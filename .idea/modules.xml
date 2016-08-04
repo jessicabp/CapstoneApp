@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Capstone2016.iml" filepath="$PROJECT_DIR$/.idea/modules/Capstone2016.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Capstone2016_android.iml" filepath="$PROJECT_DIR$/.idea/modules/Capstone2016_android.iml" group="Capstone2016" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Capstone2016_desktop.iml" filepath="$PROJECT_DIR$/.idea/modules/Capstone2016_desktop.iml" group="Capstone2016" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Capstone2016_embedded.iml" filepath="$PROJECT_DIR$/.idea/modules/Capstone2016_embedded.iml" group="Capstone2016" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Capstone2016_ios.iml" filepath="$PROJECT_DIR$/.idea/modules/Capstone2016_ios.iml" group="Capstone2016" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Capstone2016_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Capstone2016_main.iml" group="Capstone2016" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Capstone2016_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Capstone2016_test.iml" group="Capstone2016" />
+      <module fileurl="file://$PROJECT_DIR$/CapstoneApp.iml" filepath="$PROJECT_DIR$/CapstoneApp.iml" />
+    </modules>
+  </component>
+</project>
