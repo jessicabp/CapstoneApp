@@ -12,7 +12,9 @@ import com.gluonhq.charm.glisten.visual.Swatch;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import com.gluonhq.charm.glisten.license.License;
 
+@License(key="60820384-1db6-43c0-a456-1ed0ede425b4")
 public class App extends MobileApplication {
 
     public static final String PRIMARY_VIEW = HOME_VIEW;
