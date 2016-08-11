@@ -1,5 +1,6 @@
 package capstone.mobile;
 
+import capstone.mobile.views.MapView;
 import capstone.mobile.views.PrimaryView;
 import capstone.mobile.views.SecondaryView;
 import com.gluonhq.charm.glisten.application.MobileApplication;
@@ -20,12 +21,14 @@ public class App extends MobileApplication {
     public static final String PRIMARY_VIEW = HOME_VIEW;
     public static final String SECONDARY_VIEW = "Secondary View";
     public static final String MENU_LAYER = "Side Menu";
-    
+    public static final String MAP_VIEW = "Map View";
+
     @Override
     public void init() {
         addViewFactory(PRIMARY_VIEW, () -> new PrimaryView(PRIMARY_VIEW));
         addViewFactory(SECONDARY_VIEW, () -> new SecondaryView(SECONDARY_VIEW));
-        
+        addViewFactory(MAP_VIEW, () -> new MapView(MAP_VIEW));
+
         NavigationDrawer drawer = new NavigationDrawer();
         
         NavigationDrawer.Header header = new NavigationDrawer.Header("Gluon Mobile",
@@ -35,11 +38,20 @@ public class App extends MobileApplication {
         
         final Item primaryItem = new Item("Primary", MaterialDesignIcon.HOME.graphic());
         final Item secondaryItem = new Item("Secondary", MaterialDesignIcon.DASHBOARD.graphic());
-        drawer.getItems().addAll(primaryItem, secondaryItem);
+        final Item mapItem = new Item("Map", MaterialDesignIcon.MAP.graphic());
+
+        drawer.getItems().addAll(primaryItem, secondaryItem, mapItem);
         
         drawer.selectedItemProperty().addListener((obs, oldItem, newItem) -> {
             hideLayer(MENU_LAYER);
-            switchView(newItem.equals(primaryItem) ? PRIMARY_VIEW : SECONDARY_VIEW);
+            // switchView(newItem.equals(primaryItem) ? PRIMARY_VIEW : SECONDARY_VIEW);
+            if(newItem.equals(secondaryItem)) {
+                switchView(SECONDARY_VIEW);
+            } else if(newItem.equals(mapItem)) {
+                switchView(MAP_VIEW);
+            } else {
+                switchView(PRIMARY_VIEW);
+            }
         });
         
         addLayerFactory(MENU_LAYER, () -> new SidePopupView(drawer));

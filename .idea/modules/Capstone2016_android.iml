@@ -24,6 +24,15 @@
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Capstone2016_main" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/AppData/Local/Android/sdk/platforms/android-21/android.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="library" name="Gradle: org.javafxports:jfxdvk:8.60.7" level="project" />
     <orderEntry type="library" name="Gradle: com.gluonhq:charm:3.0.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.gluonhq:charm-android:3.0.0" level="project" />
