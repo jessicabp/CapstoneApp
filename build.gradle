@@ -8,6 +8,8 @@ buildscript {
 }
 
 apply plugin: 'org.javafxports.jfxmobile'
+apply plugin: 'pmd'
+apply plugin: 'jacoco'
 
 repositories {
     jcenter()
@@ -40,5 +42,22 @@ jfxmobile {
                 'javax.json.**.*',
                 'org.glassfish.json.**.*'
         ]
+    }
+}
+
+pmd {
+    ignoreFailures = true
+    ruleSets=["basic","braces","naming","codesize","optimizations","unusedcode","controversial"]
+}
+
+jacoco {
+    reportsDir = file("$buildDir/jacocoReport")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination "${buildDir}/jacocoHtml"
     }
 }
