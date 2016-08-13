@@ -47,7 +47,15 @@ jfxmobile {
 
 pmd {
     ignoreFailures = true
-    ruleSets=["basic","braces","naming","codesize","optimizations","unusedcode","controversial"]
+    ruleSets=["java-basic",
+              "java-braces",
+              "java-naming",
+              "java-codesize",
+              "java-optimizations",
+              "java-unusedcode",
+              "java-design",
+              "java-junit",
+              "java-controversial"]
 }
 
 jacoco {
