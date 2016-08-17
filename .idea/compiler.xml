@@ -25,6 +25,12 @@
       <module name="Capstone2016_ios" target="1.8" />
       <module name="Capstone2016_main" target="1.8" />
       <module name="Capstone2016_test" target="1.8" />
+      <module name="CapstoneApp_android" target="1.8" />
+      <module name="CapstoneApp_desktop" target="1.8" />
+      <module name="CapstoneApp_embedded" target="1.8" />
+      <module name="CapstoneApp_ios" target="1.8" />
+      <module name="CapstoneApp_main" target="1.8" />
+      <module name="CapstoneApp_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -2,14 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Capstone2016.iml" filepath="$PROJECT_DIR$/.idea/modules/Capstone2016.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Capstone2016_android.iml" filepath="$PROJECT_DIR$/.idea/modules/Capstone2016_android.iml" group="Capstone2016" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Capstone2016_desktop.iml" filepath="$PROJECT_DIR$/.idea/modules/Capstone2016_desktop.iml" group="Capstone2016" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Capstone2016_embedded.iml" filepath="$PROJECT_DIR$/.idea/modules/Capstone2016_embedded.iml" group="Capstone2016" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Capstone2016_ios.iml" filepath="$PROJECT_DIR$/.idea/modules/Capstone2016_ios.iml" group="Capstone2016" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Capstone2016_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Capstone2016_main.iml" group="Capstone2016" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Capstone2016_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Capstone2016_test.iml" group="Capstone2016" />
-      <module fileurl="file://$PROJECT_DIR$/CapstoneApp.iml" filepath="$PROJECT_DIR$/CapstoneApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CapstoneApp.iml" filepath="$PROJECT_DIR$/.idea/modules/CapstoneApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CapstoneApp_android.iml" filepath="$PROJECT_DIR$/.idea/modules/CapstoneApp_android.iml" group="CapstoneApp" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CapstoneApp_desktop.iml" filepath="$PROJECT_DIR$/.idea/modules/CapstoneApp_desktop.iml" group="CapstoneApp" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CapstoneApp_embedded.iml" filepath="$PROJECT_DIR$/.idea/modules/CapstoneApp_embedded.iml" group="CapstoneApp" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CapstoneApp_ios.iml" filepath="$PROJECT_DIR$/.idea/modules/CapstoneApp_ios.iml" group="CapstoneApp" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CapstoneApp_main.iml" filepath="$PROJECT_DIR$/.idea/modules/CapstoneApp_main.iml" group="CapstoneApp" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CapstoneApp_test.iml" filepath="$PROJECT_DIR$/.idea/modules/CapstoneApp_test.iml" group="CapstoneApp" />
     </modules>
   </component>
 </project>

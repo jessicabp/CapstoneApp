@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id="CapstoneApp:android" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="GRADLE" external.system.module.group="" external.system.module.type="sourceSet" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/../../build/classes/android" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../src/android">
+      <sourceFolder url="file://$MODULE_DIR$/../../src/android/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../src/android/resources" type="java-resource" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="CapstoneApp_main" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/AppData/Local/Android/sdk/platforms/android-21/android.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="Gradle: org.javafxports:jfxdvk:8.60.7" level="project" />
+    <orderEntry type="library" name="Gradle: com.gluonhq:charm:3.0.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.gluonhq:charm-android:3.0.0" level="project" />
+  </component>
+</module>
