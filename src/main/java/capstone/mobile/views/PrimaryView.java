@@ -34,7 +34,7 @@ public class PrimaryView extends View {
 
         RestClient restClient = RestClient.create()
                 .method("GET")
-                .host("http://localhost:8080")
+                .host("http://traptracker.pythonanywhere.com")
                 .path("/line");
 
         InputStreamIterableInputConverter<Line> converter = new ItemsIterableInputConverter<>(Line.class);
