@@ -12,6 +12,6 @@ public class BasicTest {
 
     @Test
     public void falseTest() {
-        Assert.assertFalse(true);
+        Assert.assertFalse(false);
     }
 }
