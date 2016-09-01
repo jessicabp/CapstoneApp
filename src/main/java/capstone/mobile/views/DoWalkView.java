@@ -1,8 +1,7 @@
 package capstone.mobile.views;
 
-
 import capstone.mobile.App;
-import capstone.mobile.classes.Line;
+import capstone.mobile.classes.Walk;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.control.Icon;
@@ -14,41 +13,49 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class DoWalk extends View {
 
-    public DoWalk(String name) {
+/**
+ * View showing user where the next trap is and lets them find or skip it
+ */
+public class DoWalkView extends View {
+
+    Walk  walk;
+    Label label;
+
+    public DoWalkView(String name, Walk walk) {
         super(name);
 
-        getStylesheets().add(SetUpWalk.class.getResource("secondary.css").toExternalForm());
+        this.walk = walk;
 
-        // TODO: This isn't updating when switching back to the view - need to update during runtime??
-        Label label = new Label("TrapData indicator on " + Line.getSide(Line.getCurrentTrap()) + " side");
+        getStylesheets().add(DoWalkView.class.getResource("secondary.css").toExternalForm());
 
+        // TODO: show map with users location
         Icon map = new Icon(MaterialDesignIcon.MAP);
 
+        // Show buttons to enter data or skip trap
         HBox   hb    = new HBox(15.0);
         Button found = new Button("Found");
-        found.setOnAction(e -> App.getInstance().switchView(App.ENTER_DATA));
+        found.setOnAction(e -> App.getInstance().switchView(App.ENTER_DATA_VIEW));
         Button skip = new Button("Skip");
-        skip.setOnAction(e -> nextTrap());
+        skip.setOnAction(e -> {
+            walk.getCurrentTrap().setSkipped(true);
+            walk.finishCurrentTrap();
+        });
         hb.getChildren().addAll(found, skip);
         hb.setAlignment(Pos.CENTER);
 
         VBox controls = new VBox(15.0, label, map, hb);
         controls.setAlignment(Pos.CENTER);
-
         setCenter(controls);
-    }
-
-    private void nextTrap() {
-        App.getInstance().switchView(App.ENTER_DATA);
-        App.getInstance().switchView(App.DO_WALK);
     }
 
     @Override
     protected void updateAppBar(AppBar appBar) {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
-        appBar.setTitleText("Walk Line");
+        appBar.setTitleText(walk.getLine().getName());
+
+        label = new Label("Trap indicator on " + (walk.getDirection() == walk.getCurrentTrap().getSide() ? "left" : "right") + " side");
+
     }
 
 }
