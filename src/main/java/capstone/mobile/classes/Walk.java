@@ -3,6 +3,9 @@ package capstone.mobile.classes;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * The walk the user is on
@@ -18,8 +21,11 @@ public class Walk {
     Trap currentTrap;
     Trap nextTrap;
     int  direction; // TODO: direction will be the same as Trap.side when the user will find the trap on the left. Direction will be 0 when trap number increases (e.g. sth to nth in gorge) - this is partially delt with in SetUpWalkView
+    private List<Capture> captures;
 
     public Walk() {
+        // TODO: set other defaults
+        setCaptures(new ArrayList<>());
     }
 
     public static BooleanProperty isWalking() {
@@ -78,6 +84,8 @@ public class Walk {
         this.direction = direction;
     }
 
+
+
     public void startWalk() {
         walking.setValue(true);
         // TODO: complete startWalk functionality
@@ -98,5 +106,13 @@ public class Walk {
     public void finishCurrentTrap() {
         currentTrap = nextTrap;
         nextTrap = line.getNextTrap(direction == 0 ? currentTrap.getNumber() + 1 : currentTrap.getNumber() - 1); // TODO: this assumes trap numbers always increment by one
+    }
+
+    public List<Capture> getCaptures() {
+        return captures;
+    }
+
+    public void setCaptures(List<Capture> captures) {
+        this.captures = captures;
     }
 }
