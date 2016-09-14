@@ -35,14 +35,17 @@ public class App extends MobileApplication {
     public static final String CREATE_LINE_VIEW   = "Add line";
     public static final String CREATE_TRAP_VIEW   = "Add trap";
     public static final String MENU_LAYER         = "Side Menu";
+
     private static boolean addLine;
     private        Walk    walk;
+
     /**
      * Items to appear in the side menu bar
      */
     private Item createLineItem;
     private Item createTrapItem;
     private Item endWalkItem;
+
     /**
      * Listener for the side menu bar selections
      */

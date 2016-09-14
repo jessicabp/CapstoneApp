@@ -19,8 +19,8 @@ import javafx.scene.layout.VBox;
  */
 public class DoWalkView extends View {
 
-    Walk  walk;
-    Label label;
+    private Walk  walk;
+    private Label label;
 
     public DoWalkView(String name, Walk walk) {
         super(name);
@@ -33,12 +33,12 @@ public class DoWalkView extends View {
         Icon map = new Icon(MaterialDesignIcon.MAP);
 
         // Show buttons to enter data or skip trap
+        label = new Label("filler text");
         HBox   hb    = new HBox(15.0);
         Button found = new Button("Found");
         found.setOnAction(e -> App.getInstance().switchView(App.ENTER_DATA_VIEW));
         Button skip = new Button("Skip");
         skip.setOnAction(e -> {
-            walk.getCurrentTrap().setSkipped(true);
             walk.finishCurrentTrap();
         });
         hb.getChildren().addAll(found, skip);

@@ -18,7 +18,7 @@ import javafx.scene.layout.VBox;
  */
 public class CreateTrapView extends View {
 
-    Walk walk;
+    private Walk walk;
 
     public CreateTrapView(String name, Walk walk) {
         super(name);

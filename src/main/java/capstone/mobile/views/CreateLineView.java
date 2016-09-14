@@ -21,7 +21,7 @@ import javafx.scene.layout.VBox;
  */
 public class CreateLineView extends View {
 
-    Walk walk;
+    private Walk walk;
 
     public CreateLineView(String name, Walk walk) {
         super(name);

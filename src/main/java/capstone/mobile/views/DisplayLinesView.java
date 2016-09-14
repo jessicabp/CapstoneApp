@@ -21,8 +21,8 @@ import java.util.List;
  */
 public class DisplayLinesView extends View {
 
-    Walk       walk;
-    List<Line> lines;
+    private Walk       walk;
+    private List<Line> lines;
 
     public DisplayLinesView(String name, Walk walk) {
         super(name);

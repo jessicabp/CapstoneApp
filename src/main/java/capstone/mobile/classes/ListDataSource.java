@@ -20,14 +20,14 @@ public class ListDataSource {
         try {
             InputStream jsonInputStream = new URL("http://localhost:8080/line").openStream();
 
-            List<Line> list = new ArrayList<>();
+            List<Line> list       = new ArrayList<>();
             JsonReader jsonReader = Json.createReader(jsonInputStream);
             JsonObject jsonObject = jsonReader.readObject();
             jsonReader.close();
             jsonInputStream.close();
 
-            JsonArray jsonArray = jsonObject.getJsonArray("lines");
-            JsonConverter<Line> c = new JsonConverter<>(Line.class);
+            JsonArray           jsonArray = jsonObject.getJsonArray("lines");
+            JsonConverter<Line> c         = new JsonConverter<>(Line.class);
 
             for (int i = 0; i < jsonArray.size(); i++) {
                 Line line = c.readFromJson(jsonArray.getJsonObject(i));
@@ -44,14 +44,14 @@ public class ListDataSource {
         try {
             InputStream jsonInputStream = new URL("http://localhost:8080/species").openStream();
 
-            List<Species> list = new ArrayList<>();
-            JsonReader jsonReader = Json.createReader(jsonInputStream);
-            JsonObject jsonObject = jsonReader.readObject();
+            List<Species> list       = new ArrayList<>();
+            JsonReader    jsonReader = Json.createReader(jsonInputStream);
+            JsonObject    jsonObject = jsonReader.readObject();
             jsonReader.close();
             jsonInputStream.close();
 
-            JsonArray jsonArray = jsonObject.getJsonArray("species");
-            JsonConverter<Species> c = new JsonConverter<>(Species.class);
+            JsonArray              jsonArray = jsonObject.getJsonArray("species");
+            JsonConverter<Species> c         = new JsonConverter<>(Species.class);
 
             for (int i = 0; i < jsonArray.size(); i++) {
                 Species species = c.readFromJson(jsonArray.getJsonObject(i));
@@ -68,14 +68,14 @@ public class ListDataSource {
         try {
             InputStream jsonInputStream = new URL("http://localhost:8080/traps?trap_id" + lineId).openStream();
 
-            List<Trap> list = new ArrayList<>();
+            List<Trap> list       = new ArrayList<>();
             JsonReader jsonReader = Json.createReader(jsonInputStream);
             JsonObject jsonObject = jsonReader.readObject();
             jsonReader.close();
             jsonInputStream.close();
 
-            JsonArray jsonArray = jsonObject.getJsonArray("traps");
-            JsonConverter<Trap> c = new JsonConverter<>(Trap.class);
+            JsonArray           jsonArray = jsonObject.getJsonArray("traps");
+            JsonConverter<Trap> c         = new JsonConverter<>(Trap.class);
 
             for (int i = 0; i < jsonArray.size(); i++) {
                 Trap Trap = c.readFromJson(jsonArray.getJsonObject(i));

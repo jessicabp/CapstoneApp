@@ -20,8 +20,8 @@ import java.util.List;
  */
 public class SetUpWalkView extends View {
 
-    List<Trap> traps;
-    Walk       walk;
+    private List<Trap> traps;
+    private Walk       walk;
 
     public SetUpWalkView(String name, Walk walk) {
         super(name);

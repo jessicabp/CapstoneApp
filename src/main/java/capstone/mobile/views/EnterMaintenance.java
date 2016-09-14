@@ -8,6 +8,7 @@ import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
 
 
@@ -16,7 +17,7 @@ import javafx.scene.layout.VBox;
  */
 public class EnterMaintenance extends View {
 
-    Walk walk;
+    private Walk walk;
 
     public EnterMaintenance(String name, Walk walk) {
         super(name);
@@ -26,22 +27,25 @@ public class EnterMaintenance extends View {
         getStylesheets().add(EnterMaintenance.class.getResource("secondary.css").toExternalForm());
 
         // button for damage
-        Button damaged = new Button("Damaged");
+        ToggleButton damaged = new ToggleButton("Damaged");
         damaged.setOnAction(e -> {
-            walk.getCurrentTrap().changeIsBroken();
-            damaged.setGraphic(MaterialDesignIcon.DONE.graphic());
+            walk.getCurrentTrap().setIsBroken(damaged.isSelected());
         });
 
         // button for moved trap
-        Button moved = new Button("Moved");
+        ToggleButton moved = new ToggleButton("Moved");
         moved.setOnAction(e -> {
-            walk.getCurrentTrap().changeIsMoved();
-            damaged.setGraphic(MaterialDesignIcon.DONE.graphic());
+            walk.getCurrentTrap().setIsMoved(moved.isSelected());
         });
 
         // button to save
         Button save = new Button("Done");
-        save.setOnAction(e -> App.getInstance().switchView(App.ENTER_DATA_VIEW));
+        save.setOnAction(e -> {
+            if (damaged.isSelected() || moved.isSelected()) {
+                walk.addChangedTrap(walk.getCurrentTrap());
+            }
+            App.getInstance().switchView(App.ENTER_DATA_VIEW);
+        });
         save.setGraphic(MaterialDesignIcon.SAVE.graphic());
 
         VBox controls = new VBox(15.0, damaged, moved, save);

@@ -9,10 +9,10 @@ import java.util.List;
  */
 public class Line {
 
-    int        id;
-    String     name;
-    List<Trap> traps;
-    boolean    newLine;
+    private int        id;
+    private String     name;
+    private List<Trap> traps;
+    private boolean    newLine;
 
     public Line() {
     }

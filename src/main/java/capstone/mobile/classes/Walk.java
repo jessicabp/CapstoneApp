@@ -14,14 +14,15 @@ import java.util.List;
  */
 public class Walk {
 
-    static BooleanProperty walking = new SimpleBooleanProperty(false);
-    Line line;
-    Trap startTrap;
-    Trap finishTrap;
-    Trap currentTrap;
-    Trap nextTrap;
-    int  direction; // TODO: direction will be the same as Trap.side when the user will find the trap on the left. Direction will be 0 when trap number increases (e.g. sth to nth in gorge) - this is partially delt with in SetUpWalkView
-    private List<Capture> captures;
+    private static BooleanProperty walking = new SimpleBooleanProperty(false);
+    private Line line;
+    private Trap startTrap;
+    private Trap finishTrap;
+    private Trap currentTrap;
+    private Trap nextTrap;
+    private int  direction; // TODO: direction will be the same as Trap.side when the user will find the trap on the left. Direction will be 0 when trap number increases (e.g. sth to nth in gorge) - this is partially delt with in SetUpWalkView
+    private List<Capture> captures     = new ArrayList<>();
+    private List<Trap>    changedTraps = new ArrayList<>();
 
     public Walk() {
         // TODO: set other defaults
@@ -85,7 +86,6 @@ public class Walk {
     }
 
 
-
     public void startWalk() {
         walking.setValue(true);
         // TODO: complete startWalk functionality
@@ -114,5 +114,17 @@ public class Walk {
 
     public void setCaptures(List<Capture> captures) {
         this.captures = captures;
+    }
+
+    public void addCapture(Capture capture) {
+        this.captures.add(capture);
+    }
+
+    public void addChangedTrap(Trap trap) {
+        this.changedTraps.add(trap);
+    }
+
+    public List<Trap> getChangedTraps() {
+        return changedTraps;
     }
 }

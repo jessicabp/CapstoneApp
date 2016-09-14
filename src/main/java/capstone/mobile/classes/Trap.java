@@ -1,8 +1,5 @@
 package capstone.mobile.classes;
 
-import java.time.LocalDateTime;
-
-
 /**
  * Holds information about the trap
  * Some is retrieved from the server or created on the device (eg id & location)
@@ -10,16 +7,13 @@ import java.time.LocalDateTime;
  */
 public class Trap {
 
-    int           id;
-    int           number;
-    int           side;
-    double        longitude;
-    double        latitude;
-    LocalDateTime time;
-    boolean       skipped;
-    int           speciesCaught;
-    boolean       isBroken;
-    boolean       isMoved;
+    private int     id;
+    private int     number;
+    private int     side;
+    private double  longitude;
+    private double  latitude;
+    private boolean isBroken;
+    private boolean isMoved;
 
     public Trap() {
     }
@@ -64,40 +58,12 @@ public class Trap {
         this.latitude = latitude;
     }
 
-    public LocalDateTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalDateTime time) {
-        this.time = time;
-    }
-
-    public boolean getSkipped() {
-        return skipped;
-    }
-
-    public void setSkipped(boolean skipped) {
-        this.skipped = skipped;
-    }
-
-    public int getSpeciesCaught() {
-        return speciesCaught;
-    }
-
-    public void setSpeciesCaught(int speciesCaught) {
-        this.speciesCaught = speciesCaught;
-    }
-
     public boolean getIsBroken() {
         return isBroken;
     }
 
     public void setIsBroken(boolean isBroken) {
         this.isBroken = isBroken;
-    }
-
-    public void changeIsBroken() {
-        this.isBroken = !this.isBroken;
     }
 
     public boolean getIsMoved() {
