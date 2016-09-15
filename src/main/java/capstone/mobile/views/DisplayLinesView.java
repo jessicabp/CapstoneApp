@@ -2,15 +2,21 @@ package capstone.mobile.views;
 
 import capstone.mobile.App;
 import capstone.mobile.classes.Line;
+import capstone.mobile.classes.ListDataSource;
 import capstone.mobile.classes.Walk;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.control.Icon;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
+import com.gluonhq.connect.GluonObservableList;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 
 import java.util.List;
@@ -31,14 +37,37 @@ public class DisplayLinesView extends View {
 
         getStylesheets().add(DisplayLinesView.class.getResource("primary.css").toExternalForm());
 
-        Label label = new Label("Searchable list of lines");
+        List<Line> linesList = ListDataSource.fetchLinesList();
 
-        // TODO: get list of lines from server, create ListView for lines
-        Button button = new Button("Select a line and enter correct password");
-        button.setGraphic(new Icon(MaterialDesignIcon.MAP));
-        button.setOnAction(e -> selectLine(new Line())); // TODO: this should use the line the user has selected and fetch its data from the server
+        GluonObservableList<Line> observableLinesList = new GluonObservableList<>();
+        if(linesList != null) {
+            observableLinesList.addAll(linesList);
+        }
+        ListView<Line> linesListView = new ListView<>(observableLinesList);
 
-        VBox controls = new VBox(15.0, label, button);
+        linesListView.setCellFactory(lv -> new ListCell<Line>() {
+
+            @Override
+            protected void updateItem(Line line, boolean empty) {
+                super.updateItem(line, empty);
+                if(!empty) {
+                    setText(line.getName());
+                } else {
+                    setText(null);
+                }
+            }
+        });
+
+        linesListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Line>() {
+            @Override
+            public void changed(ObservableValue<? extends Line> observable, Line oldValue, Line newValue) {
+                Line line = (Line) oldValue;
+                linesListView.getSelectionModel().clearSelection();
+                selectLine(line);
+            }
+        });
+
+        VBox controls = new VBox(15.0, linesListView);
         controls.setAlignment(Pos.CENTER);
         setCenter(controls);
     }

@@ -69,6 +69,12 @@ public class App extends MobileApplication {
 
     @Override
     public void init() {
+
+        /**
+         * Initializing walk object
+         */
+        walk = new Walk();
+
         /**
          * Create all views
          */
