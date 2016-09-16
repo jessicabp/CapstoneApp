@@ -29,7 +29,11 @@ public class CreateTrapView extends View {
 
         Label label = new Label("Enter GPS location on map");
 
-        Button button = new Button("Select point on map, enter ID & side of track");
+        // TODO: get GPS, ask for number, ask left or right
+        // TODO: Create new Trap, add to end of trap list, walk.addChangedTrap(newTrap)
+        // TODO: Go to data entry for trap
+
+        Button button = new Button("Select point on map, enter number & side of track");
         button.setGraphic(new Icon(MaterialDesignIcon.MAP));
         button.setOnAction(e -> createTrap(1)); // TODO: implement to input data incl. trap number
 

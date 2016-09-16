@@ -9,13 +9,21 @@ public class Trap {
 
     private int     id;
     private int     number;
-    private int     side;
+    private boolean side;
     private double  longitude;
     private double  latitude;
     private boolean isBroken;
     private boolean isMoved;
 
     public Trap() {
+    }
+
+    public Trap(int id, int number, boolean side, boolean isMoved, boolean isBroken) {
+        this.id = id;
+        this.number = number;
+        this.side = side;
+        this.isMoved = isMoved;
+        this.isBroken = isBroken;
     }
 
     public int getId() {
@@ -34,11 +42,11 @@ public class Trap {
         this.number = number;
     }
 
-    public int getSide() {
+    public boolean getSide() {
         return side;
     }
 
-    public void setSide(int side) {
+    public void setSide(boolean side) {
         this.side = side;
     }
 
@@ -76,9 +84,5 @@ public class Trap {
 
     public void changeIsMoved() {
         this.isMoved = !this.isMoved;
-    }
-
-    public void enterSpecies() {
-        // TODO: create functionality to enter a species for a trap
     }
 }

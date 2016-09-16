@@ -22,6 +22,8 @@ public class SetUpWalkView extends View {
 
     private List<Trap> traps;
     private Walk       walk;
+    Trap start;
+    Trap end;
 
     public SetUpWalkView(String name, Walk walk) {
         super(name);
@@ -29,24 +31,6 @@ public class SetUpWalkView extends View {
         this.walk = walk;
 
         getStylesheets().add(SetUpWalkView.class.getResource("secondary.css").toExternalForm());
-
-        // MOCK FUNCTIONALITY - Does nothing
-        Label  label  = new Label("Enter start point");
-        Button button = new Button("Select point on map");
-        button.setGraphic(new Icon(MaterialDesignIcon.MAP));
-        button.setOnAction(e -> {
-            if (label.getText().equals("Enter start point")) {
-                label.setText("Enter end point");
-            } else {
-                Walk.setWalking(true);
-                App.getInstance().switchView(App.DO_WALK_VIEW);
-            }
-        });
-
-        VBox controls = new VBox(15.0, label, button);
-        controls.setAlignment(Pos.CENTER);
-
-        setCenter(controls);
     }
 
     private void selectStart(Trap trap) {
@@ -56,9 +40,9 @@ public class SetUpWalkView extends View {
     private void selectEnd(Trap trap) {
         walk.setFinishTrap(trap);
         if (trap.getNumber() > walk.getStartTrap().getNumber()) {
-            walk.setDirection(0);
+            walk.setDirection(false);
         } else {
-            walk.setDirection(1);
+            walk.setDirection(true);
         }
     }
 
@@ -67,6 +51,28 @@ public class SetUpWalkView extends View {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
         appBar.setTitleText("Set Up");
         appBar.getActionItems().add(MaterialDesignIcon.UNDO.button(e -> App.getInstance().switchToPreviousView()));
+
+        traps = walk.getLine().getTraps();
+
+        // MOCK FUNCTIONALITY - Does nothing
+        Label  label  = new Label("Enter start point");
+        Button button = new Button("Select point on map");
+        button.setGraphic(new Icon(MaterialDesignIcon.MAP));
+        button.setOnAction(e -> {
+            if (label.getText().equals("Enter start point")) {
+                label.setText("Enter end point");
+                start = traps.get(0);
+            } else {
+                end = traps.get(1);
+                walk.startWalk(start, end);
+                App.getInstance().switchView(App.DO_WALK_VIEW);
+            }
+        });
+
+        VBox controls = new VBox(15.0, label, button);
+        controls.setAlignment(Pos.CENTER);
+
+        setCenter(controls);
     }
 
 }

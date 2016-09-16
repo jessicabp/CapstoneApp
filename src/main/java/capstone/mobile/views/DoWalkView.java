@@ -55,6 +55,7 @@ public class DoWalkView extends View {
         appBar.setTitleText(walk.getLine().getName());
 
         label = new Label("Trap indicator on " + (walk.getDirection() == walk.getCurrentTrap().getSide() ? "left" : "right") + " side");
+        // TODO: add message if trap is moved/broken
 
     }
 

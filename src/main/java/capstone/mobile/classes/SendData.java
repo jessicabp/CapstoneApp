@@ -12,18 +12,15 @@ import java.util.List;
  */
 public class SendData {
 
-    private Walk walk;
-
-    public SendData(Walk walk) {
-        this.walk = walk;
+    public SendData() {
     }
 
-    public void sendCaptureData() {
-        List<Capture> captures = new ArrayList<>();
-        captures.add(new Capture(101, 1));
-        captures.add(new Capture(102, 2));
-        captures.add(new Capture(103, 3));
-        this.walk.setCaptures(captures);
+    public static void sendCaptureData(Walk walk) {
+//        List<Capture> captures = new ArrayList<>();
+//        captures.add(new Capture(101, 1));
+//        captures.add(new Capture(102, 2));
+//        captures.add(new Capture(103, 3));
+//        this.walk.setCaptures(captures);
 
         JsonConverter<Capture> converter = new JsonConverter<>(Capture.class);
         StringBuilder stringBuilder = new StringBuilder();

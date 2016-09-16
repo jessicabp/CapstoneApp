@@ -28,7 +28,6 @@ import java.util.List;
 public class DisplayLinesView extends View {
 
     private Walk       walk;
-    private List<Line> lines;
 
     public DisplayLinesView(String name, Walk walk) {
         super(name);
@@ -43,8 +42,9 @@ public class DisplayLinesView extends View {
         if(linesList != null) {
             observableLinesList.addAll(linesList);
         }
-        ListView<Line> linesListView = new ListView<>(observableLinesList);
+        observableLinesList.add(new Line("Gorge")); // TODO: remove
 
+        ListView<Line> linesListView = new ListView<>(observableLinesList);
         linesListView.setCellFactory(lv -> new ListCell<Line>() {
 
             @Override
@@ -61,8 +61,8 @@ public class DisplayLinesView extends View {
         linesListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Line>() {
             @Override
             public void changed(ObservableValue<? extends Line> observable, Line oldValue, Line newValue) {
-                Line line = (Line) oldValue;
-                linesListView.getSelectionModel().clearSelection();
+                Line line = (Line) newValue;
+                linesListView.getSelectionModel().clearSelection(); //TODO: throws error
                 selectLine(line);
             }
         });
@@ -72,8 +72,9 @@ public class DisplayLinesView extends View {
         setCenter(controls);
     }
 
-    private void selectLine(Line line) {
+    public void selectLine(Line line) {
         walk.setLine(line);
+        // TODO: show loading screen?
         App.getInstance().switchView(App.SET_UP_WALK_VIEW);
     }
 

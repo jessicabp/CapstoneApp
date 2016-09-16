@@ -34,6 +34,7 @@ public class App extends MobileApplication {
     public static final String ADMIN_LOGIN        = "Admin Login";
     public static final String CREATE_LINE_VIEW   = "Add line";
     public static final String CREATE_TRAP_VIEW   = "Add trap";
+    public static final String END_WALK_VIEW      = "End walk";
     public static final String MENU_LAYER         = "Side Menu";
 
     private static boolean addLine;
@@ -59,7 +60,7 @@ public class App extends MobileApplication {
             addLine = false;
             switchView(ADMIN_LOGIN);
         } else if (newItem.equals(endWalkItem)) {
-            // TODO: end walk
+            switchView(END_WALK_VIEW);
         }
     };
 
@@ -87,6 +88,7 @@ public class App extends MobileApplication {
         addViewFactory(ADMIN_LOGIN, () -> new AdminLogin(ADMIN_LOGIN));
         addViewFactory(CREATE_LINE_VIEW, () -> new CreateLineView(CREATE_LINE_VIEW, walk));
         addViewFactory(CREATE_TRAP_VIEW, () -> new CreateTrapView(CREATE_TRAP_VIEW, walk));
+        addViewFactory(END_WALK_VIEW, () -> new EndWalkView(END_WALK_VIEW, walk));
 
         /**
          * Create items to populate side menu bar

@@ -2,6 +2,7 @@ package capstone.mobile.views;
 
 import capstone.mobile.App;
 import capstone.mobile.classes.Capture;
+import capstone.mobile.classes.SendData;
 import capstone.mobile.classes.Walk;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
@@ -61,8 +62,12 @@ public class EnterDataView extends View {
         save.setOnAction(e -> {
             if (group.getSelectedToggle() != null) {
                 walk.addCapture(capture);
-                walk.finishCurrentTrap();
-                App.getInstance().switchView(App.DO_WALK_VIEW);
+                if (walk.getCurrentTrap() != walk.getFinishTrap()) {
+                    walk.finishCurrentTrap();
+                    App.getInstance().switchView(App.DO_WALK_VIEW);
+                } else {
+                    App.getInstance().switchView(App.END_WALK_VIEW);
+                }
             } else {
                 save.setText("Please select a species");
             }

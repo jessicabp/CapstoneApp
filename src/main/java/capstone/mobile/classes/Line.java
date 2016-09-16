@@ -17,6 +17,10 @@ public class Line {
     public Line() {
     }
 
+    public Line(String name) {
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }
@@ -56,13 +60,13 @@ public class Line {
     }
 
     /**
-     * Returns trap with given number // TODO: this assumes trap numbers start at one
+     * Returns trap with given number
      *
-     * @param number - number of requested trap
-     * @return trap with given number
+     * @param index - index of requested trap in trap list
+     * @return trap
      */
-    public Trap getNextTrap(int number) {
-        return traps.get(number + 1);
+    public Trap getNextTrap(int index) {
+        return traps.get(index);
     }
 
 }

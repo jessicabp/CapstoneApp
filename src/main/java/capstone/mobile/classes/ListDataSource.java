@@ -11,8 +11,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Arrays.asList;
+
 /**
- * TODO: Exception handling and possible refactoring.
+ * TODO: Exception handling and possible refactoring. - should throw errors if can't get data
  */
 public class ListDataSource {
 
@@ -57,6 +59,7 @@ public class ListDataSource {
                 Species species = c.readFromJson(jsonArray.getJsonObject(i));
                 list.add(species);
             }
+            // TODO: sort by number
 
             return list;
         } catch (Exception ex) {
@@ -66,21 +69,22 @@ public class ListDataSource {
 
     public static List<Trap> fetchTrapsList(int lineId) {
         try {
-            InputStream jsonInputStream = new URL("http://localhost:8080/traps?trap_id" + lineId).openStream();
-
-            List<Trap> list       = new ArrayList<>();
-            JsonReader jsonReader = Json.createReader(jsonInputStream);
-            JsonObject jsonObject = jsonReader.readObject();
-            jsonReader.close();
-            jsonInputStream.close();
-
-            JsonArray           jsonArray = jsonObject.getJsonArray("traps");
-            JsonConverter<Trap> c         = new JsonConverter<>(Trap.class);
-
-            for (int i = 0; i < jsonArray.size(); i++) {
-                Trap Trap = c.readFromJson(jsonArray.getJsonObject(i));
-                list.add(Trap);
-            }
+//            InputStream jsonInputStream = new URL("http://localhost:8080/traps?trap_id" + lineId).openStream();
+//
+//            List<Trap> list       = new ArrayList<>();
+//            JsonReader jsonReader = Json.createReader(jsonInputStream);
+//            JsonObject jsonObject = jsonReader.readObject();
+//            jsonReader.close();
+//            jsonInputStream.close();
+//
+//            JsonArray           jsonArray = jsonObject.getJsonArray("traps");
+//            JsonConverter<Trap> c         = new JsonConverter<>(Trap.class);
+//
+//            for (int i = 0; i < jsonArray.size(); i++) {
+//                Trap Trap = c.readFromJson(jsonArray.getJsonObject(i));
+//                list.add(Trap);
+//            }
+            List<Trap> list = asList(new Trap(1, 1, true, false, false), new Trap(2, 2, false, false, false)); // TODO: remove and uncomment above
 
             return list;
         } catch (Exception ex) {

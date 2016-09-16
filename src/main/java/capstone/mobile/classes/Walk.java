@@ -16,17 +16,16 @@ public class Walk {
 
     private static BooleanProperty walking = new SimpleBooleanProperty(false);
     private Line line;
+    private int index;
     private Trap startTrap;
     private Trap finishTrap;
     private Trap currentTrap;
     private Trap nextTrap;
-    private int  direction; // TODO: direction will be the same as Trap.side when the user will find the trap on the left. Direction will be 0 when trap number increases (e.g. sth to nth in gorge) - this is partially delt with in SetUpWalkView
+    private boolean  direction; // TODO: direction will be the same as Trap.side when the user will find the trap on the left. Direction will be false when trap number increases (e.g. sth to nth in gorge) - this is partially dealt with in SetUpWalkView
     private List<Capture> captures     = new ArrayList<>();
     private List<Trap>    changedTraps = new ArrayList<>();
 
     public Walk() {
-        // TODO: set other defaults
-        setCaptures(new ArrayList<>());
     }
 
     public static BooleanProperty isWalking() {
@@ -43,6 +42,7 @@ public class Walk {
 
     public void setLine(Line line) {
         this.line = line;
+        line.setTraps(ListDataSource.fetchTrapsList(line.getId()));
     }
 
     public Trap getStartTrap() {
@@ -50,6 +50,7 @@ public class Walk {
     }
 
     public void setStartTrap(Trap startTrap) {
+        this.index = line.getTraps().indexOf(startTrap);
         this.startTrap = startTrap;
     }
 
@@ -77,27 +78,23 @@ public class Walk {
         this.nextTrap = nextTrap;
     }
 
-    public int getDirection() {
+    public boolean getDirection() {
         return direction;
     }
 
-    public void setDirection(int direction) {
+    public void setDirection(boolean direction) {
         this.direction = direction;
     }
 
 
-    public void startWalk() {
+    public void startWalk(Trap start, Trap end) {
         walking.setValue(true);
-        // TODO: complete startWalk functionality
-    }
-
-    public void skipCurrent() {
-        // TODO: create skipCurrent functionality
+        startTrap = start;
+        finishTrap = end;
     }
 
     public void finishWalk() {
         walking.setValue(false);
-        // TODO: complete finishWalk functionality
     }
 
     /**
@@ -105,15 +102,18 @@ public class Walk {
      */
     public void finishCurrentTrap() {
         currentTrap = nextTrap;
-        nextTrap = line.getNextTrap(direction == 0 ? currentTrap.getNumber() + 1 : currentTrap.getNumber() - 1); // TODO: this assumes trap numbers always increment by one
+        if (direction) {
+            index++;
+        } else {
+            index--;
+        }
+        if (currentTrap != finishTrap) {
+            nextTrap = line.getNextTrap(index);
+        }
     }
 
     public List<Capture> getCaptures() {
         return captures;
-    }
-
-    public void setCaptures(List<Capture> captures) {
-        this.captures = captures;
     }
 
     public void addCapture(Capture capture) {
