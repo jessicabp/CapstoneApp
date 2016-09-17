@@ -42,7 +42,7 @@ public class Walk {
 
     public void setLine(Line line) {
         this.line = line;
-        line.setTraps(ListDataSource.fetchTrapsList(line.getId()));
+        // line.setTraps(ListDataSource.fetchTrapsList(line.getId()));
     }
 
     public Trap getStartTrap() {

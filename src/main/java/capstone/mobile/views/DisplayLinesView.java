@@ -1,6 +1,7 @@
 package capstone.mobile.views;
 
 import capstone.mobile.App;
+import capstone.mobile.classes.DataUnavailableException;
 import capstone.mobile.classes.Line;
 import capstone.mobile.classes.ListDataSource;
 import capstone.mobile.classes.Walk;
@@ -36,40 +37,43 @@ public class DisplayLinesView extends View {
 
         getStylesheets().add(DisplayLinesView.class.getResource("primary.css").toExternalForm());
 
-        List<Line> linesList = ListDataSource.fetchLinesList();
+        try {
+            List<Line> linesList = ListDataSource.fetchLinesList();
 
-        GluonObservableList<Line> observableLinesList = new GluonObservableList<>();
-        if(linesList != null) {
-            observableLinesList.addAll(linesList);
-        }
-        observableLinesList.add(new Line("Gorge")); // TODO: remove
+            GluonObservableList<Line> observableLinesList = new GluonObservableList<>();
+            if (linesList != null) {
+                observableLinesList.addAll(linesList);
+            }
 
-        ListView<Line> linesListView = new ListView<>(observableLinesList);
-        linesListView.setCellFactory(lv -> new ListCell<Line>() {
+            ListView<Line> linesListView = new ListView<>(observableLinesList);
+            linesListView.setCellFactory(lv -> new ListCell<Line>() {
 
-            @Override
-            protected void updateItem(Line line, boolean empty) {
-                super.updateItem(line, empty);
-                if(!empty) {
-                    setText(line.getName());
-                } else {
-                    setText(null);
+                @Override
+                protected void updateItem(Line line, boolean empty) {
+                    super.updateItem(line, empty);
+                    if (!empty) {
+                        setText(line.getName());
+                    } else {
+                        setText(null);
+                    }
                 }
-            }
-        });
+            });
 
-        linesListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Line>() {
-            @Override
-            public void changed(ObservableValue<? extends Line> observable, Line oldValue, Line newValue) {
-                Line line = (Line) newValue;
-                linesListView.getSelectionModel().clearSelection(); //TODO: throws error
-                selectLine(line);
-            }
-        });
+            linesListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Line>() {
+                @Override
+                public void changed(ObservableValue<? extends Line> observable, Line oldValue, Line newValue) {
+                    Line line = (Line) newValue;
+                    linesListView.getSelectionModel().clearSelection(); //TODO: throws error
+                    selectLine(line);
+                }
+            });
 
-        VBox controls = new VBox(15.0, linesListView);
-        controls.setAlignment(Pos.CENTER);
-        setCenter(controls);
+            VBox controls = new VBox(15.0, linesListView);
+            controls.setAlignment(Pos.CENTER);
+            setCenter(controls);
+        } catch (DataUnavailableException ex) {
+            // TODO: display message
+        }
     }
 
     public void selectLine(Line line) {
