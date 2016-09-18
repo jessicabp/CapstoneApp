@@ -26,6 +26,8 @@ dependencies {
     androidRuntime 'com.gluonhq:charm-android:3.0.0'
     iosRuntime 'com.gluonhq:charm-ios:3.0.0'
     desktopRuntime 'com.gluonhq:charm-desktop:3.0.0'
+
+    testCompile 'junit:junit:4.12'
 }
 
 jfxmobile {
@@ -68,4 +70,17 @@ jacocoTestReport {
         csv.enabled false
         html.destination "${buildDir}/jacocoHtml"
     }
+}
+
+sourceSets {
+    test {
+        java {
+            srcDirs = ["src/tests"]
+        }
+    }
+}
+
+retrolambda {
+    jdk System.getenv("JAVA8_HOME")
+    oldJdk System.getenv("JAVA7_HOME")
 }

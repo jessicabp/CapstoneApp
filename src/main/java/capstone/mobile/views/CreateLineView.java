@@ -1,7 +1,10 @@
 package capstone.mobile.views;
 
 import capstone.mobile.App;
+import capstone.mobile.classes.Line;
+import capstone.mobile.classes.LocationProvider;
 import capstone.mobile.classes.Walk;
+import com.gluonhq.charm.down.common.Position;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.control.Icon;
@@ -14,6 +17,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
 
 
 /**
@@ -46,12 +51,24 @@ public class CreateLineView extends View {
         passwordField.setPromptText("enter password");
         hb2.getChildren().addAll(passwordField);
         hb2.setAlignment(Pos.CENTER);
-        hb2.setVisible(false);
+        // hb2.setVisible(false);
 
         // Create button to create line
         Button button = new Button("Create");
         button.setGraphic(new Icon(MaterialDesignIcon.MAP));
-        button.setOnAction(e -> createLine("Line name")); // TODO: implement correctly
+        button.setOnAction(e -> {
+            String lineName = nameField.getText();
+            String linePassword = passwordField.getText();
+            Line newLine = new Line();
+            newLine.setName(lineName);
+            newLine.setPassword(linePassword);
+            newLine.setNewLine(true);
+            newLine.setTraps(new ArrayList<>());
+
+            walk.setLine(newLine);
+
+            App.getInstance().switchView(App.CREATE_TRAP_VIEW);
+        });
 
         VBox controls = new VBox(15.0, label, hb1, hb2, button);
         controls.setAlignment(Pos.CENTER);
@@ -59,6 +76,11 @@ public class CreateLineView extends View {
     }
 
     private void createLine(String name) {
+
+
+
+
+
         // Finish walk if the user is doing a walk
         if (walk.isWalking().get()) {
             walk.finishWalk();
@@ -71,7 +93,7 @@ public class CreateLineView extends View {
     @Override
     protected void updateAppBar(AppBar appBar) {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
-        appBar.setTitleText("Create Line");
+        appBar.setTitleText("Create New Line");
         appBar.getActionItems().add(MaterialDesignIcon.UNDO.button(e -> App.getInstance().switchToPreviousView()));
     }
 }

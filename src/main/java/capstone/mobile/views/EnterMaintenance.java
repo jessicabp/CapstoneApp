@@ -36,7 +36,7 @@ public class EnterMaintenance extends View {
         // button for damage
         ToggleButton damaged = new ToggleButton("Damaged");
         damaged.setOnAction(e -> {
-            walk.getCurrentTrap().setIsBroken(damaged.isSelected());
+            walk.getCurrentTrap().setBroken(damaged.isSelected());
         });
 
         // TODO: preselect based on trap info, make repaired button in group with damaged
@@ -44,13 +44,13 @@ public class EnterMaintenance extends View {
         // button for moved trap
         ToggleButton moved = new ToggleButton("Moved");
         moved.setOnAction(e -> {
-            walk.getCurrentTrap().setIsMoved(moved.isSelected());
+            walk.getCurrentTrap().setMoved(moved.isSelected());
         });
 
         // button to save
         Button save = new Button("Done");
         save.setOnAction(e -> {
-            if (damaged.isSelected() != walk.getCurrentTrap().getIsBroken() || moved.isSelected() != walk.getCurrentTrap().getIsMoved()) {
+            if (damaged.isSelected() != walk.getCurrentTrap().isBroken() || moved.isSelected() != walk.getCurrentTrap().isMoved()) {
                 walk.addChangedTrap(walk.getCurrentTrap());
             }
             App.getInstance().switchView(App.ENTER_DATA_VIEW);

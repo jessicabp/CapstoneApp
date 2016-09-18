@@ -1,5 +1,6 @@
 package capstone.mobile.classes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -13,8 +14,17 @@ public class Line {
     private String     name;
     private List<Trap> traps;
     private boolean    newLine;
+    private String password;
 
     public Line() {
+    }
+
+    public Line(String name, String password) {
+        this.id = 0;
+        this.name = name;
+        this.password = password;
+        this.newLine = true;
+        this.traps = new ArrayList<>();
     }
 
     public Line(String name) {
@@ -53,7 +63,8 @@ public class Line {
         this.newLine = newLine;
     }
 
-    public void addTrap() {
+    public void addTrap(Trap trap) {
+        this.traps.add(trap);
     }
 
     public void removeTrap() {
@@ -69,4 +80,12 @@ public class Line {
         return traps.get(index);
     }
 
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

@@ -12,18 +12,31 @@ public class Trap {
     private boolean side;
     private double  longitude;
     private double  latitude;
-    private boolean isBroken;
-    private boolean isMoved;
+    private boolean broken;
+    private boolean moved;
 
     public Trap() {
     }
 
-    public Trap(int id, int number, boolean side, boolean isMoved, boolean isBroken) {
+    /**
+     * Constructor used to create new traps
+     */
+    public Trap(int number, double latitude, double longitude, boolean side) {
+        this.id = 0;
+        this.number = number;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.side = side;
+        this.moved = false;
+        this.broken = false;
+    }
+
+    public Trap(int id, int number, boolean side, boolean moved, boolean broken) {
         this.id = id;
         this.number = number;
         this.side = side;
-        this.isMoved = isMoved;
-        this.isBroken = isBroken;
+        this.moved = moved;
+        this.broken = broken;
     }
 
     public int getId() {
@@ -66,23 +79,23 @@ public class Trap {
         this.latitude = latitude;
     }
 
-    public boolean getIsBroken() {
-        return isBroken;
-    }
-
-    public void setIsBroken(boolean isBroken) {
-        this.isBroken = isBroken;
-    }
-
-    public boolean getIsMoved() {
-        return isMoved;
-    }
-
-    public void setIsMoved(boolean isMoved) {
-        isMoved = isMoved;
-    }
-
     public void changeIsMoved() {
-        this.isMoved = !this.isMoved;
+        this.moved = !this.moved;
+    }
+
+    public boolean isBroken() {
+        return broken;
+    }
+
+    public void setBroken(boolean broken) {
+        this.broken = broken;
+    }
+
+    public boolean isMoved() {
+        return moved;
+    }
+
+    public void setMoved(boolean moved) {
+        this.moved = moved;
     }
 }
