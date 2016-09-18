@@ -81,6 +81,10 @@ sourceSets {
 }
 
 retrolambda {
-    jdk System.getenv("JAVA8_HOME")
-    oldJdk System.getenv("JAVA7_HOME")
+    jdk System.getenv("JAVA_HOME")
+    if(System.getenv("JAVA7_HOME")) {
+        oldJdk System.getenv("JAVA7_HOME")
+    } else {
+        oldJdk "/usr/lib/jvm/java-7-oracle/jre"
+    }
 }
