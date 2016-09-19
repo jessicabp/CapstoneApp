@@ -13,18 +13,14 @@ public class Capture {
      * 1 - Rat
      * 2 - Stoat
      * 3 - Hedgehog
-     * 4 - Other
+     * 4 - Cat
+     * 5 - Other
      */
     private int speciesId;
 
     public Capture() {
         trapId = 0;
         speciesId = 0;
-        time = Timestamp.valueOf(LocalDateTime.now()).getTime();
-    }
-
-    public Capture(int id) {
-        trapId = id;
         time = Timestamp.valueOf(LocalDateTime.now()).getTime();
     }
 

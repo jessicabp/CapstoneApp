@@ -9,6 +9,8 @@ import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 
@@ -33,31 +35,35 @@ public class EnterMaintenance extends View {
         appBar.setTitleText("Maintenance");
         appBar.getActionItems().add(MaterialDesignIcon.UNDO.button(e -> App.getInstance().switchToPreviousView()));
 
-        // button for damage
-        ToggleButton damaged = new ToggleButton("Damaged");
-        damaged.setOnAction(e -> {
-            walk.getCurrentTrap().setBroken(damaged.isSelected());
-        });
-
-        // TODO: preselect based on trap info, make repaired button in group with damaged
+        // buttons for damage
+        ToggleGroup damage = new ToggleGroup();
+        ToggleButton broken = new ToggleButton("Broken");
+        broken.setSelected(walk.getCurrentTrap().isBroken());
+        broken.setOnAction(e -> walk.getCurrentTrap().setBroken(broken.isSelected()));
+        broken.setToggleGroup(damage);
+        ToggleButton fixed = new ToggleButton("Fixed");
+        fixed.setSelected(!walk.getCurrentTrap().isBroken());
+        fixed.setOnAction(e -> walk.getCurrentTrap().setBroken(fixed.isSelected()));
+        fixed.setToggleGroup(damage);
+        HBox damageHB = new HBox(15, broken, fixed);
+        damageHB.setAlignment(Pos.CENTER);
 
         // button for moved trap
         ToggleButton moved = new ToggleButton("Moved");
-        moved.setOnAction(e -> {
-            walk.getCurrentTrap().setMoved(moved.isSelected());
-        });
+        moved.setSelected(walk.getCurrentTrap().isMoved());
+        moved.setOnAction(e -> walk.getCurrentTrap().setMoved(moved.isSelected()));
 
         // button to save
         Button save = new Button("Done");
         save.setOnAction(e -> {
-            if (damaged.isSelected() != walk.getCurrentTrap().isBroken() || moved.isSelected() != walk.getCurrentTrap().isMoved()) {
+            if (broken.isSelected() != walk.getCurrentTrap().isBroken() || moved.isSelected() != walk.getCurrentTrap().isMoved()) {
                 walk.addChangedTrap(walk.getCurrentTrap());
             }
             App.getInstance().switchView(App.ENTER_DATA_VIEW);
         });
         save.setGraphic(MaterialDesignIcon.SAVE.graphic());
 
-        VBox controls = new VBox(15.0, damaged, moved, save);
+        VBox controls = new VBox(15.0, damageHB, moved, save);
         controls.setAlignment(Pos.CENTER);
         setCenter(controls);
     }

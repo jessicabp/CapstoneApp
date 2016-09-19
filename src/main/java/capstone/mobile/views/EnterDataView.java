@@ -2,12 +2,14 @@ package capstone.mobile.views;
 
 import capstone.mobile.App;
 import capstone.mobile.classes.Capture;
-import capstone.mobile.classes.SendData;
 import capstone.mobile.classes.Walk;
+import com.gluonhq.charm.glisten.application.GlassPane;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
+import com.gluonhq.charm.glisten.layout.layer.PopupView;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
@@ -22,7 +24,7 @@ import javafx.scene.layout.VBox;
 public class EnterDataView extends View {
 
     private Walk    walk;
-    private Capture capture;
+    private int     species;
 
     public EnterDataView(String name, Walk walk) {
         super(name);
@@ -37,31 +39,65 @@ public class EnterDataView extends View {
         HBox         hb1   = new HBox(15.0);
         ToggleButton empty = new ToggleButton("Empty");
         empty.setToggleGroup(group);
-        empty.setOnAction(e -> capture.setSpeciesId(0));
+        empty.setOnAction(e -> species = 0);
+        empty.setMaxWidth(Double.MAX_VALUE);
+        empty.setMaxHeight(60);
         ToggleButton rat = new ToggleButton("Rat");
         rat.setToggleGroup(group);
-        rat.setOnAction(e -> capture.setSpeciesId(1));
+        rat.setOnAction(e -> species = 1);
+        rat.setMaxWidth(Double.MAX_VALUE);
         hb1.getChildren().addAll(empty, rat);
         hb1.setAlignment(Pos.CENTER);
         HBox         hb2   = new HBox(15.0);
         ToggleButton stoat = new ToggleButton("Stoat");
         stoat.setToggleGroup(group);
-        stoat.setOnAction(e -> capture.setSpeciesId(2));
+        stoat.setOnAction(e -> species = 2);
+        stoat.setMaxWidth(Double.MAX_VALUE);
         ToggleButton hedgehog = new ToggleButton("Hedgehog");
         hedgehog.setToggleGroup(group);
-        hedgehog.setOnAction(e -> capture.setSpeciesId(3));
+        hedgehog.setOnAction(e -> species = 3);
+        hedgehog.setMaxWidth(Double.MAX_VALUE);
         hb2.getChildren().addAll(stoat, hedgehog);
         hb2.setAlignment(Pos.CENTER);
         ToggleButton other = new ToggleButton("Other");
+        other.setMaxWidth(Double.MAX_VALUE);
         other.setToggleGroup(group);
-        // TODO: complete other species selector
-        other.setOnAction(e -> capture.setSpeciesId(4));
+        other.setOnAction(e -> {
+            other.setSelected(true);
+            PopupView   speciesPopup = new PopupView(other);
+            ToggleGroup otherGroup   = new ToggleGroup();
+            HBox        otherHB1     = new HBox();
+            otherHB1.setPadding(new Insets(40, 40, 40, 40));
+            otherHB1.setSpacing(20);
+            ToggleButton cat = new ToggleButton("Cat");
+            cat.setToggleGroup(otherGroup);
+            cat.setOnAction(ev -> {
+                species = 4;
+                speciesPopup.hide();
+                App.getInstance().getGlassPane().setBackgroundFade(0);
+            });
+            cat.setMaxWidth(Double.MAX_VALUE);
+            cat.setMaxHeight(60);
+            ToggleButton otherSpecies = new ToggleButton("Other");
+            otherSpecies.setToggleGroup(otherGroup);
+            otherSpecies.setOnAction(ev -> {
+                species = 5;
+                speciesPopup.hide();
+                App.getInstance().getGlassPane().setBackgroundFade(0);
+            });
+            otherSpecies.setMaxWidth(Double.MAX_VALUE);
+            otherHB1.getChildren().addAll(cat, otherSpecies);
+            otherHB1.setAlignment(Pos.CENTER);
+            speciesPopup.setContent(otherHB1);
+            speciesPopup.show();
+            App.getInstance().getGlassPane().setBackgroundFade(GlassPane.DEFAULT_BACKGROUND_FADE_LEVEL);
+        });
 
         // Add button to mark trap as done
         Button save = new Button("Done");
         save.setOnAction(e -> {
             if (group.getSelectedToggle() != null) {
-                walk.addCapture(capture);
+                walk.addCapture(new Capture(walk.getCurrentTrap().getId(), species));
                 if (walk.getCurrentTrap() != walk.getFinishTrap()) {
                     walk.finishCurrentTrap();
                     App.getInstance().switchView(App.DO_WALK_VIEW);
@@ -92,7 +128,5 @@ public class EnterDataView extends View {
     protected void updateAppBar(AppBar appBar) {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
         appBar.setTitleText("Trap #" + walk.getCurrentTrap().getNumber());
-
-        capture = new Capture(walk.getCurrentTrap().getId());
     }
 }

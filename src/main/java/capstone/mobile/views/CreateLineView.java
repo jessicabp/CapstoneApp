@@ -1,6 +1,7 @@
 package capstone.mobile.views;
 
 import capstone.mobile.App;
+import capstone.mobile.classes.DataUnavailableException;
 import capstone.mobile.classes.Line;
 import capstone.mobile.classes.LocationProvider;
 import capstone.mobile.classes.Walk;
@@ -65,7 +66,11 @@ public class CreateLineView extends View {
             newLine.setNewLine(true);
             newLine.setTraps(new ArrayList<>());
 
-            walk.setLine(newLine);
+            try {
+                walk.setLine(newLine);
+            } catch (DataUnavailableException e1) {
+                e1.printStackTrace();
+            } //TODO: try/catch?
 
             App.getInstance().switchView(App.CREATE_TRAP_VIEW);
         });

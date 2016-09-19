@@ -40,9 +40,9 @@ public class Walk {
         return line;
     }
 
-    public void setLine(Line line) {
+    public void setLine(Line line) throws DataUnavailableException {
         this.line = line;
-        // line.setTraps(ListDataSource.fetchTrapsList(line.getId()));
+        line.setTraps(ListDataSource.fetchTrapsList(line.getId()));
     }
 
     public Trap getStartTrap() {

@@ -22,8 +22,8 @@ public class SetUpWalkView extends View {
 
     private List<Trap> traps;
     private Walk       walk;
-    Trap start;
-    Trap end;
+    private Trap       start;
+    private Trap       end;
 
     public SetUpWalkView(String name, Walk walk) {
         super(name);
@@ -50,7 +50,7 @@ public class SetUpWalkView extends View {
     protected void updateAppBar(AppBar appBar) {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
         appBar.setTitleText("Set Up");
-        appBar.getActionItems().add(MaterialDesignIcon.UNDO.button(e -> App.getInstance().switchToPreviousView()));
+        appBar.getActionItems().add(MaterialDesignIcon.UNDO.button(e -> App.getInstance().switchView(App.DISPLAY_LINES_VIEW)));
 
         traps = walk.getLine().getTraps();
 
