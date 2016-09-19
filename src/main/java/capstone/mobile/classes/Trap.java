@@ -9,11 +9,11 @@ public class Trap {
 
     private int     id;
     private int     number;
-    private boolean side;
+    private boolean side = true;
     private double  longitude;
     private double  latitude;
-    private boolean broken;
-    private boolean moved;
+    private boolean broken = false;
+    private boolean moved = false;
 
     public Trap() {
     }

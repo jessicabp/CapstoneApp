@@ -1,17 +1,28 @@
 package capstone.mobile.views;
 
 import capstone.mobile.App;
+import capstone.mobile.classes.ListDataSource;
+import capstone.mobile.classes.Trap;
 import capstone.mobile.classes.Walk;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.control.Icon;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
+import com.gluonhq.maps.MapPoint;
+import com.gluonhq.maps.MapView;
+import com.gluonhq.maps.demo.PoiLayer;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -21,15 +32,31 @@ public class DoWalkView extends View {
 
     private Walk  walk;
     private Label label;
+    private int index = 0;
 
     public DoWalkView(String name, Walk walk) {
         super(name);
 
         this.walk = walk;
 
+
+
         getStylesheets().add(DoWalkView.class.getResource("secondary.css").toExternalForm());
 
-        // TODO: show map with users location
+        MapView mapView = new MapView();
+        PoiLayer mapLayer = new PoiLayer();
+        mapView.addLayer(mapLayer);
+
+        int index = 0;
+        List<Trap> traps = walk.getLine().getTraps();
+        List<Node> nodes = new ArrayList<>();
+        for(Trap trap : traps) {
+            Node icon = new Circle(7, Color.BLUE);
+            icon.setId("" + index++);
+            nodes.add(icon);
+            mapLayer.addPoint(new MapPoint(trap.getLatitude(), trap.getLongitude()), icon);
+        }
+
         Icon map = new Icon(MaterialDesignIcon.MAP);
 
         // Show buttons to enter data or skip trap
@@ -39,23 +66,28 @@ public class DoWalkView extends View {
         found.setOnAction(e -> App.getInstance().switchView(App.ENTER_DATA_VIEW));
         Button skip = new Button("Skip");
         skip.setOnAction(e -> {
-            walk.finishCurrentTrap();
+            // walk.finishCurrentTrap();
         });
         hb.getChildren().addAll(found, skip);
         hb.setAlignment(Pos.CENTER);
 
-        VBox controls = new VBox(15.0, label, map, hb);
+        VBox controls = new VBox(15.0, label, map, mapView, hb);
         controls.setAlignment(Pos.CENTER);
         setCenter(controls);
+
+
+        Circle c = new Circle(6, Color.ORANGE);
     }
 
     @Override
     protected void updateAppBar(AppBar appBar) {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
-        appBar.setTitleText(walk.getLine().getName());
+        appBar.setTitleText("Walking: " + walk.getLine().getName());
 
         label = new Label("Trap indicator on " + (walk.getDirection() == walk.getCurrentTrap().getSide() ? "left" : "right") + " side");
         // TODO: add message if trap is moved/broken
+
+        System.out.println("SHOWING..");
 
     }
 
