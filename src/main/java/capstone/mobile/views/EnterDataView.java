@@ -12,10 +12,14 @@ import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+
+import java.util.List;
+
+import static java.util.Arrays.asList;
 
 
 /**
@@ -36,29 +40,32 @@ public class EnterDataView extends View {
         // Create species selection buttons
         ToggleGroup group = new ToggleGroup();
         // TODO: load species from line?
-        HBox         hb1   = new HBox(15.0);
-        ToggleButton empty = new ToggleButton("Empty");
-        empty.setToggleGroup(group);
-        empty.setOnAction(e -> species = 0);
-        empty.setMaxWidth(Double.MAX_VALUE);
-        empty.setMaxHeight(60);
-        ToggleButton rat = new ToggleButton("Rat");
-        rat.setToggleGroup(group);
-        rat.setOnAction(e -> species = 1);
-        rat.setMaxWidth(Double.MAX_VALUE);
-        hb1.getChildren().addAll(empty, rat);
-        hb1.setAlignment(Pos.CENTER);
-        HBox         hb2   = new HBox(15.0);
-        ToggleButton stoat = new ToggleButton("Stoat");
-        stoat.setToggleGroup(group);
-        stoat.setOnAction(e -> species = 2);
-        stoat.setMaxWidth(Double.MAX_VALUE);
-        ToggleButton hedgehog = new ToggleButton("Hedgehog");
-        hedgehog.setToggleGroup(group);
-        hedgehog.setOnAction(e -> species = 3);
-        hedgehog.setMaxWidth(Double.MAX_VALUE);
-        hb2.getChildren().addAll(stoat, hedgehog);
-        hb2.setAlignment(Pos.CENTER);
+        List<String> speciesList = asList("Empty", "Rat", "Stoat", "Hedgehog");
+
+        GridPane grid = new GridPane();
+        // Make buttons fill screen width
+        grid.getColumnConstraints().add(new ColumnConstraints());
+        grid.getColumnConstraints().add(new ColumnConstraints());
+        grid.getColumnConstraints().get(0).setPercentWidth(50);
+        grid.getColumnConstraints().get(0).setHgrow(Priority.SOMETIMES);
+        grid.getColumnConstraints().get(1).setPercentWidth(50);
+        grid.getColumnConstraints().get(1).setHgrow(Priority.SOMETIMES);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        int speciesNo = 0;
+        for (int r = 0; r < speciesList.size()/2; r++) {
+            for (int c = 0; c < 2; c++) {
+                ToggleButton button = new ToggleButton(speciesList.get(speciesNo));
+                button.setToggleGroup(group);
+                int finalSpeciesNo = speciesNo;
+                button.setOnAction(e -> species = finalSpeciesNo);
+                button.setMaxWidth(Double.MAX_VALUE);
+                button.setMinHeight(200); // TODO: Not working. Need to make buttons taller.
+                grid.add(button, c, r);
+                speciesNo++;
+            }
+        }
+
         ToggleButton other = new ToggleButton("Other");
         other.setMaxWidth(Double.MAX_VALUE);
         other.setToggleGroup(group);
@@ -119,7 +126,8 @@ public class EnterDataView extends View {
         hb3.getChildren().addAll(photo, maintenance);
         hb3.setAlignment(Pos.CENTER);
 
-        VBox controls = new VBox(15.0, hb1, hb2, other, save, hb3);
+        VBox controls = new VBox(15.0, grid, other, save, hb3);
+        controls.setPadding( new Insets(40, 40, 40, 40));
         controls.setAlignment(Pos.CENTER);
         setCenter(controls);
     }

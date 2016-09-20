@@ -21,7 +21,7 @@ repositories {
 mainClassName = 'capstone.mobile.App'
 
 dependencies {
-    compile 'com.gluonhq:charm:3.0.0'
+    compile 'com.gluonhq:charm:3.0.0', 'com.gluonhq:maps:1.0.0'
 
     androidRuntime 'com.gluonhq:charm-android:3.0.0'
     iosRuntime 'com.gluonhq:charm-ios:3.0.0'
