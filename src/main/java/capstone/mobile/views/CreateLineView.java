@@ -31,10 +31,11 @@ public class CreateLineView extends View {
 
     public CreateLineView(String name, Walk walk) {
         super(name);
-
         this.walk = walk;
 
         getStylesheets().add(CreateLineView.class.getResource("secondary.css").toExternalForm());
+
+        Label warning = new Label("This will erase any data from the current walk!"); // TODO: can we make it so data from multiple lines is sent at the end?
 
         Label label = new Label("Enter name and password");
 
@@ -81,11 +82,6 @@ public class CreateLineView extends View {
     }
 
     private void createLine(String name) {
-
-
-
-
-
         // Finish walk if the user is doing a walk
         if (walk.isWalking().get()) {
             walk.finishWalk();

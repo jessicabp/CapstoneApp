@@ -18,12 +18,6 @@ public class Capture {
      */
     private int speciesId;
 
-    public Capture() {
-        trapId = 0;
-        speciesId = 0;
-        time = Timestamp.valueOf(LocalDateTime.now()).getTime();
-    }
-
     public Capture(int trapId, int speciesId) {
         this.trapId = trapId;
         this.speciesId = speciesId;

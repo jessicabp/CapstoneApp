@@ -15,6 +15,10 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.util.List;
+
+import static java.util.Arrays.asList;
+
 @License(key = "60820384-1db6-43c0-a456-1ed0ede425b4")
 
 /**
@@ -22,9 +26,10 @@ import javafx.stage.Stage;
  */
 public class App extends MobileApplication {
 
-    /**
-     * Strings naming the views, and providing reference to them
-     */
+    private static boolean addLine;
+    private        Walk    walk;
+
+    // Strings naming the views, and providing reference to them
     public static final String DISPLAY_LINES_VIEW = HOME_VIEW;
     public static final String SET_UP_WALK_VIEW   = "Set up walk";
     public static final String DO_WALK_VIEW       = "Do walk";
@@ -37,12 +42,7 @@ public class App extends MobileApplication {
     public static final String END_WALK_VIEW      = "End walk";
     public static final String MENU_LAYER         = "Side Menu";
 
-    private static boolean addLine;
-    private        Walk    walk;
-
-    /**
-     * Items to appear in the side menu bar
-     */
+    // Items to appear in the side menu bar
     private Item createLineItem;
     private Item createTrapItem;
     private Item endWalkItem;
@@ -64,21 +64,13 @@ public class App extends MobileApplication {
         }
     };
 
-    public static boolean isAddLine() {
-        return addLine;
-    }
-
     @Override
     public void init() {
 
-        /**
-         * Initializing walk object
-         */
+        // Initializing walk object
         walk = new Walk();
 
-        /**
-         * Create all views
-         */
+        // Create all views
         addViewFactory(DISPLAY_LINES_VIEW, () -> new DisplayLinesView(DISPLAY_LINES_VIEW, walk));
         addViewFactory(SET_UP_WALK_VIEW, () -> new SetUpWalkView(SET_UP_WALK_VIEW, walk));
         addViewFactory(DO_WALK_VIEW, () -> new DoWalkView(DO_WALK_VIEW, walk));
@@ -90,16 +82,12 @@ public class App extends MobileApplication {
         addViewFactory(CREATE_TRAP_VIEW, () -> new CreateTrapView(CREATE_TRAP_VIEW, walk));
         addViewFactory(END_WALK_VIEW, () -> new EndWalkView(END_WALK_VIEW, walk));
 
-        /**
-         * Create items to populate side menu bar
-         */
+        // Create items to populate side menu bar
         createLineItem = new Item("Create Line", MaterialDesignIcon.TIMELINE.graphic());
         createTrapItem = new Item("Add Trap", MaterialDesignIcon.ADD_LOCATION.graphic());
         endWalkItem = new Item("End Walk", MaterialDesignIcon.EXIT_TO_APP.graphic());
 
-        /**
-         * Create side menu bar
-         */
+        // Create side menu bar
         NavigationDrawer        drawer = new NavigationDrawer();
         NavigationDrawer.Header header = new NavigationDrawer.Header("Trap Tracker", "Pest Trap Line Tool", new Avatar(21, new Image(App.class.getResourceAsStream("/icon.png"))));
         drawer.setHeader(header);
@@ -127,16 +115,17 @@ public class App extends MobileApplication {
         });
     }
 
+    public static boolean isAddLine() {
+        return addLine;
+    }
+
     @Override
     public void postInit(Scene scene) {
         Swatch.GREEN.assignTo(scene);
-
         scene.getStylesheets().add(App.class.getResource("style.css").toExternalForm());
         ((Stage) scene.getWindow()).getIcons().add(new Image(App.class.getResourceAsStream("/icon.png")));
 
-        /**
-         * Disable adding a trap or ending a walk if the user is not currently doing a walk
-         */
+        // Disable adding a trap or ending a walk if the user is not currently doing a walk
         createTrapItem.disableProperty().bind(Walk.isWalking().not());
         endWalkItem.disableProperty().bind(Walk.isWalking().not());
     }

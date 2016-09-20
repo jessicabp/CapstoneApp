@@ -29,7 +29,6 @@ public class CreateTrapView extends View {
 
     public CreateTrapView(String name, Walk walk) {
         super(name);
-
         this.walk = walk;
 
         getStylesheets().add(CreateTrapView.class.getResource("secondary.css").toExternalForm());

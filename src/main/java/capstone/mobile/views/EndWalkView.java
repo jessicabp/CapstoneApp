@@ -18,15 +18,14 @@ public class EndWalkView extends View {
 
     public EndWalkView(String name, Walk walk) {
         super(name);
-
         this.walk = walk;
 
+        // Add button to manually send data to server and finish walk
         Button send = new Button("Click to send to server once internet is connected");
         send.setWrapText(true);
         send.setOnAction(e -> {
             SendData.sendCaptureData(walk);
-            // TODO: ensure all data is sent (incl. edited/new traps) - if all successful, THEN go to next screen
-            App.getInstance().switchView(App.DISPLAY_LINES_VIEW);
+            // TODO: ensure all data is sent (incl. edited/new traps - SO ADD METHOD TO SEND TRAPS/NEW LINE) - if all successful, THEN end walk
             walk.finishWalk();
         });
 

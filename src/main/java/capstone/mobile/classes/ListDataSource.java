@@ -112,7 +112,9 @@ public class ListDataSource {
         speciesList.add(new Species(1, "Rat"));
         speciesList.add(new Species(2, "Stoat"));
         speciesList.add(new Species(3, "Hedgehog"));
-        speciesList.add(new Species(4, "Other"));
+        speciesList.add(new Species(4, "Cat"));
+        speciesList.add(new Species(5, "Possum"));
+        speciesList.add(new Species(6, "Other"));
 
         return speciesList;
     }
