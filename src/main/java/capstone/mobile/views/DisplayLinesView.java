@@ -35,6 +35,8 @@ public class DisplayLinesView extends View {
 
     private Walk walk;
     private ListView<Line> linesListView = new ListView<>();
+    GluonObservableList<Line> observableLinesList;
+    VBox controls;
 
     public DisplayLinesView(String name, Walk walk) {
         super(name);
@@ -43,48 +45,37 @@ public class DisplayLinesView extends View {
 
         getStylesheets().add(DisplayLinesView.class.getResource("primary.css").toExternalForm());
 
-        VBox controls = new VBox();
+        controls = new VBox();
         controls.setAlignment(Pos.CENTER);
-        setCenter(controls);
+        setTop(controls);
 
-        try {
-            List<Line> linesList = ListDataSource.fetchLinesList();
+        updateLinesList();
+        linesListView = new ListView<>(observableLinesList);
+        linesListView.setCellFactory(lv -> new ListCell<Line>() {
 
-            GluonObservableList<Line> observableLinesList = new GluonObservableList<>();
-            if (linesList != null) {
-                observableLinesList.addAll(linesList);
+            @Override
+            protected void updateItem(Line line, boolean empty) {
+                super.updateItem(line, empty);
+                if (!empty) {
+                    setText(line.getName());
+                } else {
+                    setText(null);
+                }
             }
+        });
 
-            linesListView = new ListView<>(observableLinesList);
-            linesListView.setCellFactory(lv -> new ListCell<Line>() {
-
-                @Override
-                protected void updateItem(Line line, boolean empty) {
-                    super.updateItem(line, empty);
-                    if (!empty) {
-                        setText(line.getName());
-                    } else {
-                        setText(null);
-                    }
+        linesListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                Line line = newValue;
+                try {
+                    selectLine(line);
+                } catch (DataUnavailableException e) {
+                    showServerError(controls);
+                    e.printStackTrace();
                 }
-            });
-
-            linesListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue != null) {
-                    Line line = newValue;
-                    try {
-                        selectLine(line);
-                    } catch (DataUnavailableException e) {
-                        showServerError(controls);
-                        e.printStackTrace();
-                    }
-                }
-            });
-            controls.getChildren().add(linesListView);
-        } catch (DataUnavailableException ex) {
-            showServerError(controls);
-            ex.printStackTrace();
-        }
+            }
+        });
+        controls.getChildren().add(linesListView);
     }
 
     public void selectLine(Line line) throws DataUnavailableException {
@@ -109,11 +100,27 @@ public class DisplayLinesView extends View {
         App.getInstance().getGlassPane().setBackgroundFade(GlassPane.DEFAULT_BACKGROUND_FADE_LEVEL);
     }
 
+    private void updateLinesList() {
+        List<Line> linesList = null;
+        try {
+            linesList = ListDataSource.fetchLinesList();
+        } catch (DataUnavailableException e) {
+            showServerError(controls);
+            e.printStackTrace();
+        }
+
+        observableLinesList = new GluonObservableList<>();
+        if (linesList != null) {
+            observableLinesList.addAll(linesList);
+        }
+    }
+
     @Override
     protected void updateAppBar(AppBar appBar) {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
         appBar.setTitleText("Select a line");
         linesListView.getSelectionModel().clearSelection();
+        updateLinesList();
     }
 
 }

@@ -1,7 +1,6 @@
 package capstone.mobile.views;
 
 import capstone.mobile.App;
-import capstone.mobile.classes.ListDataSource;
 import capstone.mobile.classes.Trap;
 import capstone.mobile.classes.Walk;
 import com.gluonhq.charm.glisten.application.MobileApplication;
@@ -40,24 +39,21 @@ public class DoWalkView extends View {
         this.walk = walk;
 
 
-
         getStylesheets().add(DoWalkView.class.getResource("secondary.css").toExternalForm());
 
-        MapView mapView = new MapView();
+        MapView  mapView  = new MapView();
         PoiLayer mapLayer = new PoiLayer();
         mapView.addLayer(mapLayer);
 
-        int index = 0;
+        index = 0;
         List<Trap> traps = walk.getLine().getTraps();
         List<Node> nodes = new ArrayList<>();
-        for(Trap trap : traps) {
+        for (Trap trap : traps) {
             Node icon = new Circle(7, Color.BLUE);
             icon.setId("" + index++);
             nodes.add(icon);
             mapLayer.addPoint(new MapPoint(trap.getLatitude(), trap.getLongitude()), icon);
         }
-
-        Icon map = new Icon(MaterialDesignIcon.MAP);
 
         // Show buttons to enter data or skip trap
         label = new Label("filler text");
@@ -66,12 +62,15 @@ public class DoWalkView extends View {
         found.setOnAction(e -> App.getInstance().switchView(App.ENTER_DATA_VIEW));
         Button skip = new Button("Skip");
         skip.setOnAction(e -> {
-            // walk.finishCurrentTrap();
+            walk.finishCurrentTrap();
+            // Switch to another view and back to refresh data on screen
+            App.getInstance().switchView(App.ENTER_DATA_VIEW);
+            App.getInstance().switchView(App.DO_WALK_VIEW);
         });
         hb.getChildren().addAll(found, skip);
         hb.setAlignment(Pos.CENTER);
 
-        VBox controls = new VBox(15.0, label, map, mapView, hb);
+        VBox controls = new VBox(15.0, label, mapView, hb);
         controls.setAlignment(Pos.CENTER);
         setCenter(controls);
 
@@ -84,7 +83,10 @@ public class DoWalkView extends View {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
         appBar.setTitleText("Walking: " + walk.getLine().getName());
 
-        label = new Label("Trap indicator on " + (walk.getDirection() == walk.getCurrentTrap().getSide() ? "left" : "right") + " side");
+        System.out.println("direction: " + walk.getDirection());
+        System.out.println("side: " + walk.getCurrentTrap().getSide());
+
+        label.setText("Trap indicator on " + (walk.getDirection() == walk.getCurrentTrap().getSide() ? "left" : "right") + " side");
         // TODO: add message if trap is moved/broken
 
         System.out.println("SHOWING..");

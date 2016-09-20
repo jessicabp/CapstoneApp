@@ -79,10 +79,6 @@ public class Trap {
         this.latitude = latitude;
     }
 
-    public void changeIsMoved() {
-        this.moved = !this.moved;
-    }
-
     public boolean isBroken() {
         return broken;
     }

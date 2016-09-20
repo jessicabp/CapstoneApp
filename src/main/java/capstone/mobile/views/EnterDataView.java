@@ -104,6 +104,7 @@ public class EnterDataView extends View {
         Button save = new Button("Done");
         save.setOnAction(e -> {
             if (group.getSelectedToggle() != null) {
+                System.out.println("Current trap info:  " + walk.getCurrentTrap().getNumber() + "  " + species);
                 walk.addCapture(new Capture(walk.getCurrentTrap().getId(), species));
                 if (walk.getCurrentTrap() != walk.getFinishTrap()) {
                     walk.finishCurrentTrap();

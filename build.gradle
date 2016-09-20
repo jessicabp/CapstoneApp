@@ -1,21 +1,30 @@
 buildscript {
+    project.ext.roboVMVersion = "1.14.0"
+    project.ext.roboVMGradleVersion = "1.14.0"
     repositories {
         jcenter()
+//        https://jcenter.bintray.com/org/robovm/robovm-rt/1.14.0/robovm-rt-1.14.0.pom
+        mavenCentral()
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     }
     dependencies {
         classpath 'org.javafxports:jfxmobile-plugin:1.0.8'
+        classpath group: 'org.robovm', name: 'robovm-gradle-plugin', version: project.roboVMGradleVersion
     }
 }
 
 apply plugin: 'org.javafxports.jfxmobile'
 apply plugin: 'pmd'
 apply plugin: 'jacoco'
+//apply plugin: 'robovm'
 
 repositories {
     jcenter()
     maven {
         url 'http://nexus.gluonhq.com/nexus/content/repositories/releases'
     }
+    mavenCentral()
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 }
 
 mainClassName = 'capstone.mobile.App'
@@ -28,7 +37,15 @@ dependencies {
     desktopRuntime 'com.gluonhq:charm-desktop:3.0.0'
 
     testCompile 'junit:junit:4.12'
+
+    compile group: 'org.robovm', name: 'robovm-rt', version: project.roboVMVersion
+    compile group: 'org.robovm', name: 'robovm-cocoatouch', version: project.roboVMVersion
 }
+
+//robovm {
+//    robovm.device.name = 'iPhone-5s'
+//    robovm.sdk.version = '9.0'
+//}
 
 jfxmobile {
     android {
@@ -49,15 +66,15 @@ jfxmobile {
 
 pmd {
     ignoreFailures = true
-    ruleSets=["java-basic",
-              "java-braces",
-              "java-naming",
-              "java-codesize",
-              "java-optimizations",
-              "java-unusedcode",
-              "java-design",
-              "java-junit",
-              "java-controversial"]
+    ruleSets = ["java-basic",
+                "java-braces",
+                "java-naming",
+                "java-codesize",
+                "java-optimizations",
+                "java-unusedcode",
+                "java-design",
+                "java-junit",
+                "java-controversial"]
 }
 
 jacoco {
@@ -82,7 +99,7 @@ sourceSets {
 
 retrolambda {
     jdk System.getenv("JAVA_HOME")
-    if(System.getenv("JAVA7_HOME")) {
+    if (System.getenv("JAVA7_HOME")) {
         oldJdk System.getenv("JAVA7_HOME")
     } else {
         oldJdk "/usr/lib/jvm/java-7-oracle/jre"
