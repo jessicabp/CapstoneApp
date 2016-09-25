@@ -6,7 +6,7 @@ import capstone.mobile.classes.Trap;
 public class CreateNewTrapTest {
 
     @Test
-    public void CreateNewTrapConstructorTest() {
+    public void createNewTrapConstructorTest() {
         int number = 101;
         double latitude = 8.38794;
         double longitude = 135.08785;

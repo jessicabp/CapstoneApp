@@ -23,15 +23,19 @@ public class EndWalkView extends View {
         // Add button to manually send data to server and finish walk
         Button send = new Button("Click to send to server once internet is connected");
         send.setWrapText(true);
-        send.setOnAction(e -> {
-            SendData.sendCaptureData(walk);
-            // TODO: ensure all data is sent (incl. edited/new traps - SO ADD METHOD TO SEND TRAPS/NEW LINE) - if all successful, THEN end walk
-            walk.finishWalk();
+        send.setOnAction(e -> { sendData();
+            App.getInstance().switchView(App.HOME_VIEW);
         });
 
         VBox controls = new VBox(15.0, send);
         controls.setAlignment(Pos.CENTER);
         setCenter(controls);
+    }
+
+    private void sendData() {
+        SendData.sendCaptureData(walk);
+        // TODO: ensure all data is sent (incl. edited/new traps - SO ADD METHOD TO SEND TRAPS/NEW LINE) - if all successful, THEN end walk and go to home screen
+        walk.finishWalk();
     }
 
     @Override

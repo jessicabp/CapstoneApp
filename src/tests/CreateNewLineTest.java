@@ -1,14 +1,13 @@
-import org.junit.Assert;
-import org.junit.Test;
-
 import capstone.mobile.classes.Line;
 import capstone.mobile.classes.Trap;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class CreateNewLineTest {
 
     @Test
     public void createNewLineConstructorTest() {
-        String name = "Gorge";
+        String name     = "Gorge";
         String password = "Secret";
 
         Line newLine = new Line(name, password);

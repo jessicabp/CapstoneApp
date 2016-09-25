@@ -55,6 +55,7 @@ public class Walk {
 
     /**
      * Start the walk, setting the first and last traps in the walk to be start and end.
+     *
      * @param start
      * @param end
      */
@@ -78,7 +79,6 @@ public class Walk {
         captures = new ArrayList<>();
         changedTraps = new ArrayList<>();
         newLines = new ArrayList<>();
-        App.getInstance().switchView(App.HOME_VIEW);
     }
 
     /**
@@ -113,6 +113,7 @@ public class Walk {
 
     /**
      * Add new trap to be sent to the server
+     *
      * @param trap
      */
     public void addChangedTrap(Trap trap) {
@@ -121,13 +122,14 @@ public class Walk {
 
     /**
      * Returns traps to be sent to the server
+     *
      * @return
      */
     public List<Trap> getChangedTraps() {
         return changedTraps;
     }
 
-    public void addLine(Line newLine) {
+    public void addNewLine(Line newLine) {
         newLines.add(newLine);
     }
 

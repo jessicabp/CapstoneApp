@@ -43,6 +43,7 @@ public class App extends MobileApplication {
     public static final String MENU_LAYER         = "Side Menu";
 
     // Items to appear in the side menu bar
+    private Item homeItem;
     private Item createTrapItem;
     private Item endWalkItem;
 
@@ -51,8 +52,10 @@ public class App extends MobileApplication {
      */
     private final ChangeListener listener = (obs, oldItem, newItem) -> {
         hideLayer(MENU_LAYER);
-        hideLayer(MENU_LAYER);
-        if (newItem.equals(createTrapItem)) {
+        if (newItem.equals(homeItem)) {
+            addLine = false;
+            switchView(HOME_VIEW);
+        } else if (newItem.equals(createTrapItem)) {
             addLine = false;
             switchView(ADMIN_LOGIN);
         } else if (newItem.equals(endWalkItem)) {
@@ -80,6 +83,7 @@ public class App extends MobileApplication {
         addViewFactory(END_WALK_VIEW, () -> new EndWalkView(END_WALK_VIEW, walk));
 
         // Create items to populate side menu bar
+        homeItem = new Item("Home Page", MaterialDesignIcon.HOME.graphic());
         createTrapItem = new Item("Add Trap", MaterialDesignIcon.ADD_LOCATION.graphic());
         endWalkItem = new Item("End Walk", MaterialDesignIcon.EXIT_TO_APP.graphic());
 
@@ -87,7 +91,7 @@ public class App extends MobileApplication {
         NavigationDrawer        drawer = new NavigationDrawer();
         NavigationDrawer.Header header = new NavigationDrawer.Header("Trap Tracker", "Pest Trap Line Tool", new Avatar(21, new Image(App.class.getResourceAsStream("/icon.png"))));
         drawer.setHeader(header);
-        drawer.getItems().addAll(createTrapItem, endWalkItem);
+        drawer.getItems().addAll(homeItem, createTrapItem, endWalkItem);
         drawer.selectedItemProperty().addListener(listener);
         addLayerFactory(MENU_LAYER, () -> new SidePopupView(drawer));
 
@@ -98,7 +102,10 @@ public class App extends MobileApplication {
          */
         viewProperty().addListener((obs, ov, nv) -> {
             drawer.selectedItemProperty().removeListener(listener);
-            if (nv.getName().equals(CREATE_TRAP_VIEW)) {
+            if (nv.getName().equals(HOME_VIEW)) {
+                homeItem.setSelected(false);
+                drawer.setSelectedItem(null);
+            } else if (nv.getName().equals(CREATE_TRAP_VIEW)) {
                 createTrapItem.setSelected(false);
                 drawer.setSelectedItem(null);
             } else {
@@ -119,6 +126,7 @@ public class App extends MobileApplication {
         ((Stage) scene.getWindow()).getIcons().add(new Image(App.class.getResourceAsStream("/icon.png")));
 
         // Disable adding a trap or ending a walk if the user is not currently doing a walk
+        homeItem.disableProperty().bind(Walk.isWalking());
         createTrapItem.disableProperty().bind(Walk.isWalking().not());
         endWalkItem.disableProperty().bind(Walk.isWalking().not());
     }

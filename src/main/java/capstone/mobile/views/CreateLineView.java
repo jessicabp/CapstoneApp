@@ -3,9 +3,7 @@ package capstone.mobile.views;
 import capstone.mobile.App;
 import capstone.mobile.classes.DataUnavailableException;
 import capstone.mobile.classes.Line;
-import capstone.mobile.classes.LocationProvider;
 import capstone.mobile.classes.Walk;
-import com.gluonhq.charm.down.common.Position;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.control.Icon;
@@ -65,7 +63,7 @@ public class CreateLineView extends View {
             newLine.setName(lineName);
             newLine.setPassword(linePassword);
             newLine.setTraps(new ArrayList<>());
-            walk.addLine(newLine);
+            walk.addNewLine(newLine);
 
             try {
                 walk.setLine(newLine);
@@ -85,6 +83,7 @@ public class CreateLineView extends View {
         // Finish walk if the user is doing a walk
         if (walk.isWalking().get()) {
             walk.finishWalk();
+            App.getInstance().switchView(App.HOME_VIEW);
         }
 
         // TODO: create createLine functionality
