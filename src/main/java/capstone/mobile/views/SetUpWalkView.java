@@ -31,7 +31,7 @@ public class SetUpWalkView extends View {
     private Trap       start;
     private Trap       end;
     private Label      prompt;
-    private PoiLayer   mapLayer;
+    private Pane       mapPane;
 
 
     public SetUpWalkView(String name, Walk walk) {
@@ -51,17 +51,10 @@ public class SetUpWalkView extends View {
         // Create label to prompt user
         prompt = new Label("Please pick a start point");
 
-        // Create map
-        MapView mapView = new MapView();
-        mapView.setMaxSize(100, 100);
-        Pane mapPane = new Pane();
+        // Create mapPane
+        mapPane = new Pane();
         mapPane.setStyle("-fx-background-color: black;");
         mapPane.setMaxSize(200, 200);
-        mapPane.getChildren().add(mapView);
-        mapLayer = new PoiLayer();
-        Node icon1 = new Circle(7, Color.BLUE);
-        mapLayer.addPoint(new MapPoint(50.8458, 4.724), icon1);
-        mapView.addLayer(mapLayer);
 
         // Create VBox and add all items
         VBox controls = new VBox(15.0, prompt, mapPane);
@@ -78,6 +71,15 @@ public class SetUpWalkView extends View {
 
         // Update prompt text
         prompt.setText("Please pick a start point");
+
+        // Create map
+        MapView mapView = new MapView();
+        mapView.setMaxSize(100, 100);
+        mapPane.getChildren().add(mapView);
+        PoiLayer mapLayer = new PoiLayer();
+        Node     icon1    = new Circle(7, Color.BLUE);
+        mapLayer.addPoint(new MapPoint(50.8458, 4.724), icon1);
+        mapView.addLayer(mapLayer);
 
         // Add each trap to the map with listeners
         traps = walk.getLine().getTraps();

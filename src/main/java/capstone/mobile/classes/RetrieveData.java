@@ -17,9 +17,9 @@ import java.util.List;
 /**
  * TODO: Comment and possibly refactor, fix species
  */
-public class ListDataSource {
+public class RetrieveData {
 
-    private static final String HOST = "http://localhost:8080";
+    private static final String HOST = "http://traptracker.pythonanywhere.com";
     private static final String KEY_ERROR = "Key not contained within object.";
 
     /**
@@ -40,11 +40,11 @@ public class ListDataSource {
             jsonInputStream.close();
             connection.disconnect();
 
-            if(!jsonObject.containsKey("lines")) {
+            if(!jsonObject.containsKey("result")) {
                 throw new DataUnavailableException(KEY_ERROR);
             }
 
-            JsonArray jsonArray = jsonObject.getJsonArray("lines");
+            JsonArray jsonArray = jsonObject.getJsonArray("result");
             JsonConverter<Line> jsonConverter = new JsonConverter<>(Line.class);
 
             for (int i = 0; i < jsonArray.size(); i++) {
@@ -69,7 +69,7 @@ public class ListDataSource {
      */
     public static List<Trap> fetchTrapsList(int lineId) throws DataUnavailableException {
         try {
-            URL url = new URL(HOST + "/traps?line_id=" + lineId);
+            URL url = new URL(HOST + "/trap?line_id=" + lineId);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             InputStream jsonInputStream = connection.getInputStream();
 
@@ -79,11 +79,11 @@ public class ListDataSource {
             jsonReader.close();
             jsonInputStream.close();
 
-            if(!jsonObject.containsKey("traps")) {
+            if(!jsonObject.containsKey("result")) {
                 throw new DataUnavailableException(KEY_ERROR);
             }
 
-            JsonArray jsonArray = jsonObject.getJsonArray("traps");
+            JsonArray jsonArray = jsonObject.getJsonArray("result");
             JsonConverter<Trap> jsonConverter = new JsonConverter<>(Trap.class);
 
             for (int i = 0; i < jsonArray.size(); i++) {

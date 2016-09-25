@@ -25,12 +25,12 @@ import javafx.scene.shape.Circle;
  */
 public class DoWalkView extends View {
 
-    private Walk           walk;
-    private Label          side;
-    private Label          moved;
-    private Label          broken;
-    private MapView        mapView;
-    private PoiLayer       mapLayer;
+    private Walk     walk;
+    private Label    side;
+    private Label    moved;
+    private Label    broken;
+    private MapView  mapView;
+    private PoiLayer mapLayer;
 
     public DoWalkView(String name, Walk walk) {
         super(name);
@@ -107,7 +107,7 @@ public class DoWalkView extends View {
         mapLayer.addPoint(new MapPoint(walk.getCurrentTrap().getLatitude(), walk.getCurrentTrap().getLongitude()), new Circle(7, Color.BLUE));
 
         System.out.println("Showing trap #" + walk.getCurrentTrap().getNumber());
-        System.out.println("(from DoWalkView ln 103");
+        System.out.println("(from DoWalkView ln 109)");
 
     }
 

@@ -17,7 +17,6 @@ public class CreateNewLineTest {
         Assert.assertEquals(newLine.getPassword(), password);
         Assert.assertEquals(newLine.getId(), 0);
         Assert.assertEquals(newLine.getTraps().size(), 0);
-        Assert.assertTrue(newLine.isNewLine());
     }
 
     @Test

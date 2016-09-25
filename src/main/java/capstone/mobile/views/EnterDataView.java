@@ -18,8 +18,6 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 
-import static java.util.Arrays.asList;
-
 
 /**
  * View for users to enter data about a capture (e.g. species/maintenance)
@@ -30,7 +28,7 @@ public class EnterDataView extends View {
     private int  species;
     private Insets        gridButtonInsets = new Insets(40, 0, 40, 0); // for making buttons taller
     // TODO: load species from line?
-    private List<Species> speciesList      = ListDataSource.fetchSpeciesList();
+    private List<Species> speciesList      = RetrieveData.fetchSpeciesList();
 
     public EnterDataView(String name, Walk walk) {
         super(name);

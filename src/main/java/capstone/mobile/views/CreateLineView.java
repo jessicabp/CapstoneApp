@@ -64,8 +64,8 @@ public class CreateLineView extends View {
             Line newLine = new Line();
             newLine.setName(lineName);
             newLine.setPassword(linePassword);
-            newLine.setNewLine(true);
             newLine.setTraps(new ArrayList<>());
+            walk.addLine(newLine);
 
             try {
                 walk.setLine(newLine);

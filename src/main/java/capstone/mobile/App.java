@@ -30,7 +30,7 @@ public class App extends MobileApplication {
     private        Walk    walk;
 
     // Strings naming the views, and providing reference to them
-    public static final String DISPLAY_LINES_VIEW = HOME_VIEW;
+    public static final String DISPLAY_LINES_VIEW = "Display lines";
     public static final String SET_UP_WALK_VIEW   = "Set up walk";
     public static final String DO_WALK_VIEW       = "Do walk";
     public static final String ENTER_DATA_VIEW    = "Enter data";
@@ -43,7 +43,6 @@ public class App extends MobileApplication {
     public static final String MENU_LAYER         = "Side Menu";
 
     // Items to appear in the side menu bar
-    private Item createLineItem;
     private Item createTrapItem;
     private Item endWalkItem;
 
@@ -53,10 +52,7 @@ public class App extends MobileApplication {
     private final ChangeListener listener = (obs, oldItem, newItem) -> {
         hideLayer(MENU_LAYER);
         hideLayer(MENU_LAYER);
-        if (newItem.equals(createLineItem)) {
-            addLine = true;
-            switchView(ADMIN_LOGIN);
-        } else if (newItem.equals(createTrapItem)) {
+        if (newItem.equals(createTrapItem)) {
             addLine = false;
             switchView(ADMIN_LOGIN);
         } else if (newItem.equals(endWalkItem)) {
@@ -71,6 +67,7 @@ public class App extends MobileApplication {
         walk = new Walk();
 
         // Create all views
+        addViewFactory(HOME_VIEW, () -> new HomeView(HOME_VIEW));
         addViewFactory(DISPLAY_LINES_VIEW, () -> new DisplayLinesView(DISPLAY_LINES_VIEW, walk));
         addViewFactory(SET_UP_WALK_VIEW, () -> new SetUpWalkView(SET_UP_WALK_VIEW, walk));
         addViewFactory(DO_WALK_VIEW, () -> new DoWalkView(DO_WALK_VIEW, walk));
@@ -83,7 +80,6 @@ public class App extends MobileApplication {
         addViewFactory(END_WALK_VIEW, () -> new EndWalkView(END_WALK_VIEW, walk));
 
         // Create items to populate side menu bar
-        createLineItem = new Item("Create Line", MaterialDesignIcon.TIMELINE.graphic());
         createTrapItem = new Item("Add Trap", MaterialDesignIcon.ADD_LOCATION.graphic());
         endWalkItem = new Item("End Walk", MaterialDesignIcon.EXIT_TO_APP.graphic());
 
@@ -91,7 +87,7 @@ public class App extends MobileApplication {
         NavigationDrawer        drawer = new NavigationDrawer();
         NavigationDrawer.Header header = new NavigationDrawer.Header("Trap Tracker", "Pest Trap Line Tool", new Avatar(21, new Image(App.class.getResourceAsStream("/icon.png"))));
         drawer.setHeader(header);
-        drawer.getItems().addAll(createLineItem, createTrapItem, endWalkItem);
+        drawer.getItems().addAll(createTrapItem, endWalkItem);
         drawer.selectedItemProperty().addListener(listener);
         addLayerFactory(MENU_LAYER, () -> new SidePopupView(drawer));
 
@@ -102,10 +98,7 @@ public class App extends MobileApplication {
          */
         viewProperty().addListener((obs, ov, nv) -> {
             drawer.selectedItemProperty().removeListener(listener);
-            if (nv.getName().equals(CREATE_LINE_VIEW)) {
-                createLineItem.setSelected(false);
-                drawer.setSelectedItem(null);
-            } else if (nv.getName().equals(CREATE_TRAP_VIEW)) {
+            if (nv.getName().equals(CREATE_TRAP_VIEW)) {
                 createTrapItem.setSelected(false);
                 drawer.setSelectedItem(null);
             } else {

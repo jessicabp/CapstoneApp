@@ -1,7 +1,6 @@
 package capstone.mobile.classes;
 
 import capstone.mobile.App;
-import capstone.mobile.views.DoWalkView;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
@@ -24,6 +23,7 @@ public class Walk {
     private boolean direction; // TODO: direction will be the same as Trap.side when the user will find the trap on the left. Direction will be true when trap number increases (e.g. sth to nth in gorge)
     private List<Capture> captures     = new ArrayList<>();
     private List<Trap>    changedTraps = new ArrayList<>();
+    private List<Line>    newLines     = new ArrayList<>();
 
     public Walk() {
     }
@@ -38,7 +38,7 @@ public class Walk {
 
     public void setLine(Line line) throws DataUnavailableException {
         this.line = line;
-        line.setTraps(ListDataSource.fetchTrapsList(line.getId()));
+        line.setTraps(RetrieveData.fetchTrapsList(line.getId()));
     }
 
     public Trap getFinishTrap() {
@@ -77,7 +77,8 @@ public class Walk {
         currentTrap = null;
         captures = new ArrayList<>();
         changedTraps = new ArrayList<>();
-        App.getInstance().switchView(App.DISPLAY_LINES_VIEW);
+        newLines = new ArrayList<>();
+        App.getInstance().switchView(App.HOME_VIEW);
     }
 
     /**
@@ -124,5 +125,13 @@ public class Walk {
      */
     public List<Trap> getChangedTraps() {
         return changedTraps;
+    }
+
+    public void addLine(Line newLine) {
+        newLines.add(newLine);
+    }
+
+    public List<Line> getNewLines() {
+        return newLines;
     }
 }

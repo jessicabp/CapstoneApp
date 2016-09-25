@@ -13,7 +13,6 @@ public class Line {
     private int        id;
     private String     name;
     private List<Trap> traps;
-    private boolean    newLine;
     private String password;
 
     public Line() {
@@ -23,7 +22,6 @@ public class Line {
         this.id = 0;
         this.name = name;
         this.password = password;
-        this.newLine = true;
         this.traps = new ArrayList<>();
     }
 
@@ -53,14 +51,6 @@ public class Line {
 
     public void setTraps(List<Trap> traps) {
         this.traps = traps;
-    }
-
-    public boolean isNewLine() {
-        return newLine;
-    }
-
-    public void setNewLine(boolean newLine) {
-        this.newLine = newLine;
     }
 
     public void addTrap(Trap trap) {
