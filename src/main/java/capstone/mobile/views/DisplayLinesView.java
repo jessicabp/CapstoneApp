@@ -58,7 +58,7 @@ public class DisplayLinesView extends View {
         filter.textProperty().addListener((observable, oldValue, newValue) -> {
             String             search = filter.getText().toLowerCase();
             FilteredList<Line> f      = new FilteredList<>(observableLinesList);
-            f.setPredicate(s -> s.getName().toLowerCase().startsWith(search));
+            f.setPredicate(s -> s.getName().toLowerCase().contains(search));
             linesListView.setItems(f);
         });
 
