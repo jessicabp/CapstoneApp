@@ -1,0 +1,63 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.javafxports:jfxmobile-plugin:1.0.8'
+    }
+}
+
+apply plugin: 'org.javafxports.jfxmobile'
+apply plugin: 'application'
+apply plugin: 'maven'
+apply from: rootProject.file('mavenPublish.gradle')
+
+group = 'com.gluonhq'
+version = '1.0.1-SNAPSHOT'
+
+repositories {
+    jcenter()
+    maven {
+        url 'http://nexus.gluonhq.com/nexus/content/repositories/releases'
+    }
+
+}
+
+dependencies {
+    compile 'com.gluonhq:charm-down-common:2.0.1';
+    desktopRuntime 'com.gluonhq:charm-down-desktop:2.0.1';
+    androidRuntime 'com.gluonhq:charm-down-android:2.0.1';
+    iosRuntime 'com.gluonhq:charm-down-ios:2.0.1';
+}
+
+mainClassName = 'com.gluonhq.maps.demo.DemoMap'
+//run {
+//    System.setProperty('java.util.logging.config.file', 'logging.properties')
+//    applicationDefaultJvmArgs = ["-Djava.util.logging.config.file=/logging.properties"]
+//}
+
+jfxmobile {
+    android {
+        manifest = 'src/android/AndroidManifest.xml'
+    }
+    ios {
+        infoPList = file('src/ios/Default-Info.plist')
+        forceLinkClasses = [
+            'com.gluonhq.**.*'
+        ]
+    }
+}
+
+task sourcesJar (type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+task javadocJar (type: Jar, dependsOn: javadoc) {
+    from javadoc.destinationDir
+    classifier = 'javadoc'
+}
+
+artifacts {
+    archives sourcesJar, javadocJar
+}
