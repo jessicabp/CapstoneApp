@@ -3,36 +3,30 @@ package capstone.mobile.views;
 import capstone.mobile.App;
 import capstone.mobile.classes.Trap;
 import capstone.mobile.classes.Walk;
+import capstone.mobile.maps.CustomMapView;
+import capstone.mobile.maps.CustomPoiLayer;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
-import com.gluonhq.maps.MapPoint;
-import com.gluonhq.maps.MapView;
-import com.gluonhq.maps.demo.PoiLayer;
-import javafx.geometry.Insets;
+import gluonhq.maps.MapPoint;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.stage.Screen;
-
 import java.util.List;
 
 
 public class SetUpWalkView extends View {
 
-    private Walk       walk;
-    private List<Trap> traps;
-    private Trap       start;
-    private Trap       end;
-    private Label      prompt;
-    private Pane       mapPane;
-
+    private Walk            walk;
+    private Trap            start;
+    private Trap            end;
+    private Label           prompt;
+    private CustomMapView   mapView;
+    private CustomPoiLayer  poiLayer;
 
     public SetUpWalkView(String name, Walk walk) {
         super(name);
@@ -40,26 +34,20 @@ public class SetUpWalkView extends View {
 
         getStylesheets().add(SetUpWalkView.class.getResource("secondary.css").toExternalForm());
 
-        System.out.println("Screen width: " + App.getInstance().getScreenWidth()); // 1920.0
-        System.out.println("Screen height: " + App.getInstance().getScreenHeight()); // 1032.0
-        System.out.println("(from SetupWalkView ln 40)");
-
-        Rectangle2D bounds = Screen.getPrimary().getVisualBounds(); // same as above!
-        System.out.println("Visual bounds height: " + bounds.getHeight());
-        System.out.println("(from SetupWalkView ln 46)");
-
         // Create label to prompt user
         prompt = new Label("Please pick a start point");
 
-        // Create mapPane
-        mapPane = new Pane();
-        mapPane.setStyle("-fx-background-color: black;");
-        mapPane.setMaxSize(200, 200);
+        // Creating the map display
+        mapView = new CustomMapView();
+
+        // Creating the map layer on which markers will be added
+        poiLayer = new CustomPoiLayer();
+        mapView.addLayer(poiLayer);
 
         // Create VBox and add all items
-        VBox controls = new VBox(15.0, prompt, mapPane);
-        controls.setPadding(new Insets(40, 40, 40, 40));
-        controls.setAlignment(Pos.CENTER);
+        VBox controls = new VBox(mapView, prompt);
+        // controls.setPadding(new Insets(0, 40, 40, 40));
+        controls.setAlignment(Pos.TOP_CENTER);
         setCenter(controls);
     }
 
@@ -72,17 +60,12 @@ public class SetUpWalkView extends View {
         // Update prompt text
         prompt.setText("Please pick a start point");
 
-        // Create map
-        MapView mapView = new MapView();
-        mapView.setMaxSize(100, 100);
-        mapPane.getChildren().add(mapView);
-        PoiLayer mapLayer = new PoiLayer();
-        Node     icon1    = new Circle(7, Color.BLUE);
-        mapLayer.addPoint(new MapPoint(50.8458, 4.724), icon1);
-        mapView.addLayer(mapLayer);
+        // Clear the map layer to remove any existing points
+        poiLayer.clear();
 
         // Add each trap to the map with listeners
-        traps = walk.getLine().getTraps();
+        List<Trap> traps = walk.getLine().getTraps();
+
         for (Trap trap : traps) {
             Node icon = new Circle(7, Color.BLUE);
             icon.setOnMouseClicked(e -> {
@@ -95,8 +78,12 @@ public class SetUpWalkView extends View {
                     App.getInstance().switchView(App.DO_WALK_VIEW);
                 }
             });
-            mapLayer.addPoint(new MapPoint(trap.getLatitude(), trap.getLongitude()), icon);
+            poiLayer.addPoint(new MapPoint(trap.getLatitude(), trap.getLongitude()), icon);
         }
+
+        // TODO: Correct map placement and zoom based on positions of the traps
+        Trap trap = walk.getLine().getTraps().get(0);
+        mapView.setCenter(trap.getLatitude(), trap.getLongitude());
     }
 
 }

@@ -2,14 +2,15 @@ package capstone.mobile.views;
 
 import capstone.mobile.App;
 import capstone.mobile.classes.CustomGridPane;
+import capstone.mobile.classes.Trap;
 import capstone.mobile.classes.Walk;
+import capstone.mobile.maps.CustomMapView;
+import capstone.mobile.maps.CustomPoiLayer;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
-import com.gluonhq.maps.MapPoint;
-import com.gluonhq.maps.MapView;
-import com.gluonhq.maps.demo.PoiLayer;
+import gluonhq.maps.MapPoint;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -22,15 +23,18 @@ import javafx.scene.shape.Circle;
 
 /**
  * View showing user where the next trap is and lets them find or skip it
+ * TODO: Display current position
  */
 public class DoWalkView extends View {
 
-    private Walk     walk;
-    private Label    side;
-    private Label    moved;
-    private Label    broken;
-    private MapView  mapView;
-    private PoiLayer mapLayer;
+    private Walk            walk;
+    private Label           side;
+    private Label           moved;
+    private Label           broken;
+    private VBox            messages;
+    private CustomMapView   mapView;
+    private CustomPoiLayer  positionLayer;
+    private CustomPoiLayer  trapsLayer;
 
     public DoWalkView(String name, Walk walk) {
         super(name);
@@ -38,14 +42,26 @@ public class DoWalkView extends View {
 
         getStylesheets().add(DoWalkView.class.getResource("secondary.css").toExternalForm());
 
-        // Create labels with side of path and maintenance info, and MapView
+        // Create labels with side of path and maintenance info
         side = new Label("text updated when user changes to this view");
         side.setWrapText(true);
         moved = new Label("Warning: this trap has been marked as moved.");
         moved.setWrapText(true);
         broken = new Label("Warning: this trap has been marked as broken.");
         broken.setWrapText(true);
-        mapView = new MapView();
+
+        // Creating map with position and trap marker layers
+        mapView = new CustomMapView();
+        positionLayer = new CustomPoiLayer();
+        trapsLayer = new CustomPoiLayer();
+        mapView.addLayer(trapsLayer);
+        mapView.addLayer(positionLayer);
+
+        // Create VBox for messages
+        messages = new VBox(15.0, side);
+        messages.setAlignment(Pos.CENTER);
+        messages.setPadding(new Insets(40, 40, 40, 40));
+        setTop(messages);
 
         // Show buttons to enter data or skip trap
         Button found = new Button("Found");
@@ -70,9 +86,9 @@ public class DoWalkView extends View {
         grid.add(skip, 1, 0);
 
         // Create VBox for map & buttons
-        VBox controls = new VBox(15.0, mapView, grid);
-        controls.setAlignment(Pos.CENTER);
-        controls.setPadding(new Insets(0, 40, 40, 40));
+        VBox controls = new VBox(mapView, messages, grid);
+        controls.setAlignment(Pos.TOP_CENTER);
+        // controls.setPadding(new Insets(0, 40, 40, 40));
         setCenter(controls);
     }
 
@@ -84,12 +100,6 @@ public class DoWalkView extends View {
         // Update message about side of path for trap
         side.setText("Trap indicator on " + (walk.getDirection() == walk.getCurrentTrap().getSide() ? "left" : "right") + " side");
 
-        // Create VBox for messages
-        VBox messages = new VBox(15.0, side);
-        messages.setAlignment(Pos.CENTER);
-        messages.setPadding(new Insets(40, 40, 40, 40));
-        setTop(messages);
-
         if (walk.getCurrentTrap().isMoved()) {
             messages.getChildren().add(moved);
         }
@@ -97,18 +107,16 @@ public class DoWalkView extends View {
             messages.getChildren().add(broken);
         }
 
-        // Create point for next trap location
         Node icon = new Circle(7, Color.BLUE);
+        Trap currentTrap = walk.getCurrentTrap();
+        MapPoint mapPoint = new MapPoint(currentTrap.getLatitude(), currentTrap.getLongitude());
+        trapsLayer.clear();
+        trapsLayer.addPoint(mapPoint, icon);
+        mapView.setCenter(currentTrap.getLatitude(), currentTrap.getLongitude());
 
-        // Remove layer with old trap location, create new layer and add trap point
-        mapView.removeLayer(mapLayer);
-        mapLayer = new PoiLayer();
-        mapView.addLayer(mapLayer);
-        mapLayer.addPoint(new MapPoint(walk.getCurrentTrap().getLatitude(), walk.getCurrentTrap().getLongitude()), new Circle(7, Color.BLUE));
-
+        // TODO: Remove print statements
         System.out.println("Showing trap #" + walk.getCurrentTrap().getNumber());
         System.out.println("(from DoWalkView ln 109)");
-
     }
 
 }
