@@ -66,13 +66,13 @@ public class CreateTrapView extends View {
         buttonCreate.setText("Create");
         buttonCreate.setOnMouseClicked(e -> {
             int number = Integer.parseInt(numberField.getText());
-            Position position = LocationProvider.getPosition();
+            // Position position = LocationProvider.getPosition();
 
             Trap newTrap = new Trap();
             newTrap.setNumber(number);
             newTrap.setSide(side);
-            newTrap.setLatitude(position.getLatitude());
-            newTrap.setLongitude(position.getLongitude());
+            // newTrap.setLatitude(position.getLatitude());
+            // newTrap.setLongitude(position.getLongitude());
 
             walk.getLine().addTrap(newTrap);
         });

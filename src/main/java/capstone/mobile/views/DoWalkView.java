@@ -1,16 +1,18 @@
 package capstone.mobile.views;
 
 import capstone.mobile.App;
-import capstone.mobile.classes.CustomGridPane;
-import capstone.mobile.classes.Trap;
-import capstone.mobile.classes.Walk;
+import capstone.mobile.classes.*;
 import capstone.mobile.maps.CustomMapView;
+import com.gluonhq.charm.down.common.Position;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import gluonhq.maps.MapPoint;
 import gluonhq.maps.PoiLayer;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -19,6 +21,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.util.Duration;
+
+import java.util.List;
 
 
 /**
@@ -33,8 +38,10 @@ public class DoWalkView extends View {
     private Label           broken;
     private VBox            messages;
     private CustomMapView   mapView;
+    private PoiLayer        currentLayer;
     private PoiLayer        markersLayer;
     private PoiLayer        numbersLayer;
+    private PoiLayer        positionLayer;
 
     public DoWalkView(String name, Walk walk) {
         super(name);
@@ -53,7 +60,9 @@ public class DoWalkView extends View {
         // Creating map with position and trap marker layers
         mapView = new CustomMapView();
         markersLayer = mapView.createLayer();
+        currentLayer = mapView.createLayer();
         numbersLayer = mapView.createLayer();
+        positionLayer = mapView.createLayer();
 
         // Create VBox for messages
         messages = new VBox(15.0, side);
@@ -88,6 +97,31 @@ public class DoWalkView extends View {
         controls.setAlignment(Pos.TOP_CENTER);
         // controls.setPadding(new Insets(0, 40, 40, 40));
         setCenter(controls);
+
+        List<Trap> traps = walk.getLine().getTraps();
+        for(Trap trap : traps) {
+            Circle marker = new Circle(5, Color.ORANGE);
+            MapPoint mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
+            mapView.addMarker(markersLayer,mapPoint, marker);
+        }
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), e -> {
+            System.out.println("Updating position..");
+            positionLayer = mapView.clearMarkers(positionLayer);
+            try {
+                Position position = LocationProvider.getPosition();
+                MapPoint mapPoint = new MapPoint(position.getLatitude(), position.getLongitude());
+                mapView.addMarker(positionLayer, mapPoint, new Circle(5, Color.RED));
+            } catch (DataUnavailableException ex) {
+                Position position = new Position(Math.random() * 100, Math.random() * 100);
+                MapPoint mapPoint = new MapPoint(position.getLatitude(), position.getLongitude());
+                mapView.addMarker(positionLayer, mapPoint, new Circle(5, Color.BLUEVIOLET));
+                // ex.printStackTrace();
+            }
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+        // timeline.stop();
     }
 
     @Override
@@ -108,8 +142,8 @@ public class DoWalkView extends View {
         Node icon = new Circle(7, Color.BLUE);
         Trap currentTrap = walk.getCurrentTrap();
         MapPoint mapPoint = new MapPoint(currentTrap.getLatitude(), currentTrap.getLongitude());
-        markersLayer = mapView.clearMarkers(markersLayer);
-        mapView.addMarker(markersLayer, mapPoint, icon);
+        currentLayer = mapView.clearMarkers(currentLayer);
+        mapView.addMarker(currentLayer, mapPoint, icon);
         //trapsLayer.addPoint(mapPoint, icon);
         mapView.setCenter(currentTrap.getLatitude(), currentTrap.getLongitude());
 
