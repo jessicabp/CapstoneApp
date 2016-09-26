@@ -51,20 +51,15 @@ public class PoiLayer extends MapLayer {
         this.markDirty();
     }
 
-    // TODO: Comment
-    public void removePoint(MapPoint p) {
-        for(int i = 0; i < points.size(); i++) {
-            Pair pair = points.get(i);
-            if(pair.getKey().equals(p)) {
-                points.remove(i, i + 1);
-                break;
-            }
-        }
+    public ObservableList<Pair<MapPoint, Node>> getPoints() {
+        return points;
     }
 
     // TODO: Comment
-    public void clear() {
-        points.clear();
+    public void addPair(Pair pair) {
+        this.points.add(pair);
+        this.getChildren().add((Node) pair.getValue());
+        this.markDirty();
     }
 
     @Override

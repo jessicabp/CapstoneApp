@@ -4,18 +4,19 @@ import capstone.mobile.App;
 import capstone.mobile.classes.Trap;
 import capstone.mobile.classes.Walk;
 import capstone.mobile.maps.CustomMapView;
-import capstone.mobile.maps.CustomPoiLayer;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import gluonhq.maps.MapPoint;
+import gluonhq.maps.PoiLayer;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import java.util.List;
 
 
@@ -26,7 +27,8 @@ public class SetUpWalkView extends View {
     private Trap            end;
     private Label           prompt;
     private CustomMapView   mapView;
-    private CustomPoiLayer  poiLayer;
+    private PoiLayer        markersLayer;
+    private PoiLayer        numbersLayer;
 
     public SetUpWalkView(String name, Walk walk) {
         super(name);
@@ -40,9 +42,10 @@ public class SetUpWalkView extends View {
         // Creating the map display
         mapView = new CustomMapView();
 
-        // Creating the map layer on which markers will be added
-        poiLayer = new CustomPoiLayer();
-        mapView.addLayer(poiLayer);
+        // Creating the map layers on which markers and numbers will be added, note that
+        // ORDERING of layers is IMPORTANT for interacting with the map markers.
+        numbersLayer = mapView.createLayer();
+        markersLayer = mapView.createLayer();
 
         // Create VBox and add all items
         VBox controls = new VBox(mapView, prompt);
@@ -61,14 +64,18 @@ public class SetUpWalkView extends View {
         prompt.setText("Please pick a start point");
 
         // Clear the map layer to remove any existing points
-        poiLayer.clear();
+        // markersLayer.clear();
 
         // Add each trap to the map with listeners
         List<Trap> traps = walk.getLine().getTraps();
 
+        // TODO: Replace circle with image markers
         for (Trap trap : traps) {
-            Node icon = new Circle(7, Color.BLUE);
-            icon.setOnMouseClicked(e -> {
+            MapPoint mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
+
+            Circle circle = new Circle(7, Color.BLUE);
+            circle.setOnMouseClicked(e -> {
+                circle.setFill(Color.RED);
                 if (prompt.getText().equals("Please pick a start point")) {
                     prompt.setText("Please pick a end point");
                     start = trap;
@@ -78,7 +85,11 @@ public class SetUpWalkView extends View {
                     App.getInstance().switchView(App.DO_WALK_VIEW);
                 }
             });
-            poiLayer.addPoint(new MapPoint(trap.getLatitude(), trap.getLongitude()), icon);
+
+            Node number = new Text("   " + trap.getNumber());
+
+            mapView.addMarker(markersLayer, mapPoint, circle);
+            mapView.addMarker(numbersLayer, mapPoint, number);
         }
 
         // TODO: Correct map placement and zoom based on positions of the traps

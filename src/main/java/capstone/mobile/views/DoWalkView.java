@@ -5,12 +5,12 @@ import capstone.mobile.classes.CustomGridPane;
 import capstone.mobile.classes.Trap;
 import capstone.mobile.classes.Walk;
 import capstone.mobile.maps.CustomMapView;
-import capstone.mobile.maps.CustomPoiLayer;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import gluonhq.maps.MapPoint;
+import gluonhq.maps.PoiLayer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -33,8 +33,8 @@ public class DoWalkView extends View {
     private Label           broken;
     private VBox            messages;
     private CustomMapView   mapView;
-    private CustomPoiLayer  positionLayer;
-    private CustomPoiLayer  trapsLayer;
+    private PoiLayer        markersLayer;
+    private PoiLayer        numbersLayer;
 
     public DoWalkView(String name, Walk walk) {
         super(name);
@@ -52,10 +52,8 @@ public class DoWalkView extends View {
 
         // Creating map with position and trap marker layers
         mapView = new CustomMapView();
-        positionLayer = new CustomPoiLayer();
-        trapsLayer = new CustomPoiLayer();
-        mapView.addLayer(trapsLayer);
-        mapView.addLayer(positionLayer);
+        markersLayer = mapView.createLayer();
+        numbersLayer = mapView.createLayer();
 
         // Create VBox for messages
         messages = new VBox(15.0, side);
@@ -110,8 +108,9 @@ public class DoWalkView extends View {
         Node icon = new Circle(7, Color.BLUE);
         Trap currentTrap = walk.getCurrentTrap();
         MapPoint mapPoint = new MapPoint(currentTrap.getLatitude(), currentTrap.getLongitude());
-        trapsLayer.clear();
-        trapsLayer.addPoint(mapPoint, icon);
+        markersLayer = mapView.clearMarkers(markersLayer);
+        mapView.addMarker(markersLayer, mapPoint, icon);
+        //trapsLayer.addPoint(mapPoint, icon);
         mapView.setCenter(currentTrap.getLatitude(), currentTrap.getLongitude());
 
         // TODO: Remove print statements
