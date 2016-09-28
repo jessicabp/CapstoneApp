@@ -28,9 +28,6 @@
 package gluonhq.maps;
 
 import com.gluonhq.charm.down.common.JavaFXPlatform;
-import java.util.LinkedList;
-import java.util.List;
-
 import javafx.animation.Animation.Status;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -40,8 +37,10 @@ import javafx.scene.layout.Region;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
- *
  * This is the top UI element of the map component. The center location and the
  * zoom level of the map can be altered by input events (mouse/touch/gestures)
  * or by calling the methods setCenter and setZoom.
@@ -49,12 +48,14 @@ import javafx.util.Duration;
 public class MapView extends Region {
 
     private final BaseMap baseMap;
-    private Timeline t;
     private final List<MapLayer> layers = new LinkedList<>();
+    private Timeline  t;
     private Rectangle clip;
     private MapPoint centerPoint = null;
-    private boolean zooming = false;
-    
+    private boolean  zooming     = false;
+    private boolean  dirty       = false;
+
+
     /**
      * Create a MapView component.
      */
@@ -71,24 +72,27 @@ public class MapView extends Region {
             // in case our assigned space changes, AND in case we are requested
             // to center at a specific point, we need to re-center.
             if (centerPoint != null) {
-                // we will set the center to a slightly different location first, in order 
+                // we will set the center to a slightly different location first, in order
                 // to trigger the invalidationListeners.
-                setCenter(centerPoint.getLatitude()+.00001, centerPoint.getLongitude()+.00001);
+                setCenter(centerPoint.getLatitude() + .00001, centerPoint.getLongitude() + .00001);
                 setCenter(centerPoint);
             }
         });
     }
 
-    
     private void registerInputListeners() {
         setOnMousePressed(t -> {
-            if (zooming) return;
+            if (zooming) {
+                return;
+            }
             baseMap.x0 = t.getX();
             baseMap.y0 = t.getY();
             centerPoint = null; // once the user starts moving, we don't track the center anymore.
         });
         setOnMouseDragged(t -> {
-            if (zooming) return;
+            if (zooming) {
+                return;
+            }
             baseMap.moveX(baseMap.x0 - t.getX());
             baseMap.moveY(baseMap.y0 - t.getY());
             baseMap.x0 = t.getX();
@@ -160,7 +164,7 @@ public class MapView extends Region {
      *
      * @param waitTime the time to wait before we start moving
      * @param mapPoint the destination of the move
-     * @param seconds the time the move should take
+     * @param seconds  the time the move should take
      */
     public void flyTo(double waitTime, MapPoint mapPoint, double seconds) {
         if ((t != null) && (t.getStatus() == Status.RUNNING)) {
@@ -169,14 +173,12 @@ public class MapView extends Region {
         double currentLat = baseMap.centerLat().get();
         double currentLon = baseMap.centerLon().get();
         t = new Timeline(
-            new KeyFrame(Duration.ZERO, new KeyValue(baseMap.prefCenterLat(), currentLat), new KeyValue(baseMap.prefCenterLon(), currentLon)),
-            new KeyFrame(Duration.seconds(waitTime), new KeyValue(baseMap.prefCenterLat(), currentLat), new KeyValue(baseMap.prefCenterLon(), currentLon)),
-            new KeyFrame(Duration.seconds(waitTime + seconds), new KeyValue(baseMap.prefCenterLat(), mapPoint.getLatitude()), new KeyValue(baseMap.prefCenterLon(), mapPoint.getLongitude(), Interpolator.EASE_BOTH))
+                new KeyFrame(Duration.ZERO, new KeyValue(baseMap.prefCenterLat(), currentLat), new KeyValue(baseMap.prefCenterLon(), currentLon)),
+                new KeyFrame(Duration.seconds(waitTime), new KeyValue(baseMap.prefCenterLat(), currentLat), new KeyValue(baseMap.prefCenterLon(), currentLon)),
+                new KeyFrame(Duration.seconds(waitTime + seconds), new KeyValue(baseMap.prefCenterLat(), mapPoint.getLatitude()), new KeyValue(baseMap.prefCenterLon(), mapPoint.getLongitude(), Interpolator.EASE_BOTH))
         );
         t.play();
     }
-
-    private boolean dirty = false;
 
     protected void markDirty() {
         dirty = true;

@@ -19,32 +19,33 @@ import java.util.List;
  */
 public class RetrieveData {
 
-    private static final String HOST = "http://traptracker.pythonanywhere.com";
+    private static final String HOST      = "http://traptracker.pythonanywhere.com/api";
     private static final String KEY_ERROR = "Key not contained within object.";
 
     /**
      * Returns a list of line objects (containing the lines id and name).
-     * @throws DataUnavailableException if an error occurs
+     *
      * @return list of line objects
+     * @throws DataUnavailableException if an error occurs
      */
     public static List<Line> fetchLinesList() throws DataUnavailableException {
         try {
-            URL url = new URL(HOST + "/line");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            InputStream jsonInputStream = connection.getInputStream();
+            URL               url             = new URL(HOST + "/line");
+            HttpURLConnection connection      = (HttpURLConnection) url.openConnection();
+            InputStream       jsonInputStream = connection.getInputStream();
 
-            List<Line> linesList = new ArrayList<>();
+            List<Line> linesList  = new ArrayList<>();
             JsonReader jsonReader = Json.createReader(jsonInputStream);
             JsonObject jsonObject = jsonReader.readObject();
             jsonReader.close();
             jsonInputStream.close();
             connection.disconnect();
 
-            if(!jsonObject.containsKey("result")) {
+            if (!jsonObject.containsKey("result")) {
                 throw new DataUnavailableException(KEY_ERROR);
             }
 
-            JsonArray jsonArray = jsonObject.getJsonArray("result");
+            JsonArray           jsonArray     = jsonObject.getJsonArray("result");
             JsonConverter<Line> jsonConverter = new JsonConverter<>(Line.class);
 
             for (int i = 0; i < jsonArray.size(); i++) {
@@ -63,27 +64,29 @@ public class RetrieveData {
 
     /**
      * Returns a list of trap objects that are associated with the specified line.
+     *
      * @param lineId the specified lines id
-     * @throws DataUnavailableException if an error occurs
      * @return list of trap objects
+     * @throws DataUnavailableException if an error occurs
      */
     public static List<Trap> fetchTrapsList(int lineId) throws DataUnavailableException {
         try {
-            URL url = new URL(HOST + "/trap?line_id=" + lineId);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            InputStream jsonInputStream = connection.getInputStream();
+            URL               url             = new URL(HOST + "/trap?line_id=" + lineId);
+            HttpURLConnection connection      = (HttpURLConnection) url.openConnection();
+            InputStream       jsonInputStream = connection.getInputStream();
 
-            List<Trap> trapsList = new ArrayList<>();
+            List<Trap> trapsList  = new ArrayList<>();
             JsonReader jsonReader = Json.createReader(jsonInputStream);
             JsonObject jsonObject = jsonReader.readObject();
             jsonReader.close();
             jsonInputStream.close();
+            connection.disconnect();
 
-            if(!jsonObject.containsKey("result")) {
+            if (!jsonObject.containsKey("result")) {
                 throw new DataUnavailableException(KEY_ERROR);
             }
 
-            JsonArray jsonArray = jsonObject.getJsonArray("result");
+            JsonArray           jsonArray     = jsonObject.getJsonArray("result");
             JsonConverter<Trap> jsonConverter = new JsonConverter<>(Trap.class);
 
             for (int i = 0; i < jsonArray.size(); i++) {
@@ -95,16 +98,42 @@ public class RetrieveData {
             Collections.sort(trapsList, (a, b) -> a.getNumber() - b.getNumber());
 
             return trapsList;
-        }  catch (IOException ex) {
+        } catch (IOException ex) {
             throw new DataUnavailableException(ex.getMessage());
         }
     }
 
     /**
      * Returns a list of species objects.
+     *
      * @return list of species objects
      */
-    public static List<Species> fetchSpeciesList() {
+    public static List<Species> fetchSpeciesList() throws DataUnavailableException {
+        // TODO: change to fetch species from server once implemented
+//            URL               url             = new URL(HOST + "/species");
+//            HttpURLConnection connection      = (HttpURLConnection) url.openConnection();
+//            InputStream       jsonInputStream = connection.getInputStream();
+//
+//            List<Species> speciesList = new ArrayList<>();
+//            JsonReader    jsonReader  = Json.createReader(jsonInputStream);
+//            JsonObject    jsonObject  = jsonReader.readObject();
+//            jsonReader.close();
+//            jsonInputStream.close();
+//
+//            if (!jsonObject.containsKey("result")) {
+//                throw new DataUnavailableException(KEY_ERROR);
+//            }
+//
+//            JsonArray              jsonArray     = jsonObject.getJsonArray("result");
+//            JsonConverter<Species> jsonConverter = new JsonConverter<>(Species.class);
+//
+//            for (int i = 0; i < jsonArray.size(); i++) {
+//                Species species = jsonConverter.readFromJson(jsonArray.getJsonObject(i));
+//                speciesList.add(species);
+//            }
+//
+//            // Sorts trap numbers (smallest to largest) to ensure correct ordering.
+//            Collections.sort(speciesList, (a, b) -> a.getId() - b.getId());
 
         List<Species> speciesList = new ArrayList<>();
 

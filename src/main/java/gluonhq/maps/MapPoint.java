@@ -38,15 +38,15 @@ public class MapPoint {
         this.latitude = lat;
         this.longitude = lon;
     }
-    
+
     public double getLatitude() {
         return this.latitude;
     }
-    
+
     public double getLongitude() {
         return this.longitude;
     }
-    
+
     public void update(double lat, double lon) {
         this.latitude = lat;
         this.longitude = lon;
@@ -54,19 +54,25 @@ public class MapPoint {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof MapPoint)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof MapPoint)) {
+            return false;
+        }
 
         MapPoint mapPoint = (MapPoint) o;
 
-        if (Double.compare(mapPoint.latitude, latitude) != 0) return false;
+        if (Double.compare(mapPoint.latitude, latitude) != 0) {
+            return false;
+        }
         return Double.compare(mapPoint.longitude, longitude) == 0;
 
     }
 
     @Override
     public int hashCode() {
-        int result;
+        int  result;
         long temp;
         temp = Double.doubleToLongBits(latitude);
         result = (int) (temp ^ (temp >>> 32));

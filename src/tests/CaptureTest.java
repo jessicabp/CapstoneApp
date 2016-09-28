@@ -11,5 +11,4 @@ public class CaptureTest {
         Assert.assertTrue(capture.getSpeciesId() == 0);
         Assert.assertTrue(capture.getTrapId() == 1);
     }
-
 }

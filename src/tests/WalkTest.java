@@ -15,7 +15,7 @@ public class WalkTest {
     public void beforeTests() {
         // Set up walk
         walk = new Walk();
-        line = new Line("gorge");
+        line = new Line();
         trap1 = new Trap(1, 40, 175, true);
         trap2 = new Trap(2, 41, 176, false);
         capture = new Capture(1, 2);
@@ -37,13 +37,11 @@ public class WalkTest {
         walk.startWalk(walk.getLine().getTraps().get(0), walk.getLine().getTraps().get(1));
         walk.addCapture(capture);
         walk.addChangedTrap(trap2);
-        walk.addNewLine(line);
 
         // Assume walk is started and is set up correctly
         Assume.assumeTrue(Walk.isWalking().getValue());
         Assume.assumeTrue(walk.getCaptures().contains(capture));
         Assume.assumeTrue(walk.getChangedTraps().contains(trap2));
-        Assume.assumeTrue(walk.getNewLines().contains(line));
         Assume.assumeNotNull(walk.getLine());
         Assume.assumeNotNull(walk.getFinishTrap());
         Assume.assumeNotNull(walk.getCurrentTrap());
@@ -73,7 +71,6 @@ public class WalkTest {
         Assert.assertFalse(Walk.isWalking().getValue());
         Assert.assertFalse(walk.getCaptures().contains(capture));
         Assert.assertFalse(walk.getChangedTraps().contains(trap2));
-        Assert.assertFalse(walk.getNewLines().contains(line));
         Assert.assertNull(walk.getLine());
         Assert.assertNull(walk.getFinishTrap());
         Assert.assertNull(walk.getCurrentTrap());

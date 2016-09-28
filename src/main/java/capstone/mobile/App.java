@@ -15,19 +15,12 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.util.List;
-
-import static java.util.Arrays.asList;
-
 @License(key = "60820384-1db6-43c0-a456-1ed0ede425b4")
 
 /**
  * Creates views and side menu bar, and holds reference to the walk.
  */
 public class App extends MobileApplication {
-
-    private static boolean addLine;
-    private        Walk    walk;
 
     // Strings naming the views, and providing reference to them
     public static final String DISPLAY_LINES_VIEW = "Display lines";
@@ -36,11 +29,11 @@ public class App extends MobileApplication {
     public static final String ENTER_DATA_VIEW    = "Enter data";
     public static final String CAMERA             = "Camera";
     public static final String MAINTENANCE        = "Maintenance";
-    public static final String ADMIN_LOGIN        = "Admin Login";
-    public static final String CREATE_LINE_VIEW   = "Add line";
     public static final String CREATE_TRAP_VIEW   = "Add trap";
     public static final String END_WALK_VIEW      = "End walk";
     public static final String MENU_LAYER         = "Side Menu";
+
+    private Walk walk;
 
     // Items to appear in the side menu bar
     private Item homeItem;
@@ -53,12 +46,14 @@ public class App extends MobileApplication {
     private final ChangeListener listener = (obs, oldItem, newItem) -> {
         hideLayer(MENU_LAYER);
         if (newItem.equals(homeItem)) {
-            addLine = false;
             switchView(HOME_VIEW);
         } else if (newItem.equals(createTrapItem)) {
-            addLine = false;
-            switchView(ADMIN_LOGIN);
+            CreateTrapView.getTimeline().stop();
+            DoWalkView.getTimeline().stop();
+            switchView(CREATE_TRAP_VIEW);
         } else if (newItem.equals(endWalkItem)) {
+            CreateTrapView.getTimeline().stop();
+            DoWalkView.getTimeline().stop();
             switchView(END_WALK_VIEW);
         }
     };
@@ -77,13 +72,11 @@ public class App extends MobileApplication {
         addViewFactory(ENTER_DATA_VIEW, () -> new EnterDataView(ENTER_DATA_VIEW, walk));
         addViewFactory(CAMERA, () -> new Camera(CAMERA));
         addViewFactory(MAINTENANCE, () -> new EnterMaintenance(MAINTENANCE, walk));
-        addViewFactory(ADMIN_LOGIN, () -> new AdminLogin(ADMIN_LOGIN));
-        addViewFactory(CREATE_LINE_VIEW, () -> new CreateLineView(CREATE_LINE_VIEW, walk));
         addViewFactory(CREATE_TRAP_VIEW, () -> new CreateTrapView(CREATE_TRAP_VIEW, walk));
         addViewFactory(END_WALK_VIEW, () -> new EndWalkView(END_WALK_VIEW, walk));
 
         // Create items to populate side menu bar
-        homeItem = new Item("Home Page", MaterialDesignIcon.HOME.graphic());
+        homeItem = new Item("Home", MaterialDesignIcon.HOME.graphic());
         createTrapItem = new Item("Add Trap", MaterialDesignIcon.ADD_LOCATION.graphic());
         endWalkItem = new Item("End Walk", MaterialDesignIcon.EXIT_TO_APP.graphic());
 
@@ -95,11 +88,9 @@ public class App extends MobileApplication {
         drawer.selectedItemProperty().addListener(listener);
         addLayerFactory(MENU_LAYER, () -> new SidePopupView(drawer));
 
-        /**
-         * Remove and re-add side menu bar listener
-         * Updates menu if view is changed another way
-         * Sets selected item to null so user can select item even if already in the view
-         */
+        /* Remove and re-add side menu bar listener
+           Updates menu if view is changed another way
+           Sets selected item to null so user can select item even if already in the view */
         viewProperty().addListener((obs, ov, nv) -> {
             drawer.selectedItemProperty().removeListener(listener);
             if (nv.getName().equals(HOME_VIEW)) {
@@ -108,15 +99,12 @@ public class App extends MobileApplication {
             } else if (nv.getName().equals(CREATE_TRAP_VIEW)) {
                 createTrapItem.setSelected(false);
                 drawer.setSelectedItem(null);
-            } else {
+            } else if (nv.getName().equals(END_WALK_VIEW)) {
+                endWalkItem.setSelected(false);
                 drawer.setSelectedItem(null);
             }
             drawer.selectedItemProperty().addListener(listener);
         });
-    }
-
-    public static boolean isAddLine() {
-        return addLine;
     }
 
     @Override

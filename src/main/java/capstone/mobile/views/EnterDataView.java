@@ -1,7 +1,10 @@
 package capstone.mobile.views;
 
 import capstone.mobile.App;
-import capstone.mobile.classes.*;
+import capstone.mobile.classes.Capture;
+import capstone.mobile.classes.CustomGridPane;
+import capstone.mobile.classes.Species;
+import capstone.mobile.classes.Walk;
 import com.gluonhq.charm.glisten.application.GlassPane;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
@@ -24,11 +27,11 @@ import java.util.List;
  */
 public class EnterDataView extends View {
 
-    private Walk walk;
-    private int  species;
-    private Insets        gridButtonInsets = new Insets(40, 0, 40, 0); // for making buttons taller
     // TODO: load species from line?
-    private List<Species> speciesList      = RetrieveData.fetchSpeciesList();
+    private static List<Species> speciesList;
+    private        Walk          walk;
+    private        int           species;
+    private Insets gridButtonInsets = new Insets(40, 0, 40, 0); // for making buttons taller
 
     public EnterDataView(String name, Walk walk) {
         super(name);
@@ -38,14 +41,14 @@ public class EnterDataView extends View {
         getStylesheets().add(EnterDataView.class.getResource("secondary.css").toExternalForm());
 
         // Create species selection buttons
-        ToggleGroup group = new ToggleGroup();
-        CustomGridPane grid = new CustomGridPane();
+        ToggleGroup    group = new ToggleGroup();
+        CustomGridPane grid  = new CustomGridPane(2);
         // Add first 4 species to grid and toggle group
         int speciesNo = 0;
         for (int r = 0; r < 2; r++) {
             for (int c = 0; c < 2; c++) {
-                Species nextSpecies = speciesList.get(speciesNo);
-                ToggleButton button = new ToggleButton(nextSpecies.getName());
+                Species      nextSpecies = speciesList.get(speciesNo);
+                ToggleButton button      = new ToggleButton(nextSpecies.getName());
                 button.setToggleGroup(group);
                 button.setOnAction(e -> species = nextSpecies.getId());
                 button.setMaxWidth(Double.MAX_VALUE);
@@ -59,16 +62,16 @@ public class EnterDataView extends View {
         ToggleButton other = new ToggleButton("Other");
 
         // Popup for selecting other species
-        PopupView   speciesPopup = new PopupView(other);
-        ToggleGroup otherGroup   = new ToggleGroup();
-        CustomGridPane otherGrid = new CustomGridPane();
+        PopupView      speciesPopup = new PopupView(other);
+        ToggleGroup    otherGroup   = new ToggleGroup();
+        CustomGridPane otherGrid    = new CustomGridPane(2);
         otherGrid.setPadding(new Insets(20, 20, 20, 20));
         // Add all species to grid and toggle group
         int r = 0;
-        for (; r < (speciesList.size()-4) / 2; r++) {
+        for (; r < (speciesList.size() - 4) / 2; r++) {
             for (int c = 0; c < 2; c++) {
-                Species nextSpecies = speciesList.get(speciesNo);
-                ToggleButton button = new ToggleButton(nextSpecies.getName());
+                Species      nextSpecies = speciesList.get(speciesNo);
+                ToggleButton button      = new ToggleButton(nextSpecies.getName());
                 button.setToggleGroup(otherGroup);
                 button.setOnAction(ev -> {
                     species = nextSpecies.getId();
@@ -83,8 +86,8 @@ public class EnterDataView extends View {
         }
         // If there's an odd number of species, make sure the last one is included
         if (speciesList.size() % 2 != 0) {
-            Species nextSpecies = speciesList.get(speciesNo);
-            ToggleButton button = new ToggleButton(nextSpecies.getName());
+            Species      nextSpecies = speciesList.get(speciesNo);
+            ToggleButton button      = new ToggleButton(nextSpecies.getName());
             button.setToggleGroup(otherGroup);
             button.setOnAction(ev -> {
                 species = nextSpecies.getId();
@@ -141,6 +144,10 @@ public class EnterDataView extends View {
         controls.setPadding(new Insets(40, 40, 40, 40));
         controls.setAlignment(Pos.CENTER);
         setCenter(controls);
+    }
+
+    public static void setSpeciesList(List<Species> fetchedSpeciesList) {
+        speciesList = fetchedSpeciesList;
     }
 
     @Override

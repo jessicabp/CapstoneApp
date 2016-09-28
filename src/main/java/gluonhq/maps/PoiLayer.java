@@ -34,14 +34,13 @@ import javafx.scene.Node;
 import javafx.util.Pair;
 
 /**
- *
  * A layer that allows to visualise points of interest.
  */
 public class PoiLayer extends MapLayer {
 
 
     private final ObservableList<Pair<MapPoint, Node>> points = FXCollections.observableArrayList();
-    
+
     public PoiLayer() {
     }
 
@@ -65,9 +64,9 @@ public class PoiLayer extends MapLayer {
     @Override
     protected void layoutLayer() {
         for (Pair<MapPoint, Node> candidate : points) {
-            MapPoint point = candidate.getKey();
-            Node icon = candidate.getValue();
-            Point2D mapPoint = baseMap.getMapPoint(point.getLatitude(), point.getLongitude());
+            MapPoint point    = candidate.getKey();
+            Node     icon     = candidate.getValue();
+            Point2D  mapPoint = baseMap.getMapPoint(point.getLatitude(), point.getLongitude());
             icon.setVisible(true);
             icon.setTranslateX(mapPoint.getX());
             icon.setTranslateY(mapPoint.getY());

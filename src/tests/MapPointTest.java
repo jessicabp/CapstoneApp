@@ -1,5 +1,4 @@
 import gluonhq.maps.MapPoint;
-
 import org.junit.Assert;
 import org.junit.Test;
 

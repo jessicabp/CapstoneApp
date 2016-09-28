@@ -10,24 +10,9 @@ import java.util.List;
  */
 public class Line {
 
-    private int        id;
-    private String     name;
-    private List<Trap> traps;
-    private String password;
-
-    public Line() {
-    }
-
-    public Line(String name, String password) {
-        this.id = 0;
-        this.name = name;
-        this.password = password;
-        this.traps = new ArrayList<>();
-    }
-
-    public Line(String name) {
-        this.name = name;
-    }
+    private int    id;
+    private String name;
+    private List<Trap> traps = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -57,9 +42,6 @@ public class Line {
         this.traps.add(trap);
     }
 
-    public void removeTrap() {
-    }
-
     /**
      * Returns trap with given number
      *
@@ -68,14 +50,5 @@ public class Line {
      */
     public Trap getNextTrap(int index) {
         return traps.get(index);
-    }
-
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }

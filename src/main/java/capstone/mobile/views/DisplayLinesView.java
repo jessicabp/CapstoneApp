@@ -80,8 +80,7 @@ public class DisplayLinesView extends View {
         // Add listener to cells
         linesListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                Line line = newValue;
-                selectLine(line);
+                selectLine(newValue);
             }
         });
 
@@ -96,6 +95,9 @@ public class DisplayLinesView extends View {
      */
     public void selectLine(Line line) {
         try {
+            System.out.println(line.toString());
+            System.out.println(line.getName());
+            System.out.println(line.getId());
             walk.setLine(line);
         } catch (DataUnavailableException e) {
             showServerError();
@@ -134,6 +136,7 @@ public class DisplayLinesView extends View {
         List<Line> linesList = null;
         try {
             linesList = RetrieveData.fetchLinesList();
+            EnterDataView.setSpeciesList(RetrieveData.fetchSpeciesList());
         } catch (DataUnavailableException e) {
             showServerError();
             e.printStackTrace();

@@ -17,18 +17,19 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+
 import java.util.List;
 
 
 public class SetUpWalkView extends View {
 
-    private Walk            walk;
-    private Trap            start;
-    private Trap            end;
-    private Label           prompt;
-    private CustomMapView   mapView;
-    private PoiLayer        markersLayer;
-    private PoiLayer        numbersLayer;
+    private Walk          walk;
+    private Trap          start;
+    private Trap          end;
+    private Label         prompt;
+    private CustomMapView mapView;
+    private PoiLayer      markersLayer;
+    private PoiLayer      numbersLayer;
 
     public SetUpWalkView(String name, Walk walk) {
         super(name);

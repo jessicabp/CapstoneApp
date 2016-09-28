@@ -10,7 +10,7 @@ import javafx.util.Pair;
 
 public class CustomMapView extends MapView {
 
-    private final static double MAP_HEIGHT = 280;
+    private final static double MAP_HEIGHT   = 280;
     private final static double INITIAL_ZOOM = 14.0;
 
     public CustomMapView() {
@@ -33,9 +33,9 @@ public class CustomMapView extends MapView {
     public PoiLayer removeMarker(PoiLayer oldLayer, MapPoint p) {
         ObservableList<Pair<MapPoint, Node>> points = oldLayer.getPoints();
         removeLayer(oldLayer);
-        for(int i = 0; i < points.size(); i++) {
+        for (int i = 0; i < points.size(); i++) {
             Pair pair = points.get(i);
-            if(pair.getKey().equals(p)) {
+            if (pair.getKey().equals(p)) {
                 points.remove(i, i + 1);
                 break;
             }
@@ -43,7 +43,7 @@ public class CustomMapView extends MapView {
 
         PoiLayer newLayer = new PoiLayer();
         addLayer(newLayer);
-        for(int i = 0; i < points.size(); i++) {
+        for (int i = 0; i < points.size(); i++) {
             newLayer.addPair(points.get(i));
         }
 

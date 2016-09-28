@@ -10,7 +10,7 @@ import javax.json.JsonObject;
  */
 public class SendData {
 
-    private static final String HOST = "http://traptracker.pythonanywhere.com";
+    private static final String HOST = "http://traptracker.pythonanywhere.com/api";
 
     public SendData() {
     }

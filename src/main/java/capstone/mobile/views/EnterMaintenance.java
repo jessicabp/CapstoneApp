@@ -12,7 +12,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 
@@ -48,7 +47,7 @@ public class EnterMaintenance extends View {
         fixed.setSelected(!walk.getCurrentTrap().isBroken());
         fixed.setOnAction(e -> walk.getCurrentTrap().setBroken(fixed.isSelected()));
         fixed.setToggleGroup(damage);
-        CustomGridPane grid = new CustomGridPane();
+        CustomGridPane grid = new CustomGridPane(2);
         grid.add(broken, 0, 0);
         grid.add(fixed, 1, 0);
 

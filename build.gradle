@@ -4,45 +4,33 @@ buildscript {
     }
     dependencies {
         classpath 'org.javafxports:jfxmobile-plugin:1.0.8'
-//        classpath group: 'org.robovm', name: 'robovm-gradle-plugin', version: project.roboVMGradleVersion
     }
 }
 
 apply plugin: 'org.javafxports.jfxmobile'
 apply plugin: 'pmd'
 apply plugin: 'jacoco'
-apply plugin: 'java'
-
-//apply plugin: 'robovm'
 
 repositories {
     jcenter()
     maven {
         url 'http://nexus.gluonhq.com/nexus/content/repositories/releases'
     }
-//    mavenCentral()
-//    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 }
 
 mainClassName = 'capstone.mobile.App'
 
 dependencies {
     compile 'com.gluonhq:charm:3.0.0', 'com.gluonhq:maps:1.0.0'
+    compile group: 'net.java.openjfx.backport', name: 'openjfx-78-backport', version: '1.8.0-ea-b96.1'
+    compile group: 'com.github.seratch', name: 'java-time-backport', version: '1.0.0'
 
     androidRuntime 'com.gluonhq:charm-android:3.0.0'
     iosRuntime 'com.gluonhq:charm-ios:3.0.0'
     desktopRuntime 'com.gluonhq:charm-desktop:3.0.0'
 
     testCompile 'junit:junit:4.12'
-
-//    compile group: 'org.robovm', name: 'robovm-rt', version: project.roboVMVersion
-//    compile group: 'org.robovm', name: 'robovm-cocoatouch', version: project.roboVMVersion
 }
-
-//robovm {
-//    robovm.device.name = 'iPhone-5s'
-//    robovm.sdk.version = '9.0'
-//}
 
 jfxmobile {
     android {
@@ -95,10 +83,11 @@ sourceSets {
 }
 
 retrolambda {
+
     jdk System.getenv("JAVA_HOME")
-    if (System.getenv("JAVA7_HOME")) {
-        oldJdk System.getenv("JAVA7_HOME")
-    } else {
-        oldJdk "/usr/lib/jvm/java-7-oracle/jre"
-    }
+//    if (System.getenv("JAVA7_HOME")) {
+//        oldJdk System.getenv("JAVA7_HOME")
+//    } else {
+        oldJdk "/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home"
+//    }
 }

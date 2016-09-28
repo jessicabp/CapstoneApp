@@ -1,8 +1,12 @@
 package capstone.mobile.classes;
 
 import capstone.mobile.App;
+import capstone.mobile.views.DoWalkView;
+import gluonhq.maps.MapPoint;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +27,6 @@ public class Walk {
     private boolean direction; // TODO: direction will be the same as Trap.side when the user will find the trap on the left. Direction will be true when trap number increases (e.g. sth to nth in gorge)
     private List<Capture> captures     = new ArrayList<>();
     private List<Trap>    changedTraps = new ArrayList<>();
-    private List<Line>    newLines     = new ArrayList<>();
-
-    public Walk() {
-    }
 
     public static BooleanProperty isWalking() {
         return walking;
@@ -78,7 +78,6 @@ public class Walk {
         currentTrap = null;
         captures = new ArrayList<>();
         changedTraps = new ArrayList<>();
-        newLines = new ArrayList<>();
     }
 
     /**
@@ -129,11 +128,12 @@ public class Walk {
         return changedTraps;
     }
 
-    public void addNewLine(Line newLine) {
-        newLines.add(newLine);
-    }
-
-    public List<Line> getNewLines() {
-        return newLines;
+    public void addNewTrap(Trap trap) {
+        this.changedTraps.add(trap);
+        line.getTraps().add(index, trap);
+        currentTrap = trap;
+        Circle   marker   = new Circle(5, Color.ORANGE);
+        MapPoint mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
+        DoWalkView.getMapView().addMarker(DoWalkView.getMarkersLayer(), mapPoint, marker);
     }
 }

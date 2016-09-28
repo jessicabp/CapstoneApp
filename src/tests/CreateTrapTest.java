@@ -1,16 +1,15 @@
+import capstone.mobile.classes.Trap;
 import org.junit.Assert;
 import org.junit.Test;
 
-import capstone.mobile.classes.Trap;
-
-public class CreateNewTrapTest {
+public class CreateTrapTest {
 
     @Test
-    public void createNewTrapConstructorTest() {
-        int number = 101;
-        double latitude = 8.38794;
-        double longitude = 135.08785;
-        boolean side = true;
+    public void createTrapConstructorTest() {
+        int     number    = 101;
+        double  latitude  = 8.38794;
+        double  longitude = 135.08785;
+        boolean side      = true;
 
         Trap newTrap = new Trap(number, latitude, longitude, side);
         Assert.assertEquals(newTrap.getId(), 0);

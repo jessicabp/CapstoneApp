@@ -7,13 +7,13 @@ package capstone.mobile.classes;
  */
 public class Trap {
 
-    private int     id;
-    private int     number;
+    private int id;
+    private int number;
     private boolean side = true;
-    private double  longitude;
-    private double  latitude;
+    private double longitude;
+    private double latitude;
     private boolean broken = false;
-    private boolean moved = false;
+    private boolean moved  = false;
 
     public Trap() {
     }
@@ -29,14 +29,6 @@ public class Trap {
         this.side = side;
         this.moved = false;
         this.broken = false;
-    }
-
-    public Trap(int id, int number, boolean side, boolean moved, boolean broken) {
-        this.id = id;
-        this.number = number;
-        this.side = side;
-        this.moved = moved;
-        this.broken = broken;
     }
 
     public int getId() {

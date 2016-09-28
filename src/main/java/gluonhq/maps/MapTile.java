@@ -47,26 +47,21 @@ import static java.lang.Math.floor;
  */
 class MapTile extends Region {
 
-    private static final Logger logger = Logger.getLogger( MapTile.class.getName() );
+    private static final Logger logger = Logger.getLogger(MapTile.class.getName());
 
-    final int myZoom;
+    final int  myZoom;
     final long i, j;
-    String host = "http://tile.openstreetmap.org/";
     final BaseMap baseMap;
-    // a list of tiles that this tile is covering. In case the covered tiles are 
+    // a list of tiles that this tile is covering. In case the covered tiles are
     // not yet loaded, this tile will be rendered.
     final List<MapTile> coveredTiles = new LinkedList();
     /**
      * In most cases, a tile will be shown scaled. The value for the scale
      * factor depends on the active zoom and the tile-specific myZoom
      */
-    final Scale scale = new Scale();
-
-    public boolean isCovering() {
-        return coveredTiles.size() > 0;
-    }
-
+    final Scale         scale        = new Scale();
     private final InvalidationListener zl;
+    String host = "http://tile.openstreetmap.org/";
     private ReadOnlyDoubleProperty progress;
 
     // final Image image;
@@ -100,6 +95,10 @@ class MapTile extends Region {
         this.setMouseTransparent(true);
     }
 
+    public boolean isCovering() {
+        return coveredTiles.size() > 0;
+    }
+
     boolean loading() {
         return !(progress.greaterThanOrEqualTo(1.)).get();
     }
@@ -118,8 +117,8 @@ class MapTile extends Region {
     }
 
     private void calculatePosition() {
-        double currentZoom = baseMap.zoom().get();
-        int visibleWindow = (int) floor(currentZoom + BaseMap.TIPPING);
+        double currentZoom   = baseMap.zoom().get();
+        int    visibleWindow = (int) floor(currentZoom + BaseMap.TIPPING);
         if ((visibleWindow == myZoom) || isCovering() || ((visibleWindow >= BaseMap.MAX_ZOOM) && (myZoom == BaseMap.MAX_ZOOM - 1))) {
             this.setVisible(true);
 

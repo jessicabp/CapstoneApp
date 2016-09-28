@@ -9,14 +9,14 @@ public class LocationProvider {
 
     public static final String ERROR = "Location data not available";
 
-    public static Position getPosition()  throws DataUnavailableException  {
+    public static Position getPosition() throws DataUnavailableException {
         PositionService positionService = PlatformFactory.getPlatform().getPositionService();
-        if(positionService == null) {
+        if (positionService == null) {
             throw new DataUnavailableException(ERROR);
         }
         ReadOnlyObjectProperty<Position> positionProperty = positionService.positionProperty();
-        Position position = positionProperty.get();
-        if(position == null) {
+        Position                         position         = positionProperty.get();
+        if (position == null) {
             throw new DataUnavailableException(ERROR);
         }
         return position;

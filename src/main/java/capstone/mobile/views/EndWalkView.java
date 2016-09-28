@@ -23,7 +23,8 @@ public class EndWalkView extends View {
         // Add button to manually send data to server and finish walk
         Button send = new Button("Click to send to server once internet is connected");
         send.setWrapText(true);
-        send.setOnAction(e -> { sendData();
+        send.setOnAction(e -> {
+            sendData();
             App.getInstance().switchView(App.HOME_VIEW);
         });
 

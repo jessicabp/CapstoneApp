@@ -52,12 +52,12 @@ import java.util.logging.Logger;
 public class ImageRetriever {
 
 
-    private static final Logger logger = Logger.getLogger( ImageRetriever.class.getName() );
+    private static final Logger logger = Logger.getLogger(ImageRetriever.class.getName());
 
     static String host = "http://tile.openstreetmap.org/";
     static File cacheRoot;
-    static boolean hasFileCache = false;
-    static CacheThread cacheThread = null;
+    static boolean     hasFileCache = false;
+    static CacheThread cacheThread  = null;
 
     static {
         try {
@@ -115,7 +115,7 @@ public class ImageRetriever {
             return null;
         }
         String tag = zoom + File.separator + i + File.separator + j + ".png";
-        File f = new File(cacheRoot, tag);
+        File   f   = new File(cacheRoot, tag);
         if (f.exists()) {
             Image answer = new Image(f.toURI().toString(), true);
             return answer;
@@ -125,10 +125,10 @@ public class ImageRetriever {
 
     private static class CacheThread extends Thread {
 
-        private boolean active = true;
+        private final Set<String>           offered = new HashSet<>();
+        private final BlockingDeque<String> deque   = new LinkedBlockingDeque<>();
+        private       boolean               active  = true;
         private String basePath;
-        private final Set<String> offered = new HashSet<>();
-        private final BlockingDeque<String> deque = new LinkedBlockingDeque<>();
 
         public CacheThread(String basePath) {
             this.basePath = basePath;
@@ -146,11 +146,11 @@ public class ImageRetriever {
                 try {
                     String key = deque.pollFirst(10, TimeUnit.SECONDS);
                     if (key != null) {
-                        String url = key.substring(0, key.lastIndexOf(";"));
+                        String   url   = key.substring(0, key.lastIndexOf(";"));
                         String[] split = key.substring(key.lastIndexOf(";") + 1).split("/");
-                        int zoom = Integer.parseInt(split[0]);
-                        long i = Long.parseLong(split[1]);
-                        long j = Long.parseLong(split[2]);
+                        int      zoom  = Integer.parseInt(split[0]);
+                        long     i     = Long.parseLong(split[1]);
+                        long     j     = Long.parseLong(split[2]);
                         doCache(url, zoom, i, j);
                     }
                 } catch (InterruptedException e) {
@@ -179,7 +179,7 @@ public class ImageRetriever {
                     candidate.getParentFile().mkdirs();
                     try (FileOutputStream fos = new FileOutputStream(candidate)) {
                         byte[] buff = new byte[4096];
-                        int len = inputStream.read(buff);
+                        int    len  = inputStream.read(buff);
                         while (len > 0) {
                             fos.write(buff, 0, len);
                             len = inputStream.read(buff);

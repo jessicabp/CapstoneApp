@@ -49,9 +49,8 @@ import javafx.scene.Parent;
  */
 public class MapLayer extends Parent {
 
-    private boolean dirty = false;
-
     protected BaseMap baseMap;
+    private boolean dirty = false;
 
     /**
      * Only the MapView should call this method. We want implementations to
@@ -91,6 +90,7 @@ public class MapLayer extends Parent {
             layoutLayer();
         }
     }
+
     /**
      * This method is called when a Pulse is running and it is detected that
      * the layer should be redrawn, as a consequence of an earlier call to

@@ -30,13 +30,6 @@ public class HomeView extends View {
         lines.setMaxWidth(Double.MAX_VALUE);
         lines.setOnAction(e -> App.getInstance().switchView(App.DISPLAY_LINES_VIEW));
         controls.getChildren().add(lines);
-
-        // Button to create line
-        Button create = new Button("Create a new line");
-        create.setMaxWidth(Double.MAX_VALUE);
-        create.setOnAction(e -> App.getInstance().switchView(App.ENTER_DATA_VIEW));
-        controls.getChildren().add(create);
-
     }
 
     @Override
