@@ -3,7 +3,7 @@ package capstone.mobile.classes;
 /**
  * Holds information about the trap
  * Some is retrieved from the server or created on the device (eg id & location)
- * The rest is data collected at a trap (e.g. time, skipped, species)
+ * The rest is data collected at a trap (e.g. time, skipped, animal)
  */
 public class Trap {
 

@@ -103,7 +103,7 @@ public class App extends MobileApplication {
                                    "name TEXT NOT NULL)");
                 stmt.executeUpdate("CREATE TABLE IF NOT EXISTS traps (" +
                                    "lineId INTEGER REFERENCES lines(id) ON UPDATE CASCADE ON DELETE CASCADE, " +
-                                   "id INTEGER, " + // TODO: all traps must have an id in database - NULL if new.
+                                   "id INTEGER, " +
                                    "number INTEGER NOT NULL, " +
                                    "latitude REAL NOT NULL, " +
                                    "longitude REAL NOT NULL, " +
@@ -112,10 +112,10 @@ public class App extends MobileApplication {
                                    "broken INTEGER NOT NULL, " +
                                    "changed TEXT)");
                 stmt.executeUpdate("CREATE TABLE IF NOT EXISTS captures (" +
-                                   "trapId INTEGER NOT NULL REFERENCES traps(id) ON UPDATE CASCADE ON DELETE CASCADE, " +
+                                   "trapId INTEGER NOT NULL, " +
                                    "time REAL NOT NULL, " +
-                                   "speciesId INTEGER NOT NULL)");
-                stmt.executeUpdate("CREATE TABLE IF NOT EXISTS species (" +
+                                   "animalId INTEGER NOT NULL)");
+                stmt.executeUpdate("CREATE TABLE IF NOT EXISTS animals (" +
                                    "id INTEGER PRIMARY KEY, " +
                                    "name TEXT NOT NULL)");
                 stmt.close();
@@ -201,15 +201,15 @@ public class App extends MobileApplication {
             // load captures
             ResultSet captureRS = stmt.executeQuery("SELECT * FROM captures;");
             while (captureRS.next()) {
-                walk.addCapture(new Capture(captureRS.getInt("trapID"), captureRS.getInt("speciesID"), captureRS.getLong("time")));
+                walk.addCapture(new Capture(captureRS.getInt("trapID"), captureRS.getInt("animalID"), captureRS.getLong("time")));
             }
             captureRS.close();
-            // load species
-            ResultSet speciesRS = stmt.executeQuery("SELECT * FROM species;");
-            while (speciesRS.next()) {
-                EnterDataView.addSpeciesFromDB(new Species(speciesRS.getInt("id"), speciesRS.getString("name")));
+            // load animal
+            ResultSet animalRS = stmt.executeQuery("SELECT * FROM animals;");
+            while (animalRS.next()) {
+                EnterDataView.addAnimalFromDB(new Animal(animalRS.getInt("id"), animalRS.getString("name")));
             }
-            speciesRS.close();
+            animalRS.close();
             stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();

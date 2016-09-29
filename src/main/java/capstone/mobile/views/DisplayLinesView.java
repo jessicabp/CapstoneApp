@@ -133,14 +133,14 @@ public class DisplayLinesView extends View {
         List<Line> linesList = null;
         try {
             linesList = RetrieveData.fetchLinesList();
-            EnterDataView.setSpeciesList(RetrieveData.fetchSpeciesList());
+            EnterDataView.setAnimalList(RetrieveData.fetchAnimalList());
             // Update local database
             Connection dbConnection = DriverManager.getConnection(App.getInstance().dbUrl);
             if (dbConnection != null) {
                 Statement stmt = dbConnection.createStatement();
-                stmt.executeUpdate("DELETE FROM species");
-                for (Species species : EnterDataView.getSpeciesList()) {
-                    stmt.executeUpdate("insert into species values(" + species.getId() + ", '" + species.getName() + "')");
+                stmt.executeUpdate("DELETE FROM animals");
+                for (Animal animal : EnterDataView.getAnimalList()) {
+                    stmt.executeUpdate("insert into animals values(" + animal.getId() + ", '" + animal.getName() + "')");
                 }
                 stmt.close();
             }

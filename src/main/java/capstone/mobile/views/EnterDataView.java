@@ -18,14 +18,14 @@ import java.util.List;
 
 
 /**
- * View for users to enter data about a capture (e.g. species/maintenance)
+ * View for users to enter data about a capture (e.g. animal/maintenance)
  */
 public class EnterDataView extends View {
 
-    // TODO: load species from line?
-    private static List<Animal> speciesList;
-    private        Walk          walk;
-    private        int           species;
+    // TODO: load animal from line?
+    private static List<Animal> animalList;
+    private        Walk         walk;
+    private        int          animal;
     private Insets gridButtonInsets = new Insets(40, 0, 40, 0); // for making buttons taller
 
     public EnterDataView(String name, Walk walk) {
@@ -35,70 +35,70 @@ public class EnterDataView extends View {
 
         getStylesheets().add(EnterDataView.class.getResource("secondary.css").toExternalForm());
 
-        // Create species selection buttons
+        // Create animal selection buttons
         ToggleGroup    group = new ToggleGroup();
         CustomGridPane grid  = new CustomGridPane(2);
-        // Add first 4 species to grid and toggle group
-        int speciesNo = 0;
+        // Add first 4 animal to grid and toggle group
+        int animalNo = 0;
         for (int r = 0; r < 2; r++) {
             for (int c = 0; c < 2; c++) {
-                Animal nextSpecies = speciesList.get(speciesNo);
-                ToggleButton button      = new ToggleButton(nextSpecies.getName());
+                Animal nextAnimal = animalList.get(animalNo);
+                ToggleButton button      = new ToggleButton(nextAnimal.getName());
                 button.setToggleGroup(group);
-                button.setOnAction(e -> species = nextSpecies.getId());
+                button.setOnAction(e -> animal = nextAnimal.getId());
                 button.setMaxWidth(Double.MAX_VALUE);
                 button.setPadding(gridButtonInsets); // TODO: Not working. Need to make buttons taller.
                 grid.add(button, c, r);
-                speciesNo++;
+                animalNo++;
             }
         }
 
-        // Create button with popup for other species options
+        // Create button with popup for other animal options
         ToggleButton other = new ToggleButton("Other");
 
-        // Popup for selecting other species
-        CustomPopupView speciesPopup = new CustomPopupView(other);
+        // Popup for selecting other animal
+        CustomPopupView animalPopup = new CustomPopupView(other);
         ToggleGroup     otherGroup   = new ToggleGroup();
         CustomGridPane  otherGrid    = new CustomGridPane(2);
         otherGrid.setPadding(new Insets(20, 20, 20, 20));
-        // Add all species to grid and toggle group
+        // Add all animal to grid and toggle group
         int r = 0;
-        for (; r < (speciesList.size() - 4) / 2; r++) {
+        for (; r < (animalList.size() - 4) / 2; r++) {
             for (int c = 0; c < 2; c++) {
-                Animal nextSpecies = speciesList.get(speciesNo);
-                ToggleButton button      = new ToggleButton(nextSpecies.getName());
+                Animal nextAnimal = animalList.get(animalNo);
+                ToggleButton button      = new ToggleButton(nextAnimal.getName());
                 button.setToggleGroup(otherGroup);
                 button.setOnAction(ev -> {
-                    species = nextSpecies.getId();
-                    speciesPopup.hide();
+                    animal = nextAnimal.getId();
+                    animalPopup.hide();
                 });
-                button.setMaxWidth(Double.MAX_VALUE); // TODO: other species buttons aren't wide enough
+                button.setMaxWidth(Double.MAX_VALUE); // TODO: other animal buttons aren't wide enough
                 button.setPadding(gridButtonInsets); // TODO: Not working. Need to make buttons taller.
                 otherGrid.add(button, c, r);
-                speciesNo++;
+                animalNo++;
             }
         }
-        // If there's an odd number of species, make sure the last one is included
-        if (speciesList.size() % 2 != 0) {
-            Animal nextSpecies = speciesList.get(speciesNo);
-            ToggleButton button      = new ToggleButton(nextSpecies.getName());
+        // If there's an odd number of animal, make sure the last one is included
+        if (animalList.size() % 2 != 0) {
+            Animal nextAnimal = animalList.get(animalNo);
+            ToggleButton button      = new ToggleButton(nextAnimal.getName());
             button.setToggleGroup(otherGroup);
             button.setOnAction(ev -> {
-                species = nextSpecies.getId();
-                speciesPopup.hide();
+                animal = nextAnimal.getId();
+                animalPopup.hide();
             });
             button.setMaxWidth(Double.MAX_VALUE);
             button.setPadding(gridButtonInsets); // TODO: Not working. Need to make buttons taller.
             otherGrid.add(button, 0, r);
         }
-        speciesPopup.setContent(otherGrid);
+        animalPopup.setContent(otherGrid);
 
-        // Settings for other species button
+        // Settings for other animal button
         other.setMaxWidth(Double.MAX_VALUE);
         other.setToggleGroup(group);
         other.setOnAction(e -> {
             other.setSelected(true);
-            speciesPopup.show();
+            animalPopup.show();
         });
 
         // Add button to mark trap as done
@@ -106,7 +106,7 @@ public class EnterDataView extends View {
         done.setMaxWidth(Double.MAX_VALUE);
         done.setOnAction(e -> {
             if (group.getSelectedToggle() != null) {
-                walk.addCapture(new Capture(walk.getCurrentTrap().getId(), species));
+                walk.addCapture(new Capture(walk.getCurrentTrap().getId(), animal));
                 group.getSelectedToggle().setSelected(false);
                 if (walk.getCurrentTrap() != walk.getFinishTrap()) {
                     walk.finishCurrentTrap();
@@ -117,7 +117,7 @@ public class EnterDataView extends View {
                     App.getInstance().switchScreen(App.END_WALK_VIEW);
                 }
             } else {
-                done.setText("Please select a species");
+                done.setText("Please select a animal");
             }
         });
         done.setGraphic(MaterialDesignIcon.SAVE.graphic());
@@ -138,16 +138,16 @@ public class EnterDataView extends View {
         setCenter(controls);
     }
 
-    public static void addSpeciesFromDB(Animal species) {
-        speciesList.add(species);
+    public static void addAnimalFromDB(Animal animal) {
+        animalList.add(animal);
     }
 
-    public static List<Animal> getSpeciesList() {
-        return speciesList;
+    public static List<Animal> getAnimalList() {
+        return animalList;
     }
 
-    public static void setSpeciesList(List<Animal> fetchedSpeciesList) {
-        speciesList = fetchedSpeciesList;
+    public static void setAnimalList(List<Animal> fetchedAnimalList) {
+        animalList = fetchedAnimalList;
     }
 
     @Override

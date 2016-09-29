@@ -7,16 +7,7 @@ public class Capture {
 
     private int  trapId;
     private long time;
-
-    /**
-     * 0 - Empty
-     * 1 - Rat
-     * 2 - Stoat
-     * 3 - Hedgehog
-     * 4 - Cat
-     * 5 - Other
-     */
-    private int animalId;
+    private int  animalId;
 
     public Capture(int trapId, int animalId) {
         this.trapId = trapId;
@@ -24,9 +15,9 @@ public class Capture {
         time = Timestamp.valueOf(LocalDateTime.now()).getTime();
     }
 
-    public Capture(int trapId, int speciesId, long time) {
+    public Capture(int trapId, int animalId, long time) {
         this.trapId = trapId;
-        this.speciesId = speciesId;
+        this.animalId = animalId;
         this.time = time;
     }
 

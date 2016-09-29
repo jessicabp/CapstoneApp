@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * TODO: Comment and possibly refactor, fix species
+ * TODO: Comment and possibly refactor, fix animals
  */
 public class RetrieveData {
 
@@ -104,17 +104,17 @@ public class RetrieveData {
     }
 
     /**
-     * Returns a list of species objects.
+     * Returns a list of animal objects.
      *
-     * @return list of species objects
+     * @return list of animal objects
      */
-    public static List<Animal> fetchSpeciesList() throws DataUnavailableException {
-        // TODO: change to fetch species from server once implemented
-//            URL               url             = new URL(HOST + "/species");
+    public static List<Animal> fetchAnimalList() throws DataUnavailableException {
+        // TODO: change to fetch animals from server once implemented
+//            URL               url             = new URL(HOST + "/animal");
 //            HttpURLConnection connection      = (HttpURLConnection) url.openConnection();
 //            InputStream       jsonInputStream = connection.getInputStream();
 //
-//            List<Animal> speciesList = new ArrayList<>();
+//            List<Animal> animalList = new ArrayList<>();
 //            JsonReader    jsonReader  = Json.createReader(jsonInputStream);
 //            JsonObject    jsonObject  = jsonReader.readObject();
 //            jsonReader.close();
@@ -128,23 +128,23 @@ public class RetrieveData {
 //            JsonConverter<Animal> jsonConverter = new JsonConverter<>(Animal.class);
 //
 //            for (int i = 0; i < jsonArray.size(); i++) {
-//                Animal species = jsonConverter.readFromJson(jsonArray.getJsonObject(i));
-//                speciesList.add(species);
+//                Animal animal = jsonConverter.readFromJson(jsonArray.getJsonObject(i));
+//                animalList.add(animal);
 //            }
 //
 //            // Sorts trap numbers (smallest to largest) to ensure correct ordering.
-//            Collections.sort(speciesList, (a, b) -> a.getId() - b.getId());
+//            Collections.sort(animalList, (a, b) -> a.getId() - b.getId());
 
-        List<Animal> speciesList = new ArrayList<>();
+        List<Animal> animalList = new ArrayList<>();
 
-        speciesList.add(new Animal(0, "Empty"));
-        speciesList.add(new Animal(1, "Rat"));
-        speciesList.add(new Animal(2, "Stoat"));
-        speciesList.add(new Animal(3, "Hedgehog"));
-        speciesList.add(new Animal(4, "Cat"));
-        speciesList.add(new Animal(5, "Possum"));
-        speciesList.add(new Animal(6, "Other"));
+        animalList.add(new Animal(0, "Empty"));
+        animalList.add(new Animal(1, "Rat"));
+        animalList.add(new Animal(2, "Stoat"));
+        animalList.add(new Animal(3, "Hedgehog"));
+        animalList.add(new Animal(4, "Cat"));
+        animalList.add(new Animal(5, "Possum"));
+        animalList.add(new Animal(6, "Other"));
 
-        return speciesList;
+        return animalList;
     }
 }

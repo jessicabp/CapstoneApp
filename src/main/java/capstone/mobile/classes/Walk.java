@@ -140,7 +140,7 @@ public class Walk {
         this.captures.add(capture);
         try (Connection dbConnection = DriverManager.getConnection(App.getInstance().dbUrl)) {
             Statement stmt = dbConnection.createStatement();
-            String    sql  = "insert into captures values(" + capture.getTrapId() + ", " + capture.getTime() + ", " + capture.getSpeciesId() + ")";
+            String    sql  = "insert into captures values(" + capture.getTrapId() + ", " + capture.getTime() + ", " + capture.getAnimalId() + ")";
             stmt.executeUpdate(sql);
             stmt.close();
         } catch (SQLException e) {
@@ -177,7 +177,7 @@ public class Walk {
         this.changedTraps.add(trap);
         try (Connection dbConnection = DriverManager.getConnection(App.getInstance().dbUrl)) {
             Statement stmt = dbConnection.createStatement();
-            String    sql  = "insert into traps(lineId, number, latitude, longitude, side, moved, broken) values(" + trap.getLineId() + ", " + trap.getNumber() + ", " + trap.getLatitude() + ", " + trap.getLongitude() + ", " + (trap.getSide() ? 1 : 0) + ", 0, 0)";
+            String    sql  = "insert into traps(id, lineId, number, latitude, longitude, side, moved, broken) values(NULL, " + trap.getLineId() + ", " + trap.getNumber() + ", " + trap.getLatitude() + ", " + trap.getLongitude() + ", " + (trap.getSide() ? 1 : 0) + ", 0, 0)";
             stmt.executeUpdate(sql);
             stmt.close();
         } catch (SQLException e) {
