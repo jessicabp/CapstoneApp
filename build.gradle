@@ -29,8 +29,10 @@ dependencies {
     compile group: 'org.json', name: 'json', version: '20160810'
 
     androidRuntime 'com.gluonhq:charm-android:3.0.0'
+    androidRuntime 'org.sqldroid:sqldroid:1.0.3'
     iosRuntime 'com.gluonhq:charm-ios:3.0.0'
     desktopRuntime 'com.gluonhq:charm-desktop:3.0.0'
+    desktopRuntime 'org.xerial:sqlite-jdbc:3.8.11.2'
 
     testCompile 'junit:junit:4.12'
 }

@@ -97,7 +97,7 @@ public class App extends MobileApplication {
             } else if (JavaFXPlatform.isIOS()) {
                 Class.forName("SQLite.JDBCDriver");
             } else { // desktop and embedded
-                Class.forName("org.sqlite.JDBC"); // TODO: Error class not found java.lang.ClassNotFoundException: org.sqlite.JDBC
+                Class.forName("org.sqlite.JDBC");
             }
 
             Connection dbConnection = DriverManager.getConnection(dbUrl);
