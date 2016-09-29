@@ -23,7 +23,7 @@ import java.util.List;
 public class EnterDataView extends View {
 
     // TODO: load species from line?
-    private static List<Species> speciesList;
+    private static List<Animal> speciesList;
     private        Walk          walk;
     private        int           species;
     private Insets gridButtonInsets = new Insets(40, 0, 40, 0); // for making buttons taller
@@ -42,7 +42,7 @@ public class EnterDataView extends View {
         int speciesNo = 0;
         for (int r = 0; r < 2; r++) {
             for (int c = 0; c < 2; c++) {
-                Species      nextSpecies = speciesList.get(speciesNo);
+                Animal nextSpecies = speciesList.get(speciesNo);
                 ToggleButton button      = new ToggleButton(nextSpecies.getName());
                 button.setToggleGroup(group);
                 button.setOnAction(e -> species = nextSpecies.getId());
@@ -65,7 +65,7 @@ public class EnterDataView extends View {
         int r = 0;
         for (; r < (speciesList.size() - 4) / 2; r++) {
             for (int c = 0; c < 2; c++) {
-                Species      nextSpecies = speciesList.get(speciesNo);
+                Animal nextSpecies = speciesList.get(speciesNo);
                 ToggleButton button      = new ToggleButton(nextSpecies.getName());
                 button.setToggleGroup(otherGroup);
                 button.setOnAction(ev -> {
@@ -80,7 +80,7 @@ public class EnterDataView extends View {
         }
         // If there's an odd number of species, make sure the last one is included
         if (speciesList.size() % 2 != 0) {
-            Species      nextSpecies = speciesList.get(speciesNo);
+            Animal nextSpecies = speciesList.get(speciesNo);
             ToggleButton button      = new ToggleButton(nextSpecies.getName());
             button.setToggleGroup(otherGroup);
             button.setOnAction(ev -> {
@@ -138,15 +138,15 @@ public class EnterDataView extends View {
         setCenter(controls);
     }
 
-    public static void addSpeciesFromDB(Species species) {
+    public static void addSpeciesFromDB(Animal species) {
         speciesList.add(species);
     }
 
-    public static List<Species> getSpeciesList() {
+    public static List<Animal> getSpeciesList() {
         return speciesList;
     }
 
-    public static void setSpeciesList(List<Species> fetchedSpeciesList) {
+    public static void setSpeciesList(List<Animal> fetchedSpeciesList) {
         speciesList = fetchedSpeciesList;
     }
 

@@ -16,11 +16,11 @@ public class Capture {
      * 4 - Cat
      * 5 - Other
      */
-    private int speciesId;
+    private int animalId;
 
-    public Capture(int trapId, int speciesId) {
+    public Capture(int trapId, int animalId) {
         this.trapId = trapId;
-        this.speciesId = speciesId;
+        this.animalId = animalId;
         time = Timestamp.valueOf(LocalDateTime.now()).getTime();
     }
 
@@ -38,12 +38,12 @@ public class Capture {
         this.trapId = trapId;
     }
 
-    public int getSpeciesId() {
-        return speciesId;
+    public int getAnimalId() {
+        return animalId;
     }
 
-    public void setSpeciesId(int speciesId) {
-        this.speciesId = speciesId;
+    public void setAnimalId(int animalId) {
+        this.animalId = animalId;
     }
 
     public long getTime() {

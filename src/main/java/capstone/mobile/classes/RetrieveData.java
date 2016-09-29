@@ -108,13 +108,13 @@ public class RetrieveData {
      *
      * @return list of species objects
      */
-    public static List<Species> fetchSpeciesList() throws DataUnavailableException {
+    public static List<Animal> fetchSpeciesList() throws DataUnavailableException {
         // TODO: change to fetch species from server once implemented
 //            URL               url             = new URL(HOST + "/species");
 //            HttpURLConnection connection      = (HttpURLConnection) url.openConnection();
 //            InputStream       jsonInputStream = connection.getInputStream();
 //
-//            List<Species> speciesList = new ArrayList<>();
+//            List<Animal> speciesList = new ArrayList<>();
 //            JsonReader    jsonReader  = Json.createReader(jsonInputStream);
 //            JsonObject    jsonObject  = jsonReader.readObject();
 //            jsonReader.close();
@@ -125,25 +125,25 @@ public class RetrieveData {
 //            }
 //
 //            JsonArray              jsonArray     = jsonObject.getJsonArray("result");
-//            JsonConverter<Species> jsonConverter = new JsonConverter<>(Species.class);
+//            JsonConverter<Animal> jsonConverter = new JsonConverter<>(Animal.class);
 //
 //            for (int i = 0; i < jsonArray.size(); i++) {
-//                Species species = jsonConverter.readFromJson(jsonArray.getJsonObject(i));
+//                Animal species = jsonConverter.readFromJson(jsonArray.getJsonObject(i));
 //                speciesList.add(species);
 //            }
 //
 //            // Sorts trap numbers (smallest to largest) to ensure correct ordering.
 //            Collections.sort(speciesList, (a, b) -> a.getId() - b.getId());
 
-        List<Species> speciesList = new ArrayList<>();
+        List<Animal> speciesList = new ArrayList<>();
 
-        speciesList.add(new Species(0, "Empty"));
-        speciesList.add(new Species(1, "Rat"));
-        speciesList.add(new Species(2, "Stoat"));
-        speciesList.add(new Species(3, "Hedgehog"));
-        speciesList.add(new Species(4, "Cat"));
-        speciesList.add(new Species(5, "Possum"));
-        speciesList.add(new Species(6, "Other"));
+        speciesList.add(new Animal(0, "Empty"));
+        speciesList.add(new Animal(1, "Rat"));
+        speciesList.add(new Animal(2, "Stoat"));
+        speciesList.add(new Animal(3, "Hedgehog"));
+        speciesList.add(new Animal(4, "Cat"));
+        speciesList.add(new Animal(5, "Possum"));
+        speciesList.add(new Animal(6, "Other"));
 
         return speciesList;
     }
