@@ -8,6 +8,7 @@ package capstone.mobile.classes;
 public class Trap {
 
     private int id;
+    private int lineId;
     private int number;
     private boolean side = true;
     private double longitude;
@@ -21,8 +22,8 @@ public class Trap {
     /**
      * Constructor used to create new traps
      */
-    public Trap(int number, double latitude, double longitude, boolean side) {
-        this.id = 0;
+    public Trap(int lineId, int number, double latitude, double longitude, boolean side) {
+        this.lineId = lineId;
         this.number = number;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -31,12 +32,41 @@ public class Trap {
         this.broken = false;
     }
 
+    public Trap(int id, int lineId, int number, double latitude, double longitude, int side, int broken, int moved) {
+        this.id = id;
+        this.lineId = lineId;
+        this.number = number;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.side = side == 1;
+        this.moved = moved == 1;
+        this.broken = broken == 1;
+    }
+
+    public Trap(int lineId, int number, double latitude, double longitude, int side, int broken, int moved) {
+        this.lineId = lineId;
+        this.number = number;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.side = side == 1;
+        this.moved = moved == 1;
+        this.broken = broken == 1;
+    }
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getLineId() {
+        return lineId;
+    }
+
+    public void setLineId(int lineId) {
+        this.lineId = lineId;
     }
 
     public int getNumber() {

@@ -14,6 +14,11 @@ public class Line {
     private String name;
     private List<Trap> traps = new ArrayList<>();
 
+    public Line(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }

@@ -74,19 +74,19 @@ public class DoWalkView extends View {
         found.setMaxWidth(Double.MAX_VALUE);
         found.setOnAction(e -> {
             timeline.stop();
-            App.getInstance().switchView(App.ENTER_DATA_VIEW);
+            App.getInstance().switchScreen(App.ENTER_DATA_VIEW);
         });
         Button skip = new Button("Skip");
         skip.setMaxWidth(Double.MAX_VALUE);
         skip.setOnAction(e -> {
+            timeline.stop();
             if (walk.getCurrentTrap() != walk.getFinishTrap()) {
-                timeline.stop();
                 walk.finishCurrentTrap();
                 // Switch to another view and back to refresh data on screen
-                App.getInstance().switchView(App.ENTER_DATA_VIEW);
-                App.getInstance().switchView(App.DO_WALK_VIEW);
+                App.getInstance().switchScreen(App.ENTER_DATA_VIEW);
+                App.getInstance().switchScreen(App.DO_WALK_VIEW);
             } else {
-                App.getInstance().switchView(App.END_WALK_VIEW);
+                App.getInstance().switchScreen(App.END_WALK_VIEW);
             }
         });
 
@@ -140,7 +140,7 @@ public class DoWalkView extends View {
     @Override
     protected void updateAppBar(AppBar appBar) {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
-        appBar.setTitleText("Walking: " + walk.getLine().getName());
+        appBar.setTitleText("Trap " + walk.getCurrentTrap().getNumber() + " - " + walk.getLine().getName());
         timeline.play();
 
         // Update message about side of path for trap

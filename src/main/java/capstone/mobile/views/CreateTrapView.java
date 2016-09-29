@@ -118,9 +118,9 @@ public class CreateTrapView extends View {
             if (number.getText().length() == 0 || locationGroup.getSelectedToggle() == null || sideGroup.getSelectedToggle() == null) {
                 save.setText("Please complete all details");
             } else {
-                Trap trap = new Trap(Integer.parseInt(number.getText()), latitude, longitude, (sideGroup.getSelectedToggle() == left ? true : false));
+                Trap trap = new Trap(walk.getLine().getId(), Integer.parseInt(number.getText()), latitude, longitude, (sideGroup.getSelectedToggle() == left ? true : false));
                 walk.addNewTrap(trap);
-                App.getInstance().switchView(App.DO_WALK_VIEW);
+                App.getInstance().switchScreen(App.DO_WALK_VIEW);
             }
         });
         Button cancel = new Button("Cancel");

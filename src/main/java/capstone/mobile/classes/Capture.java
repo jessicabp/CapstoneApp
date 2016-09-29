@@ -24,6 +24,12 @@ public class Capture {
         time = Timestamp.valueOf(LocalDateTime.now()).getTime();
     }
 
+    public Capture(int trapId, int speciesId, long time) {
+        this.trapId = trapId;
+        this.speciesId = speciesId;
+        this.time = time;
+    }
+
     public int getTrapId() {
         return trapId;
     }

@@ -64,7 +64,7 @@ public class EnterMaintenance extends View {
             if (broken.isSelected() != walk.getCurrentTrap().isBroken() || moved.isSelected() != walk.getCurrentTrap().isMoved()) {
                 walk.addChangedTrap(walk.getCurrentTrap());
             }
-            App.getInstance().switchView(App.ENTER_DATA_VIEW);
+            App.getInstance().switchScreen(App.ENTER_DATA_VIEW);
         });
         save.setGraphic(MaterialDesignIcon.SAVE.graphic());
 

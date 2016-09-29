@@ -25,7 +25,7 @@ public class EndWalkView extends View {
         send.setWrapText(true);
         send.setOnAction(e -> {
             sendData();
-            App.getInstance().switchView(App.HOME_VIEW);
+            App.getInstance().switchScreen(App.HOME_VIEW);
         });
 
         VBox controls = new VBox(15.0, send);

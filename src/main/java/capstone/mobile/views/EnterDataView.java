@@ -1,14 +1,9 @@
 package capstone.mobile.views;
 
 import capstone.mobile.App;
-import capstone.mobile.classes.Capture;
-import capstone.mobile.classes.CustomGridPane;
-import capstone.mobile.classes.Species;
-import capstone.mobile.classes.Walk;
-import com.gluonhq.charm.glisten.application.GlassPane;
+import capstone.mobile.classes.*;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
-import com.gluonhq.charm.glisten.layout.layer.PopupView;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import javafx.geometry.Insets;
@@ -62,9 +57,9 @@ public class EnterDataView extends View {
         ToggleButton other = new ToggleButton("Other");
 
         // Popup for selecting other species
-        PopupView      speciesPopup = new PopupView(other);
-        ToggleGroup    otherGroup   = new ToggleGroup();
-        CustomGridPane otherGrid    = new CustomGridPane(2);
+        CustomPopupView speciesPopup = new CustomPopupView(other);
+        ToggleGroup     otherGroup   = new ToggleGroup();
+        CustomGridPane  otherGrid    = new CustomGridPane(2);
         otherGrid.setPadding(new Insets(20, 20, 20, 20));
         // Add all species to grid and toggle group
         int r = 0;
@@ -76,7 +71,6 @@ public class EnterDataView extends View {
                 button.setOnAction(ev -> {
                     species = nextSpecies.getId();
                     speciesPopup.hide();
-                    App.getInstance().getGlassPane().setBackgroundFade(0);
                 });
                 button.setMaxWidth(Double.MAX_VALUE); // TODO: other species buttons aren't wide enough
                 button.setPadding(gridButtonInsets); // TODO: Not working. Need to make buttons taller.
@@ -92,7 +86,6 @@ public class EnterDataView extends View {
             button.setOnAction(ev -> {
                 species = nextSpecies.getId();
                 speciesPopup.hide();
-                App.getInstance().getGlassPane().setBackgroundFade(0);
             });
             button.setMaxWidth(Double.MAX_VALUE);
             button.setPadding(gridButtonInsets); // TODO: Not working. Need to make buttons taller.
@@ -106,7 +99,6 @@ public class EnterDataView extends View {
         other.setOnAction(e -> {
             other.setSelected(true);
             speciesPopup.show();
-            App.getInstance().getGlassPane().setBackgroundFade(GlassPane.DEFAULT_BACKGROUND_FADE_LEVEL);
         });
 
         // Add button to mark trap as done
@@ -119,10 +111,10 @@ public class EnterDataView extends View {
                 if (walk.getCurrentTrap() != walk.getFinishTrap()) {
                     walk.finishCurrentTrap();
                     // Switch to another view and back to refresh data on screen
-                    App.getInstance().switchView(App.ENTER_DATA_VIEW);
-                    App.getInstance().switchView(App.DO_WALK_VIEW);
+                    App.getInstance().switchScreen(App.ENTER_DATA_VIEW);
+                    App.getInstance().switchScreen(App.DO_WALK_VIEW);
                 } else {
-                    App.getInstance().switchView(App.END_WALK_VIEW);
+                    App.getInstance().switchScreen(App.END_WALK_VIEW);
                 }
             } else {
                 done.setText("Please select a species");
@@ -133,9 +125,9 @@ public class EnterDataView extends View {
         // Add buttons to add image or maintenance info
         HBox   hb3   = new HBox(15.0);
         Button photo = new Button("Photo");
-        photo.setOnAction(e -> App.getInstance().switchView(App.CAMERA));
+        photo.setOnAction(e -> App.getInstance().switchScreen(App.CAMERA));
         Button maintenance = new Button("Maintenance");
-        maintenance.setOnAction(e -> App.getInstance().switchView(App.MAINTENANCE));
+        maintenance.setOnAction(e -> App.getInstance().switchScreen(App.MAINTENANCE));
         hb3.getChildren().addAll(photo, maintenance);
         hb3.setAlignment(Pos.CENTER);
 
@@ -144,6 +136,14 @@ public class EnterDataView extends View {
         controls.setPadding(new Insets(40, 40, 40, 40));
         controls.setAlignment(Pos.CENTER);
         setCenter(controls);
+    }
+
+    public static void addSpeciesFromDB(Species species) {
+        speciesList.add(species);
+    }
+
+    public static List<Species> getSpeciesList() {
+        return speciesList;
     }
 
     public static void setSpeciesList(List<Species> fetchedSpeciesList) {

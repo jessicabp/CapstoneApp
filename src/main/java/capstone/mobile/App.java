@@ -1,7 +1,9 @@
 package capstone.mobile;
 
-import capstone.mobile.classes.Walk;
+import capstone.mobile.classes.*;
 import capstone.mobile.views.*;
+import com.gluonhq.charm.down.common.JavaFXPlatform;
+import com.gluonhq.charm.down.common.PlatformFactory;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.Avatar;
 import com.gluonhq.charm.glisten.control.NavigationDrawer;
@@ -14,6 +16,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.IOException;
+import java.sql.*;
 
 @License(key = "60820384-1db6-43c0-a456-1ed0ede425b4")
 
@@ -33,7 +39,15 @@ public class App extends MobileApplication {
     public static final String END_WALK_VIEW      = "End walk";
     public static final String MENU_LAYER         = "Side Menu";
 
-    private Walk walk;
+    // Strings to name values stored on device
+    public static String CURRENTPAGE   = "CURRENTPAGE";
+    public static String CURRENTLINEID = "CURRENTLINE";
+    public static String CURRENTTRAPID = "CURRENTTRAP";
+    public static String ENDTRAPID     = "ENDTRAP";
+
+    private static App    a;
+    public         String dbUrl;
+    private        Walk   walk;
 
     // Items to appear in the side menu bar
     private Item homeItem;
@@ -46,27 +60,78 @@ public class App extends MobileApplication {
     private final ChangeListener listener = (obs, oldItem, newItem) -> {
         hideLayer(MENU_LAYER);
         if (newItem.equals(homeItem)) {
-            switchView(HOME_VIEW);
+            switchScreen(HOME_VIEW);
         } else if (newItem.equals(createTrapItem)) {
             CreateTrapView.getTimeline().stop();
             DoWalkView.getTimeline().stop();
-            switchView(CREATE_TRAP_VIEW);
+            switchScreen(CREATE_TRAP_VIEW);
         } else if (newItem.equals(endWalkItem)) {
             CreateTrapView.getTimeline().stop();
             DoWalkView.getTimeline().stop();
-            switchView(END_WALK_VIEW);
+            switchScreen(END_WALK_VIEW);
         }
     };
 
+    public static App getInstance() {
+        return a;
+    }
+
     @Override
     public void init() {
+        a = this;
 
         // Initializing walk object
         walk = new Walk();
 
+        try {
+            if (JavaFXPlatform.isAndroid()) {
+                Class.forName("org.sqldroid.SQLDroidDriver");
+            } else if (JavaFXPlatform.isIOS()) {
+                Class.forName("SQLite.JDBCDriver");
+            } else { // desktop and embedded
+                Class.forName("org.sqlite.JDBC");
+            }
+
+            File db = new File(PlatformFactory.getPlatform().getPrivateStorage(), "garnetDatabase");
+            dbUrl = "jdbc:sqlite:" + db.getAbsolutePath();
+            Connection dbConnection = DriverManager.getConnection(dbUrl);
+
+            if (dbConnection != null) {
+                Statement stmt = dbConnection.createStatement();
+                stmt.executeUpdate("CREATE TABLE IF NOT EXISTS lines (" +
+                                   "id INTEGER PRIMARY KEY NOT NULL, " +
+                                   "name TEXT NOT NULL)");
+                stmt.executeUpdate("CREATE TABLE IF NOT EXISTS traps (" +
+                                   "lineId INTEGER REFERENCES lines(id) ON UPDATE CASCADE ON DELETE CASCADE, " +
+                                   "id INTEGER, " + // TODO: all traps must have an id in database - NULL if new.
+                                   "number INTEGER NOT NULL, " +
+                                   "latitude REAL NOT NULL, " +
+                                   "longitude REAL NOT NULL, " +
+                                   "side INTEGER NOT NULL, " +
+                                   "moved INTEGER NOT NULL, " +
+                                   "broken INTEGER NOT NULL, " +
+                                   "changed TEXT)");
+                stmt.executeUpdate("CREATE TABLE IF NOT EXISTS captures (" +
+                                   "trapId INTEGER NOT NULL REFERENCES traps(id) ON UPDATE CASCADE ON DELETE CASCADE, " +
+                                   "time REAL NOT NULL, " +
+                                   "speciesId INTEGER NOT NULL)");
+                stmt.executeUpdate("CREATE TABLE IF NOT EXISTS species (" +
+                                   "id INTEGER PRIMARY KEY, " +
+                                   "name TEXT NOT NULL)");
+                stmt.close();
+            }
+            dbConnection.close();
+        } catch (ClassNotFoundException e) {
+            System.out.println("Error class not found " + e);
+        } catch (IOException ex) {
+            System.out.println("Error " + ex);
+        } catch (SQLException ex) {
+            System.out.println("SQL Exception " + ex);
+        }
+
         // Create all views
-        addViewFactory(HOME_VIEW, () -> new HomeView(HOME_VIEW));
         addViewFactory(DISPLAY_LINES_VIEW, () -> new DisplayLinesView(DISPLAY_LINES_VIEW, walk));
+        addViewFactory(HOME_VIEW, () -> new HomeView(HOME_VIEW, walk));
         addViewFactory(SET_UP_WALK_VIEW, () -> new SetUpWalkView(SET_UP_WALK_VIEW, walk));
         addViewFactory(DO_WALK_VIEW, () -> new DoWalkView(DO_WALK_VIEW, walk));
         addViewFactory(ENTER_DATA_VIEW, () -> new EnterDataView(ENTER_DATA_VIEW, walk));
@@ -105,6 +170,50 @@ public class App extends MobileApplication {
             }
             drawer.selectedItemProperty().addListener(listener);
         });
+
+        // Load data from database
+        try (Connection dbConnection = DriverManager.getConnection(dbUrl)) {
+            Statement stmt    = dbConnection.createStatement();
+            ResultSet linesRS = stmt.executeQuery("SELECT * FROM lines;");
+            while (linesRS.next()) {
+                // load line from database
+                int  lineId = linesRS.getInt("id");
+                Line line   = new Line(lineId, linesRS.getString("name"));
+                // get traps on line
+                ResultSet trapRS = stmt.executeQuery("SELECT * FROM traps WHERE lineId = " + lineId + ";");
+                while (trapRS.next()) {
+                    if (trapRS.getObject("id") != null) {
+                        // add trap from the
+                        Trap trap = new Trap(trapRS.getInt("id"), trapRS.getInt("lineId"), trapRS.getInt("number"), trapRS.getDouble("latitude"), trapRS.getDouble("longitude"), trapRS.getInt("side"), trapRS.getInt("broken"), trapRS.getInt("moved"));
+                        walk.getLine().addTrap(trap);
+                        if (trapRS.getString("changed").equals("true")) {
+                            walk.addChangedTrap(trap);
+                        }
+                    } else {
+                        // add new trap
+                        walk.addChangedTrap(new Trap(trapRS.getInt("lineId"), trapRS.getInt("number"), trapRS.getDouble("latitude"), trapRS.getDouble("longitude"), trapRS.getInt("side"), trapRS.getInt("broken"), trapRS.getInt("moved")));
+                    }
+                }
+                trapRS.close();
+                DisplayLinesView.getObservableLinesList().add(line);
+            }
+            linesRS.close();
+            // load captures
+            ResultSet captureRS = stmt.executeQuery("SELECT * FROM captures;");
+            while (captureRS.next()) {
+                walk.addCapture(new Capture(captureRS.getInt("trapID"), captureRS.getInt("speciesID"), captureRS.getLong("time")));
+            }
+            captureRS.close();
+            // load species
+            ResultSet speciesRS = stmt.executeQuery("SELECT * FROM species;");
+            while (speciesRS.next()) {
+                EnterDataView.addSpeciesFromDB(new Species(speciesRS.getInt("id"), speciesRS.getString("name")));
+            }
+            speciesRS.close();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -117,5 +226,10 @@ public class App extends MobileApplication {
         homeItem.disableProperty().bind(Walk.isWalking());
         createTrapItem.disableProperty().bind(Walk.isWalking().not());
         endWalkItem.disableProperty().bind(Walk.isWalking().not());
+    }
+
+    public void switchScreen(String viewName) {
+        switchView(viewName);
+        PlatformFactory.getPlatform().getSettingService().store(CURRENTPAGE, viewName);
     }
 }

@@ -21,6 +21,6 @@ public class Camera extends View {
     protected void updateAppBar(AppBar appBar) {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
         appBar.setTitleText("Camera");
-        appBar.getActionItems().add(MaterialDesignIcon.UNDO.button(e -> App.getInstance().switchView(App.ENTER_DATA_VIEW)));
+        appBar.getActionItems().add(MaterialDesignIcon.UNDO.button(e -> App.getInstance().switchScreen(App.ENTER_DATA_VIEW)));
     }
 }

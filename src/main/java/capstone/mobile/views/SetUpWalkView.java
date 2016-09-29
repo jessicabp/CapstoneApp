@@ -83,7 +83,7 @@ public class SetUpWalkView extends View {
                 } else {
                     end = trap;
                     walk.startWalk(start, end);
-                    App.getInstance().switchView(App.DO_WALK_VIEW);
+                    App.getInstance().switchScreen(App.DO_WALK_VIEW);
                 }
             });
 

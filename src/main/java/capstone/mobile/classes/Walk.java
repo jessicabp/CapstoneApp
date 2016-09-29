@@ -2,12 +2,18 @@ package capstone.mobile.classes;
 
 import capstone.mobile.App;
 import capstone.mobile.views.DoWalkView;
+import com.gluonhq.charm.down.common.PlatformFactory;
+import com.gluonhq.charm.down.common.SettingService;
 import gluonhq.maps.MapPoint;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +45,11 @@ public class Walk {
     public void setLine(Line line) throws DataUnavailableException {
         this.line = line;
         line.setTraps(RetrieveData.fetchTrapsList(line.getId()));
+        PlatformFactory.getPlatform().getSettingService().store(App.CURRENTLINEID, String.valueOf(line.getId()));
+    }
+
+    public void setLineAtRestart(Line line) {
+        this.line = line;
     }
 
     public Trap getFinishTrap() {
@@ -65,6 +76,8 @@ public class Walk {
         finishTrap = end;
         direction = currentTrap.getNumber() < finishTrap.getNumber();
         index = line.getTraps().indexOf(start);
+        PlatformFactory.getPlatform().getSettingService().store(App.CURRENTTRAPID, String.valueOf(start.getId()));
+        PlatformFactory.getPlatform().getSettingService().store(App.ENDTRAPID, String.valueOf(end.getId()));
     }
 
     /**
@@ -78,6 +91,22 @@ public class Walk {
         currentTrap = null;
         captures = new ArrayList<>();
         changedTraps = new ArrayList<>();
+        SettingService settingService = PlatformFactory.getPlatform().getSettingService();
+        settingService.remove(App.CURRENTLINEID);
+        settingService.remove(App.CURRENTTRAPID);
+        settingService.remove(App.ENDTRAPID);
+
+        try (Connection dbConnection = DriverManager.getConnection(App.getInstance().dbUrl)) {
+            if (dbConnection != null) {
+                Statement stmt = dbConnection.createStatement();
+                stmt.executeUpdate("DELETE FROM captures");
+                stmt.executeUpdate("update traps set changed = NULL;");
+                stmt.executeUpdate("DELETE FROM traps WHERE id = NULL");
+                stmt.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -89,7 +118,7 @@ public class Walk {
         System.out.println("Index: " + index);
         System.out.println("Length: " + line.getTraps().size());
         System.out.println("(from Walk ln 87)");
-        // TODO: current trap is sometimes not in line.getTraps()
+        // TODO: remove prints
         if (currentTrap != finishTrap) {
             if (direction) {
                 index++;
@@ -97,8 +126,9 @@ public class Walk {
                 index--;
             }
             currentTrap = line.getNextTrap(index);
+            PlatformFactory.getPlatform().getSettingService().store(App.CURRENTTRAPID, String.valueOf(currentTrap.getId()));
         } else {
-            App.getInstance().switchView(App.END_WALK_VIEW);
+            App.getInstance().switchScreen(App.END_WALK_VIEW);
         }
     }
 
@@ -108,6 +138,14 @@ public class Walk {
 
     public void addCapture(Capture capture) {
         this.captures.add(capture);
+        try (Connection dbConnection = DriverManager.getConnection(App.getInstance().dbUrl)) {
+            Statement stmt = dbConnection.createStatement();
+            String    sql  = "insert into captures values(" + capture.getTrapId() + ", " + capture.getTime() + ", " + capture.getSpeciesId() + ")";
+            stmt.executeUpdate(sql);
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -117,6 +155,13 @@ public class Walk {
      */
     public void addChangedTrap(Trap trap) {
         this.changedTraps.add(trap);
+        try (Connection dbConnection = DriverManager.getConnection(App.getInstance().dbUrl)) {
+            Statement stmt = dbConnection.createStatement();
+            stmt.executeUpdate("update traps set changed = 'true' WHERE id = " + trap.getId() + ";");
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -130,9 +175,15 @@ public class Walk {
 
     public void addNewTrap(Trap trap) {
         this.changedTraps.add(trap);
-        line.getTraps().add(index, trap);
-        currentTrap = trap;
-        Circle   marker   = new Circle(5, Color.ORANGE);
+        try (Connection dbConnection = DriverManager.getConnection(App.getInstance().dbUrl)) {
+            Statement stmt = dbConnection.createStatement();
+            String    sql  = "insert into traps(lineId, number, latitude, longitude, side, moved, broken) values(" + trap.getLineId() + ", " + trap.getNumber() + ", " + trap.getLatitude() + ", " + trap.getLongitude() + ", " + (trap.getSide() ? 1 : 0) + ", 0, 0)";
+            stmt.executeUpdate(sql);
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        Circle   marker   = new Circle(5, Color.YELLOW);
         MapPoint mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
         DoWalkView.getMapView().addMarker(DoWalkView.getMarkersLayer(), mapPoint, marker);
     }
