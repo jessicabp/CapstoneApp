@@ -24,6 +24,9 @@ dependencies {
     compile 'com.gluonhq:charm:3.0.0', 'com.gluonhq:maps:1.0.0'
     compile group: 'net.java.openjfx.backport', name: 'openjfx-78-backport', version: '1.8.0-ea-b96.1'
     compile group: 'com.github.seratch', name: 'java-time-backport', version: '1.0.0'
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
+    compile group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.5'
+    compile group: 'org.json', name: 'json', version: '20160810'
 
     androidRuntime 'com.gluonhq:charm-android:3.0.0'
     iosRuntime 'com.gluonhq:charm-ios:3.0.0'

@@ -108,7 +108,7 @@ public class DoWalkView extends View {
             mapView.addMarker(markersLayer, mapPoint, marker);
         }
 
-        timeline = new Timeline(new KeyFrame(Duration.millis(500), e -> {
+        timeline = new Timeline(new KeyFrame(Duration.millis(2000), e -> {
             System.out.println("Updating position..");
             positionLayer = mapView.clearMarkers(positionLayer);
             try {

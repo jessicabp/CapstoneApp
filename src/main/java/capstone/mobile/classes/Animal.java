@@ -2,14 +2,14 @@ package capstone.mobile.classes;
 
 
 /**
- * Species which can be referenced by a trap to indicate what was caught
+ * Animal which can be referenced by a trap to indicate what was caught
  * TODO: this class currently not used
  */
-public class Species {
+public class Animal {
     private int    id;
     private String name;
 
-    public Species(int id, String name) {
+    public Animal(int id, String name) {
         this.id = id;
         this.name = name;
     }

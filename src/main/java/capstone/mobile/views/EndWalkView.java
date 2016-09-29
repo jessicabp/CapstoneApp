@@ -34,7 +34,7 @@ public class EndWalkView extends View {
     }
 
     private void sendData() {
-        SendData.sendCaptureData(walk);
+        SendData.sendWalkData(walk);
         // TODO: ensure all data is sent (incl. edited/new traps - SO ADD METHOD TO SEND TRAPS/NEW LINE) - if all successful, THEN end walk and go to home screen
         walk.finishWalk();
     }
