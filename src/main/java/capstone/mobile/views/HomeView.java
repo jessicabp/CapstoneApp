@@ -32,11 +32,17 @@ public class HomeView extends View {
         controls.setAlignment(Pos.CENTER);
         setCenter(controls);
 
-        // Button to view lines
-        Button lines = new Button("Select an existing line");
-        lines.setMaxWidth(Double.MAX_VALUE);
-        lines.setOnAction(e -> App.getInstance().switchScreen(App.DISPLAY_LINES_VIEW));
-        controls.getChildren().add(lines);
+        // Button to view favourite lines
+        Button favLines = new Button("Select a line you've used before");
+        favLines.setMaxWidth(Double.MAX_VALUE);
+//        lines.setOnAction(e -> ); // TODO: complete functionality
+        controls.getChildren().add(favLines);
+
+        // Button to view all lines
+        Button allLines = new Button("Select a new line");
+        allLines.setMaxWidth(Double.MAX_VALUE);
+        allLines.setOnAction(e -> App.getInstance().switchScreen(App.DISPLAY_LINES_VIEW));
+        controls.getChildren().add(allLines);
 
         if (currentPage != App.HOME_VIEW) {
             SettingService settingService = PlatformFactory.getPlatform().getSettingService();

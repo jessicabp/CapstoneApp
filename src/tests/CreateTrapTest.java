@@ -11,8 +11,8 @@ public class CreateTrapTest {
         double  longitude = 135.08785;
         boolean side      = true;
 
-        Trap newTrap = new Trap(number, latitude, longitude, side);
-        Assert.assertEquals(newTrap.getId(), 0);
+        Trap newTrap = new Trap(1, number, latitude, longitude, side);
+        Assert.assertEquals(newTrap.getLineId(), 1);
         Assert.assertEquals(newTrap.getNumber(), number);
         Assert.assertEquals(newTrap.getLatitude(), latitude, 0);
         Assert.assertEquals(newTrap.getLongitude(), longitude, 0);

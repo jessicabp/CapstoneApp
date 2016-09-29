@@ -83,17 +83,23 @@ public class App extends MobileApplication {
         // Initializing walk object
         walk = new Walk();
 
+        File db = null;
+        try {
+            db = new File(PlatformFactory.getPlatform().getPrivateStorage(), "TrapTrackerDatabase");
+            dbUrl = "jdbc:sqlite:" + db.getAbsolutePath();
+        } catch (IOException ex) {
+            System.out.println("Error " + ex);
+        }
+
         try {
             if (JavaFXPlatform.isAndroid()) {
                 Class.forName("org.sqldroid.SQLDroidDriver");
             } else if (JavaFXPlatform.isIOS()) {
                 Class.forName("SQLite.JDBCDriver");
             } else { // desktop and embedded
-                Class.forName("org.sqlite.JDBC");
+                Class.forName("org.sqlite.JDBC"); // TODO: Error class not found java.lang.ClassNotFoundException: org.sqlite.JDBC
             }
 
-            File db = new File(PlatformFactory.getPlatform().getPrivateStorage(), "garnetDatabase");
-            dbUrl = "jdbc:sqlite:" + db.getAbsolutePath();
             Connection dbConnection = DriverManager.getConnection(dbUrl);
 
             if (dbConnection != null) {
@@ -123,8 +129,6 @@ public class App extends MobileApplication {
             dbConnection.close();
         } catch (ClassNotFoundException e) {
             System.out.println("Error class not found " + e);
-        } catch (IOException ex) {
-            System.out.println("Error " + ex);
         } catch (SQLException ex) {
             System.out.println("SQL Exception " + ex);
         }
