@@ -77,9 +77,9 @@ public class DisplayLinesView extends View {
         });
 
         // Add listener to cells
-        linesListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                selectLine(newValue);
+        linesListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newLine) -> {
+            if (newLine != null) {
+                selectLine(newLine);
             }
         });
 

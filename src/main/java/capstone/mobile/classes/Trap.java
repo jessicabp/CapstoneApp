@@ -16,6 +16,9 @@ public class Trap {
     private boolean broken = false;
     private boolean moved  = false;
 
+    public Trap() {
+    }
+
     /**
      * Constructor used to create new traps
      */

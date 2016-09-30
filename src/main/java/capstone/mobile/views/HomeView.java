@@ -44,7 +44,7 @@ public class HomeView extends View {
         allLines.setOnAction(e -> App.getInstance().switchScreen(App.DISPLAY_LINES_VIEW));
         controls.getChildren().add(allLines);
 
-        if (currentPage != App.HOME_VIEW) {
+        if (!currentPage.equals(App.HOME_VIEW)) {
             SettingService settingService = PlatformFactory.getPlatform().getSettingService();
             if (settingService.retrieve(App.CURRENTLINEID) != null) {
                 int currentLineId = Integer.parseInt(settingService.retrieve(App.CURRENTLINEID));

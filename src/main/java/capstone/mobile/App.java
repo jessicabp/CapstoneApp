@@ -78,6 +78,11 @@ public class App extends MobileApplication {
 
     @Override
     public void init() {
+
+        // TODO: remove
+//        PlatformFactory.getPlatform().getSettingService().remove(App.CURRENTPAGE);
+
+
         a = this;
 
         // Initializing walk object
@@ -104,6 +109,12 @@ public class App extends MobileApplication {
 
             if (dbConnection != null) {
                 Statement stmt = dbConnection.createStatement();
+                // TODO: remove table deletion
+//                stmt.executeUpdate("DROP TABLE IF EXISTS lines");
+//                stmt.executeUpdate("DROP TABLE IF EXISTS traps");
+//                stmt.executeUpdate("DROP TABLE IF EXISTS captures");
+//                stmt.executeUpdate("DROP TABLE IF EXISTS animals");
+//                stmt.executeUpdate("DROP TABLE IF EXISTS species");
                 stmt.executeUpdate("CREATE TABLE IF NOT EXISTS lines (" +
                                    "id INTEGER PRIMARY KEY NOT NULL, " +
                                    "name TEXT NOT NULL)");
@@ -135,7 +146,6 @@ public class App extends MobileApplication {
 
         // Create all views
         addViewFactory(DISPLAY_LINES_VIEW, () -> new DisplayLinesView(DISPLAY_LINES_VIEW, walk));
-        addViewFactory(HOME_VIEW, () -> new HomeView(HOME_VIEW, walk));
         addViewFactory(SET_UP_WALK_VIEW, () -> new SetUpWalkView(SET_UP_WALK_VIEW, walk));
         addViewFactory(DO_WALK_VIEW, () -> new DoWalkView(DO_WALK_VIEW, walk));
         addViewFactory(ENTER_DATA_VIEW, () -> new EnterDataView(ENTER_DATA_VIEW, walk));
@@ -143,6 +153,7 @@ public class App extends MobileApplication {
         addViewFactory(MAINTENANCE, () -> new EnterMaintenance(MAINTENANCE, walk));
         addViewFactory(CREATE_TRAP_VIEW, () -> new CreateTrapView(CREATE_TRAP_VIEW, walk));
         addViewFactory(END_WALK_VIEW, () -> new EndWalkView(END_WALK_VIEW, walk));
+        addViewFactory(HOME_VIEW, () -> new HomeView(HOME_VIEW, walk));
 
         // Create items to populate side menu bar
         homeItem = new Item("Home", MaterialDesignIcon.HOME.graphic());
@@ -209,11 +220,11 @@ public class App extends MobileApplication {
             }
             captureRS.close();
             // load animal
-            ResultSet animalRS = stmt.executeQuery("SELECT * FROM animals;");
-            while (animalRS.next()) {
-                EnterDataView.addAnimalFromDB(new Animal(animalRS.getInt("id"), animalRS.getString("name")));
-            }
-            animalRS.close();
+//            ResultSet animalRS = stmt.executeQuery("SELECT * FROM animals;");
+//            while (animalRS.next()) {
+//                EnterDataView.addAnimalFromDB(new Animal(animalRS.getInt("id"), animalRS.getString("name")));
+//            }
+//            animalRS.close();
             stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
