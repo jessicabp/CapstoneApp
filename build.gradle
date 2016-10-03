@@ -21,9 +21,7 @@ repositories {
 mainClassName = 'capstone.mobile.App'
 
 dependencies {
-    compile 'com.gluonhq:charm:3.0.0', 'com.gluonhq:maps:1.0.0'
-    compile group: 'net.java.openjfx.backport', name: 'openjfx-78-backport', version: '1.8.0-ea-b96.1'
-    compile group: 'com.github.seratch', name: 'java-time-backport', version: '1.0.0'
+    compile 'com.gluonhq:charm:3.0.0'
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
     compile group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.5'
     compile group: 'org.json', name: 'json', version: '20160810'
@@ -35,11 +33,20 @@ dependencies {
     desktopRuntime 'org.xerial:sqlite-jdbc:3.8.11.2'
 
     testCompile 'junit:junit:4.12'
+    testCompile group: 'com.github.seratch', name: 'java-time-backport', version: '1.0.0'
+    testCompile group: 'net.java.openjfx.backport', name: 'openjfx-78-backport', version: '1.8.0-ea-b96.1'
 }
 
 jfxmobile {
     android {
         manifest = 'src/android/AndroidManifest.xml'
+        packagingOptions {
+            exclude 'META-INF/DEPENDENCIES'
+            exclude 'META-INF/NOTICE'
+            exclude 'META-INF/LICENSE'
+            exclude 'META-INF/LICENSE.txt'
+            exclude 'META-INF/NOTICE.txt'
+        }
     }
     ios {
         infoPList = file('src/ios/Default-Info.plist')

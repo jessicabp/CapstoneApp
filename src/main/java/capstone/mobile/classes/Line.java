@@ -14,6 +14,12 @@ public class Line {
     private String name;
     private List<Trap> traps = new ArrayList<>();
 
+    private int animal1;
+    private int animal2;
+    private int animal3;
+
+    public Line() {}
+
     public Line(int id, String name) {
         this.id = id;
         this.name = name;

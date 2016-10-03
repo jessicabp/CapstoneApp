@@ -63,11 +63,11 @@ public class App extends MobileApplication {
             switchScreen(HOME_VIEW);
         } else if (newItem.equals(createTrapItem)) {
             CreateTrapView.getTimeline().stop();
-            DoWalkView.getTimeline().stop();
+            // DoWalkView.getTimeline().stop();
             switchScreen(CREATE_TRAP_VIEW);
         } else if (newItem.equals(endWalkItem)) {
             CreateTrapView.getTimeline().stop();
-            DoWalkView.getTimeline().stop();
+            // DoWalkView.getTimeline().stop();
             switchScreen(END_WALK_VIEW);
         }
     };
