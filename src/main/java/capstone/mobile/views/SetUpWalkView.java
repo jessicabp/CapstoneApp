@@ -12,6 +12,7 @@ import gluonhq.maps.MapPoint;
 import gluonhq.maps.PoiLayer;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -21,15 +22,23 @@ import javafx.scene.text.Text;
 import java.util.List;
 
 
+// TODO: Rename confusing variables
 public class SetUpWalkView extends View {
 
+    private final static double MAP_HEIGHT = 200;
+
     private Walk          walk;
-    private Trap          start;
-    private Trap          end;
-    private Label         prompt;
-    private CustomMapView mapView;
-    private PoiLayer      markersLayer;
-    private PoiLayer      numbersLayer;
+    private Trap          startTrap;
+    private Trap          endTrap;
+    private CustomMapView startMapView;
+    private CustomMapView endMapView;
+    private PoiLayer      startMarkersLayer;
+    private PoiLayer      endMarkersLayer;
+    private PoiLayer      startNumbersLayer;
+    private PoiLayer      endNumbersLayer;
+    private Circle        startCircle;
+    private Circle        endCircle;
+
 
     public SetUpWalkView(String name, Walk walk) {
         super(name);
@@ -37,35 +46,43 @@ public class SetUpWalkView extends View {
 
         getStylesheets().add(SetUpWalkView.class.getResource("secondary.css").toExternalForm());
 
-        // Create label to prompt user
-        prompt = new Label("Please pick a start point");
-
-        // Creating the map display
-        mapView = new CustomMapView();
+        // Creating the map displays
+        startMapView = new CustomMapView(MAP_HEIGHT );
+        endMapView = new CustomMapView(MAP_HEIGHT);
 
         // Creating the map layers on which markers and numbers will be added, note that
         // ORDERING of layers is IMPORTANT for interacting with the map markers.
-        numbersLayer = mapView.createLayer();
-        markersLayer = mapView.createLayer();
+        startNumbersLayer = startMapView.createLayer();
+        endNumbersLayer = endMapView.createLayer();
+        startMarkersLayer = startMapView.createLayer();
+        endMarkersLayer = endMapView.createLayer();
 
+        // Creating the labels and button
+        Label startLabel = new Label();
+        startLabel.setText("Select starting trap:");
+        Label endLabel = new Label();
+        endLabel.setText("Select ending trap:");
+
+        Button startButton = new Button();
+        startButton.setText("Start Walk");
+        startButton.setOnMouseClicked(e -> {
+            if(startTrap != null && endTrap != null) {
+                walk.startWalk(startTrap, endTrap);
+                App.getInstance().switchScreen(App.DO_WALK_VIEW);
+            }
+        });
         // Create VBox and add all items
-        VBox controls = new VBox(mapView, prompt);
+        VBox controls = new VBox(startLabel, startMapView, endLabel, endMapView, startButton);
         // controls.setPadding(new Insets(0, 40, 40, 40));
         controls.setAlignment(Pos.TOP_CENTER);
         setCenter(controls);
     }
-
+    
     @Override
     protected void updateAppBar(AppBar appBar) {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
         appBar.setTitleText("Set Up Walk");
         appBar.getActionItems().add(MaterialDesignIcon.UNDO.button(e -> App.getInstance().switchToPreviousView()));
-
-        // Update prompt text
-        prompt.setText("Please pick a start point");
-
-        // Clear the map layer to remove any existing points
-        // markersLayer.clear();
 
         // Add each trap to the map with listeners
         List<Trap> traps = walk.getLine().getTraps();
@@ -74,28 +91,48 @@ public class SetUpWalkView extends View {
         for (Trap trap : traps) {
             MapPoint mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
 
-            Circle circle = new Circle(7, Color.BLUE);
-            circle.setOnMouseClicked(e -> {
-                circle.setFill(Color.RED);
-                if (prompt.getText().equals("Please pick a start point")) {
-                    prompt.setText("Please pick a end point");
-                    start = trap;
+            Node numberStart = new Text("   " + trap.getNumber());
+            Node numberEnd = new Text("   " + trap.getNumber());
+
+            Circle circleStart = new Circle(7, Color.BLUE);
+            circleStart.setOnMouseClicked(e -> {
+                if(startCircle == null) {
+                    startCircle = circleStart;
+                    circleStart.setFill(Color.RED);
                 } else {
-                    end = trap;
-                    walk.startWalk(start, end);
-                    App.getInstance().switchScreen(App.DO_WALK_VIEW);
+                    startCircle.setFill(Color.BLUE);
+                    startCircle = circleStart;
+                    circleStart.setFill(Color.RED);
                 }
+                startTrap = trap;
             });
 
-            Node number = new Text("   " + trap.getNumber());
+            startMapView.addMarker(startMarkersLayer, mapPoint, circleStart);
+            startMapView.addMarker(startNumbersLayer, mapPoint, numberStart);
 
-            mapView.addMarker(markersLayer, mapPoint, circle);
-            mapView.addMarker(numbersLayer, mapPoint, number);
+            Circle circleEnd = new Circle(7, Color.BLUE);
+            circleEnd.setOnMouseClicked(e -> {
+                if(endCircle == null) {
+                    endCircle  = circleEnd;
+                    circleEnd.setFill(Color.RED);
+                } else {
+                    endCircle .setFill(Color.BLUE);
+                    endCircle  = circleEnd;
+                    circleEnd.setFill(Color.RED);
+                }
+                endTrap = trap;
+            });
+
+            endMapView.addMarker(endMarkersLayer, mapPoint, circleEnd);
+            endMapView.addMarker(endNumbersLayer, mapPoint, numberEnd);
         }
 
         // TODO: Correct map placement and zoom based on positions of the traps
-        Trap trap = walk.getLine().getTraps().get(0);
-        mapView.setCenter(trap.getLatitude(), trap.getLongitude());
+        Trap s = traps.get(0);
+        startMapView.setCenter(s.getLatitude(), s.getLongitude());
+
+        Trap e = traps.get(traps.size() - 1);
+        endMapView.setCenter(e.getLatitude(), e.getLongitude());
     }
 
 }
