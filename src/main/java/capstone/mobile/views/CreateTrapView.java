@@ -3,7 +3,9 @@ package capstone.mobile.views;
 import capstone.mobile.App;
 import capstone.mobile.classes.*;
 import capstone.mobile.maps.CustomMapView;
+import com.gluonhq.charm.down.common.PlatformFactory;
 import com.gluonhq.charm.down.common.Position;
+import com.gluonhq.charm.down.common.PositionService;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.control.TextField;
@@ -11,9 +13,6 @@ import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import gluonhq.maps.MapPoint;
 import gluonhq.maps.PoiLayer;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -22,8 +21,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.util.Duration;
-
 import java.util.List;
 
 
@@ -32,7 +29,6 @@ import java.util.List;
  */
 public class CreateTrapView extends View {
 
-    private static Timeline timeline = new Timeline();
     private Walk          walk;
     private CustomMapView mapView;
     private PoiLayer      currentLayer;
@@ -43,6 +39,7 @@ public class CreateTrapView extends View {
     private double        latitude;
     private ToggleGroup   sideGroup;
     private ToggleGroup   locationGroup;
+    private Position      currentPosition;
 
     public CreateTrapView(String name, Walk walk) {
         super(name);
@@ -76,13 +73,16 @@ public class CreateTrapView extends View {
         ToggleButton useMap = new ToggleButton("Use current location from map");
         useMap.setMaxWidth(Double.MAX_VALUE);
         useMap.setToggleGroup(locationGroup);
-        useMap.setOnAction(e -> setMapLocation());
+        useMap.setOnAction(e -> {
+            // useMap.setStyle("-fx-background-color: lightblue");
+            setMapLocation();
+        });
         ToggleButton useInput = new ToggleButton("Manually enter longitude and latitude values");
         useInput.setMaxWidth(Double.MAX_VALUE);
 //        useInput.setOnAction(e -> ); // TODO: provide manual location input
         useInput.setToggleGroup(locationGroup);
         VBox locationVB = new VBox(10, useMap, useInput);
-        locationVB.setPadding(new Insets(15, 0, 15, 0));
+        locationVB.setPadding(new Insets(0, 0, 15, 0));
         items.add(locationVB);
 
 
@@ -141,35 +141,24 @@ public class CreateTrapView extends View {
             mapView.addMarker(markersLayer, mapPoint, marker);
         }
 
-        timeline = new Timeline(new KeyFrame(Duration.millis(500), e -> {
-            System.out.println("Updating position..");
-            positionLayer = mapView.clearMarkers(positionLayer);
-            try {
-                Position position = LocationProvider.getPosition();
-                MapPoint mapPoint = new MapPoint(position.getLatitude(), position.getLongitude());
-                mapView.addMarker(positionLayer, mapPoint, new Circle(5, Color.RED));
-            } catch (DataUnavailableException ex) {
-                Position position = new Position(Math.random() * 100, Math.random() * 100);
-                MapPoint mapPoint = new MapPoint(position.getLatitude(), position.getLongitude());
-                mapView.addMarker(positionLayer, mapPoint, new Circle(5, Color.BLUEVIOLET));
-                // ex.printStackTrace();
-            }
-        }));
-        timeline.setCycleCount(Animation.INDEFINITE);
+        PositionService positionService = PlatformFactory.getPlatform().getPositionService();
+        positionService.positionProperty().addListener(
+                (observableValue, oldValue, newValue) -> updatePosition(newValue)
+        );
     }
 
-    public static Timeline getTimeline() {
-        return timeline;
+    private void updatePosition(Position position) {
+        positionLayer = mapView.clearMarkers(positionLayer);
+        MapPoint mapPoint = new MapPoint(position.getLatitude(), position.getLongitude());
+        mapView.addMarker(positionLayer, mapPoint, new Circle(5, Color.GREEN));
+        mapView.setCenter(position.getLatitude(), position.getLongitude());
+        currentPosition = position;
     }
 
     private void setMapLocation() {
-        try {
-            Position pos = LocationProvider.getPosition();
-            longitude = pos.getLongitude();
-            latitude = pos.getLatitude();
-        } catch (DataUnavailableException e1) {
-            e1.printStackTrace();
-            // TODO: add error handling
+        if(currentPosition != null) {
+
+            System.out.println("Using position: lon " + currentPosition.getLongitude() + ", lat " + currentPosition.getLatitude());
         }
     }
 
@@ -179,7 +168,6 @@ public class CreateTrapView extends View {
         appBar.setTitleText("Create New Trap");
         appBar.getActionItems().add(MaterialDesignIcon.UNDO.button(e -> App.getInstance().switchToPreviousView()));
 
-        timeline.play();
         sideGroup.selectToggle(null);
         locationGroup.selectToggle(null);
     }

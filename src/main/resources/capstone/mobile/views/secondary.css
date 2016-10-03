@@ -1,3 +1,7 @@
 .view {
 
 }
+
+.toggle-button:selected {
+    -fx-background-color: orange;
+}
