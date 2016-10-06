@@ -33,6 +33,7 @@ public class EnterDataView extends View {
 
         this.walk = walk;
 
+        getStylesheets().add(EnterDataView.class.getResource("DataEntry.css").toExternalForm());
         getStylesheets().add(EnterDataView.class.getResource("secondary.css").toExternalForm());
 
         // Create animal selection buttons
