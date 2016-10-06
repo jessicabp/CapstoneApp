@@ -17,17 +17,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Fetches and displays searchable list of available lines from server
  * Allows user to open line, checks password
  */
-public class DisplayLinesView extends View {
+public class FavouriteLinesView extends View {
 
     private static GluonObservableList<Line> observableLinesList = new GluonObservableList<>();
     private Walk walk;
@@ -35,11 +33,11 @@ public class DisplayLinesView extends View {
     private TextField      filter        = new TextField();
     private ListView<Line> linesListView = new ListView<>();
 
-    public DisplayLinesView(String name, Walk walk) {
+    public FavouriteLinesView(String name, Walk walk) {
         super(name);
         this.walk = walk;
 
-        getStylesheets().add(DisplayLinesView.class.getResource("secondary.css").toExternalForm());
+        getStylesheets().add(FavouriteLinesView.class.getResource("secondary.css").toExternalForm());
 
         // Create VBox to hold items
         controls = new VBox();
@@ -76,12 +74,6 @@ public class DisplayLinesView extends View {
         // Add listener to cells
         linesListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newLine) -> {
             if (newLine != null) {
-                try (Connection dbConnection = DriverManager.getConnection(App.getInstance().dbUrl)) {
-                    Statement stmt = dbConnection.createStatement();
-                    stmt.executeUpdate("UPDATE lines SET favourite = 'true' WHERE id = " + newLine.getId());
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
                 selectLine(newLine);
             }
         });
@@ -133,23 +125,28 @@ public class DisplayLinesView extends View {
      * Fetches lines from the server, shows popup if it fails
      */
     private void updateLinesList() {
-        List<Line>   linesList  = null;
+        List<Line>   linesList  = new ArrayList<>();
         List<Animal> animalList = null;
-        try {
-            linesList = RetrieveData.fetchLinesList();
+
+        // Load data from database
+        try (Connection dbConnection = DriverManager.getConnection(App.getInstance().dbUrl)) {
+            Statement stmt    = dbConnection.createStatement();
+            ResultSet linesRS = stmt.executeQuery("SELECT * FROM lines WHERE favourite like '%true%';");
+            while (linesRS.next()) {
+                // load line from database
+                Line line   = new Line(linesRS.getInt("id"), linesRS.getString("name"));
+                linesList.add(line);
+            }
+            linesRS.close();
             animalList = RetrieveData.fetchAnimalList();
             // Update local database
-            Connection dbConnection = DriverManager.getConnection(App.getInstance().dbUrl);
             if (dbConnection != null) {
-                Statement stmt = dbConnection.createStatement();
+                stmt = dbConnection.createStatement();
                 for (Animal animal : animalList) {
                     stmt.executeUpdate("insert or ignore into animals(id, name) values(" + animal.getId() + ", '" + animal.getName() + "')");
                 }
-                for (Line line : linesList) {
-                    stmt.executeUpdate("insert or ignore into lines(id, name) values(" + line.getId() + ", '" + line.getName() + "')");
-                }
-                stmt.close();
             }
+            stmt.close();
         } catch (DataUnavailableException | SQLException e) {
             showServerError();
             e.printStackTrace();
@@ -157,7 +154,7 @@ public class DisplayLinesView extends View {
 
         // Add lines to observable list so they are displayed in the ListView
         observableLinesList.clear();
-        if (linesList != null) {
+        if (!(linesList.size() <= 0)) {
             observableLinesList.addAll(linesList);
         }
 

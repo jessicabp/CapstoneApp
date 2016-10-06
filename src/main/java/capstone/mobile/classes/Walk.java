@@ -45,6 +45,22 @@ public class Walk {
     public void setLine(Line line) throws DataUnavailableException {
         this.line = line;
         line.setTraps(RetrieveData.fetchTrapsList(line.getId()));
+
+        try {
+            // Update local database
+            Connection dbConnection = DriverManager.getConnection(App.getInstance().dbUrl);
+            if (dbConnection != null) {
+                Statement stmt = dbConnection.createStatement();
+                stmt.executeUpdate("DELETE FROM traps WHERE lineId = " + line.getId());
+                for (Trap trap : line.getTraps()) {
+                    stmt.executeUpdate("insert into traps values(" + line.getId() + ", " + trap.getId() + ", " + trap.getNumber() + ", " + trap.getLatitude() + ", " + trap.getLongitude() + ", " + (trap.getSide() ? 1 : 0) + ", " + (trap.isMoved() ? 1 : 0) + ", " + (trap.isBroken() ? 1 : 0) + ", NULL)");
+                }
+                stmt.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         PlatformFactory.getPlatform().getSettingService().store(App.CURRENTLINEID, String.valueOf(line.getId()));
     }
 
@@ -113,12 +129,6 @@ public class Walk {
      * Changes current trap to be the next trap, ends walk if the last trap has been reached
      */
     public void finishCurrentTrap() {
-        System.out.println("Current trap id, number, index: " + currentTrap.getId() + ", " + currentTrap.getNumber() + ", " + line.getTraps().indexOf(currentTrap));
-        System.out.println("Finish trap id, number, index: " + finishTrap.getId() + ", " + finishTrap.getNumber() + ", " + line.getTraps().indexOf(finishTrap));
-        System.out.println("Index: " + index);
-        System.out.println("Length: " + line.getTraps().size());
-        System.out.println("(from Walk ln 87)");
-        // TODO: remove prints
         if (currentTrap != finishTrap) {
             if (direction) {
                 index++;

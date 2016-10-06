@@ -18,8 +18,6 @@ import javafx.scene.layout.VBox;
 
 public class HomeView extends View {
 
-    private static String currentPage = PlatformFactory.getPlatform().getSettingService().retrieve(App.CURRENTPAGE) != null ? PlatformFactory.getPlatform().getSettingService().retrieve(App.CURRENTPAGE) : App.HOME_VIEW;
-
     public HomeView(String name, Walk walk) {
         super(name);
 
@@ -35,7 +33,7 @@ public class HomeView extends View {
         // Button to view favourite lines
         Button favLines = new Button("Select a line you've used before");
         favLines.setMaxWidth(Double.MAX_VALUE);
-//        lines.setOnAction(e -> ); // TODO: complete functionality
+        favLines.setOnAction(e -> App.getInstance().switchScreen(App.FAVOURITE_LINES_VIEW));
         controls.getChildren().add(favLines);
 
         // Button to view all lines
@@ -44,6 +42,7 @@ public class HomeView extends View {
         allLines.setOnAction(e -> App.getInstance().switchScreen(App.DISPLAY_LINES_VIEW));
         controls.getChildren().add(allLines);
 
+        String currentPage = PlatformFactory.getPlatform().getSettingService().retrieve(App.CURRENTPAGE) != null ? PlatformFactory.getPlatform().getSettingService().retrieve(App.CURRENTPAGE) : App.HOME_VIEW;
         if (!currentPage.equals(App.HOME_VIEW)) {
             SettingService settingService = PlatformFactory.getPlatform().getSettingService();
             if (settingService.retrieve(App.CURRENTLINEID) != null) {
@@ -53,7 +52,7 @@ public class HomeView extends View {
                         walk.setLineAtRestart(line);
                     }
                 }
-                if (settingService.retrieve(App.CURRENTTRAPID) != null) {
+                if (settingService.retrieve(App.ENDTRAPID) != null) {
                     int currentTrapId = Integer.parseInt(settingService.retrieve(App.CURRENTTRAPID));
                     int endTrapId     = Integer.parseInt(settingService.retrieve(App.ENDTRAPID));
 
@@ -70,7 +69,6 @@ public class HomeView extends View {
                     walk.startWalk(start, end);
                 }
             }
-            App.getInstance().switchScreen(currentPage);
         }
     }
 
@@ -78,5 +76,10 @@ public class HomeView extends View {
     protected void updateAppBar(AppBar appBar) {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
         appBar.setTitleText("Home");
+
+        String currentPage = PlatformFactory.getPlatform().getSettingService().retrieve(App.CURRENTPAGE) != null ? PlatformFactory.getPlatform().getSettingService().retrieve(App.CURRENTPAGE) : App.HOME_VIEW;
+        if (currentPage != App.HOME_VIEW) {
+            App.getInstance().switchScreen(currentPage);
+        }
     }
 }

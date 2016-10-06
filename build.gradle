@@ -49,6 +49,7 @@ jfxmobile {
                 'javax.annotations.**.*',
                 'javax.inject.**.*',
                 'javax.json.**.*',
+                'SQLite.**.*',
                 'org.glassfish.json.**.*'
         ]
     }

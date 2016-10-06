@@ -14,6 +14,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,11 +23,10 @@ import java.util.List;
  */
 public class EnterDataView extends View {
 
-    // TODO: load animal from line?
-    private static List<Animal> animalList;
-    private        Walk         walk;
-    private        int          animal;
-    private Insets gridButtonInsets = new Insets(40, 0, 40, 0); // for making buttons taller
+    private Walk walk;
+    private int  animal;
+    private static List<Animal> animalList       = new ArrayList<>();
+    private        Insets       gridButtonInsets = new Insets(40, 0, 40, 0); // for making buttons taller
 
     public EnterDataView(String name, Walk walk) {
         super(name);
@@ -42,8 +42,8 @@ public class EnterDataView extends View {
         int animalNo = 0;
         for (int r = 0; r < 2; r++) {
             for (int c = 0; c < 2; c++) {
-                Animal nextAnimal = animalList.get(animalNo);
-                ToggleButton button      = new ToggleButton(nextAnimal.getName());
+                Animal       nextAnimal = animalList.get(animalNo);
+                ToggleButton button     = new ToggleButton(nextAnimal.getName());
                 button.setToggleGroup(group);
                 button.setOnAction(e -> animal = nextAnimal.getId());
                 button.setMaxWidth(Double.MAX_VALUE);
@@ -58,15 +58,15 @@ public class EnterDataView extends View {
 
         // Popup for selecting other animal
         CustomPopupView animalPopup = new CustomPopupView(other);
-        ToggleGroup     otherGroup   = new ToggleGroup();
-        CustomGridPane  otherGrid    = new CustomGridPane(2);
+        ToggleGroup     otherGroup  = new ToggleGroup();
+        CustomGridPane  otherGrid   = new CustomGridPane(2);
         otherGrid.setPadding(new Insets(20, 20, 20, 20));
         // Add all animal to grid and toggle group
         int r = 0;
         for (; r < (animalList.size() - 4) / 2; r++) {
             for (int c = 0; c < 2; c++) {
-                Animal nextAnimal = animalList.get(animalNo);
-                ToggleButton button      = new ToggleButton(nextAnimal.getName());
+                Animal       nextAnimal = animalList.get(animalNo);
+                ToggleButton button     = new ToggleButton(nextAnimal.getName());
                 button.setToggleGroup(otherGroup);
                 button.setOnAction(ev -> {
                     animal = nextAnimal.getId();
@@ -80,8 +80,8 @@ public class EnterDataView extends View {
         }
         // If there's an odd number of animal, make sure the last one is included
         if (animalList.size() % 2 != 0) {
-            Animal nextAnimal = animalList.get(animalNo);
-            ToggleButton button      = new ToggleButton(nextAnimal.getName());
+            Animal       nextAnimal = animalList.get(animalNo);
+            ToggleButton button     = new ToggleButton(nextAnimal.getName());
             button.setToggleGroup(otherGroup);
             button.setOnAction(ev -> {
                 animal = nextAnimal.getId();

@@ -160,9 +160,5 @@ public class DoWalkView extends View {
         mapView.addMarker(currentLayer, mapPoint, icon);
         //trapsLayer.addPoint(mapPoint, icon);
         mapView.setCenter(currentTrap.getLatitude(), currentTrap.getLongitude());
-
-        // TODO: Remove print statements
-        System.out.println("Showing trap #" + walk.getCurrentTrap().getNumber());
-        System.out.println("(from DoWalkView ln 109)");
     }
 }

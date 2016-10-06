@@ -51,8 +51,6 @@ public class RetrieveData {
             for (int i = 0; i < jsonArray.size(); i++) {
                 Line line = jsonConverter.readFromJson(jsonArray.getJsonObject(i));
                 linesList.add(line);
-                System.out.println(line.getId());
-                System.out.println(line.getName());
             }
 
             // Sorts line names alphabetically (A -> Z).

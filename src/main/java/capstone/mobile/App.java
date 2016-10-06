@@ -4,6 +4,7 @@ import capstone.mobile.classes.*;
 import capstone.mobile.views.*;
 import com.gluonhq.charm.down.common.JavaFXPlatform;
 import com.gluonhq.charm.down.common.PlatformFactory;
+import com.gluonhq.charm.down.common.SettingService;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.Avatar;
 import com.gluonhq.charm.glisten.control.NavigationDrawer;
@@ -30,6 +31,7 @@ public class App extends MobileApplication {
 
     // Strings naming the views, and providing reference to them
     public static final String DISPLAY_LINES_VIEW = "Display lines";
+    public static final String FAVOURITE_LINES_VIEW = "Display favourite lines";
     public static final String SET_UP_WALK_VIEW   = "Set up walk";
     public static final String DO_WALK_VIEW       = "Do walk";
     public static final String ENTER_DATA_VIEW    = "Enter data";
@@ -79,18 +81,16 @@ public class App extends MobileApplication {
     @Override
     public void init() {
 
-        // TODO: remove
+//        // TODO: remove
 //        PlatformFactory.getPlatform().getSettingService().remove(App.CURRENTPAGE);
-
 
         a = this;
 
         // Initializing walk object
         walk = new Walk();
 
-        File db = null;
         try {
-            db = new File(PlatformFactory.getPlatform().getPrivateStorage(), "TrapTrackerDatabase");
+            File db = new File(PlatformFactory.getPlatform().getPrivateStorage(), "TrapTrackerDatabase");
             dbUrl = "jdbc:sqlite:" + db.getAbsolutePath();
         } catch (IOException ex) {
             System.out.println("Error " + ex);
@@ -114,10 +114,10 @@ public class App extends MobileApplication {
 //                stmt.executeUpdate("DROP TABLE IF EXISTS traps");
 //                stmt.executeUpdate("DROP TABLE IF EXISTS captures");
 //                stmt.executeUpdate("DROP TABLE IF EXISTS animals");
-//                stmt.executeUpdate("DROP TABLE IF EXISTS species");
                 stmt.executeUpdate("CREATE TABLE IF NOT EXISTS lines (" +
                                    "id INTEGER PRIMARY KEY NOT NULL, " +
-                                   "name TEXT NOT NULL)");
+                                   "name TEXT NOT NULL, " +
+                                   "favourite TEXT)");
                 stmt.executeUpdate("CREATE TABLE IF NOT EXISTS traps (" +
                                    "lineId INTEGER REFERENCES lines(id) ON UPDATE CASCADE ON DELETE CASCADE, " +
                                    "id INTEGER, " +
@@ -146,6 +146,7 @@ public class App extends MobileApplication {
 
         // Create all views
         addViewFactory(DISPLAY_LINES_VIEW, () -> new DisplayLinesView(DISPLAY_LINES_VIEW, walk));
+        addViewFactory(FAVOURITE_LINES_VIEW, () -> new FavouriteLinesView(FAVOURITE_LINES_VIEW, walk));
         addViewFactory(SET_UP_WALK_VIEW, () -> new SetUpWalkView(SET_UP_WALK_VIEW, walk));
         addViewFactory(DO_WALK_VIEW, () -> new DoWalkView(DO_WALK_VIEW, walk));
         addViewFactory(ENTER_DATA_VIEW, () -> new EnterDataView(ENTER_DATA_VIEW, walk));
@@ -198,10 +199,10 @@ public class App extends MobileApplication {
                 ResultSet trapRS = stmt.executeQuery("SELECT * FROM traps WHERE lineId = " + lineId + ";");
                 while (trapRS.next()) {
                     if (trapRS.getObject("id") != null) {
-                        // add trap from the
+                        // add trap from line
                         Trap trap = new Trap(trapRS.getInt("id"), trapRS.getInt("lineId"), trapRS.getInt("number"), trapRS.getDouble("latitude"), trapRS.getDouble("longitude"), trapRS.getInt("side"), trapRS.getInt("broken"), trapRS.getInt("moved"));
-                        walk.getLine().addTrap(trap);
-                        if (trapRS.getString("changed").equals("true")) {
+                        line.addTrap(trap);
+                        if (trapRS.getString("changed") !=null && trapRS.getString("changed").equals("true")) {
                             walk.addChangedTrap(trap);
                         }
                     } else {
@@ -220,11 +221,12 @@ public class App extends MobileApplication {
             }
             captureRS.close();
             // load animal
-//            ResultSet animalRS = stmt.executeQuery("SELECT * FROM animals;");
-//            while (animalRS.next()) {
-//                EnterDataView.addAnimalFromDB(new Animal(animalRS.getInt("id"), animalRS.getString("name")));
-//            }
-//            animalRS.close();
+            ResultSet animalRS = stmt.executeQuery("SELECT * FROM animals;");
+            while (animalRS.next()) {
+                Animal animal = new Animal(animalRS.getInt("id"), animalRS.getString("name"));
+                EnterDataView.addAnimalFromDB(animal);
+            }
+            animalRS.close();
             stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -244,7 +246,7 @@ public class App extends MobileApplication {
     }
 
     public void switchScreen(String viewName) {
-        switchView(viewName);
         PlatformFactory.getPlatform().getSettingService().store(CURRENTPAGE, viewName);
+        switchView(viewName);
     }
 }
