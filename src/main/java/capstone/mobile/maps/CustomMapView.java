@@ -20,6 +20,13 @@ public class CustomMapView extends MapView {
         setZoom(INITIAL_ZOOM);
     }
 
+    public CustomMapView(double maxHeight) {
+        super();
+
+        setMaxSize(Double.MAX_VALUE, maxHeight);
+        setZoom(INITIAL_ZOOM);
+    }
+
     public PoiLayer createLayer() {
         PoiLayer layer = new PoiLayer();
         addLayer(layer);

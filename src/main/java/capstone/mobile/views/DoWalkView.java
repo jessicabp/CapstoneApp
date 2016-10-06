@@ -3,16 +3,15 @@ package capstone.mobile.views;
 import capstone.mobile.App;
 import capstone.mobile.classes.*;
 import capstone.mobile.maps.CustomMapView;
+import com.gluonhq.charm.down.common.PlatformFactory;
 import com.gluonhq.charm.down.common.Position;
+import com.gluonhq.charm.down.common.PositionService;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import gluonhq.maps.MapPoint;
 import gluonhq.maps.PoiLayer;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -21,7 +20,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.util.Duration;
 
 import java.util.List;
 
@@ -34,7 +32,6 @@ public class DoWalkView extends View {
 
     private static CustomMapView mapView;
     private static PoiLayer      markersLayer;
-    private static Timeline timeline = new Timeline();
     private Walk     walk;
     private Label    side;
     private Label    moved;
@@ -73,13 +70,11 @@ public class DoWalkView extends View {
         Button found = new Button("Found");
         found.setMaxWidth(Double.MAX_VALUE);
         found.setOnAction(e -> {
-            timeline.stop();
             App.getInstance().switchScreen(App.ENTER_DATA_VIEW);
         });
         Button skip = new Button("Skip");
         skip.setMaxWidth(Double.MAX_VALUE);
         skip.setOnAction(e -> {
-            timeline.stop();
             if (walk.getCurrentTrap() != walk.getFinishTrap()) {
                 walk.finishCurrentTrap();
                 // Switch to another view and back to refresh data on screen
@@ -108,21 +103,17 @@ public class DoWalkView extends View {
             mapView.addMarker(markersLayer, mapPoint, marker);
         }
 
-        timeline = new Timeline(new KeyFrame(Duration.millis(2000), e -> {
-            System.out.println("Updating position..");
-            positionLayer = mapView.clearMarkers(positionLayer);
-            try {
-                Position position = LocationProvider.getPosition();
-                MapPoint mapPoint = new MapPoint(position.getLatitude(), position.getLongitude());
-                mapView.addMarker(positionLayer, mapPoint, new Circle(5, Color.RED));
-            } catch (DataUnavailableException ex) {
-                Position position = new Position(Math.random() * 100, Math.random() * 100);
-                MapPoint mapPoint = new MapPoint(position.getLatitude(), position.getLongitude());
-                mapView.addMarker(positionLayer, mapPoint, new Circle(5, Color.BLUEVIOLET));
-                // ex.printStackTrace();
-            }
-        }));
-        timeline.setCycleCount(Animation.INDEFINITE);
+        PositionService positionService = PlatformFactory.getPlatform().getPositionService();
+        positionService.positionProperty().addListener(
+                (observableValue, oldValue, newValue) -> updatePosition(newValue)
+        );
+    }
+
+    private void updatePosition(Position position) {
+        positionLayer = mapView.clearMarkers(positionLayer);
+        MapPoint mapPoint = new MapPoint(position.getLatitude(), position.getLongitude());
+        mapView.addMarker(positionLayer, mapPoint, new Circle(5, Color.GREEN));
+        mapView.setCenter(position.getLatitude(), position.getLongitude());
     }
 
     public static CustomMapView getMapView() {
@@ -133,15 +124,10 @@ public class DoWalkView extends View {
         return markersLayer;
     }
 
-    public static Timeline getTimeline() {
-        return timeline;
-    }
-
     @Override
     protected void updateAppBar(AppBar appBar) {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
         appBar.setTitleText("Trap " + walk.getCurrentTrap().getNumber() + " - " + walk.getLine().getName());
-        timeline.play();
 
         // Update message about side of path for trap
         side.setText("Trap indicator on " + (walk.getDirection() == walk.getCurrentTrap().getSide() ? "left" : "right") + " side");
@@ -159,6 +145,6 @@ public class DoWalkView extends View {
         currentLayer = mapView.clearMarkers(currentLayer);
         mapView.addMarker(currentLayer, mapPoint, icon);
         //trapsLayer.addPoint(mapPoint, icon);
-        mapView.setCenter(currentTrap.getLatitude(), currentTrap.getLongitude());
+        //mapView.setCenter(currentTrap.getLatitude(), currentTrap.getLongitude());
     }
 }

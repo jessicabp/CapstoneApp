@@ -11,11 +11,13 @@ import java.util.List;
 public class Line {
 
     private int    id;
+    private int    animal1;
+    private int    animal2;
+    private int    animal3;
     private String name;
     private List<Trap> traps = new ArrayList<>();
 
-    public Line() {
-    }
+    public Line() {}
 
     public Line(int id, String name) {
         this.id = id;
