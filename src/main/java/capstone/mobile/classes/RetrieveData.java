@@ -109,42 +109,36 @@ public class RetrieveData {
      * @return list of animal objects
      */
     public static List<Animal> fetchAnimalList() throws DataUnavailableException {
-        // TODO: change to fetch animals from server once implemented
-//            URL               url             = new URL(HOST + "/animal");
-//            HttpURLConnection connection      = (HttpURLConnection) url.openConnection();
-//            InputStream       jsonInputStream = connection.getInputStream();
-//
-//            List<Animal> animalList = new ArrayList<>();
-//            JsonReader    jsonReader  = Json.createReader(jsonInputStream);
-//            JsonObject    jsonObject  = jsonReader.readObject();
-//            jsonReader.close();
-//            jsonInputStream.close();
-//
-//            if (!jsonObject.containsKey("result")) {
-//                throw new DataUnavailableException(KEY_ERROR);
-//            }
-//
-//            JsonArray              jsonArray     = jsonObject.getJsonArray("result");
-//            JsonConverter<Animal> jsonConverter = new JsonConverter<>(Animal.class);
-//
-//            for (int i = 0; i < jsonArray.size(); i++) {
-//                Animal animal = jsonConverter.readFromJson(jsonArray.getJsonObject(i));
-//                animalList.add(animal);
-//            }
-//
-//            // Sorts trap numbers (smallest to largest) to ensure correct ordering.
-//            Collections.sort(animalList, (a, b) -> a.getId() - b.getId());
+        try {
+            URL               url             = new URL(HOST + "/animal");
+            HttpURLConnection connection      = (HttpURLConnection) url.openConnection();
+            InputStream       jsonInputStream = connection.getInputStream();
 
-        List<Animal> animalList = new ArrayList<>();
+            List<Animal> animalList = new ArrayList<>();
+            JsonReader   jsonReader = Json.createReader(jsonInputStream);
+            JsonObject   jsonObject = jsonReader.readObject();
+            jsonReader.close();
+            jsonInputStream.close();
+            connection.disconnect();
 
-        animalList.add(new Animal(0, "Empty"));
-        animalList.add(new Animal(1, "Rat"));
-        animalList.add(new Animal(2, "Stoat"));
-        animalList.add(new Animal(3, "Hedgehog"));
-        animalList.add(new Animal(4, "Cat"));
-        animalList.add(new Animal(5, "Possum"));
-        animalList.add(new Animal(6, "Other"));
+            if (!jsonObject.containsKey("result")) {
+                throw new DataUnavailableException(KEY_ERROR);
+            }
 
-        return animalList;
+            JsonArray             jsonArray     = jsonObject.getJsonArray("result");
+            JsonConverter<Animal> jsonConverter = new JsonConverter<>(Animal.class);
+
+            for (int i = 0; i < jsonArray.size(); i++) {
+                Animal animal = jsonConverter.readFromJson(jsonArray.getJsonObject(i));
+                animalList.add(animal);
+            }
+
+            // Sorts trap numbers (smallest to largest) to ensure correct ordering.
+            Collections.sort(animalList, (a, b) -> a.getId() - b.getId());
+
+            return animalList;
+        } catch (IOException ex) {
+            throw new DataUnavailableException(ex.getMessage());
+        }
     }
 }

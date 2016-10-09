@@ -37,6 +37,7 @@ public class DisplayLinesView extends View {
         super(name);
         this.walk = walk;
 
+        getStylesheets().add(DisplayLinesView.class.getResource("LineList.css").toExternalForm());
         getStylesheets().add(DisplayLinesView.class.getResource("secondary.css").toExternalForm());
 
         // Create VBox to hold items
@@ -114,8 +115,8 @@ public class DisplayLinesView extends View {
             CustomPopupView passwordPopup = new CustomPopupView(owner);
 
             // Create layout for buttons with correct spacing
-            VBox controls = new VBox();
-            controls.setPadding(new Insets(0, 40, 10, 40));
+            VBox controls = new VBox(20);
+            controls.setPadding(new Insets(40, 40, 40, 40));
             controls.setAlignment(Pos.CENTER);
 
             // Add title

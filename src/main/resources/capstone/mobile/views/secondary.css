@@ -5,7 +5,3 @@
 .toggle-button:selected {
     -fx-background-color: orange;
 }
-
-.list-view .list-cell {
-    -fx-cell-size: 50;
-}
