@@ -39,6 +39,7 @@ public class DoWalkView extends View {
     private VBox     messages;
     private PoiLayer currentLayer;
     private PoiLayer positionLayer;
+    private Label waitingMessage;
 
     public DoWalkView(String name, Walk walk) {
         super(name);
@@ -90,8 +91,14 @@ public class DoWalkView extends View {
         grid.add(found, 0, 0);
         grid.add(skip, 1, 0);
 
+        // Create waiting message to be displayed until the current position
+        // can be obtained from the GPS.
+        waitingMessage = new Label();
+        waitingMessage.setStyle("-fx-text-fill: red;");
+        waitingMessage.setText("Waiting on GPS for position..");
+
         // Create VBox for map & buttons
-        VBox controls = new VBox(mapView, messages, grid);
+        VBox controls = new VBox(mapView, waitingMessage, messages, grid);
         controls.setAlignment(Pos.TOP_CENTER);
         // controls.setPadding(new Insets(0, 40, 40, 40));
         setCenter(controls);
@@ -110,6 +117,8 @@ public class DoWalkView extends View {
     }
 
     private void updatePosition(Position position) {
+        // TODO: fix
+        waitingMessage.setText("");
         positionLayer = mapView.clearMarkers(positionLayer);
         MapPoint mapPoint = new MapPoint(position.getLatitude(), position.getLongitude());
         mapView.addMarker(positionLayer, mapPoint, new Circle(5, Color.GREEN));

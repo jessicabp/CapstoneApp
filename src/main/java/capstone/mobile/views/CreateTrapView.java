@@ -40,6 +40,7 @@ public class CreateTrapView extends View {
     private ToggleGroup   sideGroup;
     private ToggleGroup   locationGroup;
     private Position      currentPosition;
+    private Label waitingMessage;
 
     public CreateTrapView(String name, Walk walk) {
         super(name);
@@ -61,6 +62,13 @@ public class CreateTrapView extends View {
         VBox mapVB = new VBox(mapView);
         mapVB.setPadding(new Insets(15, 0, 15, 0));
         controls.getChildren().add(mapVB);
+
+        // Create waiting message to be displayed until the current position
+        // can be obtained from the GPS.
+        waitingMessage = new Label();
+        waitingMessage.setStyle("-fx-text-fill: red;");
+        waitingMessage.setText("Waiting on GPS for position..");
+        controls.getChildren().add(waitingMessage);
 
         // Create listview so user can scroll through items if there are too many
         ListView<VBox>       content = new ListView<>();
@@ -148,6 +156,8 @@ public class CreateTrapView extends View {
     }
 
     private void updatePosition(Position position) {
+        // TODO: fix
+        waitingMessage.setText("");
         positionLayer = mapView.clearMarkers(positionLayer);
         MapPoint mapPoint = new MapPoint(position.getLatitude(), position.getLongitude());
         mapView.addMarker(positionLayer, mapPoint, new Circle(5, Color.GREEN));
