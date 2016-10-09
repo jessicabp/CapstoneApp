@@ -22,10 +22,24 @@ public class SendData {
     private static final String HOST = "traptracker.pythonanywhere.com";
 
     // TODO: Comment
-    public static boolean sendWalkData(Walk walk) {
-        sendCapturesData(walk);
-        sendTrapsData(walk);
-        return true;
+    public static int sendWalkData(Walk walk) {
+        int traps = sendTrapsData(walk);
+        if (traps != 201) {
+            if (traps == 403) {
+                return 1;
+            } else {
+                return 2;
+            }
+        }
+        int caps = sendCapturesData(walk);
+        if (caps != 201) {
+            if (caps == 403) {
+                return 1;
+            } else {
+                return 2;
+            }
+        }
+        return 0;
     }
 
     /**
@@ -33,9 +47,9 @@ public class SendData {
      *
      * @param walk The walk object
      */
-    public static void sendCapturesData(Walk walk) {
+    public static int sendCapturesData(Walk walk) {
         URIBuilder builder = new URIBuilder();
-        builder.setScheme("http");
+        builder.setScheme("https");
         builder.setHost(HOST);
         builder.setPath("/api/catch");
 
@@ -53,7 +67,7 @@ public class SendData {
             // Create the JSON object that will be sent to the server
             JSONObject capturesObject = new JSONObject();
             capturesObject.put("lineId", walk.getLine().getId());
-            capturesObject.put("password", password); // TODO: get password from storage
+            capturesObject.put("password", password);
             capturesObject.put("catches", walk.getCaptures());
 
             System.out.println(capturesObject.toString());
@@ -64,15 +78,19 @@ public class SendData {
 
             System.out.println("Response Code: " + response.getStatusLine().getStatusCode());
             System.out.println(EntityUtils.toString(response.getEntity()));
+
+            return response.getStatusLine().getStatusCode();
         } catch (Exception e) {
             e.printStackTrace();
+
+            return 500;
         }
     }
 
     // TODO: Comment
-    public static void sendTrapsData(Walk walk) {
+    public static int sendTrapsData(Walk walk) {
         URIBuilder builder = new URIBuilder();
-        builder.setScheme("http");
+        builder.setScheme("https");
         builder.setHost(HOST);
         builder.setPath("/api/trap");
 
@@ -85,22 +103,28 @@ public class SendData {
             httpPut.addHeader("Content-Type", "application/json");
             httpPut.addHeader("Accept", "application/json");
 
+            String password = PlatformFactory.getPlatform().getSettingService().retrieve("password" + walk.getLine().getId());
+
             // Create the JSON object that will be sent to the server
-            JSONObject capturesObject = new JSONObject();
-            capturesObject.put("lineId", walk.getLine().getId());
-            capturesObject.put("password", "password"); // TODO: get password from storage
-            capturesObject.put("traps", walk.getChangedTraps());
+            JSONObject trapsObject = new JSONObject();
+            trapsObject.put("lineId", walk.getLine().getId());
+            trapsObject.put("password", password);
+            trapsObject.put("traps", walk.getChangedTraps());
 
-            System.out.println(capturesObject.toString());
-            System.out.println(new StringEntity(capturesObject.toString()));
+            System.out.println(trapsObject.toString());
+            System.out.println(new StringEntity(trapsObject.toString()));
 
-            httpPut.setEntity(new StringEntity(capturesObject.toString()));
+            httpPut.setEntity(new StringEntity(trapsObject.toString()));
             CloseableHttpResponse response = httpclient.execute(httpPut);
 
             System.out.println("Response Code: " + response.getStatusLine().getStatusCode());
             System.out.println(EntityUtils.toString(response.getEntity()));
+
+            return response.getStatusLine().getStatusCode();
         } catch (Exception e) {
             e.printStackTrace();
+
+            return 500;
         }
     }
 }

@@ -37,6 +37,7 @@ public class FavouriteLinesView extends DisplayLinesView {
         super(name, walk);
         this.walk = walk;
 
+        getStylesheets().add(DisplayLinesView.class.getResource("LineList.css").toExternalForm());
         getStylesheets().add(FavouriteLinesView.class.getResource("secondary.css").toExternalForm());
 
         // Create VBox to hold items
