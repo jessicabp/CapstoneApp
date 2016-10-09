@@ -1,36 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <meta charset="utf-8">
+    <title>Template</title>
 </head>
-<body style="background-color: white; height: 220px; width: 290px;">
-    <div id="map_canvas" style="height: 200px; width: 280px; border: 2px solid grey;"></div>
-    <script type="text/javascript">
-        var position = new google.maps.LatLng(-40.3645657, 175.5601384);
-        var options = {
-            zoom: 15,
-            center: position,
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            disableDefaultUI: true,
-            clickableIcons: false,
-        };
-
-        var map_obj = new google.maps.Map(document.getElementById("map_canvas"), options);
-        map_obj.setCenter(position);
-        document.map_obj = map_obj;
-
-        document.setMarker = function(lat, lon) {
-            alert(lat, lon);
-            var position = new google.maps.LatLng(lat, lon);
-            var marker = new google.maps.Marker({
-                position: position,
-                map: document.map_obj
-            });
-            marker.setPosition(position);
-            document.map_obj.setCenter(position);
-        };
-    </script>
+<body>
+<audio src="ding.wav"></audio>
+<script type="text/javascript">
+	document.audio = document.getElementsByTagName("audio")[0];
+	document.play = function() {
+		document.audio.play();
+	}
+</script>
 </body>
 </html>

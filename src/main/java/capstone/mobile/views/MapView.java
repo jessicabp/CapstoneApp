@@ -1,9 +1,5 @@
 package capstone.mobile.views;
 
-import capstone.mobile.map.GoogleMap;
-import com.gluonhq.charm.down.common.PlatformFactory;
-import com.gluonhq.charm.down.common.Position;
-import com.gluonhq.charm.down.common.PositionService;
 import com.gluonhq.charm.glisten.animation.BounceInRightTransition;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
@@ -14,38 +10,33 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
-
-import java.util.Random;
+import javafx.scene.web.WebView;
+import java.net.URL;
 
 public class MapView extends View {
+
+    private WebView webView;
+    private WebEngine webEngine;
 
     public MapView(String name) {
         super(name);
 
         getStylesheets().add(SecondaryView.class.getResource("secondary.css").toExternalForm());
 
-        GoogleMap map = new GoogleMap();
-        WebEngine engine = map.load();
+        this.webView = new WebView();
+        // this.webView.setMaxSize(20.0, 20.0);
+        // this.webView.setStyle("-fx-background-color: red");
+        this.webEngine = webView.getEngine();
 
-        Button setMarker = new Button("Set Marker");
-        setMarker.setOnAction(e -> {
-            PositionService positionService = PlatformFactory.getPlatform().getPositionService();
-            Position position = positionService.getPosition();
-            if(position == null) {
-                Random random = new Random();
-                double x = random.nextInt(20) - 40 + random.nextDouble();
-                double y = random.nextInt(165) + 20 + random.nextDouble();
-                position = new Position(x, y);
-                System.out.println("Randomly generated position");
-            }
-            System.out.println("Current GPS position: " + position.getLatitude() + "," + position.getLongitude());
+        final URL template = App.class.getResource("template.html");
+        this.webEngine.load(template.toExternalForm());
 
-            double lat = position.getLatitude();
-            double lon = position.getLongitude();
-            engine.executeScript("document.setMarker(" + lat + ", " + lon + " );");
+        Button playSound = new Button("Play Sound");
+        playSound.setOnAction(e -> {
+            webEngine.executeScript("document.play();");
         });
 
-        VBox controls = new VBox(setMarker, map);
+        VBox controls = new VBox(playSound);
         controls.setAlignment(Pos.CENTER);
         setCenter(controls);
 
