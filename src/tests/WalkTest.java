@@ -15,7 +15,7 @@ public class WalkTest {
     public void beforeTests() {
         // Set up walk
         walk = new Walk();
-        line = new Line(1, "Gorge");
+        line = new Line(1, "Gorge", 1, 2, 3);
         trap1 = new Trap(1, 1, 40, 175, true);
         trap2 = new Trap(1, 2, 41, 176, false);
         capture = new Capture(1, 2);

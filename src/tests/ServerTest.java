@@ -6,7 +6,7 @@ import java.net.URL;
 
 public class ServerTest {
 
-    private static final String HOST = "http://traptracker.pythonanywhere.com/api";
+    private static final String HOST = "https://traptracker.pythonanywhere.com/api";
 
     @Test
     public void CreateConnectionTest() {

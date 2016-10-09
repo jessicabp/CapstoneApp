@@ -2,6 +2,7 @@ package capstone.mobile.views;
 
 import capstone.mobile.App;
 import capstone.mobile.classes.*;
+import com.gluonhq.charm.down.common.PlatformFactory;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
@@ -10,17 +11,14 @@ import com.gluonhq.connect.GluonObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -82,7 +80,7 @@ public class DisplayLinesView extends View {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                selectLine(newLine);
+                selectLine(newLine, controls);
             }
         });
 
@@ -95,33 +93,76 @@ public class DisplayLinesView extends View {
     }
 
     /**
-     * Set's the walk's line to the given line, switches to SetUpWalkView
+     * Gets password, if correct: set's the walk's line to the given line, switches to SetUpWalkView
      *
      * @param line
      */
-    public void selectLine(Line line) {
-        try {
-            walk.setLine(line);
-        } catch (DataUnavailableException e) {
-            showServerError();
-            e.printStackTrace();
+    public void selectLine(Line line, VBox owner) {
+        String password = PlatformFactory.getPlatform().getSettingService().retrieve("password" + line.getId());
+        if (password != null) {
+            // TODO: check password is correct
+            try {
+                PlatformFactory.getPlatform().getSettingService().store("password" + line.getId(), password);
+                walk.setLine(line);
+                App.getInstance().switchScreen(App.SET_UP_WALK_VIEW);
+            } catch (DataUnavailableException e) {
+                e.printStackTrace();
+                showServerError();
+            }
+        } else {
+            // Create popup to request password
+            CustomPopupView passwordPopup = new CustomPopupView(owner);
+
+            // Create layout for buttons with correct spacing
+            VBox controls = new VBox();
+            controls.setPadding(new Insets(0, 40, 10, 40));
+            controls.setAlignment(Pos.CENTER);
+
+            // Add title
+            Text titleText = new Text("Password:");
+            titleText.setTextAlignment(TextAlignment.CENTER);
+            controls.getChildren().add(titleText);
+
+            PasswordField passwordField = new PasswordField();
+            passwordField.maxWidthProperty().bind(owner.widthProperty().subtract(25));
+            controls.getChildren().add(passwordField);
+
+            Button popupCancel = new Button("Cancel");
+            popupCancel.setOnAction(ev -> passwordPopup.hide());
+            Button popupDone = new Button("Save");
+            popupDone.setOnAction(ev -> {
+                try {
+                    String enteredPassword = passwordField.getText();
+                    // TODO: check password is correct
+                    PlatformFactory.getPlatform().getSettingService().store("password" + line.getId(), enteredPassword);
+                    walk.setLine(line);
+                    passwordPopup.hide();
+                    App.getInstance().switchScreen(App.SET_UP_WALK_VIEW);
+                } catch (DataUnavailableException e) {
+                    e.printStackTrace();
+                    showServerError();
+                }
+            });
+            HBox hb = new HBox(popupCancel, popupDone);
+            hb.setSpacing(15);
+            hb.setAlignment(Pos.CENTER);
+            controls.getChildren().add(hb);
+
+            passwordPopup.setContent(controls);
+            passwordPopup.show();
         }
-        App.getInstance().switchScreen(App.SET_UP_WALK_VIEW);
     }
 
     /**
      * Shows a pop-up explaining that the server connection has failed and pre-saved data is being used.
      */
-    private void showServerError() { // TODO: some data is saved on device. tell user data has not been updated.
+    protected void showServerError() {
         CustomPopupView serverError  = new CustomPopupView(controls);
-        Text            errorMessage = new Text("There has been an error connecting to the server. Information has not been updated."); // TODO: text not wrapping
-//        errorMessage.setWrapText(true);
+        Text            errorMessage = new Text("There has been an error connecting to the server. Information has not been updated.");
         errorMessage.wrappingWidthProperty().bind(linesListView.widthProperty().subtract(100));
         // Button to hide popup and reload lines from server
         Button retry = new Button("Okay");
-        retry.setOnAction(ev -> {
-            serverError.hide();
-        });
+        retry.setOnAction(ev -> serverError.hide());
         VBox popupVB = new VBox(20, errorMessage, retry);
         popupVB.setPadding(new Insets(40, 40, 40, 40));
         popupVB.setAlignment(Pos.TOP_CENTER);
@@ -133,21 +174,34 @@ public class DisplayLinesView extends View {
      * Fetches lines from the server, shows popup if it fails
      */
     private void updateLinesList() {
-        List<Line>   linesList  = null;
+        List<Line>   linesList  = new ArrayList<>();
         List<Animal> animalList = null;
-        try {
+
+        // Load data from server
+        try (Connection dbConnection = DriverManager.getConnection(App.getInstance().dbUrl)) {
             linesList = RetrieveData.fetchLinesList();
             animalList = RetrieveData.fetchAnimalList();
             // Update local database
-            Connection dbConnection = DriverManager.getConnection(App.getInstance().dbUrl);
-            if (dbConnection != null) {
+            if (dbConnection != null) { // TODO: changes to animals/lines are not saved. insert or ignore only adds if they're new, insert or replace will delete the favourite field used to find pre-viewed lines.
                 Statement stmt = dbConnection.createStatement();
                 for (Animal animal : animalList) {
                     stmt.executeUpdate("insert or ignore into animals(id, name) values(" + animal.getId() + ", '" + animal.getName() + "')");
                 }
-                for (Line line : linesList) {
-                    stmt.executeUpdate("insert or ignore into lines(id, name) values(" + line.getId() + ", '" + line.getName() + "')");
+                animalList.clear();
+                ResultSet animalRS = stmt.executeQuery(("SELECT * FROM animals"));
+                while (animalRS.next()) {
+                    animalList.add(new Animal(animalRS.getInt("id"), animalRS.getString("name")));
                 }
+                animalRS.close();
+                for (Line line : linesList) {
+                    stmt.executeUpdate("insert or ignore into lines(id, name, a1, a2, a3) values(" + line.getId() + ", '" + line.getName() + "', " + line.getAnimal1() + ", " + line.getAnimal2() + ", " + line.getAnimal3() + ")");
+                }
+                linesList.clear();
+                ResultSet lineRS = stmt.executeQuery(("SELECT * FROM lines"));
+                while (lineRS.next()) {
+                    linesList.add(new Line(lineRS.getInt("id"), lineRS.getString("name"), lineRS.getInt("a1"), lineRS.getInt("a2"), lineRS.getInt("a3")));
+                }
+                lineRS.close();
                 stmt.close();
             }
         } catch (DataUnavailableException | SQLException e) {
@@ -172,7 +226,7 @@ public class DisplayLinesView extends View {
     protected void updateAppBar(AppBar appBar) {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
         appBar.setTitleText("Select a line");
-        appBar.getActionItems().add(MaterialDesignIcon.UNDO.button(e -> App.getInstance().switchToPreviousView()));
+        appBar.getActionItems().add(MaterialDesignIcon.UNDO.button(e -> App.getInstance().switchScreen(App.HOME_VIEW)));
         linesListView.getSelectionModel().clearSelection();
         updateLinesList();
     }

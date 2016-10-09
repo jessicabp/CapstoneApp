@@ -1,5 +1,6 @@
 package capstone.mobile.classes;
 
+import com.gluonhq.charm.down.common.PlatformFactory;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.utils.URIBuilder;
@@ -47,10 +48,12 @@ public class SendData {
             httpPut.addHeader("Content-Type", "application/json");
             httpPut.addHeader("Accept", "application/json");
 
+            String password = PlatformFactory.getPlatform().getSettingService().retrieve("password" + walk.getLine().getId());
+
             // Create the JSON object that will be sent to the server
             JSONObject capturesObject = new JSONObject();
             capturesObject.put("lineId", walk.getLine().getId());
-            capturesObject.put("password", "password"); // TODO: get password from storage
+            capturesObject.put("password", password); // TODO: get password from storage
             capturesObject.put("catches", walk.getCaptures());
 
             System.out.println(capturesObject.toString());

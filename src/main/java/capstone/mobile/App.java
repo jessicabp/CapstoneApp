@@ -83,8 +83,8 @@ public class App extends MobileApplication {
     @Override
     public void init() {
 
-//        // TODO: remove
-//        PlatformFactory.getPlatform().getSettingService().remove(App.CURRENTPAGE);
+        // TODO: remove
+        PlatformFactory.getPlatform().getSettingService().remove(App.CURRENTPAGE);
 
         a = this;
 
@@ -119,6 +119,9 @@ public class App extends MobileApplication {
                 stmt.executeUpdate("CREATE TABLE IF NOT EXISTS lines (" +
                                    "id INTEGER PRIMARY KEY NOT NULL, " +
                                    "name TEXT NOT NULL, " +
+                                   "a1 INTEGER, " +
+                                   "a2 INTEGER, " +
+                                   "a3 INTEGER, " +
                                    "favourite TEXT)");
                 stmt.executeUpdate("CREATE TABLE IF NOT EXISTS traps (" +
                                    "lineId INTEGER REFERENCES lines(id) ON UPDATE CASCADE ON DELETE CASCADE, " +
@@ -196,7 +199,7 @@ public class App extends MobileApplication {
             while (linesRS.next()) {
                 // load line from database
                 int  lineId = linesRS.getInt("id");
-                Line line   = new Line(lineId, linesRS.getString("name"));
+                Line line   = new Line(lineId, linesRS.getString("name"), linesRS.getInt("a1"), linesRS.getInt("a2"), linesRS.getInt("a3"));
                 // get traps on line
                 ResultSet trapRS = stmt.executeQuery("SELECT * FROM traps WHERE lineId = " + lineId + ";");
                 while (trapRS.next()) {

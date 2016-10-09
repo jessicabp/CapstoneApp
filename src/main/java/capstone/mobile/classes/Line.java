@@ -19,9 +19,12 @@ public class Line {
 
     public Line() {}
 
-    public Line(int id, String name) {
+    public Line(int id, String name, int animal1, int animal2, int animal3) {
         this.id = id;
         this.name = name;
+        this.animal1 = animal1;
+        this.animal2 = animal2;
+        this.animal3 = animal3;
     }
 
     public int getId() {
@@ -50,6 +53,18 @@ public class Line {
 
     public void addTrap(Trap trap) {
         this.traps.add(trap);
+    }
+
+    public int getAnimal1() {
+        return animal1;
+    }
+
+    public int getAnimal2() {
+        return animal2;
+    }
+
+    public int getAnimal3() {
+        return animal3;
     }
 
     /**

@@ -25,7 +25,7 @@ import java.util.List;
  * Fetches and displays searchable list of available lines from server
  * Allows user to open line, checks password
  */
-public class FavouriteLinesView extends View {
+public class FavouriteLinesView extends DisplayLinesView {
 
     private static GluonObservableList<Line> observableLinesList = new GluonObservableList<>();
     private Walk walk;
@@ -34,7 +34,7 @@ public class FavouriteLinesView extends View {
     private ListView<Line> linesListView = new ListView<>();
 
     public FavouriteLinesView(String name, Walk walk) {
-        super(name);
+        super(name, walk);
         this.walk = walk;
 
         getStylesheets().add(FavouriteLinesView.class.getResource("secondary.css").toExternalForm());
@@ -74,51 +74,12 @@ public class FavouriteLinesView extends View {
         // Add listener to cells
         linesListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newLine) -> {
             if (newLine != null) {
-                selectLine(newLine);
+                selectLine(newLine, controls);
             }
         });
 
         // Add items to VBox
         controls.getChildren().addAll(filter, linesListView);
-    }
-
-    public static GluonObservableList<Line> getObservableLinesList() {
-        return observableLinesList;
-    }
-
-    /**
-     * Set's the walk's line to the given line, switches to SetUpWalkView
-     *
-     * @param line
-     */
-    public void selectLine(Line line) {
-        try {
-            walk.setLine(line);
-        } catch (DataUnavailableException e) {
-            showServerError();
-            e.printStackTrace();
-        }
-        App.getInstance().switchScreen(App.SET_UP_WALK_VIEW);
-    }
-
-    /**
-     * Shows a pop-up explaining that the server connection has failed and pre-saved data is being used.
-     */
-    private void showServerError() { // TODO: some data is saved on device. tell user data has not been updated.
-        CustomPopupView serverError  = new CustomPopupView(controls);
-        Text            errorMessage = new Text("There has been an error connecting to the server. Information has not been updated."); // TODO: text not wrapping
-//        errorMessage.setWrapText(true);
-        errorMessage.wrappingWidthProperty().bind(linesListView.widthProperty().subtract(100));
-        // Button to hide popup and reload lines from server
-        Button retry = new Button("Okay");
-        retry.setOnAction(ev -> {
-            serverError.hide();
-        });
-        VBox popupVB = new VBox(20, errorMessage, retry);
-        popupVB.setPadding(new Insets(40, 40, 40, 40));
-        popupVB.setAlignment(Pos.TOP_CENTER);
-        serverError.setContent(popupVB);
-        serverError.show();
     }
 
     /**
@@ -134,7 +95,7 @@ public class FavouriteLinesView extends View {
             ResultSet linesRS = stmt.executeQuery("SELECT * FROM lines WHERE favourite like '%true%';");
             while (linesRS.next()) {
                 // load line from database
-                Line line   = new Line(linesRS.getInt("id"), linesRS.getString("name"));
+                Line line   = new Line(linesRS.getInt("id"), linesRS.getString("name"), linesRS.getInt("a1"), linesRS.getInt("a2"), linesRS.getInt("a3"));
                 linesList.add(line);
             }
             linesRS.close();
@@ -167,10 +128,7 @@ public class FavouriteLinesView extends View {
 
     @Override
     protected void updateAppBar(AppBar appBar) {
-        appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
-        appBar.setTitleText("Select a line");
-        appBar.getActionItems().add(MaterialDesignIcon.UNDO.button(e -> App.getInstance().switchToPreviousView()));
-        linesListView.getSelectionModel().clearSelection();
+        super.updateAppBar(appBar);
         updateLinesList();
     }
 }

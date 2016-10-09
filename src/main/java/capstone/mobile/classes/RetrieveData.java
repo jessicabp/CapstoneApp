@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class RetrieveData {
 
-    private static final String HOST      = "http://traptracker.pythonanywhere.com/api";
+    private static final String HOST      = "https://traptracker.pythonanywhere.com/api";
     private static final String KEY_ERROR = "Key not contained within object.";
 
     /**
