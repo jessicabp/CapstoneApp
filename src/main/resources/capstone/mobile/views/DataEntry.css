@@ -2,6 +2,6 @@
 
 }
 
-.toggle-button { /* TODO: doesn't affect buttons in popup, does affect button outside gridpane */
-    -fx-padding: 30 30 30 30;
+.tall {
+    -fx-padding: 40 0 40 0;
 }

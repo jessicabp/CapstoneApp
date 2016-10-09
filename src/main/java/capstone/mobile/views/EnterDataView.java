@@ -36,19 +36,30 @@ public class EnterDataView extends View {
         getStylesheets().add(EnterDataView.class.getResource("DataEntry.css").toExternalForm());
         getStylesheets().add(EnterDataView.class.getResource("secondary.css").toExternalForm());
 
+        showButtons();
+    }
+
+    private void showButtons() {
+        // Create VBox for all items
+        VBox controls = new VBox(20.0);
+        controls.setPadding(new Insets(40, 40, 40, 40));
+        controls.setAlignment(Pos.CENTER);
+        setCenter(controls);
+
         // Create animal selection buttons
         ToggleGroup    group = new ToggleGroup();
         CustomGridPane grid  = new CustomGridPane(2);
+        controls.getChildren().add(grid);
         // Add first 4 animal to grid and toggle group
         int animalNo = 0;
         for (int r = 0; r < 2; r++) {
             for (int c = 0; c < 2; c++) {
                 Animal       nextAnimal = animalList.get(animalNo);
                 ToggleButton button     = new ToggleButton(nextAnimal.getName());
+                button.getStyleClass().add("tall");
                 button.setToggleGroup(group);
                 button.setOnAction(e -> animal = nextAnimal.getId());
                 button.setMaxWidth(Double.MAX_VALUE);
-                button.setPadding(gridButtonInsets); // TODO: Not working. Need to make buttons taller.
                 grid.add(button, c, r);
                 animalNo++;
             }
@@ -56,43 +67,33 @@ public class EnterDataView extends View {
 
         // Create button with popup for other animal options
         ToggleButton other = new ToggleButton("Other");
+        controls.getChildren().add(other);
 
         // Popup for selecting other animal
-        CustomPopupView animalPopup = new CustomPopupView(other);
-        ToggleGroup     otherGroup  = new ToggleGroup();
-        CustomGridPane  otherGrid   = new CustomGridPane(2);
-        otherGrid.setPadding(new Insets(20, 20, 20, 20));
+        CustomPopupView animalPopup = new CustomPopupView(grid);
+        animalPopup.getStylesheets().add(EnterDataView.class.getResource("OtherAnimals.css").toExternalForm());
+        animalPopup.getStylesheets().add(EnterDataView.class.getResource("secondary.css").toExternalForm());
+        animalPopup.setPrefWidth(other.getMaxWidth());
+        ToggleGroup otherGroup = new ToggleGroup();
+        VBox        animalVB   = new VBox(10);
+        animalVB.setPadding(new Insets(20, 20, 20, 20));
         // Add all animal to grid and toggle group
         int r = 0;
-        for (; r < (animalList.size() - 4) / 2; r++) {
-            for (int c = 0; c < 2; c++) {
-                Animal       nextAnimal = animalList.get(animalNo);
-                ToggleButton button     = new ToggleButton(nextAnimal.getName());
-                button.setToggleGroup(otherGroup);
-                button.setOnAction(ev -> {
-                    animal = nextAnimal.getId();
-                    animalPopup.hide();
-                });
-                button.setMaxWidth(Double.MAX_VALUE); // TODO: other animal buttons aren't wide enough
-                button.setPadding(gridButtonInsets); // TODO: Not working. Need to make buttons taller.
-                otherGrid.add(button, c, r);
-                animalNo++;
-            }
-        }
-        // If there's an odd number of animal, make sure the last one is included
-        if (animalList.size() % 2 != 0) {
+        for (; r < (animalList.size() - 4); r++) {
             Animal       nextAnimal = animalList.get(animalNo);
             ToggleButton button     = new ToggleButton(nextAnimal.getName());
+            button.getStyleClass().add("tall");
             button.setToggleGroup(otherGroup);
             button.setOnAction(ev -> {
                 animal = nextAnimal.getId();
                 animalPopup.hide();
             });
-            button.setMaxWidth(Double.MAX_VALUE);
-            button.setPadding(gridButtonInsets); // TODO: Not working. Need to make buttons taller.
-            otherGrid.add(button, 0, r);
+            button.maxWidthProperty().bind(controls.widthProperty().subtract(120));
+            button.minWidthProperty().bind(controls.widthProperty().subtract(120));
+            animalVB.getChildren().add(button);
+            animalNo++;
         }
-        animalPopup.setContent(otherGrid);
+        animalPopup.setContent(animalVB);
 
         // Settings for other animal button
         other.setMaxWidth(Double.MAX_VALUE);
@@ -103,7 +104,7 @@ public class EnterDataView extends View {
         });
 
         // Add button to mark trap as done
-        Button done = new Button("Done");
+        Button done = new Button("DONE");
         done.setMaxWidth(Double.MAX_VALUE);
         done.setOnAction(e -> {
             if (group.getSelectedToggle() != null) {
@@ -122,21 +123,13 @@ public class EnterDataView extends View {
             }
         });
         done.setGraphic(MaterialDesignIcon.SAVE.graphic());
+        controls.getChildren().add(done);
 
         // Add buttons to add image or maintenance info
-        HBox   hb3   = new HBox(15.0);
-        Button photo = new Button("Photo");
-        photo.setOnAction(e -> App.getInstance().switchScreen(App.CAMERA));
         Button maintenance = new Button("Maintenance");
+        maintenance.setMaxWidth(Double.MAX_VALUE);
         maintenance.setOnAction(e -> App.getInstance().switchScreen(App.MAINTENANCE));
-        hb3.getChildren().addAll(photo, maintenance);
-        hb3.setAlignment(Pos.CENTER);
-
-        // Create VBox for all items
-        VBox controls = new VBox(15.0, grid, other, done, hb3);
-        controls.setPadding(new Insets(40, 40, 40, 40));
-        controls.setAlignment(Pos.CENTER);
-        setCenter(controls);
+        controls.getChildren().add(maintenance);
     }
 
     public static void addAnimalFromDB(Animal animal) {
@@ -155,5 +148,7 @@ public class EnterDataView extends View {
     protected void updateAppBar(AppBar appBar) {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
         appBar.setTitleText("Trap #" + walk.getCurrentTrap().getNumber());
+
+        showButtons();
     }
 }
