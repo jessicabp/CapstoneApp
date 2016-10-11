@@ -1,10 +1,12 @@
 package capstone.mobile.classes;
 
 import capstone.mobile.App;
+import capstone.mobile.maps.CustomMapView;
 import capstone.mobile.views.DoWalkView;
 import com.gluonhq.charm.down.common.PlatformFactory;
 import com.gluonhq.charm.down.common.SettingService;
 import gluonhq.maps.MapPoint;
+import gluonhq.maps.PoiLayer;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.paint.Color;
@@ -26,13 +28,17 @@ import java.util.List;
 public class Walk {
 
     private static BooleanProperty walking = new SimpleBooleanProperty(false);
-    private Line    line;
-    private int     index;
-    private Trap    finishTrap;
-    private Trap    currentTrap;
-    private boolean direction; // TODO: direction will be the same as Trap.side when the user will find the trap on the left. Direction will be true when trap number increases (e.g. sth to nth in gorge)
+    private Line line;
+    private int  index;
+    private Trap finishTrap;
+    private Trap currentTrap;
     private List<Capture> captures     = new ArrayList<>();
     private List<Trap>    changedTraps = new ArrayList<>();
+
+    /**
+     * direction == Trap.side when the user will find the trap on the left. Direction will be true when trap number increases (e.g. sth to nth in gorge)
+     */
+    private boolean direction;
 
     public static BooleanProperty isWalking() {
         return walking;
@@ -193,8 +199,13 @@ public class Walk {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        Circle   marker   = new Circle(5, Color.YELLOW);
-        MapPoint mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
-        DoWalkView.getMapView().addMarker(DoWalkView.getMarkersLayer(), mapPoint, marker);
+        Circle        marker   = new Circle(5, Color.YELLOW);
+        MapPoint      mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
+        CustomMapView mapview  = DoWalkView.getMapView();
+        PoiLayer      layer    = DoWalkView.getMarkersLayer();
+        if (layer != null) {
+            System.out.println("layer not null");
+        }
+        mapview.addMarker(layer, mapPoint, marker);
     }
 }

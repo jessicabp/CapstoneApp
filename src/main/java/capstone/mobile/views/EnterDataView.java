@@ -11,7 +11,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
@@ -23,10 +22,10 @@ import java.util.List;
  */
 public class EnterDataView extends View {
 
+    private static List<Animal> animalList = new ArrayList<>();
     private Walk walk;
     private int  animal;
-    private static List<Animal> animalList       = new ArrayList<>();
-    private        Insets       gridButtonInsets = new Insets(40, 0, 40, 0); // for making buttons taller
+    private Insets gridButtonInsets = new Insets(40, 0, 40, 0); // for making buttons taller
 
     public EnterDataView(String name, Walk walk) {
         super(name);
@@ -37,6 +36,18 @@ public class EnterDataView extends View {
         getStylesheets().add(EnterDataView.class.getResource("secondary.css").toExternalForm());
 
         showButtons();
+    }
+
+    public static void addAnimalFromDB(Animal animal) {
+        animalList.add(animal);
+    }
+
+    public static List<Animal> getAnimalList() {
+        return animalList;
+    }
+
+    public static void setAnimalList(List<Animal> fetchedAnimalList) {
+        animalList = fetchedAnimalList;
     }
 
     private void showButtons() {
@@ -130,18 +141,6 @@ public class EnterDataView extends View {
         maintenance.setMaxWidth(Double.MAX_VALUE);
         maintenance.setOnAction(e -> App.getInstance().switchScreen(App.MAINTENANCE));
         controls.getChildren().add(maintenance);
-    }
-
-    public static void addAnimalFromDB(Animal animal) {
-        animalList.add(animal);
-    }
-
-    public static List<Animal> getAnimalList() {
-        return animalList;
-    }
-
-    public static void setAnimalList(List<Animal> fetchedAnimalList) {
-        animalList = fetchedAnimalList;
     }
 
     @Override

@@ -14,9 +14,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * TODO: Comment and possibly refactor, fix animals
- */
 public class RetrieveData {
 
     private static final String HOST      = "https://traptracker.pythonanywhere.com/api";
@@ -137,6 +134,33 @@ public class RetrieveData {
             Collections.sort(animalList, (a, b) -> a.getId() - b.getId());
 
             return animalList;
+        } catch (IOException ex) {
+            throw new DataUnavailableException(ex.getMessage());
+        }
+    }
+
+    /**
+     * Returns authorisation level of password.
+     *
+     * @return int -- 0 = no authorisation, 1 = user, 2 = admin
+     */
+    public static int checkAuthorisation(int lineId, String password) throws DataUnavailableException {
+        try {
+            URL               url             = new URL(HOST + "/checkauth?line_id=" + lineId + "&password=" + password);
+            HttpURLConnection connection      = (HttpURLConnection) url.openConnection();
+            InputStream       jsonInputStream = connection.getInputStream();
+
+            JsonReader jsonReader = Json.createReader(jsonInputStream);
+            JsonObject jsonObject = jsonReader.readObject();
+            jsonReader.close();
+            jsonInputStream.close();
+            connection.disconnect();
+
+            if (!jsonObject.containsKey("result")) {
+                throw new DataUnavailableException(KEY_ERROR);
+            }
+
+            return jsonObject.getInt("result");
         } catch (IOException ex) {
             throw new DataUnavailableException(ex.getMessage());
         }

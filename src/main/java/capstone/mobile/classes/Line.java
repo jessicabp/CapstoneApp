@@ -17,7 +17,8 @@ public class Line {
     private String name;
     private List<Trap> traps = new ArrayList<>();
 
-    public Line() {}
+    public Line() {
+    }
 
     public Line(int id, String name, int animal1, int animal2, int animal3) {
         this.id = id;

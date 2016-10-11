@@ -14,14 +14,12 @@ import java.net.URI;
 
 /**
  * Sends data from traps when connected
- * TODO: Create exceptions for errors
  */
 public class SendData {
 
 
     private static final String HOST = "traptracker.pythonanywhere.com";
 
-    // TODO: Comment
     public static int sendWalkData(Walk walk) {
         int traps = sendTrapsData(walk);
         if (traps != 201) {
@@ -58,11 +56,14 @@ public class SendData {
             System.out.println(uri);
 
             CloseableHttpClient httpclient = HttpClients.createDefault();
-            HttpPut httpPut = new HttpPut(uri);
+            HttpPut             httpPut    = new HttpPut(uri);
             httpPut.addHeader("Content-Type", "application/json");
             httpPut.addHeader("Accept", "application/json");
 
             String password = PlatformFactory.getPlatform().getSettingService().retrieve("password" + walk.getLine().getId());
+            if (!(password != null)) {
+                password = "";
+            }
 
             // Create the JSON object that will be sent to the server
             JSONObject capturesObject = new JSONObject();
@@ -87,7 +88,6 @@ public class SendData {
         }
     }
 
-    // TODO: Comment
     public static int sendTrapsData(Walk walk) {
         URIBuilder builder = new URIBuilder();
         builder.setScheme("https");
@@ -99,11 +99,14 @@ public class SendData {
             System.out.println(uri);
 
             CloseableHttpClient httpclient = HttpClients.createDefault();
-            HttpPut httpPut = new HttpPut(uri);
+            HttpPut             httpPut    = new HttpPut(uri);
             httpPut.addHeader("Content-Type", "application/json");
             httpPut.addHeader("Accept", "application/json");
 
             String password = PlatformFactory.getPlatform().getSettingService().retrieve("password" + walk.getLine().getId());
+            if (!(password != null)) {
+                password = "";
+            }
 
             // Create the JSON object that will be sent to the server
             JSONObject trapsObject = new JSONObject();

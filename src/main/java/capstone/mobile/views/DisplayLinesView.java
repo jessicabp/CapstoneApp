@@ -101,57 +101,68 @@ public class DisplayLinesView extends View {
     public void selectLine(Line line, VBox owner) {
         String password = PlatformFactory.getPlatform().getSettingService().retrieve("password" + line.getId());
         if (password != null) {
-            // TODO: check password is correct
             try {
-                PlatformFactory.getPlatform().getSettingService().store("password" + line.getId(), password);
-                walk.setLine(line);
-                App.getInstance().switchScreen(App.SET_UP_WALK_VIEW);
+                if (RetrieveData.checkAuthorisation(line.getId(), password) > 0) {
+                    PlatformFactory.getPlatform().getSettingService().store("password" + line.getId(), password);
+                    walk.setLine(line);
+                    App.getInstance().switchScreen(App.SET_UP_WALK_VIEW);
+                } else {
+                    askForPassword(owner, line);
+                }
             } catch (DataUnavailableException e) {
                 e.printStackTrace();
                 showServerError();
             }
         } else {
-            // Create popup to request password
-            CustomPopupView passwordPopup = new CustomPopupView(owner);
+            askForPassword(owner, line);
+        }
+    }
 
-            // Create layout for buttons with correct spacing
-            VBox controls = new VBox(20);
-            controls.setPadding(new Insets(40, 40, 40, 40));
-            controls.setAlignment(Pos.CENTER);
+    private void askForPassword(VBox owner, Line line) {
+        // Create popup to request password
+        CustomPopupView passwordPopup = new CustomPopupView(owner);
 
-            // Add title
-            Text titleText = new Text("Password:");
-            titleText.setTextAlignment(TextAlignment.CENTER);
-            controls.getChildren().add(titleText);
+        // Create layout for buttons with correct spacing
+        VBox controls = new VBox(20);
+        controls.setPadding(new Insets(40, 40, 40, 40));
+        controls.setAlignment(Pos.CENTER);
 
-            PasswordField passwordField = new PasswordField();
-            passwordField.maxWidthProperty().bind(owner.widthProperty().subtract(25));
-            controls.getChildren().add(passwordField);
+        // Add title
+        Text titleText = new Text("Password:");
+        titleText.setTextAlignment(TextAlignment.CENTER);
+        controls.getChildren().add(titleText);
 
-            Button popupCancel = new Button("Cancel");
-            popupCancel.setOnAction(ev -> passwordPopup.hide());
-            Button popupDone = new Button("Save");
-            popupDone.setOnAction(ev -> {
-                try {
-                    String enteredPassword = passwordField.getText();
-                    // TODO: check password is correct
+        PasswordField passwordField = new PasswordField();
+        passwordField.maxWidthProperty().bind(owner.widthProperty().subtract(25));
+        controls.getChildren().add(passwordField);
+
+        Button popupCancel = new Button("Cancel");
+        popupCancel.setOnAction(ev -> passwordPopup.hide());
+        Button popupDone = new Button("Save");
+        popupDone.setOnAction(ev -> {
+            try {
+                String enteredPassword = passwordField.getText();
+                if (RetrieveData.checkAuthorisation(line.getId(), enteredPassword) > 0) {
                     PlatformFactory.getPlatform().getSettingService().store("password" + line.getId(), enteredPassword);
                     walk.setLine(line);
                     passwordPopup.hide();
                     App.getInstance().switchScreen(App.SET_UP_WALK_VIEW);
-                } catch (DataUnavailableException e) {
-                    e.printStackTrace();
-                    showServerError();
+                } else {
+                    passwordField.setText("");
+                    titleText.setText("Try again:");
                 }
-            });
-            HBox hb = new HBox(popupCancel, popupDone);
-            hb.setSpacing(15);
-            hb.setAlignment(Pos.CENTER);
-            controls.getChildren().add(hb);
+            } catch (DataUnavailableException e) {
+                e.printStackTrace();
+                showServerError();
+            }
+        });
+        HBox hb = new HBox(popupCancel, popupDone);
+        hb.setSpacing(15);
+        hb.setAlignment(Pos.CENTER);
+        controls.getChildren().add(hb);
 
-            passwordPopup.setContent(controls);
-            passwordPopup.show();
-        }
+        passwordPopup.setContent(controls);
+        passwordPopup.show();
     }
 
     /**
@@ -183,7 +194,7 @@ public class DisplayLinesView extends View {
             linesList = RetrieveData.fetchLinesList();
             animalList = RetrieveData.fetchAnimalList();
             // Update local database
-            if (dbConnection != null) { // TODO: changes to animals/lines are not saved. insert or ignore only adds if they're new, insert or replace will delete the favourite field used to find pre-viewed lines.
+            if (dbConnection != null) {
                 Statement stmt = dbConnection.createStatement();
                 for (Animal animal : animalList) {
                     stmt.executeUpdate("insert or ignore into animals(id, name) values(" + animal.getId() + ", '" + animal.getName() + "')");

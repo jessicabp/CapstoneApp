@@ -1,6 +1,3 @@
-import capstone.mobile.classes.Validator;
-
-import org.junit.Assert;
 import org.junit.Test;
 
 public class ValidatorTest {

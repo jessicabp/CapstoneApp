@@ -4,7 +4,6 @@ import capstone.mobile.classes.*;
 import capstone.mobile.views.*;
 import com.gluonhq.charm.down.common.JavaFXPlatform;
 import com.gluonhq.charm.down.common.PlatformFactory;
-import com.gluonhq.charm.down.common.SettingService;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.Avatar;
 import com.gluonhq.charm.glisten.control.NavigationDrawer;
@@ -30,16 +29,15 @@ import java.sql.*;
 public class App extends MobileApplication {
 
     // Strings naming the views, and providing reference to them
-    public static final String DISPLAY_LINES_VIEW = "Display lines";
+    public static final String DISPLAY_LINES_VIEW   = "Display lines";
     public static final String FAVOURITE_LINES_VIEW = "Display favourite lines";
-    public static final String SET_UP_WALK_VIEW   = "Set up walk";
-    public static final String DO_WALK_VIEW       = "Do walk";
-    public static final String ENTER_DATA_VIEW    = "Enter data";
-    public static final String CAMERA             = "Camera";
-    public static final String MAINTENANCE        = "Maintenance";
-    public static final String CREATE_TRAP_VIEW   = "Add trap";
-    public static final String END_WALK_VIEW      = "End walk";
-    public static final String MENU_LAYER         = "Side Menu";
+    public static final String SET_UP_WALK_VIEW     = "Set up walk";
+    public static final String DO_WALK_VIEW         = "Do walk";
+    public static final String ENTER_DATA_VIEW      = "Enter data";
+    public static final String MAINTENANCE          = "Maintenance";
+    public static final String CREATE_TRAP_VIEW     = "Add trap";
+    public static final String END_WALK_VIEW        = "End walk";
+    public static final String MENU_LAYER           = "Side Menu";
 
     // Strings to name values stored on device
     public static String CURRENTPAGE   = "CURRENTPAGE";
@@ -64,14 +62,8 @@ public class App extends MobileApplication {
         if (newItem.equals(homeItem)) {
             switchScreen(HOME_VIEW);
         } else if (newItem.equals(createTrapItem)) {
-            // TODO ???
-            // CreateTrapView.getTimeline().stop();
-            // DoWalkView.getTimeline().stop();
             switchScreen(CREATE_TRAP_VIEW);
         } else if (newItem.equals(endWalkItem)) {
-            // TODO ???
-            // CreateTrapView.getTimeline().stop();
-            // DoWalkView.getTimeline().stop();
             switchScreen(END_WALK_VIEW);
         }
     };
@@ -155,7 +147,6 @@ public class App extends MobileApplication {
         addViewFactory(SET_UP_WALK_VIEW, () -> new SetUpWalkView(SET_UP_WALK_VIEW, walk));
         addViewFactory(DO_WALK_VIEW, () -> new DoWalkView(DO_WALK_VIEW, walk));
         addViewFactory(ENTER_DATA_VIEW, () -> new EnterDataView(ENTER_DATA_VIEW, walk));
-        addViewFactory(CAMERA, () -> new Camera(CAMERA));
         addViewFactory(MAINTENANCE, () -> new EnterMaintenance(MAINTENANCE, walk));
         addViewFactory(CREATE_TRAP_VIEW, () -> new CreateTrapView(CREATE_TRAP_VIEW, walk));
         addViewFactory(END_WALK_VIEW, () -> new EndWalkView(END_WALK_VIEW, walk));
@@ -207,7 +198,7 @@ public class App extends MobileApplication {
                         // add trap from line
                         Trap trap = new Trap(trapRS.getInt("id"), trapRS.getInt("lineId"), trapRS.getInt("number"), trapRS.getDouble("latitude"), trapRS.getDouble("longitude"), trapRS.getInt("side"), trapRS.getInt("broken"), trapRS.getInt("moved"));
                         line.addTrap(trap);
-                        if (trapRS.getString("changed") !=null && trapRS.getString("changed").equals("true")) {
+                        if (trapRS.getString("changed") != null && trapRS.getString("changed").equals("true")) {
                             walk.addChangedTrap(trap);
                         }
                     } else {

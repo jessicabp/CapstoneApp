@@ -1,7 +1,6 @@
 package capstone.mobile.views;
 
 import capstone.mobile.App;
-import capstone.mobile.classes.CustomGridPane;
 import capstone.mobile.classes.Walk;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
@@ -9,7 +8,8 @@ import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
 
 

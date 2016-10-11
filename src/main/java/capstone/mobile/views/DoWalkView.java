@@ -1,7 +1,9 @@
 package capstone.mobile.views;
 
 import capstone.mobile.App;
-import capstone.mobile.classes.*;
+import capstone.mobile.classes.CustomGridPane;
+import capstone.mobile.classes.Trap;
+import capstone.mobile.classes.Walk;
 import capstone.mobile.maps.CustomMapView;
 import com.gluonhq.charm.down.common.PlatformFactory;
 import com.gluonhq.charm.down.common.Position;
@@ -26,20 +28,19 @@ import java.util.List;
 
 /**
  * View showing user where the next trap is and lets them find or skip it
- * TODO: Display current position
  */
 public class DoWalkView extends View {
 
     private static CustomMapView mapView;
     private static PoiLayer      markersLayer;
-    private Walk     walk;
-    private Label    side;
-    private Label    moved;
-    private Label    broken;
-    private VBox     messages;
-    private PoiLayer currentLayer;
-    private PoiLayer positionLayer;
-    private Label waitingMessage;
+    private        Walk          walk;
+    private        Label         side;
+    private        Label         moved;
+    private        Label         broken;
+    private        VBox          messages;
+    private        PoiLayer      currentLayer;
+    private        PoiLayer      positionLayer;
+    private        Label         waitingMessage;
 
     public DoWalkView(String name, Walk walk) {
         super(name);
@@ -113,7 +114,15 @@ public class DoWalkView extends View {
         PositionService positionService = PlatformFactory.getPlatform().getPositionService();
         positionService.positionProperty().addListener(
                 (observableValue, oldValue, newValue) -> updatePosition(newValue)
-        );
+                                                      );
+    }
+
+    public static CustomMapView getMapView() {
+        return mapView;
+    }
+
+    public static PoiLayer getMarkersLayer() {
+        return markersLayer;
     }
 
     private void updatePosition(Position position) {
@@ -123,14 +132,6 @@ public class DoWalkView extends View {
         MapPoint mapPoint = new MapPoint(position.getLatitude(), position.getLongitude());
         mapView.addMarker(positionLayer, mapPoint, new Circle(5, Color.GREEN));
         mapView.setCenter(position.getLatitude(), position.getLongitude());
-    }
-
-    public static CustomMapView getMapView() {
-        return mapView;
-    }
-
-    public static PoiLayer getMarkersLayer() {
-        return markersLayer;
     }
 
     @Override

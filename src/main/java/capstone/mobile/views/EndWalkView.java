@@ -73,7 +73,6 @@ public class EndWalkView extends View {
                     Button popupDone = new Button("Save new password");
                     popupDone.setOnAction(ev -> {
                         String enteredPassword = passwordField.getText();
-                        // TODO: check password is correct
                         PlatformFactory.getPlatform().getSettingService().store("password" + walk.getLine().getId(), enteredPassword);
                         passwordPopup.hide();
                     });

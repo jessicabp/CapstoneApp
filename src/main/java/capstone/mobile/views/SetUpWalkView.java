@@ -22,7 +22,6 @@ import javafx.scene.text.Text;
 import java.util.List;
 
 
-// TODO: Rename confusing variables
 public class SetUpWalkView extends View {
 
     private final static double MAP_HEIGHT = 200;
@@ -47,7 +46,7 @@ public class SetUpWalkView extends View {
         getStylesheets().add(SetUpWalkView.class.getResource("secondary.css").toExternalForm());
 
         // Creating the map displays
-        startMapView = new CustomMapView(MAP_HEIGHT );
+        startMapView = new CustomMapView(MAP_HEIGHT);
         endMapView = new CustomMapView(MAP_HEIGHT);
 
         // Creating the map layers on which markers and numbers will be added, note that
@@ -66,7 +65,7 @@ public class SetUpWalkView extends View {
         Button startButton = new Button();
         startButton.setText("Start Walk");
         startButton.setOnMouseClicked(e -> {
-            if(startTrap != null && endTrap != null) {
+            if (startTrap != null && endTrap != null) {
                 walk.startWalk(startTrap, endTrap);
                 App.getInstance().switchScreen(App.DO_WALK_VIEW);
             }
@@ -77,7 +76,7 @@ public class SetUpWalkView extends View {
         controls.setAlignment(Pos.TOP_CENTER);
         setCenter(controls);
     }
-    
+
     @Override
     protected void updateAppBar(AppBar appBar) {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
@@ -87,16 +86,15 @@ public class SetUpWalkView extends View {
         // Add each trap to the map with listeners
         List<Trap> traps = walk.getLine().getTraps();
 
-        // TODO: Replace circle with image markers
         for (Trap trap : traps) {
             MapPoint mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
 
             Node numberStart = new Text("   " + trap.getNumber());
-            Node numberEnd = new Text("   " + trap.getNumber());
+            Node numberEnd   = new Text("   " + trap.getNumber());
 
             Circle circleStart = new Circle(7, Color.BLUE);
             circleStart.setOnMouseClicked(e -> {
-                if(startCircle == null) {
+                if (startCircle == null) {
                     startCircle = circleStart;
                     circleStart.setFill(Color.RED);
                 } else {
@@ -112,12 +110,12 @@ public class SetUpWalkView extends View {
 
             Circle circleEnd = new Circle(7, Color.BLUE);
             circleEnd.setOnMouseClicked(e -> {
-                if(endCircle == null) {
-                    endCircle  = circleEnd;
+                if (endCircle == null) {
+                    endCircle = circleEnd;
                     circleEnd.setFill(Color.RED);
                 } else {
-                    endCircle .setFill(Color.BLUE);
-                    endCircle  = circleEnd;
+                    endCircle.setFill(Color.BLUE);
+                    endCircle = circleEnd;
                     circleEnd.setFill(Color.RED);
                 }
                 endTrap = trap;
@@ -127,7 +125,6 @@ public class SetUpWalkView extends View {
             endMapView.addMarker(endNumbersLayer, mapPoint, numberEnd);
         }
 
-        // TODO: Correct map placement and zoom based on positions of the traps
         Trap s = traps.get(0);
         startMapView.setCenter(s.getLatitude(), s.getLongitude());
 

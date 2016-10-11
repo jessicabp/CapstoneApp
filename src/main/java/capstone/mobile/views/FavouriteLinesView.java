@@ -2,20 +2,15 @@ package capstone.mobile.views;
 
 import capstone.mobile.App;
 import capstone.mobile.classes.*;
-import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
-import com.gluonhq.charm.glisten.mvc.View;
-import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.gluonhq.connect.GluonObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -96,7 +91,7 @@ public class FavouriteLinesView extends DisplayLinesView {
             ResultSet linesRS = stmt.executeQuery("SELECT * FROM lines WHERE favourite like '%true%';");
             while (linesRS.next()) {
                 // load line from database
-                Line line   = new Line(linesRS.getInt("id"), linesRS.getString("name"), linesRS.getInt("a1"), linesRS.getInt("a2"), linesRS.getInt("a3"));
+                Line line = new Line(linesRS.getInt("id"), linesRS.getString("name"), linesRS.getInt("a1"), linesRS.getInt("a2"), linesRS.getInt("a3"));
                 linesList.add(line);
             }
             linesRS.close();
