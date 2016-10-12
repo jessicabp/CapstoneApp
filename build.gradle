@@ -98,9 +98,9 @@ sourceSets {
 retrolambda {
 
     jdk System.getenv("JAVA_HOME")
-//    if (System.getenv("JAVA7_HOME")) {
-//        oldJdk System.getenv("JAVA7_HOME")
-//    } else {
+    if (System.getenv("JAVA7_HOME")) {
+        oldJdk System.getenv("JAVA7_HOME")
+    } else {
         oldJdk "/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home"
-//    }
+    }
 }

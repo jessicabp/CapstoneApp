@@ -1,7 +1,6 @@
 package capstone.mobile.classes;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Capture {
 
@@ -12,7 +11,7 @@ public class Capture {
     public Capture(int trapId, int animalId) {
         this.trapId = trapId;
         this.animalId = animalId;
-        time = Timestamp.valueOf(LocalDateTime.now()).getTime();
+        time = new Date().getTime();
     }
 
     public Capture(int trapId, int animalId, long time) {
