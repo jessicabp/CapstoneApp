@@ -1,5 +1,8 @@
-package capstone.mobile.classes;
+package capstone.mobile.dataHandlers;
 
+import capstone.mobile.models.Animal;
+import capstone.mobile.models.Line;
+import capstone.mobile.models.Trap;
 import com.gluonhq.connect.converter.JsonConverter;
 
 import javax.json.Json;

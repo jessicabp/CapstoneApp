@@ -1,10 +1,10 @@
-package capstone.mobile.views;
+package capstone.mobile.userInterfaces;
 
 import capstone.mobile.App;
-import capstone.mobile.classes.CustomGridPane;
-import capstone.mobile.classes.Trap;
-import capstone.mobile.classes.Walk;
-import capstone.mobile.maps.CustomMapView;
+import capstone.mobile.other.CustomGridPane;
+import capstone.mobile.models.Trap;
+import capstone.mobile.models.Walk;
+import capstone.mobile.other.CustomMapView;
 import com.gluonhq.charm.down.common.PlatformFactory;
 import com.gluonhq.charm.down.common.Position;
 import com.gluonhq.charm.down.common.PositionService;

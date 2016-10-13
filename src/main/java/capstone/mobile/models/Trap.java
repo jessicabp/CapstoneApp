@@ -1,4 +1,4 @@
-package capstone.mobile.classes;
+package capstone.mobile.models;
 
 /**
  * Holds information about the trap

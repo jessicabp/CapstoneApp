@@ -1,10 +1,10 @@
-package capstone.mobile.views;
+package capstone.mobile.userInterfaces;
 
 
 import capstone.mobile.App;
-import capstone.mobile.classes.Line;
-import capstone.mobile.classes.Trap;
-import capstone.mobile.classes.Walk;
+import capstone.mobile.models.Line;
+import capstone.mobile.models.Trap;
+import capstone.mobile.models.Walk;
 import com.gluonhq.charm.down.common.PlatformFactory;
 import com.gluonhq.charm.down.common.SettingService;
 import com.gluonhq.charm.glisten.application.MobileApplication;
@@ -42,19 +42,19 @@ public class HomeView extends View {
         allLines.setOnAction(e -> App.getInstance().switchScreen(App.DISPLAY_LINES_VIEW));
         controls.getChildren().add(allLines);
 
-        String currentPage = PlatformFactory.getPlatform().getSettingService().retrieve(App.CURRENTPAGE) != null ? PlatformFactory.getPlatform().getSettingService().retrieve(App.CURRENTPAGE) : App.HOME_VIEW;
+        String currentPage = PlatformFactory.getPlatform().getSettingService().retrieve(App.currentPage) != null ? PlatformFactory.getPlatform().getSettingService().retrieve(App.currentPage) : App.HOME_VIEW;
         if (!currentPage.equals(App.HOME_VIEW)) {
             SettingService settingService = PlatformFactory.getPlatform().getSettingService();
-            if (settingService.retrieve(App.CURRENTLINEID) != null) {
-                int currentLineId = Integer.parseInt(settingService.retrieve(App.CURRENTLINEID));
+            if (settingService.retrieve(App.currentLineID) != null) {
+                int currentLineId = Integer.parseInt(settingService.retrieve(App.currentLineID));
                 for (Line line : DisplayLinesView.getObservableLinesList()) {
                     if (line.getId() == currentLineId) {
                         walk.setLineAtRestart(line);
                     }
                 }
-                if (settingService.retrieve(App.ENDTRAPID) != null) {
-                    int currentTrapId = Integer.parseInt(settingService.retrieve(App.CURRENTTRAPID));
-                    int endTrapId     = Integer.parseInt(settingService.retrieve(App.ENDTRAPID));
+                if (settingService.retrieve(App.endTrapID) != null) {
+                    int currentTrapId = Integer.parseInt(settingService.retrieve(App.currentTrapID));
+                    int endTrapId     = Integer.parseInt(settingService.retrieve(App.endTrapID));
 
                     Trap start = null;
                     Trap end   = null;
@@ -77,7 +77,7 @@ public class HomeView extends View {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
         appBar.setTitleText("Home");
 
-        String currentPage = PlatformFactory.getPlatform().getSettingService().retrieve(App.CURRENTPAGE) != null ? PlatformFactory.getPlatform().getSettingService().retrieve(App.CURRENTPAGE) : App.HOME_VIEW;
+        String currentPage = PlatformFactory.getPlatform().getSettingService().retrieve(App.currentPage) != null ? PlatformFactory.getPlatform().getSettingService().retrieve(App.currentPage) : App.HOME_VIEW;
         if (currentPage != App.HOME_VIEW) {
             App.getInstance().switchScreen(currentPage);
         }

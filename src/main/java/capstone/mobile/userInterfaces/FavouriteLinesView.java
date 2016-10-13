@@ -1,7 +1,10 @@
-package capstone.mobile.views;
+package capstone.mobile.userInterfaces;
 
-import capstone.mobile.App;
-import capstone.mobile.classes.*;
+import capstone.mobile.dataHandlers.*;
+import capstone.mobile.dataHandlers.DataUnavailableException;
+import capstone.mobile.models.Animal;
+import capstone.mobile.models.Line;
+import capstone.mobile.models.Walk;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.connect.GluonObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -86,24 +89,9 @@ public class FavouriteLinesView extends DisplayLinesView {
         List<Animal> animalList = null;
 
         // Load data from database
-        try (Connection dbConnection = DriverManager.getConnection(App.getInstance().dbUrl)) {
-            Statement stmt    = dbConnection.createStatement();
-            ResultSet linesRS = stmt.executeQuery("SELECT * FROM lines WHERE favourite like '%true%';");
-            while (linesRS.next()) {
-                // load line from database
-                Line line = new Line(linesRS.getInt("id"), linesRS.getString("name"), linesRS.getInt("a1"), linesRS.getInt("a2"), linesRS.getInt("a3"));
-                linesList.add(line);
-            }
-            linesRS.close();
-            animalList = RetrieveData.fetchAnimalList();
-            // Update local database
-            if (dbConnection != null) {
-                stmt = dbConnection.createStatement();
-                for (Animal animal : animalList) {
-                    stmt.executeUpdate("insert or ignore into animals(id, name) values(" + animal.getId() + ", '" + animal.getName() + "')");
-                }
-            }
-            stmt.close();
+        try {
+            linesList = LocalDatabase.fetchLines();
+            animalList = LocalDatabase.updateAnimals();
         } catch (DataUnavailableException | SQLException e) {
             showServerError();
             e.printStackTrace();

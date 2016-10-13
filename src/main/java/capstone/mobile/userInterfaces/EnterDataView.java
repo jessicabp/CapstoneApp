@@ -1,7 +1,11 @@
-package capstone.mobile.views;
+package capstone.mobile.userInterfaces;
 
 import capstone.mobile.App;
-import capstone.mobile.classes.*;
+import capstone.mobile.other.CustomGridPane;
+import capstone.mobile.other.CustomPopupView;
+import capstone.mobile.models.Animal;
+import capstone.mobile.models.Capture;
+import capstone.mobile.models.Walk;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;

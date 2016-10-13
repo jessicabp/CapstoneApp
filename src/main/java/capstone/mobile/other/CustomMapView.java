@@ -1,4 +1,4 @@
-package capstone.mobile.maps;
+package capstone.mobile.other;
 
 import gluonhq.maps.MapPoint;
 import gluonhq.maps.MapView;

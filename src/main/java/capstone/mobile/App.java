@@ -1,12 +1,13 @@
 package capstone.mobile;
 
-import capstone.mobile.classes.*;
-import capstone.mobile.views.*;
-import com.gluonhq.charm.down.common.JavaFXPlatform;
+import capstone.mobile.dataHandlers.LocalDatabase;
+import capstone.mobile.models.Walk;
+import capstone.mobile.userInterfaces.*;
 import com.gluonhq.charm.down.common.PlatformFactory;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.Avatar;
 import com.gluonhq.charm.glisten.control.NavigationDrawer;
+import com.gluonhq.charm.glisten.control.NavigationDrawer.Header;
 import com.gluonhq.charm.glisten.control.NavigationDrawer.Item;
 import com.gluonhq.charm.glisten.layout.layer.SidePopupView;
 import com.gluonhq.charm.glisten.license.License;
@@ -17,16 +18,14 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.*;
-
 @License(key = "60820384-1db6-43c0-a456-1ed0ede425b4")
 
 /**
  * Creates views and side menu bar, and holds reference to the walk.
  */
 public class App extends MobileApplication {
+
+    private static App a;
 
     // Strings naming the views, and providing reference to them
     public static final String DISPLAY_LINES_VIEW   = "Display lines";
@@ -40,14 +39,10 @@ public class App extends MobileApplication {
     public static final String MENU_LAYER           = "Side Menu";
 
     // Strings to name values stored on device
-    public static String CURRENTPAGE   = "CURRENTPAGE";
-    public static String CURRENTLINEID = "CURRENTLINE";
-    public static String CURRENTTRAPID = "CURRENTTRAP";
-    public static String ENDTRAPID     = "ENDTRAP";
-
-    private static App    a;
-    public         String dbUrl;
-    private        Walk   walk;
+    public static String currentPage   = "CURRENTPAGE";
+    public static String currentLineID = "CURRENTLINE";
+    public static String currentTrapID = "CURRENTTRAP";
+    public static String endTrapID     = "ENDTRAP";
 
     // Items to appear in the side menu bar
     private Item homeItem;
@@ -72,85 +67,22 @@ public class App extends MobileApplication {
         return a;
     }
 
+    /**
+     * Sets up app, creates views, local database, & sidebar menu
+     */
     @Override
     public void init() {
 
         // TODO: remove
-        PlatformFactory.getPlatform().getSettingService().remove(App.CURRENTPAGE);
+        PlatformFactory.getPlatform().getSettingService().remove(App.currentPage);
 
         a = this;
 
         // Initializing walk object
-        walk = new Walk();
+        final Walk walk = new Walk();
 
-        try {
-            File db = new File(PlatformFactory.getPlatform().getPrivateStorage(), "TrapTrackerDatabase");
-            dbUrl = "jdbc:sqlite:" + db.getAbsolutePath();
-        } catch (IOException ex) {
-            System.out.println("Error " + ex);
-        }
-
-        try {
-            if (JavaFXPlatform.isAndroid()) {
-                Class.forName("org.sqldroid.SQLDroidDriver");
-            } else if (JavaFXPlatform.isIOS()) {
-                Class.forName("SQLite.JDBCDriver");
-            } else { // desktop and embedded
-                Class.forName("org.sqlite.JDBC");
-            }
-
-            Connection dbConnection = DriverManager.getConnection(dbUrl);
-
-            if (dbConnection != null) {
-                Statement stmt = dbConnection.createStatement();
-                // TODO: remove table deletion
-//                stmt.executeUpdate("DROP TABLE IF EXISTS lines");
-//                stmt.executeUpdate("DROP TABLE IF EXISTS traps");
-//                stmt.executeUpdate("DROP TABLE IF EXISTS captures");
-//                stmt.executeUpdate("DROP TABLE IF EXISTS animals");
-                stmt.executeUpdate("CREATE TABLE IF NOT EXISTS lines (" +
-                                   "id INTEGER PRIMARY KEY NOT NULL, " +
-                                   "name TEXT NOT NULL, " +
-                                   "a1 INTEGER, " +
-                                   "a2 INTEGER, " +
-                                   "a3 INTEGER, " +
-                                   "favourite TEXT)");
-                stmt.executeUpdate("CREATE TABLE IF NOT EXISTS traps (" +
-                                   "lineId INTEGER REFERENCES lines(id) ON UPDATE CASCADE ON DELETE CASCADE, " +
-                                   "id INTEGER, " +
-                                   "number INTEGER NOT NULL, " +
-                                   "latitude REAL NOT NULL, " +
-                                   "longitude REAL NOT NULL, " +
-                                   "side INTEGER NOT NULL, " +
-                                   "moved INTEGER NOT NULL, " +
-                                   "broken INTEGER NOT NULL, " +
-                                   "changed TEXT)");
-                stmt.executeUpdate("CREATE TABLE IF NOT EXISTS captures (" +
-                                   "trapId INTEGER NOT NULL, " +
-                                   "time REAL NOT NULL, " +
-                                   "animalId INTEGER NOT NULL)");
-                stmt.executeUpdate("CREATE TABLE IF NOT EXISTS animals (" +
-                                   "id INTEGER PRIMARY KEY, " +
-                                   "name TEXT NOT NULL)");
-                stmt.close();
-            }
-            dbConnection.close();
-        } catch (ClassNotFoundException e) {
-            System.out.println("Error class not found " + e);
-        } catch (SQLException ex) {
-            System.out.println("SQL Exception " + ex);
-        }
-
-        // Create all views
-        addViewFactory(DISPLAY_LINES_VIEW, () -> new DisplayLinesView(DISPLAY_LINES_VIEW, walk));
-        addViewFactory(FAVOURITE_LINES_VIEW, () -> new FavouriteLinesView(FAVOURITE_LINES_VIEW, walk));
-        addViewFactory(SET_UP_WALK_VIEW, () -> new SetUpWalkView(SET_UP_WALK_VIEW, walk));
-        addViewFactory(DO_WALK_VIEW, () -> new DoWalkView(DO_WALK_VIEW, walk));
-        addViewFactory(ENTER_DATA_VIEW, () -> new EnterDataView(ENTER_DATA_VIEW, walk));
-        addViewFactory(MAINTENANCE, () -> new EnterMaintenance(MAINTENANCE, walk));
-        addViewFactory(CREATE_TRAP_VIEW, () -> new CreateTrapView(CREATE_TRAP_VIEW, walk));
-        addViewFactory(END_WALK_VIEW, () -> new EndWalkView(END_WALK_VIEW, walk));
-        addViewFactory(HOME_VIEW, () -> new HomeView(HOME_VIEW, walk));
+        LocalDatabase.setUpLocalDatabase();
+        createViews(walk);
 
         // Create items to populate side menu bar
         homeItem = new Item("Home", MaterialDesignIcon.HOME.graphic());
@@ -158,8 +90,8 @@ public class App extends MobileApplication {
         endWalkItem = new Item("End Walk", MaterialDesignIcon.EXIT_TO_APP.graphic());
 
         // Create side menu bar
-        NavigationDrawer        drawer = new NavigationDrawer();
-        NavigationDrawer.Header header = new NavigationDrawer.Header("Trap Tracker", "Pest Trap Line Tool", new Avatar(21, new Image(App.class.getResourceAsStream("/icon.png"))));
+        final NavigationDrawer drawer = new NavigationDrawer();
+        final Header           header = new NavigationDrawer.Header("Trap Tracker", "Pest Trap Line Tool", new Avatar(21, new Image(App.class.getResourceAsStream("/icon.png"))));
         drawer.setHeader(header);
         drawer.getItems().addAll(homeItem, createTrapItem, endWalkItem);
         drawer.selectedItemProperty().addListener(listener);
@@ -184,51 +116,14 @@ public class App extends MobileApplication {
         });
 
         // Load data from database
-        try (Connection dbConnection = DriverManager.getConnection(dbUrl)) {
-            Statement stmt    = dbConnection.createStatement();
-            ResultSet linesRS = stmt.executeQuery("SELECT * FROM lines;");
-            while (linesRS.next()) {
-                // load line from database
-                int  lineId = linesRS.getInt("id");
-                Line line   = new Line(lineId, linesRS.getString("name"), linesRS.getInt("a1"), linesRS.getInt("a2"), linesRS.getInt("a3"));
-                // get traps on line
-                ResultSet trapRS = stmt.executeQuery("SELECT * FROM traps WHERE lineId = " + lineId + ";");
-                while (trapRS.next()) {
-                    if (trapRS.getObject("id") != null) {
-                        // add trap from line
-                        Trap trap = new Trap(trapRS.getInt("id"), trapRS.getInt("lineId"), trapRS.getInt("number"), trapRS.getDouble("latitude"), trapRS.getDouble("longitude"), trapRS.getInt("side"), trapRS.getInt("broken"), trapRS.getInt("moved"));
-                        line.addTrap(trap);
-                        if (trapRS.getString("changed") != null && trapRS.getString("changed").equals("true")) {
-                            walk.addChangedTrap(trap);
-                        }
-                    } else {
-                        // add new trap
-                        walk.addChangedTrap(new Trap(trapRS.getInt("lineId"), trapRS.getInt("number"), trapRS.getDouble("latitude"), trapRS.getDouble("longitude"), trapRS.getInt("side"), trapRS.getInt("broken"), trapRS.getInt("moved")));
-                    }
-                }
-                trapRS.close();
-                DisplayLinesView.getObservableLinesList().add(line);
-            }
-            linesRS.close();
-            // load captures
-            ResultSet captureRS = stmt.executeQuery("SELECT * FROM captures;");
-            while (captureRS.next()) {
-                walk.addCapture(new Capture(captureRS.getInt("trapID"), captureRS.getInt("animalID"), captureRS.getLong("time")));
-            }
-            captureRS.close();
-            // load animal
-            ResultSet animalRS = stmt.executeQuery("SELECT * FROM animals;");
-            while (animalRS.next()) {
-                Animal animal = new Animal(animalRS.getInt("id"), animalRS.getString("name"));
-                EnterDataView.addAnimalFromDB(animal);
-            }
-            animalRS.close();
-            stmt.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        LocalDatabase.loadDatafromLocalDatabase(walk);
     }
 
+    /**
+     * Runs after init, assigns app colour and sets sidebar menu items to disable when irrelevant
+     *
+     * @param scene
+     */
     @Override
     public void postInit(Scene scene) {
         Swatch.GREEN.assignTo(scene);
@@ -241,8 +136,30 @@ public class App extends MobileApplication {
         endWalkItem.disableProperty().bind(Walk.isWalking().not());
     }
 
+    /**
+     * Sets the variable on the device to match the current (new) screen, then changes to that screen
+     *
+     * @param viewName
+     */
     public void switchScreen(String viewName) {
-        PlatformFactory.getPlatform().getSettingService().store(CURRENTPAGE, viewName);
+        PlatformFactory.getPlatform().getSettingService().store(currentPage, viewName);
         switchView(viewName);
+    }
+
+    /**
+     * Creates all the screens
+     *
+     * @param walk
+     */
+    private void createViews(Walk walk) {
+        addViewFactory(DISPLAY_LINES_VIEW, () -> new DisplayLinesView(DISPLAY_LINES_VIEW, walk));
+        addViewFactory(FAVOURITE_LINES_VIEW, () -> new FavouriteLinesView(FAVOURITE_LINES_VIEW, walk));
+        addViewFactory(SET_UP_WALK_VIEW, () -> new SetUpWalkView(SET_UP_WALK_VIEW, walk));
+        addViewFactory(DO_WALK_VIEW, () -> new DoWalkView(DO_WALK_VIEW, walk));
+        addViewFactory(ENTER_DATA_VIEW, () -> new EnterDataView(ENTER_DATA_VIEW, walk));
+        addViewFactory(MAINTENANCE, () -> new EnterMaintenance(MAINTENANCE, walk));
+        addViewFactory(CREATE_TRAP_VIEW, () -> new CreateTrapView(CREATE_TRAP_VIEW, walk));
+        addViewFactory(END_WALK_VIEW, () -> new EndWalkView(END_WALK_VIEW, walk));
+        addViewFactory(HOME_VIEW, () -> new HomeView(HOME_VIEW, walk));
     }
 }

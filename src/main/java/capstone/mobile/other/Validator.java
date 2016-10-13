@@ -1,4 +1,4 @@
-package capstone.mobile.classes;
+package capstone.mobile.other;
 
 public class Validator {
 

@@ -1,4 +1,4 @@
-import capstone.mobile.classes.Capture;
+import capstone.mobile.models.Capture;
 import org.junit.Assert;
 import org.junit.Test;
 

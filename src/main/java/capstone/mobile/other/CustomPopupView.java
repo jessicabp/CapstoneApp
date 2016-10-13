@@ -1,4 +1,4 @@
-package capstone.mobile.classes;
+package capstone.mobile.other;
 
 import capstone.mobile.App;
 import com.gluonhq.charm.glisten.application.GlassPane;
@@ -10,7 +10,6 @@ public class CustomPopupView extends PopupView {
 
     public CustomPopupView(Node ownerNode) {
         super(ownerNode);
-
 
         showingProperty().addListener((obs, ov, nv) -> {
             if (nv) {

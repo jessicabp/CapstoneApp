@@ -1,4 +1,4 @@
-package capstone.mobile.classes;
+package capstone.mobile.models;
 
 import java.util.Date;
 

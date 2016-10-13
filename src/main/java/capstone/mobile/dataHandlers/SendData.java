@@ -1,5 +1,6 @@
-package capstone.mobile.classes;
+package capstone.mobile.dataHandlers;
 
+import capstone.mobile.models.Walk;
 import com.gluonhq.charm.down.common.PlatformFactory;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPut;

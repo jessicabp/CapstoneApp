@@ -1,4 +1,4 @@
-package capstone.mobile.classes;
+package capstone.mobile.other;
 
 
 import javafx.scene.layout.ColumnConstraints;

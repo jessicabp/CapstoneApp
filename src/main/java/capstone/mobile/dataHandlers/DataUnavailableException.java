@@ -1,4 +1,4 @@
-package capstone.mobile.classes;
+package capstone.mobile.dataHandlers;
 
 public class DataUnavailableException extends Exception {
 

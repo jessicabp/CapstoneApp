@@ -1,4 +1,4 @@
-import capstone.mobile.classes.Trap;
+import capstone.mobile.models.Trap;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package capstone.mobile.classes;
+package capstone.mobile.models;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +59,8 @@ public class Line {
     public int getAnimal1() {
         return animal1;
     }
+
+    // TODO: make setters for animals
 
     public int getAnimal2() {
         return animal2;

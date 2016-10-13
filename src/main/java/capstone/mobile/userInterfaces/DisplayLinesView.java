@@ -1,7 +1,12 @@
-package capstone.mobile.views;
+package capstone.mobile.userInterfaces;
 
 import capstone.mobile.App;
-import capstone.mobile.classes.*;
+import capstone.mobile.dataHandlers.*;
+import capstone.mobile.other.CustomPopupView;
+import capstone.mobile.dataHandlers.DataUnavailableException;
+import capstone.mobile.models.Animal;
+import capstone.mobile.models.Line;
+import capstone.mobile.models.Walk;
 import com.gluonhq.charm.down.common.PlatformFactory;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
@@ -75,12 +80,7 @@ public class DisplayLinesView extends View {
         // Add listener to cells
         linesListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newLine) -> {
             if (newLine != null) {
-                try (Connection dbConnection = DriverManager.getConnection(App.getInstance().dbUrl)) {
-                    Statement stmt = dbConnection.createStatement();
-                    stmt.executeUpdate("UPDATE lines SET favourite = 'true' WHERE id = " + newLine.getId());
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                LocalDatabase.setCurrentLine(newLine);
                 selectLine(newLine, controls);
             }
         });
@@ -99,6 +99,7 @@ public class DisplayLinesView extends View {
      * @param line
      */
     public void selectLine(Line line, VBox owner) {
+        linesListView.getSelectionModel().clearSelection();
         String password = PlatformFactory.getPlatform().getSettingService().retrieve("password" + line.getId());
         if (password != null) {
             try {
@@ -190,32 +191,9 @@ public class DisplayLinesView extends View {
         List<Animal> animalList = null;
 
         // Load data from server
-        try (Connection dbConnection = DriverManager.getConnection(App.getInstance().dbUrl)) {
-            linesList = RetrieveData.fetchLinesList();
-            animalList = RetrieveData.fetchAnimalList();
-            // Update local database
-            if (dbConnection != null) {
-                Statement stmt = dbConnection.createStatement();
-                for (Animal animal : animalList) {
-                    stmt.executeUpdate("insert or ignore into animals(id, name) values(" + animal.getId() + ", '" + animal.getName() + "')");
-                }
-                animalList.clear();
-                ResultSet animalRS = stmt.executeQuery(("SELECT * FROM animals"));
-                while (animalRS.next()) {
-                    animalList.add(new Animal(animalRS.getInt("id"), animalRS.getString("name")));
-                }
-                animalRS.close();
-                for (Line line : linesList) {
-                    stmt.executeUpdate("insert or ignore into lines(id, name, a1, a2, a3) values(" + line.getId() + ", '" + line.getName() + "', " + line.getAnimal1() + ", " + line.getAnimal2() + ", " + line.getAnimal3() + ")");
-                }
-                linesList.clear();
-                ResultSet lineRS = stmt.executeQuery(("SELECT * FROM lines"));
-                while (lineRS.next()) {
-                    linesList.add(new Line(lineRS.getInt("id"), lineRS.getString("name"), lineRS.getInt("a1"), lineRS.getInt("a2"), lineRS.getInt("a3")));
-                }
-                lineRS.close();
-                stmt.close();
-            }
+        try {
+            linesList = LocalDatabase.updateLines();
+            animalList = LocalDatabase.updateAnimals();
         } catch (DataUnavailableException | SQLException e) {
             showServerError();
             e.printStackTrace();

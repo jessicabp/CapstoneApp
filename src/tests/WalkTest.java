@@ -1,4 +1,8 @@
-import capstone.mobile.classes.*;
+import capstone.mobile.dataHandlers.DataUnavailableException;
+import capstone.mobile.models.Capture;
+import capstone.mobile.models.Line;
+import capstone.mobile.models.Trap;
+import capstone.mobile.models.Walk;
 import org.junit.*;
 
 import static java.util.Arrays.asList;
