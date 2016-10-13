@@ -1,11 +1,11 @@
 package capstone.mobile.userInterfaces;
 
 import capstone.mobile.App;
-import capstone.mobile.other.CustomGridPane;
 import capstone.mobile.models.Trap;
-import capstone.mobile.other.Validator;
 import capstone.mobile.models.Walk;
+import capstone.mobile.other.CustomGridPane;
 import capstone.mobile.other.CustomMapView;
+import capstone.mobile.other.Validator;
 import com.gluonhq.charm.down.common.PlatformFactory;
 import com.gluonhq.charm.down.common.Position;
 import com.gluonhq.charm.down.common.PositionService;

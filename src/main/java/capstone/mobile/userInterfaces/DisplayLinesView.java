@@ -1,12 +1,13 @@
 package capstone.mobile.userInterfaces;
 
 import capstone.mobile.App;
-import capstone.mobile.dataHandlers.*;
-import capstone.mobile.other.CustomPopupView;
 import capstone.mobile.dataHandlers.DataUnavailableException;
+import capstone.mobile.dataHandlers.LocalDatabase;
+import capstone.mobile.dataHandlers.RetrieveData;
 import capstone.mobile.models.Animal;
 import capstone.mobile.models.Line;
 import capstone.mobile.models.Walk;
+import capstone.mobile.other.CustomPopupView;
 import com.gluonhq.charm.down.common.PlatformFactory;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
@@ -22,7 +23,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-import java.sql.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 

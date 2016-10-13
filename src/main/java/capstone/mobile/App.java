@@ -25,8 +25,6 @@ import javafx.stage.Stage;
  */
 public class App extends MobileApplication {
 
-    private static App a;
-
     // Strings naming the views, and providing reference to them
     public static final String DISPLAY_LINES_VIEW   = "Display lines";
     public static final String FAVOURITE_LINES_VIEW = "Display favourite lines";
@@ -37,13 +35,12 @@ public class App extends MobileApplication {
     public static final String CREATE_TRAP_VIEW     = "Add trap";
     public static final String END_WALK_VIEW        = "End walk";
     public static final String MENU_LAYER           = "Side Menu";
-
     // Strings to name values stored on device
     public static String currentPage   = "CURRENTPAGE";
     public static String currentLineID = "CURRENTLINE";
     public static String currentTrapID = "CURRENTTRAP";
     public static String endTrapID     = "ENDTRAP";
-
+    private static App a;
     // Items to appear in the side menu bar
     private Item homeItem;
     private Item createTrapItem;

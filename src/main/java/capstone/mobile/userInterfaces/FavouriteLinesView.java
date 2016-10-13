@@ -1,7 +1,7 @@
 package capstone.mobile.userInterfaces;
 
-import capstone.mobile.dataHandlers.*;
 import capstone.mobile.dataHandlers.DataUnavailableException;
+import capstone.mobile.dataHandlers.LocalDatabase;
 import capstone.mobile.models.Animal;
 import capstone.mobile.models.Line;
 import capstone.mobile.models.Walk;
@@ -15,7 +15,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
-import java.sql.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
