@@ -3,7 +3,6 @@ package capstone.mobile.models;
 import capstone.mobile.App;
 import capstone.mobile.dataHandlers.DataUnavailableException;
 import capstone.mobile.dataHandlers.LocalDatabase;
-import capstone.mobile.dataHandlers.RetrieveData;
 import capstone.mobile.other.CustomMapView;
 import capstone.mobile.userInterfaces.DoWalkView;
 import com.gluonhq.charm.down.common.PlatformFactory;
@@ -29,7 +28,7 @@ public class Walk {
     private static BooleanProperty walking = new SimpleBooleanProperty(false);
     private Line line;
     private int  index;
-    private Trap finishTrap;
+    private Trap endTrap;
     private Trap currentTrap;
     private List<Capture> captures     = new ArrayList<>();
     private List<Trap>    changedTraps = new ArrayList<>();
@@ -72,15 +71,15 @@ public class Walk {
         return currentTrap;
     }
 
-    public Trap getFinishTrap() {
-        return finishTrap;
+    public Trap getEndTrap() {
+        return endTrap;
     }
 
     /**
      * Changes current trap to be the next trap, ends walk if the last trap has been reached
      */
-    public void finishCurrentTrap() {
-        if (currentTrap != finishTrap) {
+    public void endCurrentTrap() {
+        if (!currentTrap.equals(endTrap)) {
             if (direction) {
                 index++;
             } else {
@@ -120,14 +119,14 @@ public class Walk {
     public void addNewTrap(Trap trap) {
         this.changedTraps.add(trap);
         LocalDatabase.addNewTrap(trap);
-        Circle        marker   = new Circle(5, Color.YELLOW);
-        MapPoint      mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
-        CustomMapView mapview  = DoWalkView.getMapView();
-        PoiLayer      layer    = DoWalkView.getMarkersLayer();
+        final Circle        marker   = new Circle(5, Color.YELLOW);
+        final MapPoint      mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
+        final CustomMapView mapview  = DoWalkView.getMapView();
+        final PoiLayer      layer    = DoWalkView.getMarkersLayer();
         mapview.addMarker(layer, mapPoint, marker);
     }
 
-    public boolean getDirection() {
+    public boolean isDirection() {
         return direction;
     }
 
@@ -140,8 +139,8 @@ public class Walk {
     public void startWalk(Trap start, Trap end) {
         walking.setValue(true);
         currentTrap = start;
-        finishTrap = end;
-        direction = currentTrap.getNumber() < finishTrap.getNumber();
+        endTrap = end;
+        direction = currentTrap.getNumber() < endTrap.getNumber();
         index = line.getTraps().indexOf(start);
         PlatformFactory.getPlatform().getSettingService().store(App.currentTrapID, String.valueOf(start.getId()));
         PlatformFactory.getPlatform().getSettingService().store(App.endTrapID, String.valueOf(end.getId()));
@@ -151,20 +150,20 @@ public class Walk {
      * Finish the walk, erasing data about the current walk and changing to the home view.
      * Do NOT use unless server has successfully received data.
      */
-    public void finishWalk() {
+    public void endWalk() {
         walking.setValue(false);
         line = null;
-        finishTrap = null;
+        endTrap = null;
         currentTrap = null;
         captures = new ArrayList<>();
         changedTraps = new ArrayList<>();
-        SettingService settingService = PlatformFactory.getPlatform().getSettingService();
+        final SettingService settingService = PlatformFactory.getPlatform().getSettingService();
         settingService.remove(App.currentLineID);
         settingService.remove(App.currentTrapID);
         settingService.remove(App.endTrapID);
-        LocalDatabase.finishWalk();
+        LocalDatabase.endWalk();
     }
-    
+
     public List<Capture> getCaptures() {
         return captures;
     }

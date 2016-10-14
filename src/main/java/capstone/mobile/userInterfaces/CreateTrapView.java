@@ -30,33 +30,34 @@ import java.util.List;
 /*
     TODO: Consider GPS is null and the user wants to use this to create the new trap.
  */
+
 /**
  * Provides ability to create new trap objects while in a walk. The new trap objects coordinates may be obtained from
  * the current GPS position or entered manually. Trap number and side are also required.
  */
 public class CreateTrapView extends View {
 
-    private Walk walk;
+    private Walk          walk;
     private CustomMapView mapView;
-    private PoiLayer currentLayer;
-    private PoiLayer markersLayer;
-    private PoiLayer numbersLayer;
-    private PoiLayer positionLayer;
-    private ToggleGroup sideGroup;
-    private ToggleGroup locationGroup;
-    private Position currentPosition;
-    private Label waitingMessage;
-    private VBox coordinatesVBox;
-    private Label latitudeLabel;
-    private Label longitudeLabel;
-    private ToggleButton mapCoordinatesToggle;
-    private ToggleButton manualCoordinatesToggle;
-    private TextField latitudeTextField;
-    private TextField longitudeTextField;
-    private TextField numberTextField;
-    private ToggleButton leftToggleButton;
-    private ToggleButton rightToggleButton;
-    private Button saveButton;
+    private PoiLayer      currentLayer;
+    private PoiLayer      markersLayer;
+    private PoiLayer      numbersLayer;
+    private PoiLayer      positionLayer;
+    private ToggleGroup   sideGroup;
+    private ToggleGroup   locationGroup;
+    private Position      currentPosition;
+    private Label         waitingMessage;
+    private VBox          coordinatesVBox;
+    private Label         latitudeLabel;
+    private Label         longitudeLabel;
+    private ToggleButton  mapCoordinatesToggle;
+    private ToggleButton  manualCoordinatesToggle;
+    private TextField     latitudeTextField;
+    private TextField     longitudeTextField;
+    private TextField     numberTextField;
+    private ToggleButton  leftToggleButton;
+    private ToggleButton  rightToggleButton;
+    private Button        saveButton;
     private boolean waitingMessageVisible = true;
 
 
@@ -89,8 +90,8 @@ public class CreateTrapView extends View {
         controls.getChildren().add(waitingMessage);
 
         // Create list view so user can scroll through items if there are too many
-        ListView<VBox> content = new ListView<>();
-        ObservableList<VBox> items = FXCollections.observableArrayList();
+        ListView<VBox>       content = new ListView<>();
+        ObservableList<VBox> items   = FXCollections.observableArrayList();
         content.setItems(items);
         controls.getChildren().add(content);
 
@@ -104,8 +105,8 @@ public class CreateTrapView extends View {
         manualCoordinatesToggle.setMaxWidth(Double.MAX_VALUE);
         manualCoordinatesToggle.setToggleGroup(locationGroup);
         manualCoordinatesToggle.selectedProperty().addListener((observableValue, oldValue, newValue) ->
-                toggleCoordinatesToggle(newValue)
-        );
+                                                                       toggleCoordinatesToggle(newValue)
+                                                              );
 
         // Latitude Label and TextField.
         latitudeLabel = new Label();
@@ -113,8 +114,8 @@ public class CreateTrapView extends View {
         latitudeTextField = new TextField();
         latitudeTextField.setStyle("-fx-border-width: 2; -fx-border-color: white");
         latitudeTextField.textProperty().addListener((observableValue, oldValue, newValue) ->
-                validateCoordinateInput(newValue, latitudeTextField)
-        );
+                                                             validateCoordinateInput(newValue, latitudeTextField)
+                                                    );
 
         // Longitude Label and TextField.
         longitudeLabel = new Label();
@@ -122,8 +123,8 @@ public class CreateTrapView extends View {
         longitudeTextField = new TextField();
         longitudeTextField.setStyle("-fx-border-width: 2; -fx-border-color: white");
         longitudeTextField.textProperty().addListener((observableValue, oldValue, newValue) ->
-                validateCoordinateInput(newValue, longitudeTextField)
-        );
+                                                              validateCoordinateInput(newValue, longitudeTextField)
+                                                     );
 
         // VBox containing Labels and TextFields for manually entering coordinates. The Visible
         // and Managed properties are set to false to initially hide the controls, which can be
@@ -133,7 +134,7 @@ public class CreateTrapView extends View {
         coordinatesVBox.setManaged(false);
         coordinatesVBox.getChildren().addAll(
                 latitudeLabel, latitudeTextField, longitudeLabel, longitudeTextField
-        );
+                                            );
 
         VBox locationVB = new VBox(10, mapCoordinatesToggle, manualCoordinatesToggle, coordinatesVBox);
         locationVB.setPadding(new Insets(0, 0, 15, 0));
@@ -144,8 +145,8 @@ public class CreateTrapView extends View {
         numberTextField = new TextField();
         numberTextField.setStyle("-fx-border-width: 2; -fx-border-color: white");
         numberTextField.textProperty().addListener((observableValue, oldValue, newValue) ->
-                validateNumberInput(newValue, numberTextField)
-        );
+                                                           validateNumberInput(newValue, numberTextField)
+                                                  );
 
         VBox numberVB = new VBox(5, numberLabel, numberTextField);
         numberVB.setPadding(new Insets(15, 0, 15, 0));
@@ -192,7 +193,7 @@ public class CreateTrapView extends View {
         // TODO: move elsewhere?
         List<Trap> traps = walk.getLine().getTraps();
         for (Trap trap : traps) {
-            Circle marker = new Circle(5, Color.ORANGE);
+            Circle   marker   = new Circle(5, Color.ORANGE);
             MapPoint mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
             mapView.addMarker(markersLayer, mapPoint, marker);
         }
@@ -200,8 +201,8 @@ public class CreateTrapView extends View {
         // Adding listener for obtaining current GPS location.
         PositionService positionService = PlatformFactory.getPlatform().getPositionService();
         positionService.positionProperty().addListener((observableValue, oldValue, newValue) ->
-                updateCurrentPosition(newValue)
-        );
+                                                               updateCurrentPosition(newValue)
+                                                      );
     }
 
     @Override
@@ -295,7 +296,7 @@ public class CreateTrapView extends View {
 
         // Validate manually entered coordinates if option selected.
         if (manualCoordinatesToggle.isSelected()) {
-            boolean isLatitudeValid = Validator.isCoordinate(latitudeTextField.getText());
+            boolean isLatitudeValid  = Validator.isCoordinate(latitudeTextField.getText());
             boolean isLongitudeValid = Validator.isCoordinate(longitudeTextField.getText());
             if (!(isLatitudeValid && isLongitudeValid)) {
                 validInputs = false;
@@ -316,8 +317,8 @@ public class CreateTrapView extends View {
 
         // If there are not issues proceed to create the new trap.
         if (validInputs) {
-            double latitude;
-            double longitude;
+            double  latitude;
+            double  longitude;
             boolean side = leftToggleButton.isSelected();
 
             if (mapCoordinatesToggle.isSelected()) {
@@ -328,7 +329,7 @@ public class CreateTrapView extends View {
                 longitude = Double.parseDouble(longitudeTextField.getText());
             }
 
-            int lineId = walk.getLine().getId();
+            int lineId     = walk.getLine().getId();
             int trapNumber = Integer.parseInt(numberTextField.getText());
 
             Trap newTrap = new Trap(lineId, trapNumber, latitude, longitude, side);

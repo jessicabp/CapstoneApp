@@ -19,7 +19,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -63,10 +62,10 @@ public class FavouriteLinesView extends DisplayLinesView {
             @Override
             protected void updateItem(Line line, boolean empty) {
                 super.updateItem(line, empty);
-                if (!empty) {
-                    setText(line.getName());
-                } else {
+                if (empty) {
                     setText(null);
+                } else {
+                    setText(line.getName());
                 }
                 setPadding(new Insets(5, 10, 5, 10));
                 setWrapText(true);
@@ -104,7 +103,7 @@ public class FavouriteLinesView extends DisplayLinesView {
 
         // Add lines to observable list so they are displayed in the ListView
         observableLinesList.clear();
-        if (!(linesList.size() <= 0)) {
+        if (linesList.size() > 0) {
             observableLinesList.addAll(linesList);
         }
 

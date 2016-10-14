@@ -33,15 +33,15 @@ import java.util.List;
 public class DoWalkView extends View {
 
     private static CustomMapView mapView;
-    private static PoiLayer markersLayer;
-    private Walk walk;
-    private Label side;
-    private Label moved;
-    private Label broken;
-    private VBox messages;
-    private PoiLayer currentLayer;
-    private PoiLayer positionLayer;
-    private Label waitingMessage;
+    private static PoiLayer      markersLayer;
+    private        Walk          walk;
+    private        Label         side;
+    private        Label         moved;
+    private        Label         broken;
+    private        VBox          messages;
+    private        PoiLayer      currentLayer;
+    private        PoiLayer      positionLayer;
+    private        Label         waitingMessage;
     private boolean waitingMessageVisible = true;
 
     public DoWalkView(String name, Walk walk) {
@@ -98,21 +98,22 @@ public class DoWalkView extends View {
 
         List<Trap> traps = walk.getLine().getTraps();
         for (Trap trap : traps) {
-            Circle marker = new Circle(5, Color.ORANGE);
+            Circle   marker   = new Circle(5, Color.ORANGE);
             MapPoint mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
             mapView.addMarker(markersLayer, mapPoint, marker);
         }
 
         PositionService positionService = PlatformFactory.getPlatform().getPositionService();
         positionService.positionProperty().addListener((observableValue, oldValue, newValue) ->
-                updateCurrentPosition(newValue)
-        );
+                                                               updateCurrentPosition(newValue)
+                                                      );
     }
 
     // TODO: provide utility method to give same results
     public static CustomMapView getMapView() {
         return mapView;
     }
+
     public static PoiLayer getMarkersLayer() {
         return markersLayer;
     }
@@ -130,7 +131,7 @@ public class DoWalkView extends View {
      */
     private void displayCurrentTrap() {
         // Update message about side of path for trap
-        side.setText("Trap indicator on " + (walk.getDirection() == walk.getCurrentTrap().getSide() ? "left" : "right") + " side");
+        side.setText("Trap indicator on " + (walk.isDirection() == walk.getCurrentTrap().getSide() ? "left" : "right") + " side");
 
         if (walk.getCurrentTrap().isMoved()) {
             messages.getChildren().add(moved);
@@ -139,9 +140,9 @@ public class DoWalkView extends View {
             messages.getChildren().add(broken);
         }
 
-        Node icon = new Circle(7, Color.BLUE);
-        Trap currentTrap = walk.getCurrentTrap();
-        MapPoint mapPoint = new MapPoint(currentTrap.getLatitude(), currentTrap.getLongitude());
+        Node     icon        = new Circle(7, Color.BLUE);
+        Trap     currentTrap = walk.getCurrentTrap();
+        MapPoint mapPoint    = new MapPoint(currentTrap.getLatitude(), currentTrap.getLongitude());
         currentLayer = mapView.clearMarkers(currentLayer);
         mapView.addMarker(currentLayer, mapPoint, icon);
     }
@@ -167,14 +168,14 @@ public class DoWalkView extends View {
      * TODO: Comment
      */
     private void skipCurrentTrap() {
-        if (walk.getCurrentTrap() != walk.getFinishTrap()) {
-            walk.finishCurrentTrap();
+        if (walk.getCurrentTrap().equals(walk.getEndTrap())) {
+            App.getInstance().switchScreen(App.END_WALK_VIEW);
+        } else {
+            walk.endCurrentTrap();
             // TODO: fix refreshing
             // Switch to another view and back to refresh data on screen
             App.getInstance().switchScreen(App.ENTER_DATA_VIEW);
             App.getInstance().switchScreen(App.DO_WALK_VIEW);
-        } else {
-            App.getInstance().switchScreen(App.END_WALK_VIEW);
         }
     }
 }

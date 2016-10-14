@@ -21,8 +21,10 @@ import javafx.scene.text.TextAlignment;
 
 public class EndWalkView extends View {
 
+    private final int[] count            = {0}; // stored as an array so it is effectively final for use in lambda expression
     private Walk walk;
-    private final int[] count = {0}; // stored as an array so it is effectively final for use in lambda expression
+    private       int   OKAY             = 0;
+    private       int   INVALID_PASSWORD = 1;
 
     public EndWalkView(String name, Walk walk) {
         super(name);
@@ -65,15 +67,15 @@ public class EndWalkView extends View {
      */
     private void sendData(Button send, VBox controls) {
         int response = SendData.sendWalkData(walk);
-        if (response == 0) {
-            walk.finishWalk();
+        if (response == OKAY) {
+            walk.endWalk();
             App.getInstance().switchScreen(App.HOME_VIEW);
         } else {
             count[0]++;
             // Update button text to propt user to retry, and count retries
             send.setText("Click to retry sending to server once internet is connected. (Retry #" + count[0] + ")");
 
-            if (response == 1) {
+            if (response == INVALID_PASSWORD) {
                 // Create popup to request password
                 CustomPopupView passwordPopup = new CustomPopupView(controls);
 

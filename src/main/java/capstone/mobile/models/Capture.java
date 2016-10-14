@@ -7,9 +7,9 @@ import java.util.Date;
  */
 public class Capture {
 
-    private int trapId;
+    private int  trapId;
     private long time;
-    private int animalId;
+    private int  animalId;
 
     /**
      * Constructor.

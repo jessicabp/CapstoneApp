@@ -30,13 +30,12 @@ public class RetrieveData {
      */
     public static List<Line> fetchLinesList() throws DataUnavailableException {
         try {
-            URL               url             = new URL(HOST + "/line");
-            HttpURLConnection connection      = (HttpURLConnection) url.openConnection();
-            InputStream       jsonInputStream = connection.getInputStream();
+            final URL               url             = new URL(HOST + "/line");
+            final HttpURLConnection connection      = (HttpURLConnection) url.openConnection();
+            final InputStream       jsonInputStream = connection.getInputStream();
 
-            List<Line> linesList  = new ArrayList<>();
-            JsonReader jsonReader = Json.createReader(jsonInputStream);
-            JsonObject jsonObject = jsonReader.readObject();
+            final JsonReader jsonReader = Json.createReader(jsonInputStream);
+            final JsonObject jsonObject = jsonReader.readObject();
             jsonReader.close();
             jsonInputStream.close();
             connection.disconnect();
@@ -45,11 +44,12 @@ public class RetrieveData {
                 throw new DataUnavailableException(KEY_ERROR);
             }
 
-            JsonArray           jsonArray     = jsonObject.getJsonArray("result");
+            final JsonArray     jsonArray     = jsonObject.getJsonArray("result");
             JsonConverter<Line> jsonConverter = new JsonConverter<>(Line.class);
+            final List<Line>    linesList     = new ArrayList<>();
 
             for (int i = 0; i < jsonArray.size(); i++) {
-                Line line = jsonConverter.readFromJson(jsonArray.getJsonObject(i));
+                final Line line = jsonConverter.readFromJson(jsonArray.getJsonObject(i));
                 linesList.add(line);
             }
 
@@ -71,13 +71,12 @@ public class RetrieveData {
      */
     public static List<Trap> fetchTrapsList(int lineId) throws DataUnavailableException {
         try {
-            URL               url             = new URL(HOST + "/trap?line_id=" + lineId);
-            HttpURLConnection connection      = (HttpURLConnection) url.openConnection();
-            InputStream       jsonInputStream = connection.getInputStream();
+            final URL               url             = new URL(HOST + "/trap?line_id=" + lineId);
+            final HttpURLConnection connection      = (HttpURLConnection) url.openConnection();
+            final InputStream       jsonInputStream = connection.getInputStream();
 
-            List<Trap> trapsList  = new ArrayList<>();
-            JsonReader jsonReader = Json.createReader(jsonInputStream);
-            JsonObject jsonObject = jsonReader.readObject();
+            final JsonReader jsonReader = Json.createReader(jsonInputStream);
+            final JsonObject jsonObject = jsonReader.readObject();
             jsonReader.close();
             jsonInputStream.close();
             connection.disconnect();
@@ -86,11 +85,12 @@ public class RetrieveData {
                 throw new DataUnavailableException(KEY_ERROR);
             }
 
-            JsonArray           jsonArray     = jsonObject.getJsonArray("result");
-            JsonConverter<Trap> jsonConverter = new JsonConverter<>(Trap.class);
+            final JsonArray           jsonArray     = jsonObject.getJsonArray("result");
+            final JsonConverter<Trap> jsonConverter = new JsonConverter<>(Trap.class);
+            final List<Trap>          trapsList     = new ArrayList<>();
 
             for (int i = 0; i < jsonArray.size(); i++) {
-                Trap trap = jsonConverter.readFromJson(jsonArray.getJsonObject(i));
+                final Trap trap = jsonConverter.readFromJson(jsonArray.getJsonObject(i));
                 trapsList.add(trap);
             }
 
@@ -107,13 +107,12 @@ public class RetrieveData {
      */
     public static List<Animal> fetchAnimalList() throws DataUnavailableException {
         try {
-            URL               url             = new URL(HOST + "/animal");
-            HttpURLConnection connection      = (HttpURLConnection) url.openConnection();
-            InputStream       jsonInputStream = connection.getInputStream();
+            final URL               url             = new URL(HOST + "/animal");
+            final HttpURLConnection connection      = (HttpURLConnection) url.openConnection();
+            final InputStream       jsonInputStream = connection.getInputStream();
 
-            List<Animal> animalList = new ArrayList<>();
-            JsonReader   jsonReader = Json.createReader(jsonInputStream);
-            JsonObject   jsonObject = jsonReader.readObject();
+            final JsonReader jsonReader = Json.createReader(jsonInputStream);
+            final JsonObject jsonObject = jsonReader.readObject();
             jsonReader.close();
             jsonInputStream.close();
             connection.disconnect();
@@ -122,11 +121,12 @@ public class RetrieveData {
                 throw new DataUnavailableException(KEY_ERROR);
             }
 
-            JsonArray             jsonArray     = jsonObject.getJsonArray("result");
-            JsonConverter<Animal> jsonConverter = new JsonConverter<>(Animal.class);
+            final JsonArray             jsonArray     = jsonObject.getJsonArray("result");
+            final JsonConverter<Animal> jsonConverter = new JsonConverter<>(Animal.class);
+            final List<Animal>          animalList    = new ArrayList<>();
 
             for (int i = 0; i < jsonArray.size(); i++) {
-                Animal animal = jsonConverter.readFromJson(jsonArray.getJsonObject(i));
+                final Animal animal = jsonConverter.readFromJson(jsonArray.getJsonObject(i));
                 animalList.add(animal);
             }
 
@@ -146,12 +146,12 @@ public class RetrieveData {
      */
     public static int checkAuthorisation(int lineId, String password) throws DataUnavailableException {
         try {
-            URL               url             = new URL(HOST + "/checkauth?line_id=" + lineId + "&password=" + password);
-            HttpURLConnection connection      = (HttpURLConnection) url.openConnection();
-            InputStream       jsonInputStream = connection.getInputStream();
+            final URL               url             = new URL(HOST + "/checkauth?line_id=" + lineId + "&password=" + password);
+            final HttpURLConnection connection      = (HttpURLConnection) url.openConnection();
+            final InputStream       jsonInputStream = connection.getInputStream();
 
-            JsonReader jsonReader = Json.createReader(jsonInputStream);
-            JsonObject jsonObject = jsonReader.readObject();
+            final JsonReader jsonReader = Json.createReader(jsonInputStream);
+            final JsonObject jsonObject = jsonReader.readObject();
             jsonReader.close();
             jsonInputStream.close();
             connection.disconnect();

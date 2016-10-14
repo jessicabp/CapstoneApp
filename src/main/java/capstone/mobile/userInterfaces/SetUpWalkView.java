@@ -26,22 +26,22 @@ import java.util.List;
  */
 public class SetUpWalkView extends View {
 
-    private final static double MAP_HEIGHT = 200;
-    private final static int TRAP_MARKER_SIZE = 10;
-    private final static Color TRAP_UNSELECTED_COLOUR = Color.BLUE;
-    private final static Color TRAP_SELECTED_COLOUR = Color.RED;
+    private final static double MAP_HEIGHT             = 200;
+    private final static int    TRAP_MARKER_SIZE       = 10;
+    private final static Color  TRAP_UNSELECTED_COLOUR = Color.BLUE;
+    private final static Color  TRAP_SELECTED_COLOUR   = Color.RED;
 
-    private Walk walk;
+    private Walk          walk;
     private CustomMapView startMapView;
     private CustomMapView endMapView;
-    private PoiLayer startMarkersLayer;
-    private PoiLayer endMarkersLayer;
-    private PoiLayer startNumbersLayer;
-    private PoiLayer endNumbersLayer;
-    private Circle selectedStartCircle;
-    private Circle selectedEndCircle;
-    private Trap selectedStartTrap;
-    private Trap selectedEndTrap;
+    private PoiLayer      startMarkersLayer;
+    private PoiLayer      endMarkersLayer;
+    private PoiLayer      startNumbersLayer;
+    private PoiLayer      endNumbersLayer;
+    private Circle        selectedStartCircle;
+    private Circle        selectedEndCircle;
+    private Trap          selectedStartTrap;
+    private Trap          selectedEndTrap;
 
 
     public SetUpWalkView(String name, Walk walk) {
@@ -96,7 +96,7 @@ public class SetUpWalkView extends View {
             MapPoint mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
 
             Node numberStart = new Text("   " + trap.getNumber());
-            Node numberEnd = new Text("   " + trap.getNumber());
+            Node numberEnd   = new Text("   " + trap.getNumber());
 
             Circle circleStart = new Circle(TRAP_MARKER_SIZE, Color.BLUE);
             circleStart.setOnMouseClicked(e -> toggleStartCircle(circleStart, trap));
@@ -123,7 +123,7 @@ public class SetUpWalkView extends View {
      * TODO: Comment
      */
     private void toggleStartCircle(Circle startCircle, Trap startTrap) {
-        if(selectedStartCircle == null) {
+        if (selectedStartCircle == null) {
             startCircle.setFill(TRAP_SELECTED_COLOUR);
             selectedStartCircle = startCircle;
         } else {
@@ -139,7 +139,7 @@ public class SetUpWalkView extends View {
      * TODO: Comment
      */
     private void toggleEndCircle(Circle endCircle, Trap endTrap) {
-        if(selectedEndCircle == null) {
+        if (selectedEndCircle == null) {
             endCircle.setFill(TRAP_SELECTED_COLOUR);
             selectedEndCircle = endCircle;
         } else {

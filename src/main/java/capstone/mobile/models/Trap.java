@@ -6,19 +6,17 @@ package capstone.mobile.models;
  */
 public class Trap {
 
-    private int id;
-    private int lineId;
-    private int number;
+    private int     id;
+    private int     lineId;
+    private int     number;
     private boolean side;
-    private double longitude;
-    private double latitude;
+    private double  longitude;
+    private double  latitude;
     private boolean broken;
     private boolean moved;
 
-    /**
-     * Constructor.
-     */
     public Trap() {
+        // Empty constructor and all setters and getters required for json conversions
     }
 
     /**
@@ -54,27 +52,6 @@ public class Trap {
      */
     public Trap(int id, int lineId, int number, double latitude, double longitude, int side, int broken, int moved) {
         this.id = id;
-        this.lineId = lineId;
-        this.number = number;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.side = side == 1;
-        this.moved = moved == 1;
-        this.broken = broken == 1;
-    }
-
-    /**
-     * Constructor used when restoring changed new traps from the local database.
-     *
-     * @param lineId
-     * @param number    The number of the trap
-     * @param latitude  The latitude coordinate
-     * @param longitude The Longitude coordinate
-     * @param side      The integer representation of the side of the path the trap is on
-     * @param broken    The integer representation of the trap being broken
-     * @param moved     The integer representation of the trap being moved
-     */
-    public Trap(int lineId, int number, double latitude, double longitude, int side, int broken, int moved) {
         this.lineId = lineId;
         this.number = number;
         this.latitude = latitude;

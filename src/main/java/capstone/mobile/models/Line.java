@@ -9,17 +9,15 @@ import java.util.List;
  */
 public class Line {
 
-    private int id;
-    private int animal1;
-    private int animal2;
-    private int animal3;
+    private int    id;
+    private int    animal1;
+    private int    animal2;
+    private int    animal3;
     private String name;
     private List<Trap> traps = new ArrayList<>();
 
-    /**
-     * Constructor.
-     */
     public Line() {
+        // Empty constructor and all setters and getters required for json conversions
     }
 
     /**

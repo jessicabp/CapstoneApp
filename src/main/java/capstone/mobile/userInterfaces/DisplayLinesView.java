@@ -35,8 +35,9 @@ public class DisplayLinesView extends View {
     private static GluonObservableList<Line> observableLinesList = new GluonObservableList<>();
     private Walk walk;
     private VBox controls;
-    private TextField      filter        = new TextField();
-    private ListView<Line> linesListView = new ListView<>();
+    private TextField      filter         = new TextField();
+    private ListView<Line> linesListView  = new ListView<>();
+    private int            NO_PERMISSIONS = 0;
 
     public DisplayLinesView(String name, Walk walk) {
         super(name);
@@ -67,10 +68,10 @@ public class DisplayLinesView extends View {
             @Override
             protected void updateItem(Line line, boolean empty) {
                 super.updateItem(line, empty);
-                if (!empty) {
-                    setText(line.getName());
-                } else {
+                if (empty) {
                     setText(null);
+                } else {
+                    setText(line.getName());
                 }
                 setPadding(new Insets(5, 10, 5, 10));
                 setWrapText(true);
@@ -113,7 +114,7 @@ public class DisplayLinesView extends View {
         String password = PlatformFactory.getPlatform().getSettingService().retrieve("password" + line.getId());
         if (password != null) {
             try {
-                if (RetrieveData.checkAuthorisation(line.getId(), password) > 0) {
+                if (RetrieveData.checkAuthorisation(line.getId(), password) > NO_PERMISSIONS) {
                     PlatformFactory.getPlatform().getSettingService().store("password" + line.getId(), password);
                     walk.setLine(line);
                     App.getInstance().switchScreen(App.SET_UP_WALK_VIEW);
@@ -160,7 +161,7 @@ public class DisplayLinesView extends View {
         popupDone.setOnAction(ev -> {
             try {
                 String enteredPassword = passwordField.getText();
-                if (RetrieveData.checkAuthorisation(line.getId(), enteredPassword) > 0) {
+                if (RetrieveData.checkAuthorisation(line.getId(), enteredPassword) > NO_PERMISSIONS) {
                     PlatformFactory.getPlatform().getSettingService().store("password" + line.getId(), enteredPassword);
                     walk.setLine(line);
                     passwordPopup.hide();

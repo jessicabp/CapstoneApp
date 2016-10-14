@@ -27,12 +27,12 @@ import java.util.List;
  */
 public class EnterDataView extends View {
 
-    private Walk walk;
-    private int  animal;
-    private        List<Animal> tempAnimalList = new ArrayList<>();
     private static List<Animal> animalList     = new ArrayList<>();
     private static ToggleButton selectedMain   = null;
     private static ToggleButton selectedOther  = null;
+    private Walk walk;
+    private int  animal;
+    private        List<Animal> tempAnimalList = new ArrayList<>();
 
     public EnterDataView(String name, Walk walk) {
         super(name);
@@ -156,15 +156,15 @@ public class EnterDataView extends View {
         done.setMaxWidth(Double.MAX_VALUE);
         done.setOnAction(e -> {
             // Check an animal is selected, then create capture and finish trap
-            if (group.getSelectedToggle() != null && ((!(group.getSelectedToggle().getUserData().equals("Other")) || otherGroup.getSelectedToggle() != null))) {
+            if ((group.getSelectedToggle() != null) && (!group.getSelectedToggle().getUserData().equals("Other") || (otherGroup.getSelectedToggle() != null))) {
                 walk.addCapture(new Capture(walk.getCurrentTrap().getId(), animal));
                 selectedMain = null;
                 selectedOther = null;
-                if (walk.getCurrentTrap() != walk.getFinishTrap()) {
-                    walk.finishCurrentTrap();
-                    App.getInstance().switchScreen(App.DO_WALK_VIEW);
-                } else {
+                if (walk.getCurrentTrap().equals(walk.getEndTrap())) {
                     App.getInstance().switchScreen(App.END_WALK_VIEW);
+                } else {
+                    walk.endCurrentTrap();
+                    App.getInstance().switchScreen(App.DO_WALK_VIEW);
                 }
             } else {
                 done.setText("Please select an animal");
