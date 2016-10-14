@@ -1,0 +1,1353 @@
+java -jar evosuite-1.0.3.jar -prefix "capstone.mobile" -projectCP "/Users/Jessica/Documents/2016/159356 Capstone/CapstoneApp/build/classes/main"
+* EvoSuite 1.0.3
+* Analyzing classpath (generating inheritance tree)
+  - /Users/Jessica/Documents/2016/159356 Capstone/CapstoneApp/build/classes/main
+* Found 23 matching classes for prefix capstone.mobile
+* Current class: capstone.mobile.other.CustomGridPane
+* Going to generate test cases for class: capstone.mobile.other.CustomGridPane
+* Starting client
+* Connecting to master process on port 4972
+* Analyzing classpath: 
+* Inheritance tree loaded from /var/folders/rv/4n5tsxl154g7_r09hc8xy6nw0000gn/T/ES_inheritancetree5203731066044580492.xml.gz
+* Error while initializing target class: java.lang.ExceptionInInitializerError
+[MASTER] 03:38:27.720 [logback-2] ERROR TestSuiteGenerator - Problem for capstone.mobile.other.CustomGridPane. Full stack:
+java.lang.ExceptionInInitializerError: null
+	at java.lang.Class.forName0(Native Method) ~[na:1.8.0_92]
+	at java.lang.Class.forName(Class.java:348) ~[na:1.8.0_92]
+	at org.evosuite.Properties.getTargetClass(Properties.java:2339) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.Properties.getTargetClass(Properties.java:2304) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.initializeTargetMethods(TestClusterGenerator.java:363) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.generateCluster(TestClusterGenerator.java:135) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyze(DependencyAnalysis.java:117) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyzeClass(DependencyAnalysis.java:131) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.TestSuiteGenerator.generateTestSuite(TestSuiteGenerator.java:110) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.rmi.service.ClientNodeImpl$1.run(ClientNodeImpl.java:145) [evosuite-1.0.3.jar:1.0.3]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_92]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_92]
+	at java.lang.Thread.run(Thread.java:745) [na:1.8.0_92]
+Caused by: java.lang.RuntimeException: No toolkit found
+	at com.sun.javafx.tk.Toolkit.getToolkit(Toolkit.java:217) ~[jfxrt.jar:na]
+	at com.sun.javafx.perf.PerformanceTracker.logEvent(PerformanceTracker.java:110) ~[jfxrt.jar:na]
+	at javafx.scene.Node.<clinit>(Node.java:387) ~[jfxrt.jar:na]
+	... 15 common frames omitted
+* Computation finished
+[MASTER] 03:38:27.928 [main] ERROR SearchStatistics - No statistics has been saved because EvoSuite failed to generate any test case
+[MASTER] 03:38:28.033 [main] ERROR TestGeneration - failed to write statistics data
+* Current class: capstone.mobile.other.CustomMapView
+* Going to generate test cases for class: capstone.mobile.other.CustomMapView
+* Starting client
+* Connecting to master process on port 11956
+* Analyzing classpath: 
+* Inheritance tree loaded from /var/folders/rv/4n5tsxl154g7_r09hc8xy6nw0000gn/T/ES_inheritancetree5203731066044580492.xml.gz
+* Error while initializing target class: java.lang.ExceptionInInitializerError
+[MASTER] 03:38:33.795 [logback-2] ERROR TestSuiteGenerator - Problem for capstone.mobile.other.CustomMapView. Full stack:
+java.lang.ExceptionInInitializerError: null
+	at java.lang.Class.forName0(Native Method) ~[na:1.8.0_92]
+	at java.lang.Class.forName(Class.java:348) ~[na:1.8.0_92]
+	at org.evosuite.Properties.getTargetClass(Properties.java:2339) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.Properties.getTargetClass(Properties.java:2304) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.initializeTargetMethods(TestClusterGenerator.java:363) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.generateCluster(TestClusterGenerator.java:135) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyze(DependencyAnalysis.java:117) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyzeClass(DependencyAnalysis.java:131) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.TestSuiteGenerator.generateTestSuite(TestSuiteGenerator.java:110) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.rmi.service.ClientNodeImpl$1.run(ClientNodeImpl.java:145) [evosuite-1.0.3.jar:1.0.3]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_92]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_92]
+	at java.lang.Thread.run(Thread.java:745) [na:1.8.0_92]
+Caused by: java.lang.RuntimeException: No toolkit found
+	at com.sun.javafx.tk.Toolkit.getToolkit(Toolkit.java:217) ~[jfxrt.jar:na]
+	at com.sun.javafx.perf.PerformanceTracker.logEvent(PerformanceTracker.java:110) ~[jfxrt.jar:na]
+	at javafx.scene.Node.<clinit>(Node.java:387) ~[jfxrt.jar:na]
+	... 15 common frames omitted
+* Computation finished
+[MASTER] 03:38:33.953 [main] ERROR SearchStatistics - No statistics has been saved because EvoSuite failed to generate any test case
+[MASTER] 03:38:34.059 [main] ERROR TestGeneration - failed to write statistics data
+* Current class: capstone.mobile.dataHandlers.SendData
+* Going to generate test cases for class: capstone.mobile.dataHandlers.SendData
+* Starting client
+* Connecting to master process on port 5349
+* Analyzing classpath: 
+* Inheritance tree loaded from /var/folders/rv/4n5tsxl154g7_r09hc8xy6nw0000gn/T/ES_inheritancetree5203731066044580492.xml.gz
+* Error while initializing target class: org/apache/http/HttpEntity
+[MASTER] 03:38:40.717 [logback-2] ERROR TestSuiteGenerator - Problem for capstone.mobile.dataHandlers.SendData. Full stack:
+java.lang.NoClassDefFoundError: org/apache/http/HttpEntity
+	at java.lang.Class.forName0(Native Method) ~[na:1.8.0_92]
+	at java.lang.Class.forName(Class.java:348) ~[na:1.8.0_92]
+	at org.evosuite.Properties.getTargetClass(Properties.java:2339) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.Properties.getTargetClass(Properties.java:2304) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.initializeTargetMethods(TestClusterGenerator.java:363) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.generateCluster(TestClusterGenerator.java:135) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyze(DependencyAnalysis.java:117) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyzeClass(DependencyAnalysis.java:131) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.TestSuiteGenerator.generateTestSuite(TestSuiteGenerator.java:110) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.rmi.service.ClientNodeImpl$1.run(ClientNodeImpl.java:145) [evosuite-1.0.3.jar:1.0.3]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_92]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_92]
+	at java.lang.Thread.run(Thread.java:745) [na:1.8.0_92]
+Caused by: java.lang.ClassNotFoundException: Class 'org/apache/http/HttpEntity.class' should be in target project, but could not be found!
+	at org.evosuite.instrumentation.InstrumentingClassLoader.instrumentClass(InstrumentingClassLoader.java:199) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.InstrumentingClassLoader.loadClass(InstrumentingClassLoader.java:166) ~[evosuite-1.0.3.jar:1.0.3]
+	... 15 common frames omitted
+Caused by: java.lang.ClassNotFoundException: Class 'org/apache/http/HttpEntity.class' should be in target project, but could not be found!
+	at org.evosuite.instrumentation.InstrumentingClassLoader.instrumentClass(InstrumentingClassLoader.java:186) ~[evosuite-1.0.3.jar:1.0.3]
+	... 16 common frames omitted
+* Computation finished
+[MASTER] 03:38:40.888 [main] ERROR SearchStatistics - No statistics has been saved because EvoSuite failed to generate any test case
+[MASTER] 03:38:40.989 [main] ERROR TestGeneration - failed to write statistics data
+* Current class: capstone.mobile.userInterfaces.CreateTrapView
+* Going to generate test cases for class: capstone.mobile.userInterfaces.CreateTrapView
+* Starting client
+* Connecting to master process on port 12787
+* Analyzing classpath: 
+* Inheritance tree loaded from /var/folders/rv/4n5tsxl154g7_r09hc8xy6nw0000gn/T/ES_inheritancetree5203731066044580492.xml.gz
+[MASTER] 03:38:47.954 [logback-2] ERROR TestClusterGenerator - Problem for capstone.mobile.userInterfaces.CreateTrapView. Class not found
+java.lang.ClassNotFoundException: com/gluonhq/charm/glisten/mvc/View
+	at org.evosuite.instrumentation.InstrumentingClassLoader.instrumentClass(InstrumentingClassLoader.java:199) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.InstrumentingClassLoader.loadClass(InstrumentingClassLoader.java:166) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.addCastClassDependencyIfAccessible(TestClusterGenerator.java:277) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.handleCastClasses(TestClusterGenerator.java:216) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.generateCluster(TestClusterGenerator.java:132) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyze(DependencyAnalysis.java:117) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyzeClass(DependencyAnalysis.java:131) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.TestSuiteGenerator.generateTestSuite(TestSuiteGenerator.java:110) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.rmi.service.ClientNodeImpl$1.run(ClientNodeImpl.java:145) [evosuite-1.0.3.jar:1.0.3]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_92]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_92]
+	at java.lang.Thread.run(Thread.java:745) [na:1.8.0_92]
+Caused by: java.lang.NoClassDefFoundError: com/gluonhq/charm/glisten/mvc/View
+	at java.lang.ClassLoader.defineClass1(Native Method) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:763) ~[na:1.8.0_92]
+	at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142) ~[na:1.8.0_92]
+	at java.net.URLClassLoader.defineClass(URLClassLoader.java:467) ~[na:1.8.0_92]
+	at java.net.URLClassLoader.access$100(URLClassLoader.java:73) ~[na:1.8.0_92]
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:368) ~[na:1.8.0_92]
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:362) ~[na:1.8.0_92]
+	at java.security.AccessController.doPrivileged(Native Method) ~[na:1.8.0_92]
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:361) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424) ~[na:1.8.0_92]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_92]
+	at java.lang.Class.forName0(Native Method) ~[na:1.8.0_92]
+	at java.lang.Class.forName(Class.java:348) ~[na:1.8.0_92]
+	at org.evosuite.runtime.instrumentation.MethodCallReplacementClassAdapter.visitEnd(MethodCallReplacementClassAdapter.java:180) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.shaded.org.objectweb.asm.tree.ClassNode.accept(Unknown Source) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.BytecodeInstrumentation.transformBytes(BytecodeInstrumentation.java:273) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.InstrumentingClassLoader.getTransformedBytes(InstrumentingClassLoader.java:173) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.InstrumentingClassLoader.instrumentClass(InstrumentingClassLoader.java:190) ~[evosuite-1.0.3.jar:1.0.3]
+	... 13 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.gluonhq.charm.glisten.mvc.View
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424) ~[na:1.8.0_92]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_92]
+	... 32 common frames omitted
+* Could not find class under test capstone.mobile.userInterfaces.CreateTrapView: java.lang.ClassNotFoundException: expect to get instruction without BasicBlock already set
+* Error while initializing target class: Failed to load capstone.mobile.userInterfaces.CreateTrapView
+[MASTER] 03:38:48.152 [logback-2] ERROR TestSuiteGenerator - Problem for capstone.mobile.userInterfaces.CreateTrapView. Full stack:
+java.lang.RuntimeException: Failed to load capstone.mobile.userInterfaces.CreateTrapView
+	at org.evosuite.setup.TestClusterGenerator.initializeTargetMethods(TestClusterGenerator.java:369) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.generateCluster(TestClusterGenerator.java:135) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyze(DependencyAnalysis.java:117) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyzeClass(DependencyAnalysis.java:131) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.TestSuiteGenerator.generateTestSuite(TestSuiteGenerator.java:110) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.rmi.service.ClientNodeImpl$1.run(ClientNodeImpl.java:145) [evosuite-1.0.3.jar:1.0.3]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_92]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_92]
+	at java.lang.Thread.run(Thread.java:745) [na:1.8.0_92]
+* Computation finished
+[MASTER] 03:38:48.306 [main] ERROR SearchStatistics - No statistics has been saved because EvoSuite failed to generate any test case
+[MASTER] 03:38:48.412 [main] ERROR TestGeneration - failed to write statistics data
+* Current class: capstone.mobile.App
+* Going to generate test cases for class: capstone.mobile.App
+* Starting client
+* Connecting to master process on port 6972
+* Analyzing classpath: 
+* Inheritance tree loaded from /var/folders/rv/4n5tsxl154g7_r09hc8xy6nw0000gn/T/ES_inheritancetree5203731066044580492.xml.gz
+[MASTER] 03:38:55.577 [logback-2] ERROR TestClusterGenerator - Problem for capstone.mobile.App. Class not found
+java.lang.ClassNotFoundException: com/gluonhq/charm/glisten/application/MobileApplication
+	at org.evosuite.instrumentation.InstrumentingClassLoader.instrumentClass(InstrumentingClassLoader.java:199) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.InstrumentingClassLoader.loadClass(InstrumentingClassLoader.java:166) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.addCastClassDependencyIfAccessible(TestClusterGenerator.java:277) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.handleCastClasses(TestClusterGenerator.java:216) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.generateCluster(TestClusterGenerator.java:132) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyze(DependencyAnalysis.java:117) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyzeClass(DependencyAnalysis.java:131) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.TestSuiteGenerator.generateTestSuite(TestSuiteGenerator.java:110) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.rmi.service.ClientNodeImpl$1.run(ClientNodeImpl.java:145) [evosuite-1.0.3.jar:1.0.3]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_92]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_92]
+	at java.lang.Thread.run(Thread.java:745) [na:1.8.0_92]
+Caused by: java.lang.NoClassDefFoundError: com/gluonhq/charm/glisten/application/MobileApplication
+	at java.lang.ClassLoader.defineClass1(Native Method) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:763) ~[na:1.8.0_92]
+	at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142) ~[na:1.8.0_92]
+	at java.net.URLClassLoader.defineClass(URLClassLoader.java:467) ~[na:1.8.0_92]
+	at java.net.URLClassLoader.access$100(URLClassLoader.java:73) ~[na:1.8.0_92]
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:368) ~[na:1.8.0_92]
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:362) ~[na:1.8.0_92]
+	at java.security.AccessController.doPrivileged(Native Method) ~[na:1.8.0_92]
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:361) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424) ~[na:1.8.0_92]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_92]
+	at java.lang.Class.forName0(Native Method) ~[na:1.8.0_92]
+	at java.lang.Class.forName(Class.java:348) ~[na:1.8.0_92]
+	at org.evosuite.runtime.instrumentation.MethodCallReplacementClassAdapter.visitEnd(MethodCallReplacementClassAdapter.java:180) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.shaded.org.objectweb.asm.tree.ClassNode.accept(Unknown Source) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.BytecodeInstrumentation.transformBytes(BytecodeInstrumentation.java:273) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.InstrumentingClassLoader.getTransformedBytes(InstrumentingClassLoader.java:173) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.InstrumentingClassLoader.instrumentClass(InstrumentingClassLoader.java:190) ~[evosuite-1.0.3.jar:1.0.3]
+	... 13 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.gluonhq.charm.glisten.application.MobileApplication
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424) ~[na:1.8.0_92]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_92]
+	... 32 common frames omitted
+* Could not find class under test capstone.mobile.App: java.lang.ClassNotFoundException: expect to get instruction without BasicBlock already set
+* Error while initializing target class: Failed to load capstone.mobile.App
+[MASTER] 03:38:55.826 [logback-2] ERROR TestSuiteGenerator - Problem for capstone.mobile.App. Full stack:
+java.lang.RuntimeException: Failed to load capstone.mobile.App
+	at org.evosuite.setup.TestClusterGenerator.initializeTargetMethods(TestClusterGenerator.java:369) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.generateCluster(TestClusterGenerator.java:135) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyze(DependencyAnalysis.java:117) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyzeClass(DependencyAnalysis.java:131) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.TestSuiteGenerator.generateTestSuite(TestSuiteGenerator.java:110) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.rmi.service.ClientNodeImpl$1.run(ClientNodeImpl.java:145) [evosuite-1.0.3.jar:1.0.3]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_92]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_92]
+	at java.lang.Thread.run(Thread.java:745) [na:1.8.0_92]
+* Computation finished
+[MASTER] 03:38:56.020 [main] ERROR SearchStatistics - No statistics has been saved because EvoSuite failed to generate any test case
+[MASTER] 03:38:56.125 [main] ERROR TestGeneration - failed to write statistics data
+* Current class: capstone.mobile.userInterfaces.FavouriteLinesView
+* Going to generate test cases for class: capstone.mobile.userInterfaces.FavouriteLinesView
+* Starting client
+* Connecting to master process on port 6035
+* Analyzing classpath: 
+* Inheritance tree loaded from /var/folders/rv/4n5tsxl154g7_r09hc8xy6nw0000gn/T/ES_inheritancetree5203731066044580492.xml.gz
+* Error while initializing target class: java.lang.ExceptionInInitializerError
+[MASTER] 03:39:02.248 [logback-2] ERROR TestSuiteGenerator - Problem for capstone.mobile.userInterfaces.FavouriteLinesView. Full stack:
+java.lang.ExceptionInInitializerError: null
+	at java.lang.Class.forName0(Native Method) ~[na:1.8.0_92]
+	at java.lang.Class.forName(Class.java:348) ~[na:1.8.0_92]
+	at org.evosuite.setup.DependencyAnalysis.loadCallTreeClasses(DependencyAnalysis.java:157) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyze(DependencyAnalysis.java:91) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyzeClass(DependencyAnalysis.java:131) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.TestSuiteGenerator.generateTestSuite(TestSuiteGenerator.java:110) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.rmi.service.ClientNodeImpl$1.run(ClientNodeImpl.java:145) [evosuite-1.0.3.jar:1.0.3]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_92]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_92]
+	at java.lang.Thread.run(Thread.java:745) [na:1.8.0_92]
+Caused by: java.lang.RuntimeException: No toolkit found
+	at com.sun.javafx.tk.Toolkit.getToolkit(Toolkit.java:217) ~[jfxrt.jar:na]
+	at com.sun.javafx.perf.PerformanceTracker.logEvent(PerformanceTracker.java:110) ~[jfxrt.jar:na]
+	at javafx.scene.Node.<clinit>(Node.java:387) ~[jfxrt.jar:na]
+	... 12 common frames omitted
+* Computation finished
+[MASTER] 03:39:02.436 [main] ERROR SearchStatistics - No statistics has been saved because EvoSuite failed to generate any test case
+[MASTER] 03:39:02.542 [main] ERROR TestGeneration - failed to write statistics data
+* Current class: capstone.mobile.models.Line
+* Going to generate test cases for class: capstone.mobile.models.Line
+* Starting client
+* Connecting to master process on port 12963
+* Analyzing classpath: 
+* Inheritance tree loaded from /var/folders/rv/4n5tsxl154g7_r09hc8xy6nw0000gn/T/ES_inheritancetree5203731066044580492.xml.gz
+* Finished analyzing classpath
+* Generating tests for class capstone.mobile.models.Line
+* Test criteria:
+  - Line Coverage
+  - Branch Coverage
+  - Exception
+  - Mutation testing (weak)
+  - Method-Output Coverage
+  - Top-Level Method Coverage
+  - No-Exception Top-Level Method Coverage
+  - Context Branch Coverage
+* Setting up search algorithm for whole suite generation
+* Total number of test goals: 
+  - Line 30
+  - Branch 16
+  - Exception 0
+  - MutationFactory 51
+  - Output 43
+  - Method 16
+  - MethodNoException 16
+  - CBranchFitnessFactory 16
+* Using seed 1476455943660
+* Starting evolution
+[Progress:==============================100%] [Cov:==================================>99%]
+* Search finished after 62s and 462 generations, 130736 statements, best individual has fitness: 1.2
+* Minimizing test suite
+* Going to analyze the coverage criteria
+* Coverage analysis for criterion LINE
+* Coverage of criterion LINE: 100%
+* Total number of goals: 30
+* Number of covered goals: 30
+* Coverage analysis for criterion BRANCH
+* Coverage of criterion BRANCH: 100%
+* Total number of goals: 16
+* Number of covered goals: 16
+* Coverage analysis for criterion EXCEPTION
+* Coverage of criterion EXCEPTION: 100%
+* Total number of goals: 4
+* Number of covered goals: 4
+* Coverage analysis for criterion WEAKMUTATION
+* Coverage of criterion WEAKMUTATION: 100%
+* Total number of goals: 51
+* Number of covered goals: 51
+* Coverage analysis for criterion OUTPUT
+* Coverage of criterion OUTPUT: 98%
+* Total number of goals: 43
+* Number of covered goals: 42
+* Coverage analysis for criterion METHOD
+* Coverage of criterion METHOD: 100%
+* Total number of goals: 16
+* Number of covered goals: 16
+* Coverage analysis for criterion METHODNOEXCEPTION
+* Coverage of criterion METHODNOEXCEPTION: 100%
+* Total number of goals: 16
+* Number of covered goals: 16
+* Coverage analysis for criterion CBRANCH
+* Coverage of criterion CBRANCH: 100%
+* Total number of goals: 16
+* Number of covered goals: 16
+* Generated 32 tests with total length 91
+* Resulting test suite's coverage: 100% (average coverage for all fitness functions)
+* Generating assertions
+* Resulting test suite's mutation score: 96%
+* Compiling and checking tests
+* Writing JUnit test case 'Line_ESTest' to evosuite-tests
+* Done!
+
+* Computation finished
+* Current class: capstone.mobile.models.Trap
+* Going to generate test cases for class: capstone.mobile.models.Trap
+* Starting client
+* Connecting to master process on port 14458
+* Analyzing classpath: 
+* Inheritance tree loaded from /var/folders/rv/4n5tsxl154g7_r09hc8xy6nw0000gn/T/ES_inheritancetree5203731066044580492.xml.gz
+* Finished analyzing classpath
+* Generating tests for class capstone.mobile.models.Trap
+* Test criteria:
+  - Line Coverage
+  - Branch Coverage
+  - Exception
+  - Mutation testing (weak)
+  - Method-Output Coverage
+  - Top-Level Method Coverage
+  - No-Exception Top-Level Method Coverage
+  - Context Branch Coverage
+* Setting up search algorithm for whole suite generation
+* Total number of test goals: 
+  - Line 42
+  - Branch 24
+  - Exception 0
+  - MutationFactory 115
+  - Output 21
+  - Method 19
+  - MethodNoException 19
+  - CBranchFitnessFactory 24
+* Using seed 1476456039697
+* Starting evolution
+[Progress:=>                            6%] [Cov:===================================100%]
+* Search finished after 7s and 1 generations, 6240 statements, best individual has fitness: 0.0
+* Minimizing test suite
+* Going to analyze the coverage criteria
+* Coverage analysis for criterion LINE
+* Coverage of criterion LINE: 100%
+* Total number of goals: 42
+* Number of covered goals: 42
+* Coverage analysis for criterion BRANCH
+* Coverage of criterion BRANCH: 100%
+* Total number of goals: 24
+* Number of covered goals: 24
+* Coverage analysis for criterion EXCEPTION
+* Coverage of criterion EXCEPTION: 100% (no goals)
+* Coverage analysis for criterion WEAKMUTATION
+* Coverage of criterion WEAKMUTATION: 100%
+* Total number of goals: 115
+* Number of covered goals: 115
+* Coverage analysis for criterion OUTPUT
+* Coverage of criterion OUTPUT: 100%
+* Total number of goals: 21
+* Number of covered goals: 21
+* Coverage analysis for criterion METHOD
+* Coverage of criterion METHOD: 100%
+* Total number of goals: 19
+* Number of covered goals: 19
+* Coverage analysis for criterion METHODNOEXCEPTION
+* Coverage of criterion METHODNOEXCEPTION: 100%
+* Total number of goals: 19
+* Number of covered goals: 19
+* Coverage analysis for criterion CBRANCH
+* Coverage of criterion CBRANCH: 100%
+* Total number of goals: 24
+* Number of covered goals: 24
+* Generated 25 tests with total length 54
+* Resulting test suite's coverage: 100% (average coverage for all fitness functions)
+* Generating assertions
+* Resulting test suite's mutation score: 90%
+* Compiling and checking tests
+* Writing JUnit test case 'Trap_ESTest' to evosuite-tests
+* Done!
+
+* Computation finished
+* Current class: capstone.mobile.other.CustomPopupView
+* Going to generate test cases for class: capstone.mobile.other.CustomPopupView
+* Starting client
+* Connecting to master process on port 9620
+* Analyzing classpath: 
+* Inheritance tree loaded from /var/folders/rv/4n5tsxl154g7_r09hc8xy6nw0000gn/T/ES_inheritancetree5203731066044580492.xml.gz
+* Could not find class under test capstone.mobile.other.CustomPopupView: java.lang.ClassNotFoundException: com/gluonhq/charm/glisten/layout/layer/PopupView
+* Error while initializing target class: Failed to load capstone.mobile.other.CustomPopupView
+[MASTER] 03:41:19.387 [logback-2] ERROR TestSuiteGenerator - Problem for capstone.mobile.other.CustomPopupView. Full stack:
+java.lang.RuntimeException: Failed to load capstone.mobile.other.CustomPopupView
+	at org.evosuite.setup.TestClusterGenerator.initializeTargetMethods(TestClusterGenerator.java:369) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.generateCluster(TestClusterGenerator.java:135) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyze(DependencyAnalysis.java:117) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyzeClass(DependencyAnalysis.java:131) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.TestSuiteGenerator.generateTestSuite(TestSuiteGenerator.java:110) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.rmi.service.ClientNodeImpl$1.run(ClientNodeImpl.java:145) [evosuite-1.0.3.jar:1.0.3]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_92]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_92]
+	at java.lang.Thread.run(Thread.java:745) [na:1.8.0_92]
+* Computation finished
+[MASTER] 03:41:19.532 [main] ERROR SearchStatistics - No statistics has been saved because EvoSuite failed to generate any test case
+[MASTER] 03:41:19.637 [main] ERROR TestGeneration - failed to write statistics data
+* Current class: capstone.mobile.userInterfaces.EnterDataView
+* Going to generate test cases for class: capstone.mobile.userInterfaces.EnterDataView
+* Starting client
+* Connecting to master process on port 19784
+* Analyzing classpath: 
+* Inheritance tree loaded from /var/folders/rv/4n5tsxl154g7_r09hc8xy6nw0000gn/T/ES_inheritancetree5203731066044580492.xml.gz
+[MASTER] 03:41:24.973 [logback-2] ERROR TestClusterGenerator - Problem for capstone.mobile.userInterfaces.EnterDataView. Class not found
+java.lang.ClassNotFoundException: com/gluonhq/charm/glisten/mvc/View
+	at org.evosuite.instrumentation.InstrumentingClassLoader.instrumentClass(InstrumentingClassLoader.java:199) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.InstrumentingClassLoader.loadClass(InstrumentingClassLoader.java:166) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.addCastClassDependencyIfAccessible(TestClusterGenerator.java:277) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.handleCastClasses(TestClusterGenerator.java:216) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.generateCluster(TestClusterGenerator.java:132) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyze(DependencyAnalysis.java:117) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyzeClass(DependencyAnalysis.java:131) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.TestSuiteGenerator.generateTestSuite(TestSuiteGenerator.java:110) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.rmi.service.ClientNodeImpl$1.run(ClientNodeImpl.java:145) [evosuite-1.0.3.jar:1.0.3]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_92]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_92]
+	at java.lang.Thread.run(Thread.java:745) [na:1.8.0_92]
+Caused by: java.lang.NoClassDefFoundError: com/gluonhq/charm/glisten/mvc/View
+	at java.lang.ClassLoader.defineClass1(Native Method) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:763) ~[na:1.8.0_92]
+	at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142) ~[na:1.8.0_92]
+	at java.net.URLClassLoader.defineClass(URLClassLoader.java:467) ~[na:1.8.0_92]
+	at java.net.URLClassLoader.access$100(URLClassLoader.java:73) ~[na:1.8.0_92]
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:368) ~[na:1.8.0_92]
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:362) ~[na:1.8.0_92]
+	at java.security.AccessController.doPrivileged(Native Method) ~[na:1.8.0_92]
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:361) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424) ~[na:1.8.0_92]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_92]
+	at java.lang.Class.forName0(Native Method) ~[na:1.8.0_92]
+	at java.lang.Class.forName(Class.java:348) ~[na:1.8.0_92]
+	at org.evosuite.runtime.instrumentation.MethodCallReplacementClassAdapter.visitEnd(MethodCallReplacementClassAdapter.java:180) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.shaded.org.objectweb.asm.tree.ClassNode.accept(Unknown Source) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.BytecodeInstrumentation.transformBytes(BytecodeInstrumentation.java:273) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.InstrumentingClassLoader.getTransformedBytes(InstrumentingClassLoader.java:173) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.InstrumentingClassLoader.instrumentClass(InstrumentingClassLoader.java:190) ~[evosuite-1.0.3.jar:1.0.3]
+	... 13 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.gluonhq.charm.glisten.mvc.View
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424) ~[na:1.8.0_92]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_92]
+	... 32 common frames omitted
+* Could not find class under test capstone.mobile.userInterfaces.EnterDataView: java.lang.ClassNotFoundException: expect to get instruction without BasicBlock already set
+* Error while initializing target class: Failed to load capstone.mobile.userInterfaces.EnterDataView
+[MASTER] 03:41:25.096 [logback-2] ERROR TestSuiteGenerator - Problem for capstone.mobile.userInterfaces.EnterDataView. Full stack:
+java.lang.RuntimeException: Failed to load capstone.mobile.userInterfaces.EnterDataView
+	at org.evosuite.setup.TestClusterGenerator.initializeTargetMethods(TestClusterGenerator.java:369) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.generateCluster(TestClusterGenerator.java:135) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyze(DependencyAnalysis.java:117) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyzeClass(DependencyAnalysis.java:131) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.TestSuiteGenerator.generateTestSuite(TestSuiteGenerator.java:110) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.rmi.service.ClientNodeImpl$1.run(ClientNodeImpl.java:145) [evosuite-1.0.3.jar:1.0.3]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_92]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_92]
+	at java.lang.Thread.run(Thread.java:745) [na:1.8.0_92]
+* Computation finished
+[MASTER] 03:41:25.236 [main] ERROR SearchStatistics - No statistics has been saved because EvoSuite failed to generate any test case
+[MASTER] 03:41:25.344 [main] ERROR TestGeneration - failed to write statistics data
+* Current class: capstone.mobile.models.Animal
+* Going to generate test cases for class: capstone.mobile.models.Animal
+* Starting client
+* Connecting to master process on port 14660
+* Analyzing classpath: 
+* Inheritance tree loaded from /var/folders/rv/4n5tsxl154g7_r09hc8xy6nw0000gn/T/ES_inheritancetree5203731066044580492.xml.gz
+* Finished analyzing classpath
+* Generating tests for class capstone.mobile.models.Animal
+* Test criteria:
+  - Line Coverage
+  - Branch Coverage
+  - Exception
+  - Mutation testing (weak)
+  - Method-Output Coverage
+  - Top-Level Method Coverage
+  - No-Exception Top-Level Method Coverage
+  - Context Branch Coverage
+* Setting up search algorithm for whole suite generation
+* Total number of test goals: 
+  - Line 10
+  - Branch 6
+  - Exception 0
+  - MutationFactory 9
+  - Output 6
+  - Method 6
+  - MethodNoException 6
+  - CBranchFitnessFactory 6
+* Using seed 1476456086478
+* Starting evolution
+[Progress:>                             3%] [Cov:===================================100%]
+* Search finished after 6s and 0 generations, 6102 statements, best individual has fitness: 0.0
+* Minimizing test suite
+* Going to analyze the coverage criteria
+* Coverage analysis for criterion LINE
+* Coverage of criterion LINE: 100%
+* Total number of goals: 10
+* Number of covered goals: 10
+* Coverage analysis for criterion BRANCH
+* Coverage of criterion BRANCH: 100%
+* Total number of goals: 6
+* Number of covered goals: 6
+* Coverage analysis for criterion EXCEPTION
+* Coverage of criterion EXCEPTION: 100% (no goals)
+* Coverage analysis for criterion WEAKMUTATION
+* Coverage of criterion WEAKMUTATION: 100%
+* Total number of goals: 9
+* Number of covered goals: 9
+* Coverage analysis for criterion OUTPUT
+* Coverage of criterion OUTPUT: 100%
+* Total number of goals: 6
+* Number of covered goals: 6
+* Coverage analysis for criterion METHOD
+* Coverage of criterion METHOD: 100%
+* Total number of goals: 6
+* Number of covered goals: 6
+* Coverage analysis for criterion METHODNOEXCEPTION
+* Coverage of criterion METHODNOEXCEPTION: 100%
+* Total number of goals: 6
+* Number of covered goals: 6
+* Coverage analysis for criterion CBRANCH
+* Coverage of criterion CBRANCH: 100%
+* Total number of goals: 6
+* Number of covered goals: 6
+* Generated 7 tests with total length 16
+* Resulting test suite's coverage: 100% (average coverage for all fitness functions)
+* Generating assertions
+* Resulting test suite's mutation score: 100%
+* Compiling and checking tests
+* Writing JUnit test case 'Animal_ESTest' to evosuite-tests
+* Done!
+
+* Computation finished
+* Current class: capstone.mobile.userInterfaces.DisplayLinesView
+* Going to generate test cases for class: capstone.mobile.userInterfaces.DisplayLinesView
+* Starting client
+* Connecting to master process on port 10502
+* Analyzing classpath: 
+* Inheritance tree loaded from /var/folders/rv/4n5tsxl154g7_r09hc8xy6nw0000gn/T/ES_inheritancetree5203731066044580492.xml.gz
+* Error while initializing target class: java.lang.ExceptionInInitializerError
+[MASTER] 03:41:58.968 [logback-2] ERROR TestSuiteGenerator - Problem for capstone.mobile.userInterfaces.DisplayLinesView. Full stack:
+java.lang.ExceptionInInitializerError: null
+	at java.lang.Class.forName0(Native Method) ~[na:1.8.0_92]
+	at java.lang.Class.forName(Class.java:348) ~[na:1.8.0_92]
+	at org.evosuite.setup.DependencyAnalysis.loadCallTreeClasses(DependencyAnalysis.java:157) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyze(DependencyAnalysis.java:91) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyzeClass(DependencyAnalysis.java:131) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.TestSuiteGenerator.generateTestSuite(TestSuiteGenerator.java:110) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.rmi.service.ClientNodeImpl$1.run(ClientNodeImpl.java:145) [evosuite-1.0.3.jar:1.0.3]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_92]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_92]
+	at java.lang.Thread.run(Thread.java:745) [na:1.8.0_92]
+Caused by: java.lang.RuntimeException: No toolkit found
+	at com.sun.javafx.tk.Toolkit.getToolkit(Toolkit.java:217) ~[jfxrt.jar:na]
+	at com.sun.javafx.perf.PerformanceTracker.logEvent(PerformanceTracker.java:110) ~[jfxrt.jar:na]
+	at javafx.scene.Node.<clinit>(Node.java:387) ~[jfxrt.jar:na]
+	... 12 common frames omitted
+* Computation finished
+[MASTER] 03:41:59.116 [main] ERROR SearchStatistics - No statistics has been saved because EvoSuite failed to generate any test case
+[MASTER] 03:41:59.223 [main] ERROR TestGeneration - failed to write statistics data
+* Current class: capstone.mobile.userInterfaces.EndWalkView
+* Going to generate test cases for class: capstone.mobile.userInterfaces.EndWalkView
+* Starting client
+* Connecting to master process on port 2575
+* Analyzing classpath: 
+* Inheritance tree loaded from /var/folders/rv/4n5tsxl154g7_r09hc8xy6nw0000gn/T/ES_inheritancetree5203731066044580492.xml.gz
+* Could not find class under test capstone.mobile.userInterfaces.EndWalkView: java.lang.ClassNotFoundException: com/gluonhq/charm/glisten/mvc/View
+* Error while initializing target class: Failed to load capstone.mobile.userInterfaces.EndWalkView
+[MASTER] 03:42:05.005 [logback-2] ERROR TestSuiteGenerator - Problem for capstone.mobile.userInterfaces.EndWalkView. Full stack:
+java.lang.RuntimeException: Failed to load capstone.mobile.userInterfaces.EndWalkView
+	at org.evosuite.setup.TestClusterGenerator.initializeTargetMethods(TestClusterGenerator.java:369) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.generateCluster(TestClusterGenerator.java:135) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyze(DependencyAnalysis.java:117) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyzeClass(DependencyAnalysis.java:131) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.TestSuiteGenerator.generateTestSuite(TestSuiteGenerator.java:110) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.rmi.service.ClientNodeImpl$1.run(ClientNodeImpl.java:145) [evosuite-1.0.3.jar:1.0.3]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_92]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_92]
+	at java.lang.Thread.run(Thread.java:745) [na:1.8.0_92]
+* Computation finished
+[MASTER] 03:42:05.171 [main] ERROR SearchStatistics - No statistics has been saved because EvoSuite failed to generate any test case
+[MASTER] 03:42:05.277 [main] ERROR TestGeneration - failed to write statistics data
+* Current class: capstone.mobile.dataHandlers.RetrieveData
+* Going to generate test cases for class: capstone.mobile.dataHandlers.RetrieveData
+* Starting client
+* Connecting to master process on port 19769
+* Analyzing classpath: 
+* Inheritance tree loaded from /var/folders/rv/4n5tsxl154g7_r09hc8xy6nw0000gn/T/ES_inheritancetree5203731066044580492.xml.gz
+[MASTER] 03:42:10.900 [logback-1] WARN  TestUsageChecker - class capstone.mobile.dataHandlers.RetrieveData$$Lambda$2 looks like an anonymous class, ignoring it (although reflection says false) RetrieveData$$Lambda$2
+[MASTER] 03:42:10.904 [logback-1] WARN  TestUsageChecker - class capstone.mobile.dataHandlers.RetrieveData$$Lambda$1 looks like an anonymous class, ignoring it (although reflection says false) RetrieveData$$Lambda$1
+* Finished analyzing classpath
+* Generating tests for class capstone.mobile.dataHandlers.RetrieveData
+* Test criteria:
+  - Line Coverage
+  - Branch Coverage
+  - Exception
+  - Mutation testing (weak)
+  - Method-Output Coverage
+  - Top-Level Method Coverage
+  - No-Exception Top-Level Method Coverage
+  - Context Branch Coverage
+* Setting up search algorithm for whole suite generation
+* Total number of test goals: 
+  - Line 72
+  - Branch 19
+  - Exception 0
+  - MutationFactory 67
+  - Output 21
+  - Method 5
+  - MethodNoException 5
+  - CBranchFitnessFactory 19
+* Using seed 1476456126396
+* Starting evolution
+[Progress:==============================100%] [Cov:=========>                         26%]
+* Search finished after 61s and 536 generations, 34172 statements, best individual has fitness: 164.0907029478458
+* Minimizing test suite
+* Going to analyze the coverage criteria
+* Coverage analysis for criterion LINE
+* Coverage of criterion LINE: 32%
+* Total number of goals: 72
+* Number of covered goals: 23
+* Coverage analysis for criterion BRANCH
+* Coverage of criterion BRANCH: 5%
+* Total number of goals: 19
+* Number of covered goals: 1
+* Coverage analysis for criterion EXCEPTION
+* Coverage of criterion EXCEPTION: 88%
+* Total number of goals: 8
+* Number of covered goals: 7
+* Coverage analysis for criterion WEAKMUTATION
+* Coverage of criterion WEAKMUTATION: 28%
+* Total number of goals: 67
+* Number of covered goals: 19
+* Coverage analysis for criterion OUTPUT
+* Coverage of criterion OUTPUT: 0%
+* Total number of goals: 21
+* Number of covered goals: 0
+* Coverage analysis for criterion METHOD
+* Coverage of criterion METHOD: 100%
+* Total number of goals: 5
+* Number of covered goals: 5
+* Coverage analysis for criterion METHODNOEXCEPTION
+* Coverage of criterion METHODNOEXCEPTION: 20%
+* Total number of goals: 5
+* Number of covered goals: 1
+* Coverage analysis for criterion CBRANCH
+* Coverage of criterion CBRANCH: 5%
+* Total number of goals: 19
+* Number of covered goals: 1
+* Generated 8 tests with total length 14
+* Resulting test suite's coverage: 27% (average coverage for all fitness functions)
+* Generating assertions
+* Resulting test suite's mutation score: 0%
+* Compiling and checking tests
+* Permissions denied during test execution: 
+  - java.net.SocketPermission: 
+         resolve traptracker.pythonanywhere.com: 7
+* Writing JUnit test case 'RetrieveData_ESTest' to evosuite-tests
+* Done!
+
+* Computation finished
+* Current class: capstone.mobile.other.Validator
+* Going to generate test cases for class: capstone.mobile.other.Validator
+* Starting client
+* Connecting to master process on port 19298
+* Analyzing classpath: 
+* Inheritance tree loaded from /var/folders/rv/4n5tsxl154g7_r09hc8xy6nw0000gn/T/ES_inheritancetree5203731066044580492.xml.gz
+* Finished analyzing classpath
+* Generating tests for class capstone.mobile.other.Validator
+* Test criteria:
+  - Line Coverage
+  - Branch Coverage
+  - Exception
+  - Mutation testing (weak)
+  - Method-Output Coverage
+  - Top-Level Method Coverage
+  - No-Exception Top-Level Method Coverage
+  - Context Branch Coverage
+* Setting up search algorithm for whole suite generation
+* Total number of test goals: 
+  - Line 4
+  - Branch 3
+  - Exception 0
+  - MutationFactory 6
+  - Output 4
+  - Method 3
+  - MethodNoException 3
+  - CBranchFitnessFactory 3
+* Using seed 1476456212835
+* Starting evolution
+[Progress:>                             3%] [Cov:===================================100%]
+* Search finished after 3s and 1 generations, 4301 statements, best individual has fitness: 0.3333333333333333
+* Minimizing test suite
+* Going to analyze the coverage criteria
+* Coverage analysis for criterion LINE
+* Coverage of criterion LINE: 100%
+* Total number of goals: 4
+* Number of covered goals: 4
+* Coverage analysis for criterion BRANCH
+* Coverage of criterion BRANCH: 100%
+* Total number of goals: 3
+* Number of covered goals: 3
+* Coverage analysis for criterion EXCEPTION
+* Coverage of criterion EXCEPTION: 100%
+* Total number of goals: 2
+* Number of covered goals: 2
+* Coverage analysis for criterion WEAKMUTATION
+* Coverage of criterion WEAKMUTATION: 100%
+* Total number of goals: 6
+* Number of covered goals: 6
+* Coverage analysis for criterion OUTPUT
+* Coverage of criterion OUTPUT: 100%
+* Total number of goals: 4
+* Number of covered goals: 4
+* Coverage analysis for criterion METHOD
+* Coverage of criterion METHOD: 100%
+* Total number of goals: 3
+* Number of covered goals: 3
+* Coverage analysis for criterion METHODNOEXCEPTION
+* Coverage of criterion METHODNOEXCEPTION: 100%
+* Total number of goals: 3
+* Number of covered goals: 3
+* Coverage analysis for criterion CBRANCH
+* Coverage of criterion CBRANCH: 100%
+* Total number of goals: 3
+* Number of covered goals: 3
+* Generated 7 tests with total length 7
+* Resulting test suite's coverage: 100% (average coverage for all fitness functions)
+* Generating assertions
+* Resulting test suite's mutation score: 67%
+* Compiling and checking tests
+* Writing JUnit test case 'Validator_ESTest' to evosuite-tests
+* Done!
+
+* Computation finished
+* Current class: capstone.mobile.userInterfaces.DoWalkView
+* Going to generate test cases for class: capstone.mobile.userInterfaces.DoWalkView
+* Starting client
+* Connecting to master process on port 13421
+* Analyzing classpath: 
+* Inheritance tree loaded from /var/folders/rv/4n5tsxl154g7_r09hc8xy6nw0000gn/T/ES_inheritancetree5203731066044580492.xml.gz
+[MASTER] 03:43:57.842 [logback-2] ERROR TestClusterGenerator - Problem for capstone.mobile.userInterfaces.DoWalkView. Class not found
+java.lang.ClassNotFoundException: com/gluonhq/charm/glisten/mvc/View
+	at org.evosuite.instrumentation.InstrumentingClassLoader.instrumentClass(InstrumentingClassLoader.java:199) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.InstrumentingClassLoader.loadClass(InstrumentingClassLoader.java:166) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.addCastClassDependencyIfAccessible(TestClusterGenerator.java:277) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.handleCastClasses(TestClusterGenerator.java:216) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.generateCluster(TestClusterGenerator.java:132) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyze(DependencyAnalysis.java:117) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyzeClass(DependencyAnalysis.java:131) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.TestSuiteGenerator.generateTestSuite(TestSuiteGenerator.java:110) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.rmi.service.ClientNodeImpl$1.run(ClientNodeImpl.java:145) [evosuite-1.0.3.jar:1.0.3]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_92]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_92]
+	at java.lang.Thread.run(Thread.java:745) [na:1.8.0_92]
+Caused by: java.lang.NoClassDefFoundError: com/gluonhq/charm/glisten/mvc/View
+	at java.lang.ClassLoader.defineClass1(Native Method) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:763) ~[na:1.8.0_92]
+	at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142) ~[na:1.8.0_92]
+	at java.net.URLClassLoader.defineClass(URLClassLoader.java:467) ~[na:1.8.0_92]
+	at java.net.URLClassLoader.access$100(URLClassLoader.java:73) ~[na:1.8.0_92]
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:368) ~[na:1.8.0_92]
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:362) ~[na:1.8.0_92]
+	at java.security.AccessController.doPrivileged(Native Method) ~[na:1.8.0_92]
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:361) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424) ~[na:1.8.0_92]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_92]
+	at java.lang.Class.forName0(Native Method) ~[na:1.8.0_92]
+	at java.lang.Class.forName(Class.java:348) ~[na:1.8.0_92]
+	at org.evosuite.runtime.instrumentation.MethodCallReplacementClassAdapter.visitEnd(MethodCallReplacementClassAdapter.java:180) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.shaded.org.objectweb.asm.tree.ClassNode.accept(Unknown Source) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.BytecodeInstrumentation.transformBytes(BytecodeInstrumentation.java:273) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.InstrumentingClassLoader.getTransformedBytes(InstrumentingClassLoader.java:173) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.InstrumentingClassLoader.instrumentClass(InstrumentingClassLoader.java:190) ~[evosuite-1.0.3.jar:1.0.3]
+	... 13 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.gluonhq.charm.glisten.mvc.View
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424) ~[na:1.8.0_92]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_92]
+	... 32 common frames omitted
+* Could not find class under test capstone.mobile.userInterfaces.DoWalkView: java.lang.ClassNotFoundException: expect to get instruction without BasicBlock already set
+* Error while initializing target class: Failed to load capstone.mobile.userInterfaces.DoWalkView
+[MASTER] 03:43:57.972 [logback-2] ERROR TestSuiteGenerator - Problem for capstone.mobile.userInterfaces.DoWalkView. Full stack:
+java.lang.RuntimeException: Failed to load capstone.mobile.userInterfaces.DoWalkView
+	at org.evosuite.setup.TestClusterGenerator.initializeTargetMethods(TestClusterGenerator.java:369) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.generateCluster(TestClusterGenerator.java:135) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyze(DependencyAnalysis.java:117) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyzeClass(DependencyAnalysis.java:131) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.TestSuiteGenerator.generateTestSuite(TestSuiteGenerator.java:110) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.rmi.service.ClientNodeImpl$1.run(ClientNodeImpl.java:145) [evosuite-1.0.3.jar:1.0.3]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_92]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_92]
+	at java.lang.Thread.run(Thread.java:745) [na:1.8.0_92]
+* Computation finished
+[MASTER] 03:43:58.126 [main] ERROR SearchStatistics - No statistics has been saved because EvoSuite failed to generate any test case
+[MASTER] 03:43:58.231 [main] ERROR TestGeneration - failed to write statistics data
+* Current class: capstone.mobile.userInterfaces.EnterMaintenance
+* Going to generate test cases for class: capstone.mobile.userInterfaces.EnterMaintenance
+* Starting client
+* Connecting to master process on port 12411
+* Analyzing classpath: 
+* Inheritance tree loaded from /var/folders/rv/4n5tsxl154g7_r09hc8xy6nw0000gn/T/ES_inheritancetree5203731066044580492.xml.gz
+[MASTER] 03:44:04.412 [logback-2] ERROR TestClusterGenerator - Problem for capstone.mobile.userInterfaces.EnterMaintenance. Class not found
+java.lang.ClassNotFoundException: com/gluonhq/charm/glisten/mvc/View
+	at org.evosuite.instrumentation.InstrumentingClassLoader.instrumentClass(InstrumentingClassLoader.java:199) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.InstrumentingClassLoader.loadClass(InstrumentingClassLoader.java:166) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.addCastClassDependencyIfAccessible(TestClusterGenerator.java:277) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.handleCastClasses(TestClusterGenerator.java:216) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.generateCluster(TestClusterGenerator.java:132) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyze(DependencyAnalysis.java:117) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyzeClass(DependencyAnalysis.java:131) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.TestSuiteGenerator.generateTestSuite(TestSuiteGenerator.java:110) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.rmi.service.ClientNodeImpl$1.run(ClientNodeImpl.java:145) [evosuite-1.0.3.jar:1.0.3]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_92]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_92]
+	at java.lang.Thread.run(Thread.java:745) [na:1.8.0_92]
+Caused by: java.lang.NoClassDefFoundError: com/gluonhq/charm/glisten/mvc/View
+	at java.lang.ClassLoader.defineClass1(Native Method) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:763) ~[na:1.8.0_92]
+	at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142) ~[na:1.8.0_92]
+	at java.net.URLClassLoader.defineClass(URLClassLoader.java:467) ~[na:1.8.0_92]
+	at java.net.URLClassLoader.access$100(URLClassLoader.java:73) ~[na:1.8.0_92]
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:368) ~[na:1.8.0_92]
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:362) ~[na:1.8.0_92]
+	at java.security.AccessController.doPrivileged(Native Method) ~[na:1.8.0_92]
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:361) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424) ~[na:1.8.0_92]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_92]
+	at java.lang.Class.forName0(Native Method) ~[na:1.8.0_92]
+	at java.lang.Class.forName(Class.java:348) ~[na:1.8.0_92]
+	at org.evosuite.runtime.instrumentation.MethodCallReplacementClassAdapter.visitEnd(MethodCallReplacementClassAdapter.java:180) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.shaded.org.objectweb.asm.tree.ClassNode.accept(Unknown Source) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.BytecodeInstrumentation.transformBytes(BytecodeInstrumentation.java:273) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.InstrumentingClassLoader.getTransformedBytes(InstrumentingClassLoader.java:173) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.InstrumentingClassLoader.instrumentClass(InstrumentingClassLoader.java:190) ~[evosuite-1.0.3.jar:1.0.3]
+	... 13 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.gluonhq.charm.glisten.mvc.View
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424) ~[na:1.8.0_92]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_92]
+	... 32 common frames omitted
+* Could not find class under test capstone.mobile.userInterfaces.EnterMaintenance: java.lang.ClassNotFoundException: expect to get instruction without BasicBlock already set
+* Error while initializing target class: Failed to load capstone.mobile.userInterfaces.EnterMaintenance
+[MASTER] 03:44:04.485 [logback-2] ERROR TestSuiteGenerator - Problem for capstone.mobile.userInterfaces.EnterMaintenance. Full stack:
+java.lang.RuntimeException: Failed to load capstone.mobile.userInterfaces.EnterMaintenance
+	at org.evosuite.setup.TestClusterGenerator.initializeTargetMethods(TestClusterGenerator.java:369) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.generateCluster(TestClusterGenerator.java:135) ~[evosuite-1.0.3.jar:1.0.3]
+		at org.evosuite.setup.DependencyAnalysis.analyze(DependencyAnalysis.java:117) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyzeClass(DependencyAnalysis.java:131) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.TestSuiteGenerator.generateTestSuite(TestSuiteGenerator.java:110) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.rmi.service.ClientNodeImpl$1.run(ClientNodeImpl.java:145) [evosuite-1.0.3.jar:1.0.3]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_92]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_92]
+	at java.lang.Thread.run(Thread.java:745) [na:1.8.0_92]
+* Computation finished
+[MASTER] 03:44:04.616 [main] ERROR SearchStatistics - No statistics has been saved because EvoSuite failed to generate any test case
+[MASTER] 03:44:04.719 [main] ERROR TestGeneration - failed to write statistics data
+* Current class: capstone.mobile.models.Walk
+* Going to generate test cases for class: capstone.mobile.models.Walk
+* Starting client
+* Connecting to master process on port 6111
+* Analyzing classpath: 
+* Inheritance tree loaded from /var/folders/rv/4n5tsxl154g7_r09hc8xy6nw0000gn/T/ES_inheritancetree5203731066044580492.xml.gz
+[MASTER] 03:44:11.070 [logback-1] WARN  TestUsageChecker - class capstone.mobile.dataHandlers.LocalDatabase$$Lambda$1 looks like an anonymous class, ignoring it (although reflection says false) LocalDatabase$$Lambda$1
+* Finished analyzing classpath
+* Generating tests for class capstone.mobile.models.Walk
+* Test criteria:
+  - Line Coverage
+  - Branch Coverage
+  - Exception
+  - Mutation testing (weak)
+  - Method-Output Coverage
+  - Top-Level Method Coverage
+  - No-Exception Top-Level Method Coverage
+  - Context Branch Coverage
+* Setting up search algorithm for whole suite generation
+* Total number of test goals: 
+  - Line 59
+  - Branch 21
+  - Exception 0
+  - MutationFactory 41
+  - Output 73
+  - Method 17
+  - MethodNoException 17
+  - CBranchFitnessFactory 21
+* Using seed 1476456246228
+* Starting evolution
+[Progress:==============================100%] [Cov:=======================>           67%]
+* Search finished after 61s and 333 generations, 58148 statements, best individual has fitness: 109.06565656565657
+* Minimizing test suite
+* Going to analyze the coverage criteria
+* Coverage analysis for criterion LINE
+* Coverage of criterion LINE: 64%
+* Total number of goals: 59
+* Number of covered goals: 38
+* Coverage analysis for criterion BRANCH
+* Coverage of criterion BRANCH: 81%
+* Total number of goals: 21
+* Number of covered goals: 17
+* Coverage analysis for criterion EXCEPTION
+* Coverage of criterion EXCEPTION: 89%
+* Total number of goals: 9
+* Number of covered goals: 8
+* Coverage analysis for criterion WEAKMUTATION
+* Coverage of criterion WEAKMUTATION: 27%
+* Total number of goals: 41
+* Number of covered goals: 11
+* Coverage analysis for criterion OUTPUT
+* Coverage of criterion OUTPUT: 34%
+* Total number of goals: 73
+* Number of covered goals: 25
+* Coverage analysis for criterion METHOD
+* Coverage of criterion METHOD: 100%
+* Total number of goals: 17
+* Number of covered goals: 17
+* Coverage analysis for criterion METHODNOEXCEPTION
+* Coverage of criterion METHODNOEXCEPTION: 71%
+* Total number of goals: 17
+* Number of covered goals: 12
+* Coverage analysis for criterion CBRANCH
+* Coverage of criterion CBRANCH: 81%
+* Total number of goals: 21
+* Number of covered goals: 17
+* Generated 23 tests with total length 72
+* Resulting test suite's coverage: 54% (average coverage for all fitness functions)
+* Generating assertions
+* Resulting test suite's mutation score: 0%
+* Compiling and checking tests
+* Permissions denied during test execution: 
+  - java.lang.RuntimePermission: 
+         loadLibrary./Library/Java/JavaVirtualMachines/jdk1.8.0_92.jdk/Contents/Home/jre/lib/libprism_es2.dylib: 1
+         loadLibrary./Users/Jessica/Documents/2016/159356 Capstone/CapstoneApp/src/lib/libprism_es2.dylib: 1
+         loadLibrary./Library/Java/JavaVirtualMachines/jdk1.8.0_92.jdk/Contents/Home/jre/lib/libprism_sw.dylib: 1
+         loadLibrary./Users/Jessica/Documents/2016/159356 Capstone/CapstoneApp/src/lib/libprism_sw.dylib: 1
+* Writing JUnit test case 'Walk_ESTest' to evosuite-tests
+* Done!
+
+* Computation finished
+* Current class: capstone.mobile.dataHandlers.DataUnavailableException
+* Going to generate test cases for class: capstone.mobile.dataHandlers.DataUnavailableException
+* Starting client
+* Connecting to master process on port 9023
+* Analyzing classpath: 
+* Inheritance tree loaded from /var/folders/rv/4n5tsxl154g7_r09hc8xy6nw0000gn/T/ES_inheritancetree5203731066044580492.xml.gz
+* Finished analyzing classpath
+* Generating tests for class capstone.mobile.dataHandlers.DataUnavailableException
+* Test criteria:
+  - Line Coverage
+  - Branch Coverage
+  - Exception
+  - Mutation testing (weak)
+  - Method-Output Coverage
+  - Top-Level Method Coverage
+  - No-Exception Top-Level Method Coverage
+  - Context Branch Coverage
+* Setting up search algorithm for whole suite generation
+* Total number of test goals: 
+  - Line 1
+  - Branch 1
+  - Exception 0
+  - MutationFactory 0
+  - Output 0
+  - Method 1
+  - MethodNoException 1
+  - CBranchFitnessFactory 1
+* Using seed 1476456344103
+* Starting evolution
+[Progress:>                             3%] [Cov:===================================100%]
+* Search finished after 6s and 0 generations, 5502 statements, best individual has fitness: 0.0
+* Minimizing test suite
+* Going to analyze the coverage criteria
+* Coverage analysis for criterion LINE
+* Coverage of criterion LINE: 100%
+* Total number of goals: 1
+* Number of covered goals: 1
+* Coverage analysis for criterion BRANCH
+* Coverage of criterion BRANCH: 100%
+* Total number of goals: 1
+* Number of covered goals: 1
+* Coverage analysis for criterion EXCEPTION
+* Coverage of criterion EXCEPTION: 100% (no goals)
+* Coverage analysis for criterion WEAKMUTATION
+* Coverage of criterion WEAKMUTATION: 100% (no goals)
+* Coverage analysis for criterion OUTPUT
+* Coverage of criterion OUTPUT: 100% (no goals)
+* Coverage analysis for criterion METHOD
+* Coverage of criterion METHOD: 100%
+* Total number of goals: 1
+* Number of covered goals: 1
+* Coverage analysis for criterion METHODNOEXCEPTION
+* Coverage of criterion METHODNOEXCEPTION: 100%
+* Total number of goals: 1
+* Number of covered goals: 1
+* Coverage analysis for criterion CBRANCH
+* Coverage of criterion CBRANCH: 100%
+* Total number of goals: 1
+* Number of covered goals: 1
+* Generated 1 tests with total length 1
+* Resulting test suite's coverage: 100% (average coverage for all fitness functions)
+* Generating assertions
+* Resulting test suite's mutation score: 100%
+* Compiling and checking tests
+* Writing JUnit test case 'DataUnavailableException_ESTest' to evosuite-tests
+* Done!
+
+* Computation finished
+* Current class: capstone.mobile.dataHandlers.LocalDatabase
+* Going to generate test cases for class: capstone.mobile.dataHandlers.LocalDatabase
+* Starting client
+* Connecting to master process on port 9772
+* Analyzing classpath: 
+* Inheritance tree loaded from /var/folders/rv/4n5tsxl154g7_r09hc8xy6nw0000gn/T/ES_inheritancetree5203731066044580492.xml.gz
+[MASTER] 03:46:12.684 [logback-1] WARN  TestUsageChecker - class capstone.mobile.dataHandlers.RetrieveData$$Lambda$2 looks like an anonymous class, ignoring it (although reflection says false) RetrieveData$$Lambda$2
+[MASTER] 03:46:12.692 [logback-1] WARN  TestUsageChecker - class capstone.mobile.dataHandlers.RetrieveData$$Lambda$1 looks like an anonymous class, ignoring it (although reflection says false) RetrieveData$$Lambda$1
+[MASTER] 03:46:12.693 [logback-1] WARN  TestUsageChecker - class capstone.mobile.dataHandlers.LocalDatabase$$Lambda$1 looks like an anonymous class, ignoring it (although reflection says false) LocalDatabase$$Lambda$1
+* Finished analyzing classpath
+* Generating tests for class capstone.mobile.dataHandlers.LocalDatabase
+* Test criteria:
+  - Line Coverage
+  - Branch Coverage
+  - Exception
+  - Mutation testing (weak)
+  - Method-Output Coverage
+  - Top-Level Method Coverage
+  - No-Exception Top-Level Method Coverage
+  - Context Branch Coverage
+* Setting up search algorithm for whole suite generation
+* Total number of test goals: 
+  - Line 169
+  - Branch 137
+  - Exception 0
+  - MutationFactory 163
+  - Output 24
+  - Method 12
+  - MethodNoException 12
+  - CBranchFitnessFactory 137
+* Using seed 1476456366517
+* Starting evolution
+[Progress:==============================100%] [Cov:==========>                        29%]
+* Search finished after 61s and 383 generations, 59548 statements, best individual has fitness: 873.1039168665068
+* Minimizing test suite
+* Going to analyze the coverage criteria
+* Coverage analysis for criterion LINE
+* Coverage of criterion LINE: 18%
+* Total number of goals: 169
+* Number of covered goals: 31
+* Coverage analysis for criterion BRANCH
+* Coverage of criterion BRANCH: 1%
+* Total number of goals: 137
+* Number of covered goals: 1
+* Coverage analysis for criterion EXCEPTION
+* Coverage of criterion EXCEPTION: 100%
+* Total number of goals: 8
+* Number of covered goals: 8
+* Coverage analysis for criterion WEAKMUTATION
+* Coverage of criterion WEAKMUTATION: 2%
+* Total number of goals: 163
+* Number of covered goals: 3
+* Coverage analysis for criterion OUTPUT
+* Coverage of criterion OUTPUT: 0%
+* Total number of goals: 24
+* Number of covered goals: 0
+* Coverage analysis for criterion METHOD
+* Coverage of criterion METHOD: 100%
+* Total number of goals: 12
+* Number of covered goals: 12
+* Coverage analysis for criterion METHODNOEXCEPTION
+* Coverage of criterion METHODNOEXCEPTION: 58%
+* Total number of goals: 12
+* Number of covered goals: 7
+* Coverage analysis for criterion CBRANCH
+* Coverage of criterion CBRANCH: 1%
+* Total number of goals: 137
+* Number of covered goals: 1
+* Generated 15 tests with total length 23
+* Resulting test suite's coverage: 30% (average coverage for all fitness functions)
+* Generating assertions
+* Resulting test suite's mutation score: 0%
+* Compiling and checking tests
+* Permissions denied during test execution: 
+  - java.lang.RuntimePermission: 
+         loadLibrary./Library/Java/JavaVirtualMachines/jdk1.8.0_92.jdk/Contents/Home/jre/lib/libprism_es2.dylib: 1
+         loadLibrary./Users/Jessica/Documents/2016/159356 Capstone/CapstoneApp/src/lib/libprism_es2.dylib: 1
+         loadLibrary./Library/Java/JavaVirtualMachines/jdk1.8.0_92.jdk/Contents/Home/jre/lib/libprism_sw.dylib: 1
+         loadLibrary./Users/Jessica/Documents/2016/159356 Capstone/CapstoneApp/src/lib/libprism_sw.dylib: 1
+* Writing JUnit test case 'LocalDatabase_ESTest' to evosuite-tests
+* Done!
+
+* Computation finished
+* Current class: capstone.mobile.userInterfaces.SetUpWalkView
+* Going to generate test cases for class: capstone.mobile.userInterfaces.SetUpWalkView
+* Starting client
+* Connecting to master process on port 11014
+* Analyzing classpath: 
+* Inheritance tree loaded from /var/folders/rv/4n5tsxl154g7_r09hc8xy6nw0000gn/T/ES_inheritancetree5203731066044580492.xml.gz
+[MASTER] 03:47:48.886 [logback-2] ERROR TestClusterGenerator - Problem for capstone.mobile.userInterfaces.SetUpWalkView. Class not found
+java.lang.ClassNotFoundException: com/gluonhq/charm/glisten/mvc/View
+	at org.evosuite.instrumentation.InstrumentingClassLoader.instrumentClass(InstrumentingClassLoader.java:199) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.InstrumentingClassLoader.loadClass(InstrumentingClassLoader.java:166) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.addCastClassDependencyIfAccessible(TestClusterGenerator.java:277) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.handleCastClasses(TestClusterGenerator.java:216) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.generateCluster(TestClusterGenerator.java:132) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyze(DependencyAnalysis.java:117) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyzeClass(DependencyAnalysis.java:131) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.TestSuiteGenerator.generateTestSuite(TestSuiteGenerator.java:110) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.rmi.service.ClientNodeImpl$1.run(ClientNodeImpl.java:145) [evosuite-1.0.3.jar:1.0.3]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_92]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_92]
+	at java.lang.Thread.run(Thread.java:745) [na:1.8.0_92]
+Caused by: java.lang.NoClassDefFoundError: com/gluonhq/charm/glisten/mvc/View
+	at java.lang.ClassLoader.defineClass1(Native Method) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:763) ~[na:1.8.0_92]
+	at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142) ~[na:1.8.0_92]
+	at java.net.URLClassLoader.defineClass(URLClassLoader.java:467) ~[na:1.8.0_92]
+	at java.net.URLClassLoader.access$100(URLClassLoader.java:73) ~[na:1.8.0_92]
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:368) ~[na:1.8.0_92]
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:362) ~[na:1.8.0_92]
+	at java.security.AccessController.doPrivileged(Native Method) ~[na:1.8.0_92]
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:361) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424) ~[na:1.8.0_92]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_92]
+	at java.lang.Class.forName0(Native Method) ~[na:1.8.0_92]
+	at java.lang.Class.forName(Class.java:348) ~[na:1.8.0_92]
+	at org.evosuite.runtime.instrumentation.MethodCallReplacementClassAdapter.visitEnd(MethodCallReplacementClassAdapter.java:180) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.shaded.org.objectweb.asm.tree.ClassNode.accept(Unknown Source) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.BytecodeInstrumentation.transformBytes(BytecodeInstrumentation.java:273) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.InstrumentingClassLoader.getTransformedBytes(InstrumentingClassLoader.java:173) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.InstrumentingClassLoader.instrumentClass(InstrumentingClassLoader.java:190) ~[evosuite-1.0.3.jar:1.0.3]
+	... 13 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.gluonhq.charm.glisten.mvc.View
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424) ~[na:1.8.0_92]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_92]
+	... 32 common frames omitted
+* Could not find class under test capstone.mobile.userInterfaces.SetUpWalkView: java.lang.ClassNotFoundException: expect to get instruction without BasicBlock already set
+* Error while initializing target class: Failed to load capstone.mobile.userInterfaces.SetUpWalkView
+[MASTER] 03:47:48.988 [logback-2] ERROR TestSuiteGenerator - Problem for capstone.mobile.userInterfaces.SetUpWalkView. Full stack:
+java.lang.RuntimeException: Failed to load capstone.mobile.userInterfaces.SetUpWalkView
+	at org.evosuite.setup.TestClusterGenerator.initializeTargetMethods(TestClusterGenerator.java:369) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.generateCluster(TestClusterGenerator.java:135) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyze(DependencyAnalysis.java:117) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyzeClass(DependencyAnalysis.java:131) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.TestSuiteGenerator.generateTestSuite(TestSuiteGenerator.java:110) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.rmi.service.ClientNodeImpl$1.run(ClientNodeImpl.java:145) [evosuite-1.0.3.jar:1.0.3]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_92]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_92]
+	at java.lang.Thread.run(Thread.java:745) [na:1.8.0_92]
+* Computation finished
+[MASTER] 03:47:49.149 [main] ERROR SearchStatistics - No statistics has been saved because EvoSuite failed to generate any test case
+[MASTER] 03:47:49.250 [main] ERROR TestGeneration - failed to write statistics data
+* Current class: capstone.mobile.models.Capture
+* Going to generate test cases for class: capstone.mobile.models.Capture
+* Starting client
+* Connecting to master process on port 16580
+* Analyzing classpath: 
+* Inheritance tree loaded from /var/folders/rv/4n5tsxl154g7_r09hc8xy6nw0000gn/T/ES_inheritancetree5203731066044580492.xml.gz
+* Finished analyzing classpath
+* Generating tests for class capstone.mobile.models.Capture
+* Test criteria:
+  - Line Coverage
+  - Branch Coverage
+  - Exception
+  - Mutation testing (weak)
+  - Method-Output Coverage
+  - Top-Level Method Coverage
+  - No-Exception Top-Level Method Coverage
+  - Context Branch Coverage
+* Setting up search algorithm for whole suite generation
+* Total number of test goals: 
+  - Line 17
+  - Branch 8
+  - Exception 0
+  - MutationFactory 32
+  - Output 9
+  - Method 8
+  - MethodNoException 8
+  - CBranchFitnessFactory 8
+* Using seed 1476456470599
+* Starting evolution
+[Progress:>                             3%] [Cov:===================================100%]
+* Search finished after 2s and 0 generations, 5015 statements, best individual has fitness: 0.0
+* Minimizing test suite
+* Going to analyze the coverage criteria
+* Coverage analysis for criterion LINE
+* Coverage of criterion LINE: 100%
+* Total number of goals: 17
+* Number of covered goals: 17
+* Coverage analysis for criterion BRANCH
+* Coverage of criterion BRANCH: 100%
+* Total number of goals: 8
+* Number of covered goals: 8
+* Coverage analysis for criterion EXCEPTION
+* Coverage of criterion EXCEPTION: 100% (no goals)
+* Coverage analysis for criterion WEAKMUTATION
+* Coverage of criterion WEAKMUTATION: 100%
+* Total number of goals: 32
+* Number of covered goals: 32
+* Coverage analysis for criterion OUTPUT
+* Coverage of criterion OUTPUT: 100%
+* Total number of goals: 9
+* Number of covered goals: 9
+* Coverage analysis for criterion METHOD
+* Coverage of criterion METHOD: 100%
+* Total number of goals: 8
+* Number of covered goals: 8
+* Coverage analysis for criterion METHODNOEXCEPTION
+* Coverage of criterion METHODNOEXCEPTION: 100%
+* Total number of goals: 8
+* Number of covered goals: 8
+* Coverage analysis for criterion CBRANCH
+* Coverage of criterion CBRANCH: 100%
+* Total number of goals: 8
+* Number of covered goals: 8
+* Generated 10 tests with total length 24
+* Resulting test suite's coverage: 100% (average coverage for all fitness functions)
+* Generating assertions
+* Resulting test suite's mutation score: 97%
+* Compiling and checking tests
+* Writing JUnit test case 'Capture_ESTest' to evosuite-tests
+* Done!
+
+* Computation finished
+* Current class: capstone.mobile.userInterfaces.HomeView
+* Going to generate test cases for class: capstone.mobile.userInterfaces.HomeView
+* Starting client
+* Connecting to master process on port 5820
+* Analyzing classpath: 
+* Inheritance tree loaded from /var/folders/rv/4n5tsxl154g7_r09hc8xy6nw0000gn/T/ES_inheritancetree5203731066044580492.xml.gz
+[MASTER] 03:48:16.394 [logback-2] ERROR TestClusterGenerator - Problem for capstone.mobile.userInterfaces.HomeView. Class not found
+java.lang.ClassNotFoundException: com/gluonhq/charm/glisten/mvc/View
+	at org.evosuite.instrumentation.InstrumentingClassLoader.instrumentClass(InstrumentingClassLoader.java:199) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.InstrumentingClassLoader.loadClass(InstrumentingClassLoader.java:166) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.addCastClassDependencyIfAccessible(TestClusterGenerator.java:277) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.handleCastClasses(TestClusterGenerator.java:216) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.generateCluster(TestClusterGenerator.java:132) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyze(DependencyAnalysis.java:117) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyzeClass(DependencyAnalysis.java:131) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.TestSuiteGenerator.generateTestSuite(TestSuiteGenerator.java:110) [evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.rmi.service.ClientNodeImpl$1.run(ClientNodeImpl.java:145) [evosuite-1.0.3.jar:1.0.3]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_92]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_92]
+	at java.lang.Thread.run(Thread.java:745) [na:1.8.0_92]
+Caused by: java.lang.NoClassDefFoundError: com/gluonhq/charm/glisten/mvc/View
+	at java.lang.ClassLoader.defineClass1(Native Method) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.defineClass(ClassLoader.java:763) ~[na:1.8.0_92]
+	at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142) ~[na:1.8.0_92]
+	at java.net.URLClassLoader.defineClass(URLClassLoader.java:467) ~[na:1.8.0_92]
+	at java.net.URLClassLoader.access$100(URLClassLoader.java:73) ~[na:1.8.0_92]
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:368) ~[na:1.8.0_92]
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:362) ~[na:1.8.0_92]
+	at java.security.AccessController.doPrivileged(Native Method) ~[na:1.8.0_92]
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:361) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424) ~[na:1.8.0_92]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_92]
+	at java.lang.Class.forName0(Native Method) ~[na:1.8.0_92]
+	at java.lang.Class.forName(Class.java:348) ~[na:1.8.0_92]
+	at org.evosuite.runtime.instrumentation.MethodCallReplacementClassAdapter.visitEnd(MethodCallReplacementClassAdapter.java:180) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.shaded.org.objectweb.asm.tree.ClassNode.accept(Unknown Source) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.BytecodeInstrumentation.transformBytes(BytecodeInstrumentation.java:273) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.InstrumentingClassLoader.getTransformedBytes(InstrumentingClassLoader.java:173) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.instrumentation.InstrumentingClassLoader.instrumentClass(InstrumentingClassLoader.java:190) ~[evosuite-1.0.3.jar:1.0.3]
+	... 13 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.gluonhq.charm.glisten.mvc.View
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424) ~[na:1.8.0_92]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331) ~[na:1.8.0_92]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_92]
+	... 32 common frames omitted
+* Could not find class under test capstone.mobile.userInterfaces.HomeView: java.lang.ClassNotFoundException: com/gluonhq/charm/glisten/mvc/View
+* Error while initializing target class: Failed to load capstone.mobile.userInterfaces.HomeView
+[MASTER] 03:48:16.778 [logback-2] ERROR TestSuiteGenerator - Problem for capstone.mobile.userInterfaces.HomeView. Full stack:
+java.lang.RuntimeException: Failed to load capstone.mobile.userInterfaces.HomeView
+	at org.evosuite.setup.TestClusterGenerator.initializeTargetMethods(TestClusterGenerator.java:369) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.TestClusterGenerator.generateCluster(TestClusterGenerator.java:135) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyze(DependencyAnalysis.java:117) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.setup.DependencyAnalysis.analyzeClass(DependencyAnalysis.java:131) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.TestSuiteGenerator.generateTestSuite(TestSuiteGenerator.java:110) ~[evosuite-1.0.3.jar:1.0.3]
+	at org.evosuite.rmi.service.ClientNodeImpl$1.run(ClientNodeImpl.java:145) [evosuite-1.0.3.jar:1.0.3]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) [na:1.8.0_92]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [na:1.8.0_92]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [na:1.8.0_92]
+	at java.lang.Thread.run(Thread.java:745) [na:1.8.0_92]
+* Computation finished
+[MASTER] 03:48:16.905 [main] ERROR SearchStatistics - No statistics has been saved because EvoSuite failed to generate any test case
+[MASTER] 03:48:17.009 [main] ERROR TestGeneration - failed to write statistics data
