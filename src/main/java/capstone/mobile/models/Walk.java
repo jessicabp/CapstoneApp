@@ -164,7 +164,7 @@ public class Walk {
         settingService.remove(App.endTrapID);
         LocalDatabase.finishWalk();
     }
-
+    
     public List<Capture> getCaptures() {
         return captures;
     }
