@@ -114,7 +114,7 @@ public class Walk {
             } else {
                 index--;
             }
-            currentTrap = line.getNextTrap(index);
+            currentTrap = line.getTrapByIndex(index);
             PlatformFactory.getPlatform().getSettingService().store(App.currentTrapID, String.valueOf(currentTrap.getId()));
         } else {
             App.getInstance().switchScreen(App.END_WALK_VIEW);

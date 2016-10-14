@@ -1,26 +1,34 @@
 package capstone.mobile.models;
 
 /**
- * Holds information about the trap
- * Some is retrieved from the server or created on the device (eg id & location)
- * The rest is data collected at a trap (e.g. time, skipped, animal)
+ * Contains information about a specific trap. Some properties are retrieved from the server, and some are created on
+ * the device (eg id & location). The rest is data collected at a trap (e.g. time, skipped, animal).
  */
 public class Trap {
 
     private int id;
     private int lineId;
     private int number;
-    private boolean side = true;
+    private boolean side;
     private double longitude;
     private double latitude;
-    private boolean broken = false;
-    private boolean moved  = false;
+    private boolean broken;
+    private boolean moved;
 
+    /**
+     * Constructor.
+     */
     public Trap() {
     }
 
     /**
-     * Constructor used to create new traps
+     * Constructor used to create a new trap object.
+     *
+     * @param lineId    The ID number of the line to which the trap belongs to
+     * @param number    The number of the trap
+     * @param latitude  The latitude coordinate
+     * @param longitude The Longitude coordinate
+     * @param side      The side of the path the trap is on, true indicates on left in ascending order
      */
     public Trap(int lineId, int number, double latitude, double longitude, boolean side) {
         this.lineId = lineId;
@@ -32,6 +40,18 @@ public class Trap {
         this.broken = false;
     }
 
+    /**
+     * Constructor used when restoring existing traps from the local database.
+     *
+     * @param id        The ID number of the trap
+     * @param lineId    The ID number of the line to which the trap belongs to
+     * @param number    The number of the trap
+     * @param latitude  The latitude coordinate
+     * @param longitude The Longitude coordinate
+     * @param side      The integer representation of the side of the path the trap is on
+     * @param broken    The integer representation of the trap being broken
+     * @param moved     The integer representation of the trap being moved
+     */
     public Trap(int id, int lineId, int number, double latitude, double longitude, int side, int broken, int moved) {
         this.id = id;
         this.lineId = lineId;
@@ -43,6 +63,17 @@ public class Trap {
         this.broken = broken == 1;
     }
 
+    /**
+     * Constructor used when restoring changed new traps from the local database.
+     *
+     * @param lineId
+     * @param number    The number of the trap
+     * @param latitude  The latitude coordinate
+     * @param longitude The Longitude coordinate
+     * @param side      The integer representation of the side of the path the trap is on
+     * @param broken    The integer representation of the trap being broken
+     * @param moved     The integer representation of the trap being moved
+     */
     public Trap(int lineId, int number, double latitude, double longitude, int side, int broken, int moved) {
         this.lineId = lineId;
         this.number = number;

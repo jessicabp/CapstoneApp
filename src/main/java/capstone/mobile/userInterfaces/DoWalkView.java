@@ -27,20 +27,22 @@ import java.util.List;
 
 
 /**
- * View showing user where the next trap is and lets them find or skip it
+ * Displays where the next trap is and the users position. Once found, capture and maintenance data may be created for
+ * the trap, or the trap may be skipped.
  */
 public class DoWalkView extends View {
 
     private static CustomMapView mapView;
-    private static PoiLayer      markersLayer;
-    private        Walk          walk;
-    private        Label         side;
-    private        Label         moved;
-    private        Label         broken;
-    private        VBox          messages;
-    private        PoiLayer      currentLayer;
-    private        PoiLayer      positionLayer;
-    private        Label         waitingMessage;
+    private static PoiLayer markersLayer;
+    private Walk walk;
+    private Label side;
+    private Label moved;
+    private Label broken;
+    private VBox messages;
+    private PoiLayer currentLayer;
+    private PoiLayer positionLayer;
+    private Label waitingMessage;
+    private boolean waitingMessageVisible = true;
 
     public DoWalkView(String name, Walk walk) {
         super(name);
@@ -71,21 +73,11 @@ public class DoWalkView extends View {
         // Show buttons to enter data or skip trap
         Button found = new Button("Found");
         found.setMaxWidth(Double.MAX_VALUE);
-        found.setOnAction(e -> {
-            App.getInstance().switchScreen(App.ENTER_DATA_VIEW);
-        });
+        found.setOnAction(e -> App.getInstance().switchScreen(App.ENTER_DATA_VIEW));
+
         Button skip = new Button("Skip");
         skip.setMaxWidth(Double.MAX_VALUE);
-        skip.setOnAction(e -> {
-            if (walk.getCurrentTrap() != walk.getFinishTrap()) {
-                walk.finishCurrentTrap();
-                // Switch to another view and back to refresh data on screen
-                App.getInstance().switchScreen(App.ENTER_DATA_VIEW);
-                App.getInstance().switchScreen(App.DO_WALK_VIEW);
-            } else {
-                App.getInstance().switchScreen(App.END_WALK_VIEW);
-            }
-        });
+        skip.setOnAction(e -> skipCurrentTrap());
 
         // Put buttons in a grid so they fill screen width
         CustomGridPane grid = new CustomGridPane(2);
@@ -106,32 +98,23 @@ public class DoWalkView extends View {
 
         List<Trap> traps = walk.getLine().getTraps();
         for (Trap trap : traps) {
-            Circle   marker   = new Circle(5, Color.ORANGE);
+            Circle marker = new Circle(5, Color.ORANGE);
             MapPoint mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
             mapView.addMarker(markersLayer, mapPoint, marker);
         }
 
         PositionService positionService = PlatformFactory.getPlatform().getPositionService();
-        positionService.positionProperty().addListener(
-                (observableValue, oldValue, newValue) -> updatePosition(newValue)
-                                                      );
+        positionService.positionProperty().addListener((observableValue, oldValue, newValue) ->
+                updateCurrentPosition(newValue)
+        );
     }
 
+    // TODO: provide utility method to give same results
     public static CustomMapView getMapView() {
         return mapView;
     }
-
     public static PoiLayer getMarkersLayer() {
         return markersLayer;
-    }
-
-    private void updatePosition(Position position) {
-        // TODO: fix
-        waitingMessage.setText("");
-        positionLayer = mapView.clearMarkers(positionLayer);
-        MapPoint mapPoint = new MapPoint(position.getLatitude(), position.getLongitude());
-        mapView.addMarker(positionLayer, mapPoint, new Circle(5, Color.GREEN));
-        mapView.setCenter(position.getLatitude(), position.getLongitude());
     }
 
     @Override
@@ -139,6 +122,13 @@ public class DoWalkView extends View {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
         appBar.setTitleText("Trap " + walk.getCurrentTrap().getNumber() + " - " + walk.getLine().getName());
 
+        displayCurrentTrap();
+    }
+
+    /**
+     * TODO: Comment
+     */
+    private void displayCurrentTrap() {
         // Update message about side of path for trap
         side.setText("Trap indicator on " + (walk.getDirection() == walk.getCurrentTrap().getSide() ? "left" : "right") + " side");
 
@@ -149,12 +139,42 @@ public class DoWalkView extends View {
             messages.getChildren().add(broken);
         }
 
-        Node     icon        = new Circle(7, Color.BLUE);
-        Trap     currentTrap = walk.getCurrentTrap();
-        MapPoint mapPoint    = new MapPoint(currentTrap.getLatitude(), currentTrap.getLongitude());
+        Node icon = new Circle(7, Color.BLUE);
+        Trap currentTrap = walk.getCurrentTrap();
+        MapPoint mapPoint = new MapPoint(currentTrap.getLatitude(), currentTrap.getLongitude());
         currentLayer = mapView.clearMarkers(currentLayer);
         mapView.addMarker(currentLayer, mapPoint, icon);
-        //trapsLayer.addPoint(mapPoint, icon);
-        //mapView.setCenter(currentTrap.getLatitude(), currentTrap.getLongitude());
+    }
+
+    /**
+     * TODO: Comment
+     *
+     * @param position
+     */
+    private void updateCurrentPosition(Position position) {
+        if (waitingMessageVisible) {
+            waitingMessageVisible = false;
+            waitingMessage.setVisible(false);
+            waitingMessage.setManaged(false);
+        }
+        positionLayer = mapView.clearMarkers(positionLayer);
+        MapPoint mapPoint = new MapPoint(position.getLatitude(), position.getLongitude());
+        mapView.addMarker(positionLayer, mapPoint, new Circle(5, Color.GREEN));
+        mapView.setCenter(position.getLatitude(), position.getLongitude());
+    }
+
+    /**
+     * TODO: Comment
+     */
+    private void skipCurrentTrap() {
+        if (walk.getCurrentTrap() != walk.getFinishTrap()) {
+            walk.finishCurrentTrap();
+            // TODO: fix refreshing
+            // Switch to another view and back to refresh data on screen
+            App.getInstance().switchScreen(App.ENTER_DATA_VIEW);
+            App.getInstance().switchScreen(App.DO_WALK_VIEW);
+        } else {
+            App.getInstance().switchScreen(App.END_WALK_VIEW);
+        }
     }
 }

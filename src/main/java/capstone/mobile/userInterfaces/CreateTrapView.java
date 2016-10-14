@@ -27,30 +27,37 @@ import javafx.scene.shape.Circle;
 
 import java.util.List;
 
-
+/*
+    TODO: Consider GPS is null and the user wants to use this to create the new trap.
+ */
 /**
- * Adds a trap to the line a user is currently in - trap needs reference to line ID
+ * Provides ability to create new trap objects while in a walk. The new trap objects coordinates may be obtained from
+ * the current GPS position or entered manually. Trap number and side are also required.
  */
 public class CreateTrapView extends View {
 
-    private Walk          walk;
+    private Walk walk;
     private CustomMapView mapView;
-    private PoiLayer      currentLayer;
-    private PoiLayer      markersLayer;
-    private PoiLayer      numbersLayer;
-    private PoiLayer      positionLayer;
-    private double        longitude;
-    private double        latitude;
-    private ToggleGroup   sideGroup;
-    private ToggleGroup   locationGroup;
-    private Position      currentPosition;
-    private Label         waitingMessage;
-
-    private VBox      coordinatesVBox;
-    private Label     latitudeLabel;
-    private Label     longitudeLabel;
+    private PoiLayer currentLayer;
+    private PoiLayer markersLayer;
+    private PoiLayer numbersLayer;
+    private PoiLayer positionLayer;
+    private ToggleGroup sideGroup;
+    private ToggleGroup locationGroup;
+    private Position currentPosition;
+    private Label waitingMessage;
+    private VBox coordinatesVBox;
+    private Label latitudeLabel;
+    private Label longitudeLabel;
+    private ToggleButton mapCoordinatesToggle;
+    private ToggleButton manualCoordinatesToggle;
     private TextField latitudeTextField;
     private TextField longitudeTextField;
+    private TextField numberTextField;
+    private ToggleButton leftToggleButton;
+    private ToggleButton rightToggleButton;
+    private Button saveButton;
+    private boolean waitingMessageVisible = true;
 
 
     public CreateTrapView(String name, Walk walk) {
@@ -81,63 +88,42 @@ public class CreateTrapView extends View {
         waitingMessage.setText("Waiting on GPS for position..");
         controls.getChildren().add(waitingMessage);
 
-        // Create listview so user can scroll through items if there are too many
-        ListView<VBox>       content = new ListView<>();
-        ObservableList<VBox> items   = FXCollections.observableArrayList();
+        // Create list view so user can scroll through items if there are too many
+        ListView<VBox> content = new ListView<>();
+        ObservableList<VBox> items = FXCollections.observableArrayList();
         content.setItems(items);
         controls.getChildren().add(content);
 
         // Show buttons to set location
         locationGroup = new ToggleGroup();
-        ToggleButton mapCoordinatesToggle = new ToggleButton("Use current location from map");
+        mapCoordinatesToggle = new ToggleButton("Use current location from map");
         mapCoordinatesToggle.setMaxWidth(Double.MAX_VALUE);
         mapCoordinatesToggle.setToggleGroup(locationGroup);
-        mapCoordinatesToggle.setOnAction(e -> {
-            // useMap.setStyle("-fx-background-color: lightblue");
-            setMapLocation();
-        });
 
-        ToggleButton manualCoordinatesToggle = new ToggleButton("Manually enter longitude and latitude values");
+        manualCoordinatesToggle = new ToggleButton("Manually enter longitude and latitude values");
         manualCoordinatesToggle.setMaxWidth(Double.MAX_VALUE);
         manualCoordinatesToggle.setToggleGroup(locationGroup);
-
-        manualCoordinatesToggle.selectedProperty().addListener((observableValue, oldValue, newValue) -> {
-            if (newValue) {
-                coordinatesVBox.setVisible(true);
-                coordinatesVBox.setManaged(true);
-            } else {
-                coordinatesVBox.setVisible(false);
-                coordinatesVBox.setManaged(false);
-            }
-        });
+        manualCoordinatesToggle.selectedProperty().addListener((observableValue, oldValue, newValue) ->
+                toggleCoordinatesToggle(newValue)
+        );
 
         // Latitude Label and TextField.
         latitudeLabel = new Label();
         latitudeLabel.setText("Enter Latitude: (at least 4 decimal places)");
         latitudeTextField = new TextField();
         latitudeTextField.setStyle("-fx-border-width: 2; -fx-border-color: white");
-        latitudeTextField.textProperty().addListener((observableValue, oldValue, newValue) -> {
-                                                         if (!Validator.isCoordinate(newValue)) {
-                                                             latitudeTextField.setStyle("-fx-border-width: 2;-fx-border-color: red");
-                                                         } else {
-                                                             latitudeTextField.setStyle("-fx-border-width: 2;-fx-border-color: green");
-                                                         }
-                                                     }
-                                                    );
+        latitudeTextField.textProperty().addListener((observableValue, oldValue, newValue) ->
+                validateCoordinateInput(newValue, latitudeTextField)
+        );
 
         // Longitude Label and TextField.
         longitudeLabel = new Label();
         longitudeLabel.setText("Enter Longitude: (at least 4 decimal places)");
         longitudeTextField = new TextField();
         longitudeTextField.setStyle("-fx-border-width: 2; -fx-border-color: white");
-        longitudeTextField.textProperty().addListener((observableValue, oldValue, newValue) -> {
-                                                          if (!Validator.isCoordinate(newValue)) {
-                                                              longitudeTextField.setStyle("-fx-border-width: 2;-fx-border-color: red");
-                                                          } else {
-                                                              longitudeTextField.setStyle("-fx-border-width: 2;-fx-border-color: green");
-                                                          }
-                                                      }
-                                                     );
+        longitudeTextField.textProperty().addListener((observableValue, oldValue, newValue) ->
+                validateCoordinateInput(newValue, longitudeTextField)
+        );
 
         // VBox containing Labels and TextFields for manually entering coordinates. The Visible
         // and Managed properties are set to false to initially hide the controls, which can be
@@ -147,23 +133,19 @@ public class CreateTrapView extends View {
         coordinatesVBox.setManaged(false);
         coordinatesVBox.getChildren().addAll(
                 latitudeLabel, latitudeTextField, longitudeLabel, longitudeTextField
-                                            );
+        );
 
         VBox locationVB = new VBox(10, mapCoordinatesToggle, manualCoordinatesToggle, coordinatesVBox);
         locationVB.setPadding(new Insets(0, 0, 15, 0));
         items.add(locationVB);
 
         // Trap number Label and TextField.
-        Label     numberLabel     = new Label("Enter Trap number:");
-        TextField numberTextField = new TextField();
+        Label numberLabel = new Label("Enter Trap number:");
+        numberTextField = new TextField();
         numberTextField.setStyle("-fx-border-width: 2; -fx-border-color: white");
-        numberTextField.textProperty().addListener((observableValue, oldValue, newValue) -> {
-            if (!Validator.isNumber(newValue)) {
-                numberTextField.setStyle("-fx-border-width: 2;-fx-border-color: red");
-            } else {
-                numberTextField.setStyle("-fx-border-width: 2;-fx-border-color: green");
-            }
-        });
+        numberTextField.textProperty().addListener((observableValue, oldValue, newValue) ->
+                validateNumberInput(newValue, numberTextField)
+        );
 
         VBox numberVB = new VBox(5, numberLabel, numberTextField);
         numberVB.setPadding(new Insets(15, 0, 15, 0));
@@ -172,88 +154,26 @@ public class CreateTrapView extends View {
         // Show buttons to set side of path
         Label side = new Label("Side of path:");
         sideGroup = new ToggleGroup();
-        ToggleButton left = new ToggleButton("Left");
-        left.setMaxWidth(Double.MAX_VALUE);
-        left.setToggleGroup(sideGroup);
-        ToggleButton right = new ToggleButton("Right");
-        right.setMaxWidth(Double.MAX_VALUE);
-        right.setToggleGroup(sideGroup);
+        leftToggleButton = new ToggleButton("Left");
+        leftToggleButton.setMaxWidth(Double.MAX_VALUE);
+        leftToggleButton.setToggleGroup(sideGroup);
+        rightToggleButton = new ToggleButton("Right");
+        rightToggleButton.setMaxWidth(Double.MAX_VALUE);
+        rightToggleButton.setToggleGroup(sideGroup);
+
         // Put buttons in a grid so they fill screen width
         CustomGridPane sideGrid = new CustomGridPane(2);
         sideGrid.add(side, 0, 0);
-        sideGrid.add(left, 0, 1);
-        sideGrid.add(right, 1, 1);
+        sideGrid.add(leftToggleButton, 0, 1);
+        sideGrid.add(rightToggleButton, 1, 1);
         VBox sideVB = new VBox(5, side, sideGrid);
         sideVB.setPadding(new Insets(15, 0, 15, 0));
         items.add(sideVB);
 
         // Save Button.
-        Button saveButton = new Button("Save");
+        saveButton = new Button("Save");
         saveButton.setMaxWidth(Double.MAX_VALUE);
-        saveButton.setOnAction(e -> {
-            boolean validInputs = true;
-
-            // Validate trap number.
-            if (!Validator.isNumber(numberTextField.getText())) {
-                validInputs = false;
-            }
-
-            // Check for location method selection.
-            if (locationGroup.getSelectedToggle() == null) {
-                validInputs = false;
-            }
-
-            // Validate manually entered coordinates if option selected.
-            if (manualCoordinatesToggle.isSelected()) {
-                boolean isLatitudeValid  = Validator.isCoordinate(latitudeTextField.getText());
-                boolean islongitudeValid = Validator.isCoordinate(longitudeTextField.getText());
-                if (!(isLatitudeValid && islongitudeValid)) {
-                    validInputs = false;
-                }
-            }
-
-            // Make sure the position provided by the GPS is not null if option selected.
-            if (mapCoordinatesToggle.isSelected()) {
-                if (currentPosition == null) {
-                    validInputs = false;
-                }
-            }
-
-            // Make sure a side has been selected.
-            if (sideGroup.getSelectedToggle() == null) {
-                validInputs = false;
-            }
-
-            // If there are not issues proceed to create the new trap.
-            if (validInputs) {
-                double  latitude;
-                double  longitude;
-                boolean side2 = left.isSelected();
-
-                if (mapCoordinatesToggle.isSelected()) {
-                    latitude = currentPosition.getLatitude();
-                    longitude = currentPosition.getLongitude();
-                } else {
-                    latitude = Double.parseDouble(latitudeTextField.getText());
-                    longitude = Double.parseDouble(longitudeTextField.getText());
-                }
-
-                Trap newTrap = new Trap(
-                        walk.getLine().getId(),
-                        Integer.parseInt(numberTextField.getText()),
-                        latitude,
-                        longitude,
-                        side2
-                );
-
-                walk.addNewTrap(newTrap);
-                App.getInstance().switchScreen(App.DO_WALK_VIEW);
-            } else {
-                saveButton.setText("Please complete all details");
-                saveButton.setWrapText(true);
-            }
-        });
-
+        saveButton.setOnAction(e -> saveNewTrap());
 
         // Cancel Button.
         Button cancelButton = new Button("Cancel");
@@ -269,35 +189,19 @@ public class CreateTrapView extends View {
         actionVB.setPadding(new Insets(15, 0, 15, 0));
         items.add(actionVB);
 
+        // TODO: move elsewhere?
         List<Trap> traps = walk.getLine().getTraps();
         for (Trap trap : traps) {
-            Circle   marker   = new Circle(5, Color.ORANGE);
+            Circle marker = new Circle(5, Color.ORANGE);
             MapPoint mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
             mapView.addMarker(markersLayer, mapPoint, marker);
         }
 
         // Adding listener for obtaining current GPS location.
         PositionService positionService = PlatformFactory.getPlatform().getPositionService();
-        positionService.positionProperty().addListener(
-                (observableValue, oldValue, newValue) -> updatePosition(newValue)
-                                                      );
-    }
-
-    private void updatePosition(Position position) {
-        // TODO: fix
-        waitingMessage.setText("");
-        positionLayer = mapView.clearMarkers(positionLayer);
-        MapPoint mapPoint = new MapPoint(position.getLatitude(), position.getLongitude());
-        mapView.addMarker(positionLayer, mapPoint, new Circle(5, Color.GREEN));
-        mapView.setCenter(position.getLatitude(), position.getLongitude());
-        currentPosition = position;
-    }
-
-    private void setMapLocation() {
-        if (currentPosition != null) {
-
-            System.out.println("Using position: lon " + currentPosition.getLongitude() + ", lat " + currentPosition.getLatitude());
-        }
+        positionService.positionProperty().addListener((observableValue, oldValue, newValue) ->
+                updateCurrentPosition(newValue)
+        );
     }
 
     @Override
@@ -306,7 +210,134 @@ public class CreateTrapView extends View {
         appBar.setTitleText("Create New Trap");
         appBar.getActionItems().add(MaterialDesignIcon.UNDO.button(e -> App.getInstance().switchToPreviousView()));
 
+        resetControls();
+    }
+
+    /**
+     * TODO: Comment
+     */
+    private void resetControls() {
         sideGroup.selectToggle(null);
         locationGroup.selectToggle(null);
+        latitudeTextField.setText("");
+        longitudeTextField.setText("");
+        numberTextField.setText("");
+    }
+
+    /**
+     * TODO: Comment
+     *
+     * @param position
+     */
+    private void updateCurrentPosition(Position position) {
+        if (waitingMessageVisible) {
+            waitingMessageVisible = false;
+            waitingMessage.setVisible(false);
+            waitingMessage.setManaged(false);
+        }
+        positionLayer = mapView.clearMarkers(positionLayer);
+        MapPoint mapPoint = new MapPoint(position.getLatitude(), position.getLongitude());
+        mapView.addMarker(positionLayer, mapPoint, new Circle(5, Color.GREEN));
+        mapView.setCenter(position.getLatitude(), position.getLongitude());
+        currentPosition = position;
+    }
+
+    /**
+     * TODO: Comment
+     */
+    private void toggleCoordinatesToggle(boolean selected) {
+        if (selected) {
+            coordinatesVBox.setVisible(true);
+            coordinatesVBox.setManaged(true);
+        } else {
+            coordinatesVBox.setVisible(false);
+            coordinatesVBox.setManaged(false);
+        }
+    }
+
+    /**
+     * TODO: Comment
+     */
+    private void validateCoordinateInput(String coordinate, TextField textField) {
+        if (!Validator.isCoordinate(coordinate)) {
+            textField.setStyle("-fx-border-width: 2;-fx-border-color: red");
+        } else {
+            textField.setStyle("-fx-border-width: 2;-fx-border-color: green");
+        }
+    }
+
+    /**
+     * TODO: Comment
+     */
+    private void validateNumberInput(String number, TextField textField) {
+        if (!Validator.isNumber(number)) {
+            textField.setStyle("-fx-border-width: 2;-fx-border-color: red");
+        } else {
+            textField.setStyle("-fx-border-width: 2;-fx-border-color: green");
+        }
+    }
+
+    /**
+     * TODO: Comment
+     */
+    private void saveNewTrap() {
+        boolean validInputs = true;
+
+        // Validate trap number.
+        if (!Validator.isNumber(numberTextField.getText())) {
+            validInputs = false;
+        }
+
+        // Check for location method selection.
+        if (locationGroup.getSelectedToggle() == null) {
+            validInputs = false;
+        }
+
+        // Validate manually entered coordinates if option selected.
+        if (manualCoordinatesToggle.isSelected()) {
+            boolean isLatitudeValid = Validator.isCoordinate(latitudeTextField.getText());
+            boolean isLongitudeValid = Validator.isCoordinate(longitudeTextField.getText());
+            if (!(isLatitudeValid && isLongitudeValid)) {
+                validInputs = false;
+            }
+        }
+
+        // Make sure the position provided by the GPS is not null if option selected.
+        if (mapCoordinatesToggle.isSelected()) {
+            if (currentPosition == null) {
+                validInputs = false;
+            }
+        }
+
+        // Make sure a side has been selected.
+        if (sideGroup.getSelectedToggle() == null) {
+            validInputs = false;
+        }
+
+        // If there are not issues proceed to create the new trap.
+        if (validInputs) {
+            double latitude;
+            double longitude;
+            boolean side = leftToggleButton.isSelected();
+
+            if (mapCoordinatesToggle.isSelected()) {
+                latitude = currentPosition.getLatitude();
+                longitude = currentPosition.getLongitude();
+            } else {
+                latitude = Double.parseDouble(latitudeTextField.getText());
+                longitude = Double.parseDouble(longitudeTextField.getText());
+            }
+
+            int lineId = walk.getLine().getId();
+            int trapNumber = Integer.parseInt(numberTextField.getText());
+
+            Trap newTrap = new Trap(lineId, trapNumber, latitude, longitude, side);
+
+            walk.addNewTrap(newTrap);
+            App.getInstance().switchScreen(App.DO_WALK_VIEW);
+        } else {
+            saveButton.setText("Please complete all details"); // TODO: better way?
+            saveButton.setWrapText(true);
+        }
     }
 }
