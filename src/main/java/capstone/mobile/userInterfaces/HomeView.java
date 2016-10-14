@@ -42,6 +42,7 @@ public class HomeView extends View {
         allLines.setOnAction(e -> App.getInstance().switchScreen(App.DISPLAY_LINES_VIEW));
         controls.getChildren().add(allLines);
 
+        // If storage lists another page as the current page, restore information from local storage
         String currentPage = PlatformFactory.getPlatform().getSettingService().retrieve(App.currentPage) != null ? PlatformFactory.getPlatform().getSettingService().retrieve(App.currentPage) : App.HOME_VIEW;
         if (!currentPage.equals(App.HOME_VIEW)) {
             SettingService settingService = PlatformFactory.getPlatform().getSettingService();

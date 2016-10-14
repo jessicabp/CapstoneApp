@@ -24,7 +24,6 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -81,6 +80,7 @@ public class DisplayLinesView extends View {
         // Add listener to cells
         linesListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newLine) -> {
             if (newLine != null) {
+                linesListView.getSelectionModel().clearSelection();
                 LocalDatabase.setCurrentLine(newLine);
                 selectLine(newLine, controls);
             }
@@ -95,12 +95,21 @@ public class DisplayLinesView extends View {
     }
 
     /**
+     * Adds given line to the observable lines list
+     *
+     * @param line
+     */
+    public static void addToObservableLinesList(Line line) {
+        observableLinesList.add(line);
+    }
+
+    /**
      * Gets password, if correct: set's the walk's line to the given line, switches to SetUpWalkView
      *
      * @param line
      */
     public void selectLine(Line line, VBox owner) {
-        linesListView.getSelectionModel().clearSelection();
+//        linesListView.getSelectionModel().clearSelection();
         String password = PlatformFactory.getPlatform().getSettingService().retrieve("password" + line.getId());
         if (password != null) {
             try {
@@ -113,13 +122,20 @@ public class DisplayLinesView extends View {
                 }
             } catch (DataUnavailableException e) {
                 e.printStackTrace();
-                showServerError();
+                App.getInstance().switchScreen(App.SET_UP_WALK_VIEW);
             }
         } else {
             askForPassword(owner, line);
         }
     }
 
+    /**
+     * Create popup which asks for password
+     * Entered password is sent to server to be verified, if incorrect user is prompted to retry, otherwise app progresses
+     *
+     * @param owner
+     * @param line
+     */
     private void askForPassword(VBox owner, Line line) {
         // Create popup to request password
         CustomPopupView passwordPopup = new CustomPopupView(owner);
@@ -155,7 +171,7 @@ public class DisplayLinesView extends View {
                 }
             } catch (DataUnavailableException e) {
                 e.printStackTrace();
-                showServerError();
+                showServerError(controls);
             }
         });
         HBox hb = new HBox(popupCancel, popupDone);
@@ -169,11 +185,13 @@ public class DisplayLinesView extends View {
 
     /**
      * Shows a pop-up explaining that the server connection has failed and pre-saved data is being used.
+     *
+     * @param ownerNode - node for popup to anchor on
      */
-    protected void showServerError() {
-        CustomPopupView serverError  = new CustomPopupView(controls);
-        Text            errorMessage = new Text("There has been an error connecting to the server. Information has not been updated.");
-        errorMessage.wrappingWidthProperty().bind(linesListView.widthProperty().subtract(100));
+    protected void showServerError(VBox ownerNode) {
+        CustomPopupView serverError  = new CustomPopupView(ownerNode);
+        Text            errorMessage = new Text("There has been an error connecting to the server. Information will not been updated from server.");
+        errorMessage.wrappingWidthProperty().bind(ownerNode.widthProperty().subtract(100));
         // Button to hide popup and reload lines from server
         Button retry = new Button("Okay");
         retry.setOnAction(ev -> serverError.hide());
@@ -188,7 +206,7 @@ public class DisplayLinesView extends View {
      * Fetches lines from the server, shows popup if it fails
      */
     private void updateLinesList() {
-        List<Line>   linesList  = new ArrayList<>();
+        List<Line>   linesList  = null;
         List<Animal> animalList = null;
 
         // Load data from server
@@ -196,18 +214,20 @@ public class DisplayLinesView extends View {
             linesList = LocalDatabase.updateLines();
             animalList = LocalDatabase.updateAnimals();
         } catch (DataUnavailableException | SQLException e) {
-            showServerError();
+            showServerError(controls);
             e.printStackTrace();
         }
 
         // Add lines to observable list so they are displayed in the ListView
-        observableLinesList.clear();
         if (linesList != null) {
+            observableLinesList.clear();
             observableLinesList.addAll(linesList);
         }
 
         // Add animals to list of animals
-        EnterDataView.setAnimalList(animalList);
+        if (animalList != null) {
+            EnterDataView.setAnimalList(animalList);
+        }
 
         // Clear search box
         filter.setText("");

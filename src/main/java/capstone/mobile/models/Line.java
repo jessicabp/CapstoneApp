@@ -76,7 +76,7 @@ public class Line {
      * @param index - index of requested trap in trap list
      * @return trap
      */
-    public Trap getNextTrap(int index) {
+    public Trap getTrapByIndex(int index) {
         return traps.get(index);
     }
 }

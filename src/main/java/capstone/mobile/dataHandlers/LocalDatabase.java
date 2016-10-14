@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class LocalDatabase {
@@ -88,13 +89,14 @@ public class LocalDatabase {
     public static void loadDatafromLocalDatabase(Walk walk) {
         try (Connection dbConnection = DriverManager.getConnection(dbUrl)) {
             Statement stmt    = dbConnection.createStatement();
+            Statement stmt2   = dbConnection.createStatement();
             ResultSet linesRS = stmt.executeQuery("SELECT * FROM lines;");
             while (linesRS.next()) {
                 // load line from database
                 int  lineId = linesRS.getInt("id");
                 Line line   = new Line(lineId, linesRS.getString("name"), linesRS.getInt("a1"), linesRS.getInt("a2"), linesRS.getInt("a3"));
                 // get traps on line
-                ResultSet trapRS = stmt.executeQuery("SELECT * FROM traps WHERE lineId = " + lineId + ";");
+                ResultSet trapRS = stmt2.executeQuery("SELECT * FROM traps WHERE lineId = " + lineId + ";");
                 while (trapRS.next()) {
                     if (trapRS.getObject("id") != null) {
                         // add trap from line
@@ -105,17 +107,17 @@ public class LocalDatabase {
                         }
                     } else {
                         // add new trap
-                        walk.addChangedTrap(new Trap(trapRS.getInt("lineId"), trapRS.getInt("number"), trapRS.getDouble("latitude"), trapRS.getDouble("longitude"), trapRS.getInt("side"), trapRS.getInt("broken"), trapRS.getInt("moved")));
+                        walk.addChangedTrap(new Trap(trapRS.getInt("lineId"), trapRS.getInt("number"), trapRS.getDouble("latitude"), trapRS.getDouble("longitude"), (trapRS.getInt("side") == 1)));
                     }
                 }
                 trapRS.close();
-                DisplayLinesView.getObservableLinesList().add(line);
+                DisplayLinesView.addToObservableLinesList(line);
             }
             linesRS.close();
             // load captures
             ResultSet captureRS = stmt.executeQuery("SELECT * FROM captures;");
             while (captureRS.next()) {
-                walk.addCapture(new Capture(captureRS.getInt("trapID"), captureRS.getInt("animalID"), captureRS.getLong("time")));
+                walk.addCaptureFromDB(new Capture(captureRS.getInt("trapID"), captureRS.getInt("animalID"), captureRS.getLong("time")));
             }
             captureRS.close();
             // load animal
@@ -126,6 +128,7 @@ public class LocalDatabase {
             }
             animalRS.close();
             stmt.close();
+            stmt2.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -181,6 +184,42 @@ public class LocalDatabase {
     }
 
     /**
+     * Add new traps from the server to th database
+     *
+     * @return List of all traps in the database for the line
+     * @throws SQLException
+     * @throws DataUnavailableException
+     */
+    public static List<Trap> updateTraps(int lineId) throws DataUnavailableException {
+        List<Trap> trapsList = RetrieveData.fetchTrapsList(lineId);
+        try (Connection dbConnection = DriverManager.getConnection(dbUrl)) {
+            // Update local database
+            if (dbConnection != null) {
+                Statement stmt = dbConnection.createStatement();
+                for (Trap trap : trapsList) {
+                    if (!stmt.executeQuery("SELECT * FROM traps WHERE id = " + trap.getId()).next()) {
+                        stmt.executeUpdate("insert into traps values(" + lineId + ", " + trap.getId() + ", " + trap.getNumber() + ", " + trap.getLatitude() + ", " + trap.getLongitude() + ", " + (trap.getSide() ? 1 : 0) + ", " + (trap.isMoved() ? 1 : 0) + ", " + (trap.isBroken() ? 1 : 0) + ", NULL)");
+                    }
+                }
+                trapsList.clear();
+                ResultSet trapRS = stmt.executeQuery("SELECT * FROM traps WHERE lineId = " + lineId);
+                while (trapRS.next()) {
+                    trapsList.add(new Trap(trapRS.getInt("id"), trapRS.getInt("lineId"), trapRS.getInt("number"), trapRS.getDouble("latitude"), trapRS.getDouble("longitude"), trapRS.getInt("side"), trapRS.getInt("broken"), trapRS.getInt("moved")));
+                }
+                trapRS.close();
+                stmt.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Sorts trap numbers (smallest to largest) to ensure correct ordering.
+        Collections.sort(trapsList, (a, b) -> a.getNumber() - b.getNumber());
+
+        return trapsList;
+    }
+
+    /**
      * Remove all captures, mark all traps as not changed, delete traps without ids (newly created traps)
      */
     public static void finishWalk() {
@@ -190,28 +229,6 @@ public class LocalDatabase {
                 stmt.executeUpdate("DELETE FROM captures");
                 stmt.executeUpdate("update traps set changed = NULL;");
                 stmt.executeUpdate("DELETE FROM traps WHERE id = NULL");
-                stmt.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Save the traps from a line into the database
-     *
-     * @param line
-     */
-    public static void saveTraps(Line line) {
-        try {
-            // Update local database
-            Connection dbConnection = DriverManager.getConnection(dbUrl);
-            if (dbConnection != null) {
-                Statement stmt = dbConnection.createStatement();
-                stmt.executeUpdate("DELETE FROM traps WHERE lineId = " + line.getId());
-                for (Trap trap : line.getTraps()) {
-                    stmt.executeUpdate("insert into traps values(" + line.getId() + ", " + trap.getId() + ", " + trap.getNumber() + ", " + trap.getLatitude() + ", " + trap.getLongitude() + ", " + (trap.getSide() ? 1 : 0) + ", " + (trap.isMoved() ? 1 : 0) + ", " + (trap.isBroken() ? 1 : 0) + ", NULL)");
-                }
                 stmt.close();
             }
         } catch (SQLException e) {
@@ -241,23 +258,26 @@ public class LocalDatabase {
      * @throws DataUnavailableException
      */
     public static List<Line> updateLines() throws SQLException, DataUnavailableException {
-        Connection dbConnection = DriverManager.getConnection(dbUrl);
         List<Line> linesList    = RetrieveData.fetchLinesList();
-        // Update local database
-        if (dbConnection != null) {
-            Statement stmt = dbConnection.createStatement();
-            for (Line line : linesList) {
-                stmt.executeUpdate("insert or ignore into lines(id, name, a1, a2, a3) values(" + line.getId() + ", '" + line.getName() + "', " + line.getAnimal1() + ", " + line.getAnimal2() + ", " + line.getAnimal3() + ")");
+        try (Connection dbConnection = DriverManager.getConnection(dbUrl)) {
+            // Update local database
+            if (dbConnection != null) {
+                Statement stmt = dbConnection.createStatement();
+                for (Line line : linesList) {
+                    stmt.executeUpdate("insert or ignore into lines(id, name, a1, a2, a3) values(" + line.getId() + ", '" + line.getName() + "', " + line.getAnimal1() + ", " + line.getAnimal2() + ", " + line.getAnimal3() + ")");
+                }
+                linesList.clear();
+                ResultSet lineRS = stmt.executeQuery(("SELECT * FROM lines"));
+                while (lineRS.next()) {
+                    linesList.add(new Line(lineRS.getInt("id"), lineRS.getString("name"), lineRS.getInt("a1"), lineRS.getInt("a2"), lineRS.getInt("a3")));
+                }
+                lineRS.close();
+                stmt.close();
             }
-            linesList.clear();
-            ResultSet lineRS = stmt.executeQuery(("SELECT * FROM lines"));
-            while (lineRS.next()) {
-                linesList.add(new Line(lineRS.getInt("id"), lineRS.getString("name"), lineRS.getInt("a1"), lineRS.getInt("a2"), lineRS.getInt("a3")));
-            }
-            lineRS.close();
-            stmt.close();
+            return linesList;
+        } catch (SQLException e) {
+            throw e;
         }
-        return linesList;
     }
 
     /**
@@ -268,23 +288,26 @@ public class LocalDatabase {
      * @throws DataUnavailableException
      */
     public static List<Animal> updateAnimals() throws SQLException, DataUnavailableException {
-        Connection   dbConnection = DriverManager.getConnection(dbUrl);
         List<Animal> animalList   = RetrieveData.fetchAnimalList();
-        // Update local database
-        if (dbConnection != null) {
-            Statement stmt = dbConnection.createStatement();
-            for (Animal animal : animalList) {
-                stmt.executeUpdate("insert or ignore into animals(id, name) values(" + animal.getId() + ", '" + animal.getName() + "')");
+        try (Connection   dbConnection = DriverManager.getConnection(dbUrl)) {
+            // Update local database
+            if (dbConnection != null) {
+                Statement stmt = dbConnection.createStatement();
+                for (Animal animal : animalList) {
+                    stmt.executeUpdate("insert or ignore into animals(id, name) values(" + animal.getId() + ", '" + animal.getName() + "')");
+                }
+                animalList.clear();
+                ResultSet animalRS = stmt.executeQuery(("SELECT * FROM animals"));
+                while (animalRS.next()) {
+                    animalList.add(new Animal(animalRS.getInt("id"), animalRS.getString("name")));
+                }
+                animalRS.close();
+                stmt.close();
             }
-            animalList.clear();
-            ResultSet animalRS = stmt.executeQuery(("SELECT * FROM animals"));
-            while (animalRS.next()) {
-                animalList.add(new Animal(animalRS.getInt("id"), animalRS.getString("name")));
-            }
-            animalRS.close();
-            stmt.close();
+            return animalList;
+        } catch (SQLException e) {
+            throw e;
         }
-        return animalList;
     }
 
     /**
@@ -295,16 +318,19 @@ public class LocalDatabase {
      */
     public static List<Line> fetchLines() throws SQLException {
         List<Line> linesList    = new ArrayList<>();
-        Connection dbConnection = DriverManager.getConnection(dbUrl);
-        Statement  stmt         = dbConnection.createStatement();
-        ResultSet  linesRS      = stmt.executeQuery("SELECT * FROM lines WHERE favourite like '%true%';");
-        while (linesRS.next()) {
-            // load line from database
-            Line line = new Line(linesRS.getInt("id"), linesRS.getString("name"), linesRS.getInt("a1"), linesRS.getInt("a2"), linesRS.getInt("a3"));
-            linesList.add(line);
+        try (Connection dbConnection = DriverManager.getConnection(dbUrl)) {
+            Statement stmt    = dbConnection.createStatement();
+            ResultSet linesRS = stmt.executeQuery("SELECT * FROM lines WHERE favourite like '%true%';");
+            while (linesRS.next()) {
+                // load line from database
+                Line line = new Line(linesRS.getInt("id"), linesRS.getString("name"), linesRS.getInt("a1"), linesRS.getInt("a2"), linesRS.getInt("a3"));
+                linesList.add(line);
+            }
+            linesRS.close();
+            stmt.close();
+            return linesList;
+        } catch(SQLException e) {
+            throw e;
         }
-        linesRS.close();
-        stmt.close();
-        return linesList;
     }
 }

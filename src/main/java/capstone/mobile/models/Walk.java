@@ -35,7 +35,7 @@ public class Walk {
     private List<Trap>    changedTraps = new ArrayList<>();
 
     /**
-     * direction == Trap.side when the user will find the trap on the left. Direction will be true when trap number increases (e.g. sth to nth in gorge)
+     * direction == Trap.side when the user will find the trap on the left. Direction will be true when trap number increases (e.g. start at trap 1, end at trap 5)
      */
     private boolean direction;
 
@@ -47,23 +47,84 @@ public class Walk {
         return line;
     }
 
+    /**
+     * Set line in walk, fetch traps from server, save traps in database, set currentLine on device
+     *
+     * @param line
+     * @throws DataUnavailableException
+     */
     public void setLine(Line line) throws DataUnavailableException {
         this.line = line;
-        line.setTraps(RetrieveData.fetchTrapsList(line.getId()));
-        LocalDatabase.saveTraps(line);
+        line.setTraps(LocalDatabase.updateTraps(line.getId()));
         PlatformFactory.getPlatform().getSettingService().store(App.currentLineID, String.valueOf(line.getId()));
     }
 
+    /**
+     * Sets line if restoring data after app closes
+     *
+     * @param line
+     */
     public void setLineAtRestart(Line line) {
         this.line = line;
+    }
+
+    public Trap getCurrentTrap() {
+        return currentTrap;
     }
 
     public Trap getFinishTrap() {
         return finishTrap;
     }
 
-    public Trap getCurrentTrap() {
-        return currentTrap;
+    /**
+     * Changes current trap to be the next trap, ends walk if the last trap has been reached
+     */
+    public void finishCurrentTrap() {
+        if (currentTrap != finishTrap) {
+            if (direction) {
+                index++;
+            } else {
+                index--;
+            }
+            currentTrap = line.getTrapByIndex(index);
+            PlatformFactory.getPlatform().getSettingService().store(App.currentTrapID, String.valueOf(currentTrap.getId()));
+        } else {
+            App.getInstance().switchScreen(App.END_WALK_VIEW);
+        }
+    }
+
+    /**
+     * Add new trap to be sent to the server
+     *
+     * @param trap
+     */
+    public void addChangedTrap(Trap trap) {
+        this.changedTraps.add(trap);
+        LocalDatabase.changeTrap(trap);
+    }
+
+    /**
+     * Returns traps to be sent to the server
+     *
+     * @return
+     */
+    public List<Trap> getChangedTraps() {
+        return changedTraps;
+    }
+
+    /**
+     * Add a newly created trap to the database, list of changed traps, and map
+     *
+     * @param trap
+     */
+    public void addNewTrap(Trap trap) {
+        this.changedTraps.add(trap);
+        LocalDatabase.addNewTrap(trap);
+        Circle        marker   = new Circle(5, Color.YELLOW);
+        MapPoint      mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
+        CustomMapView mapview  = DoWalkView.getMapView();
+        PoiLayer      layer    = DoWalkView.getMarkersLayer();
+        mapview.addMarker(layer, mapPoint, marker);
     }
 
     public boolean getDirection() {
@@ -71,7 +132,7 @@ public class Walk {
     }
 
     /**
-     * Start the walk, setting the first and last traps in the walk to be start and end.
+     * Start the walk, setting the first and last traps in the walk to be current and end, and setting the direction & index
      *
      * @param start
      * @param end
@@ -104,61 +165,26 @@ public class Walk {
         LocalDatabase.finishWalk();
     }
 
-    /**
-     * Changes current trap to be the next trap, ends walk if the last trap has been reached
-     */
-    public void finishCurrentTrap() {
-        if (currentTrap != finishTrap) {
-            if (direction) {
-                index++;
-            } else {
-                index--;
-            }
-            currentTrap = line.getNextTrap(index);
-            PlatformFactory.getPlatform().getSettingService().store(App.currentTrapID, String.valueOf(currentTrap.getId()));
-        } else {
-            App.getInstance().switchScreen(App.END_WALK_VIEW);
-        }
-    }
-
     public List<Capture> getCaptures() {
         return captures;
     }
 
+    /**
+     * Add a capture to the walk and the local database
+     *
+     * @param capture
+     */
     public void addCapture(Capture capture) {
         this.captures.add(capture);
         LocalDatabase.addCapture(capture);
     }
 
     /**
-     * Add new trap to be sent to the server
+     * Add a capture from the local database to the walk
      *
-     * @param trap
+     * @param capture
      */
-    public void addChangedTrap(Trap trap) {
-        this.changedTraps.add(trap);
-        LocalDatabase.changeTrap(trap);
-    }
-
-    /**
-     * Returns traps to be sent to the server
-     *
-     * @return
-     */
-    public List<Trap> getChangedTraps() {
-        return changedTraps;
-    }
-
-    public void addNewTrap(Trap trap) {
-        this.changedTraps.add(trap);
-        LocalDatabase.addNewTrap(trap);
-        Circle        marker   = new Circle(5, Color.YELLOW);
-        MapPoint      mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
-        CustomMapView mapview  = DoWalkView.getMapView();
-        PoiLayer      layer    = DoWalkView.getMarkersLayer();
-        if (layer != null) {
-            System.out.println("layer not null");
-        }
-        mapview.addMarker(layer, mapPoint, marker);
+    public void addCaptureFromDB(Capture capture) {
+        this.captures.add(capture);
     }
 }

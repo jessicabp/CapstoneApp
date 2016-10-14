@@ -23,10 +23,14 @@ public class EnterMaintenance extends View {
     public EnterMaintenance(String name, Walk walk) {
         super(name);
         this.walk = walk;
-
         getStylesheets().add(EnterMaintenance.class.getResource("secondary.css").toExternalForm());
     }
 
+    /**
+     * Sets up user interface each time the page is visited
+     *
+     * @param appBar
+     */
     @Override
     protected void updateAppBar(AppBar appBar) {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
@@ -46,17 +50,26 @@ public class EnterMaintenance extends View {
         // button to save
         Button save = new Button("Done");
         save.setPadding(new Insets(40, 0, 0, 0));
-        save.setOnAction(e -> {
-            if (broken.isSelected() != walk.getCurrentTrap().isBroken() || moved.isSelected() != walk.getCurrentTrap().isMoved()) {
-                walk.addChangedTrap(walk.getCurrentTrap());
-            }
-            App.getInstance().switchScreen(App.ENTER_DATA_VIEW);
-        });
+        save.setOnAction(e -> saveMaintenance(broken, moved));
         save.setGraphic(MaterialDesignIcon.SAVE.graphic());
 
+        // VBox to display all elements
         VBox controls = new VBox(20, broken, moved, save);
         controls.setPadding(new Insets(40, 40, 40, 40));
         controls.setAlignment(Pos.CENTER);
         setCenter(controls);
+    }
+
+    /**
+     * Add trap to changed list if broken/moved has changed, change page
+     *
+     * @param broken
+     * @param moved
+     */
+    private void saveMaintenance(CheckBox broken, CheckBox moved) {
+        if (broken.isSelected() != walk.getCurrentTrap().isBroken() || moved.isSelected() != walk.getCurrentTrap().isMoved()) {
+            walk.addChangedTrap(walk.getCurrentTrap());
+        }
+        App.getInstance().switchScreen(App.ENTER_DATA_VIEW);
     }
 }

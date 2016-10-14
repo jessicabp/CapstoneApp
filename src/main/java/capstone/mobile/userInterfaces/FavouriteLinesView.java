@@ -1,11 +1,14 @@
 package capstone.mobile.userInterfaces;
 
+import capstone.mobile.App;
 import capstone.mobile.dataHandlers.DataUnavailableException;
 import capstone.mobile.dataHandlers.LocalDatabase;
 import capstone.mobile.models.Animal;
 import capstone.mobile.models.Line;
 import capstone.mobile.models.Walk;
+import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
+import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.gluonhq.connect.GluonObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Insets;
@@ -73,6 +76,8 @@ public class FavouriteLinesView extends DisplayLinesView {
         // Add listener to cells
         linesListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newLine) -> {
             if (newLine != null) {
+                linesListView.getSelectionModel().clearSelection();
+                LocalDatabase.setCurrentLine(newLine);
                 selectLine(newLine, controls);
             }
         });
@@ -85,7 +90,7 @@ public class FavouriteLinesView extends DisplayLinesView {
      * Fetches lines from the server, shows popup if it fails
      */
     private void updateLinesList() {
-        List<Line>   linesList  = new ArrayList<>();
+        List<Line>   linesList  = null;
         List<Animal> animalList = null;
 
         // Load data from database
@@ -93,7 +98,7 @@ public class FavouriteLinesView extends DisplayLinesView {
             linesList = LocalDatabase.fetchLines();
             animalList = LocalDatabase.updateAnimals();
         } catch (DataUnavailableException | SQLException e) {
-            showServerError();
+            showServerError(controls);
             e.printStackTrace();
         }
 
@@ -104,7 +109,9 @@ public class FavouriteLinesView extends DisplayLinesView {
         }
 
         // Add animals to list of animals
-        EnterDataView.setAnimalList(animalList);
+        if (animalList != null) {
+            EnterDataView.setAnimalList(animalList);
+        }
 
         // Clear search box
         filter.setText("");
@@ -112,7 +119,10 @@ public class FavouriteLinesView extends DisplayLinesView {
 
     @Override
     protected void updateAppBar(AppBar appBar) {
-        super.updateAppBar(appBar);
+        appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
+        appBar.setTitleText("Select a line");
+        appBar.getActionItems().add(MaterialDesignIcon.UNDO.button(e -> App.getInstance().switchScreen(App.HOME_VIEW)));
+        linesListView.getSelectionModel().clearSelection();
         updateLinesList();
     }
 }

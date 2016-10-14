@@ -70,8 +70,8 @@ public class App extends MobileApplication {
     @Override
     public void init() {
 
-        // TODO: remove
-        PlatformFactory.getPlatform().getSettingService().remove(App.currentPage);
+//        // TODO: remove
+//        PlatformFactory.getPlatform().getSettingService().remove(App.currentPage);
 
         a = this;
 
@@ -139,7 +139,9 @@ public class App extends MobileApplication {
      * @param viewName
      */
     public void switchScreen(String viewName) {
-        PlatformFactory.getPlatform().getSettingService().store(currentPage, viewName);
+        if (viewName != CREATE_TRAP_VIEW) {
+            PlatformFactory.getPlatform().getSettingService().store(currentPage, viewName);
+        }
         switchView(viewName);
     }
 

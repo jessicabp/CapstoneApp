@@ -94,9 +94,6 @@ public class RetrieveData {
                 trapsList.add(trap);
             }
 
-            // Sorts trap numbers (smallest to largest) to ensure correct ordering.
-            Collections.sort(trapsList, (a, b) -> a.getNumber() - b.getNumber());
-
             return trapsList;
         } catch (IOException ex) {
             throw new DataUnavailableException(ex.getMessage());

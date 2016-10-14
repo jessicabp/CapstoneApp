@@ -8,6 +8,9 @@ public class Animal {
     private int    id;
     private String name;
 
+    /**
+     * Empty constructor and all setters and getters required for json conversions
+     */
     public Animal() {
     }
 

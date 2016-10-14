@@ -8,6 +8,11 @@ import javafx.scene.Node;
 
 public class CustomPopupView extends PopupView {
 
+    /**
+     * Adds listener to the PopupView so background fade is always applied when a popup opens and removed when closed
+     *
+     * @param ownerNode
+     */
     public CustomPopupView(Node ownerNode) {
         super(ownerNode);
 

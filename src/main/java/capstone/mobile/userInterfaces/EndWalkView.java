@@ -21,77 +21,98 @@ import javafx.scene.text.TextAlignment;
 
 public class EndWalkView extends View {
 
-    Walk walk;
+    private Walk walk;
+    private final int[] count = {0}; // stored as an array so it is effectively final for use in lambda expression
 
     public EndWalkView(String name, Walk walk) {
         super(name);
         this.walk = walk;
 
+        // VBox to display elements
         VBox controls = new VBox(15.0);
         controls.setPadding(new Insets(40));
         controls.setAlignment(Pos.CENTER);
         setCenter(controls);
 
-        final int[] count = {0}; // array so it is effectively final for use in lambda expression
-
         // Add button to manually send data to server and finish walk
         Button send = new Button("Click to send to server once internet is connected");
         send.setWrapText(true);
         send.setTextAlignment(TextAlignment.CENTER);
-        send.setOnAction(e -> {
-            int response = SendData.sendWalkData(walk);
-            if (response == 0) {
-                walk.finishWalk();
-                App.getInstance().switchScreen(App.HOME_VIEW);
-            } else {
-                count[0]++;
-                send.setText("Click to retry sending to server once internet is connected. (Retry #" + count[0] + ")");
-
-                if (response == 1) {
-                    // Create popup to request password
-                    CustomPopupView passwordPopup = new CustomPopupView(controls);
-
-                    // Create layout for buttons with correct spacing
-                    VBox passControls = new VBox(20);
-                    passControls.setPadding(new Insets(40, 40, 40, 40));
-                    passControls.setAlignment(Pos.CENTER);
-
-                    // Add title
-                    Text titleText = new Text("Stored password is incorrect.");
-                    titleText.setTextAlignment(TextAlignment.CENTER);
-                    passControls.getChildren().add(titleText);
-                    Text passText = new Text("Enter password:");
-                    passText.setTextAlignment(TextAlignment.CENTER);
-                    passControls.getChildren().add(passText);
-
-                    PasswordField passwordField = new PasswordField();
-                    passwordField.maxWidthProperty().bind(controls.widthProperty().subtract(25));
-                    passControls.getChildren().add(passwordField);
-
-                    Button popupCancel = new Button("Cancel");
-                    popupCancel.setOnAction(ev -> passwordPopup.hide());
-                    Button popupDone = new Button("Save new password");
-                    popupDone.setOnAction(ev -> {
-                        String enteredPassword = passwordField.getText();
-                        PlatformFactory.getPlatform().getSettingService().store("password" + walk.getLine().getId(), enteredPassword);
-                        passwordPopup.hide();
-                    });
-                    HBox hb = new HBox(popupCancel, popupDone);
-                    hb.setSpacing(15);
-                    hb.setAlignment(Pos.CENTER);
-                    passControls.getChildren().add(hb);
-
-                    passwordPopup.setContent(passControls);
-                    passwordPopup.show();
-                }
-            }
-        });
+        send.setOnAction(e -> sendData(send, controls));
         controls.getChildren().add(send);
     }
 
+    /**
+     * Update text in app bar & reset retry count back to 0
+     *
+     * @param appBar
+     */
     @Override
     protected void updateAppBar(AppBar appBar) {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
         appBar.setTitleText("Finished: " + walk.getLine().getName());
+
+        count[0] = 0;
+    }
+
+    /**
+     * Sends data from walk to the server
+     * If sending data is unsuccessful, prompt user to try again and count retries
+     * If line password is incorrect when sending, create popup and request password
+     *
+     * @param send
+     * @param controls
+     */
+    private void sendData(Button send, VBox controls) {
+        int response = SendData.sendWalkData(walk);
+        if (response == 0) {
+            walk.finishWalk();
+            App.getInstance().switchScreen(App.HOME_VIEW);
+        } else {
+            count[0]++;
+            // Update button text to propt user to retry, and count retries
+            send.setText("Click to retry sending to server once internet is connected. (Retry #" + count[0] + ")");
+
+            if (response == 1) {
+                // Create popup to request password
+                CustomPopupView passwordPopup = new CustomPopupView(controls);
+
+                // Create layout for buttons with correct spacing
+                VBox passControls = new VBox(20);
+                passControls.setPadding(new Insets(40, 40, 40, 40));
+                passControls.setAlignment(Pos.CENTER);
+
+                // Add titles
+                Text titleText = new Text("Stored password is incorrect.");
+                titleText.setTextAlignment(TextAlignment.CENTER);
+                passControls.getChildren().add(titleText);
+                Text passText = new Text("Enter password:");
+                passText.setTextAlignment(TextAlignment.CENTER);
+                passControls.getChildren().add(passText);
+
+                // Add password entry field
+                PasswordField passwordField = new PasswordField();
+                passwordField.maxWidthProperty().bind(controls.widthProperty().subtract(25));
+                passControls.getChildren().add(passwordField);
+
+                // Add cancel/save buttons
+                Button popupCancel = new Button("Cancel");
+                popupCancel.setOnAction(ev -> passwordPopup.hide());
+                Button popupDone = new Button("Save");
+                popupDone.setOnAction(ev -> {
+                    // Save entered password to device storage, hide popup
+                    String enteredPassword = passwordField.getText();
+                    PlatformFactory.getPlatform().getSettingService().store("password" + walk.getLine().getId(), enteredPassword);
+                    passwordPopup.hide();
+                });
+                HBox hb = new HBox(popupCancel, popupDone);
+                hb.setSpacing(15);
+                hb.setAlignment(Pos.CENTER);
+                passControls.getChildren().add(hb);
+
+                passwordPopup.setContent(passControls);
+                passwordPopup.show();
+            }
+        }
     }
 }

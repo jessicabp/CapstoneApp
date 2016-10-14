@@ -18,6 +18,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -26,10 +27,12 @@ import java.util.List;
  */
 public class EnterDataView extends View {
 
-    private static List<Animal> animalList = new ArrayList<>();
     private Walk walk;
     private int  animal;
-    private Insets gridButtonInsets = new Insets(40, 0, 40, 0); // for making buttons taller
+    private        List<Animal> tempAnimalList = new ArrayList<>();
+    private static List<Animal> animalList     = new ArrayList<>();
+    private static ToggleButton selectedMain   = null;
+    private static ToggleButton selectedOther  = null;
 
     public EnterDataView(String name, Walk walk) {
         super(name);
@@ -42,18 +45,22 @@ public class EnterDataView extends View {
         showButtons();
     }
 
+    /**
+     * Adds animal to animalList from the local database
+     *
+     * @param animal
+     */
     public static void addAnimalFromDB(Animal animal) {
         animalList.add(animal);
-    }
-
-    public static List<Animal> getAnimalList() {
-        return animalList;
     }
 
     public static void setAnimalList(List<Animal> fetchedAnimalList) {
         animalList = fetchedAnimalList;
     }
 
+    /**
+     * Sets up the buttons for selecting an animal (popular or other), entering maintenance, and saving the capture
+     */
     private void showButtons() {
         // Create VBox for all items
         VBox controls = new VBox(20.0);
@@ -61,58 +68,84 @@ public class EnterDataView extends View {
         controls.setAlignment(Pos.CENTER);
         setCenter(controls);
 
+        // Create temporary list of animals to remove popular animals from and create buttons
+        tempAnimalList.clear();
+        tempAnimalList.addAll(animalList);
+        // Sorts animals by id (smallest to largest) to ensure correct ordering.
+        Collections.sort(tempAnimalList, (a, b) -> a.getId() - b.getId());
+
         // Create animal selection buttons
         ToggleGroup    group = new ToggleGroup();
         CustomGridPane grid  = new CustomGridPane(2);
         controls.getChildren().add(grid);
-        // Add first 4 animal to grid and toggle group
-        int animalNo = 0;
+        // Add first 4 animals (empty + 3 x line preferences) to grid and toggle group
+        int[] animalNo    = {0, walk.getLine().getAnimal1(), walk.getLine().getAnimal2(), walk.getLine().getAnimal3()};
+        int   animalIndex = 0;
         for (int r = 0; r < 2; r++) {
             for (int c = 0; c < 2; c++) {
-                Animal       nextAnimal = animalList.get(animalNo);
+                Animal       nextAnimal = tempAnimalList.remove(animalNo[animalIndex]);
                 ToggleButton button     = new ToggleButton(nextAnimal.getName());
                 button.getStyleClass().add("tall");
+                button.setUserData(nextAnimal.getId());
                 button.setToggleGroup(group);
-                button.setOnAction(e -> animal = nextAnimal.getId());
+                // If button matches the remembered stored button, select it
+                if (selectedMain != null && selectedMain.getUserData().equals(button.getUserData())) {
+                    button.setSelected(true);
+                }
+                button.setOnAction(e -> {
+                    animal = nextAnimal.getId();
+                    selectedMain = button;
+                    selectedOther = null;
+                });
                 button.setMaxWidth(Double.MAX_VALUE);
                 grid.add(button, c, r);
-                animalNo++;
+                animalIndex++;
             }
         }
 
         // Create button with popup for other animal options
         ToggleButton other = new ToggleButton("Other");
         controls.getChildren().add(other);
+        other.setMaxWidth(Double.MAX_VALUE);
+        other.setUserData("Other");
+        other.setToggleGroup(group);
+        // If button matches the remembered stored button, select it
+        if (selectedMain != null && selectedMain.getUserData().equals(other.getUserData())) {
+            other.setSelected(true);
+        }
 
         // Popup for selecting other animal
         CustomPopupView animalPopup = new CustomPopupView(grid);
         animalPopup.getStylesheets().add(EnterDataView.class.getResource("OtherAnimals.css").toExternalForm());
         animalPopup.getStylesheets().add(EnterDataView.class.getResource("secondary.css").toExternalForm());
-        animalPopup.setPrefWidth(other.getMaxWidth());
+        animalPopup.setMinWidth(other.getWidth());
         ToggleGroup otherGroup = new ToggleGroup();
         VBox        animalVB   = new VBox(10);
         animalVB.setPadding(new Insets(20, 20, 20, 20));
-        // Add all animal to grid and toggle group
-        int r = 0;
-        for (; r < (animalList.size() - 4); r++) {
-            Animal       nextAnimal = animalList.get(animalNo);
+        // Add all non-popular animals to vbox and toggle group
+        for (int i = 0; i < tempAnimalList.size(); i++) {
+            Animal       nextAnimal = tempAnimalList.get(i);
             ToggleButton button     = new ToggleButton(nextAnimal.getName());
             button.getStyleClass().add("tall");
+            button.setUserData(nextAnimal.getId());
             button.setToggleGroup(otherGroup);
+            // If button matches the remembered stored button, select it
+            if (selectedOther != null && selectedOther.getUserData().equals(button.getUserData())) {
+                button.setSelected(true);
+            }
             button.setOnAction(ev -> {
                 animal = nextAnimal.getId();
+                selectedMain = other;
+                selectedOther = button;
                 animalPopup.hide();
             });
             button.maxWidthProperty().bind(controls.widthProperty().subtract(120));
             button.minWidthProperty().bind(controls.widthProperty().subtract(120));
             animalVB.getChildren().add(button);
-            animalNo++;
         }
         animalPopup.setContent(animalVB);
 
         // Settings for other animal button
-        other.setMaxWidth(Double.MAX_VALUE);
-        other.setToggleGroup(group);
         other.setOnAction(e -> {
             other.setSelected(true);
             animalPopup.show();
@@ -122,26 +155,26 @@ public class EnterDataView extends View {
         Button done = new Button("DONE");
         done.setMaxWidth(Double.MAX_VALUE);
         done.setOnAction(e -> {
-            if (group.getSelectedToggle() != null) {
+            // Check an animal is selected, then create capture and finish trap
+            if (group.getSelectedToggle() != null && ((!(group.getSelectedToggle().getUserData().equals("Other")) || otherGroup.getSelectedToggle() != null))) {
                 walk.addCapture(new Capture(walk.getCurrentTrap().getId(), animal));
-                group.getSelectedToggle().setSelected(false);
+                selectedMain = null;
+                selectedOther = null;
                 if (walk.getCurrentTrap() != walk.getFinishTrap()) {
                     walk.finishCurrentTrap();
-                    // Switch to another view and back to refresh data on screen
-                    App.getInstance().switchScreen(App.ENTER_DATA_VIEW);
                     App.getInstance().switchScreen(App.DO_WALK_VIEW);
                 } else {
                     App.getInstance().switchScreen(App.END_WALK_VIEW);
                 }
             } else {
-                done.setText("Please select a animal");
+                done.setText("Please select an animal");
             }
         });
         done.setGraphic(MaterialDesignIcon.SAVE.graphic());
         controls.getChildren().add(done);
 
         // Add buttons to add image or maintenance info
-        Button maintenance = new Button("Maintenance");
+        Button maintenance = new Button("Trap Maintenance");
         maintenance.setMaxWidth(Double.MAX_VALUE);
         maintenance.setOnAction(e -> App.getInstance().switchScreen(App.MAINTENANCE));
         controls.getChildren().add(maintenance);
