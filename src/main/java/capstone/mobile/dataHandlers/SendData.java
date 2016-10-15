@@ -2,24 +2,22 @@ package capstone.mobile.dataHandlers;
 
 import capstone.mobile.models.Walk;
 import com.gluonhq.charm.down.common.PlatformFactory;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.json.JSONObject;
 
-import java.net.URI;
+import javax.net.ssl.HttpsURLConnection;
+import java.net.URL;
+
 
 /**
  * Sends data from traps when connected
+ * TODO: Requires clean up
  */
 public class SendData {
 
-    private static final String HOST             = "traptracker.pythonanywhere.com";
-    private static       int    FULFILLED        = 201;
-    private static       int    INVALID_PASSWORD = 403;
+    private static final String HOST = "traptracker.pythonanywhere.com";
+    private static int FULFILLED = 201;
+    private static int INVALID_PASSWORD = 403;
+
 
     public static int sendWalkData(Walk walk) {
         final int traps = sendTrapsData(walk);
@@ -42,27 +40,22 @@ public class SendData {
     }
 
     /**
-     * Converts captures in walk to json, sends to server
+     * Sends capture data to the server in JSON format.
      *
-     * @param walk The walk object
+     * @param walk The walk object containing the capture data
+     * @return int Response code from put request if successful, else returns 500
      */
-    public static int sendCapturesData(Walk walk) {
-        final URIBuilder builder = new URIBuilder();
-        builder.setScheme("https");
-        builder.setHost(HOST);
-        builder.setPath("/api/catch");
-
+    private static int sendCapturesData(Walk walk) {
+        final String location = "https://" + HOST + "/api/catch";
         try {
-            final URI uri = builder.build();
-            System.out.println(uri);
-
-            final CloseableHttpClient httpclient = HttpClients.createDefault();
-            final HttpPut             httpPut    = new HttpPut(uri);
-            httpPut.addHeader("Content-Type", "application/json");
-            httpPut.addHeader("Accept", "application/json");
+            final URL url = new URL(location);
+            final HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+            connection.setRequestMethod("PUT");
+            connection.setDoOutput(true);
+            connection.addRequestProperty("Content-Type", "application/json");
 
             String password = PlatformFactory.getPlatform().getSettingService().retrieve("password" + walk.getLine().getId());
-            if (password.equals(null)) {
+            if (password == null) {
                 password = "";
             }
 
@@ -72,34 +65,40 @@ public class SendData {
             capturesObject.put("password", password);
             capturesObject.put("catches", walk.getCaptures());
 
-            httpPut.setEntity(new StringEntity(capturesObject.toString()));
-            final CloseableHttpResponse response = httpclient.execute(httpPut);
+            String body = capturesObject.toString();
+            System.out.println(body);
 
-            return response.getStatusLine().getStatusCode();
-        } catch (Exception e) {
-            e.printStackTrace();
+            connection.setRequestProperty("Content-Length", Integer.toString(body.length()));
+            connection.getOutputStream().write(body.getBytes("UTF-8"));
+
+            final int responseCode = connection.getResponseCode();
+            System.out.println(responseCode);
+
+            return responseCode;
+        } catch (Exception ex) {
+            ex.printStackTrace();
 
             return 500;
         }
     }
 
-    public static int sendTrapsData(Walk walk) {
-        final URIBuilder builder = new URIBuilder();
-        builder.setScheme("https");
-        builder.setHost(HOST);
-        builder.setPath("/api/trap");
-
+    /**
+     * Sends trap data to the server in JSON format.
+     *
+     * @param walk The walk object containing the trap data
+     * @return int Response code from put request if successful, else returns 500
+     */
+    private static int sendTrapsData(Walk walk) {
+        final String location = "https://" + HOST + "/api/trap";
         try {
-            final URI uri = builder.build();
-            System.out.println(uri);
-
-            final CloseableHttpClient httpclient = HttpClients.createDefault();
-            final HttpPut             httpPut    = new HttpPut(uri);
-            httpPut.addHeader("Content-Type", "application/json");
-            httpPut.addHeader("Accept", "application/json");
+            final URL url = new URL(location);
+            final HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+            connection.setRequestMethod("PUT");
+            connection.setDoOutput(true);
+            connection.addRequestProperty("Content-Type", "application/json");
 
             String password = PlatformFactory.getPlatform().getSettingService().retrieve("password" + walk.getLine().getId());
-            if (password.equals(null)) {
+            if (password == null) {
                 password = "";
             }
 
@@ -109,12 +108,18 @@ public class SendData {
             trapsObject.put("password", password);
             trapsObject.put("traps", walk.getChangedTraps());
 
-            httpPut.setEntity(new StringEntity(trapsObject.toString()));
-            final CloseableHttpResponse response = httpclient.execute(httpPut);
+            String body = trapsObject.toString();
+            System.out.println(body);
 
-            return response.getStatusLine().getStatusCode();
-        } catch (Exception e) {
-            e.printStackTrace();
+            connection.setRequestProperty("Content-Length", Integer.toString(body.length()));
+            connection.getOutputStream().write(body.getBytes("UTF-8"));
+
+            final int responseCode = connection.getResponseCode();
+            System.out.println(responseCode);
+
+            return responseCode;
+        } catch (Exception ex) {
+            ex.printStackTrace();
 
             return 500;
         }

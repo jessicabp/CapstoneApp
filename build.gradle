@@ -22,8 +22,6 @@ mainClassName = 'capstone.mobile.App'
 
 dependencies {
     compile 'com.gluonhq:charm:3.0.0'
-    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
-    compile group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.5'
     compile group: 'org.json', name: 'json', version: '20160810'
 
     androidRuntime 'com.gluonhq:charm-android:3.0.0'
