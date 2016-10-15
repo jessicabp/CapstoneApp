@@ -99,7 +99,7 @@ public class EnterDataView extends View {
                 });
                 button.setMaxWidth(Double.MAX_VALUE);
                 grid.add(button, c, r);
-                animalIndex++;
+                // animalIndex++;
             }
         }
 
