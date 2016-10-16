@@ -109,7 +109,6 @@ public class DisplayLinesView extends View {
      * @param line
      */
     public void selectLine(Line line, VBox owner) {
-        linesListView.getSelectionModel().clearSelection();
         String password = PlatformFactory.getPlatform().getSettingService().retrieve("password" + line.getId());
         if (password != null) {
             try {
@@ -238,7 +237,6 @@ public class DisplayLinesView extends View {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
         appBar.setTitleText("Select a line");
         appBar.getActionItems().add(MaterialDesignIcon.UNDO.button(e -> App.getInstance().switchScreen(App.HOME_VIEW)));
-        linesListView.getSelectionModel().clearSelection();
         updateLinesList();
     }
 }

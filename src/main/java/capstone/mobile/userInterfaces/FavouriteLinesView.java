@@ -75,7 +75,6 @@ public class FavouriteLinesView extends DisplayLinesView {
         // Add listener to cells
         linesListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newLine) -> {
             if (newLine != null) {
-                linesListView.getSelectionModel().clearSelection();
                 LocalDatabase.setCurrentLine(newLine);
                 selectLine(newLine, controls);
             }
@@ -121,7 +120,6 @@ public class FavouriteLinesView extends DisplayLinesView {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
         appBar.setTitleText("Select a line");
         appBar.getActionItems().add(MaterialDesignIcon.UNDO.button(e -> App.getInstance().switchScreen(App.HOME_VIEW)));
-        linesListView.getSelectionModel().clearSelection();
         updateLinesList();
     }
 }
