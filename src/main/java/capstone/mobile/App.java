@@ -70,9 +70,6 @@ public class App extends MobileApplication {
     @Override
     public void init() {
 
-        // TODO: remove
-        PlatformFactory.getPlatform().getSettingService().remove(App.currentPage);
-
         a = this;
 
         // Initializing walk object

@@ -96,17 +96,8 @@ public class DoWalkView extends View {
         // controls.setPadding(new Insets(0, 40, 40, 40));
         setCenter(controls);
 
-        List<Trap> traps = walk.getLine().getTraps();
-        for (Trap trap : traps) {
-            Circle   marker   = new Circle(5, Color.ORANGE);
-            MapPoint mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
-            mapView.addMarker(markersLayer, mapPoint, marker);
-        }
-
         PositionService positionService = PlatformFactory.getPlatform().getPositionService();
-        positionService.positionProperty().addListener((observableValue, oldValue, newValue) ->
-                                                               updateCurrentPosition(newValue)
-                                                      );
+        positionService.positionProperty().addListener((observableValue, oldValue, newValue) -> updateCurrentPosition(newValue));
     }
 
     // TODO: provide utility method to give same results
@@ -123,13 +114,13 @@ public class DoWalkView extends View {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
         appBar.setTitleText("Trap " + walk.getCurrentTrap().getNumber() + " - " + walk.getLine().getName());
 
-        displayCurrentTrap();
+        displayTraps();
     }
 
     /**
      * TODO: Comment
      */
-    private void displayCurrentTrap() {
+    private void displayTraps() {
         // Update message about side of path for trap
         side.setText("Trap indicator on " + (walk.isDirection() == walk.getCurrentTrap().getSide() ? "left" : "right") + " side");
 
@@ -138,6 +129,13 @@ public class DoWalkView extends View {
         }
         if (walk.getCurrentTrap().isBroken()) {
             messages.getChildren().add(broken);
+        }
+
+        markersLayer = mapView.clearMarkers(markersLayer);
+        for (Trap trap : walk.getLine().getTraps()) {
+            Circle   marker   = new Circle(5, Color.ORANGE);
+            MapPoint mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
+            mapView.addMarker(markersLayer, mapPoint, marker);
         }
 
         Node     icon        = new Circle(7, Color.BLUE);

@@ -117,7 +117,8 @@ public class Walk {
      * @param trap
      */
     public void addNewTrap(Trap trap) {
-        this.changedTraps.add(trap);
+        changedTraps.add(trap);
+        line.addTrap(trap);
         LocalDatabase.addNewTrap(trap);
         final Circle        marker   = new Circle(5, Color.YELLOW);
         final MapPoint      mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
