@@ -81,7 +81,6 @@ public class DisplayLinesView extends View {
         // Add listener to cells
         linesListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newLine) -> {
             if (newLine != null) {
-                linesListView.getSelectionModel().clearSelection();
                 LocalDatabase.setCurrentLine(newLine);
                 selectLine(newLine, controls);
             }
@@ -110,7 +109,7 @@ public class DisplayLinesView extends View {
      * @param line
      */
     public void selectLine(Line line, VBox owner) {
-//        linesListView.getSelectionModel().clearSelection();
+        linesListView.getSelectionModel().clearSelection();
         String password = PlatformFactory.getPlatform().getSettingService().retrieve("password" + line.getId());
         if (password != null) {
             try {
