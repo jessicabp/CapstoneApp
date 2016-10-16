@@ -23,6 +23,7 @@ public class LocalDatabase {
      */
     public static void setUpLocalDatabase() {
         try {
+            // Get database location
             final File db = new File(PlatformFactory.getPlatform().getPrivateStorage(), "TrapTrackerDatabase");
             dbUrl = "jdbc:sqlite:" + db.getAbsolutePath();
         } catch (IOException ex) {
@@ -30,6 +31,7 @@ public class LocalDatabase {
         }
 
         try {
+            // Get sql access for platform
             if (JavaFXPlatform.isAndroid()) {
                 Class.forName("org.sqldroid.SQLDroidDriver");
             } else if (JavaFXPlatform.isIOS()) {
@@ -38,15 +40,12 @@ public class LocalDatabase {
                 Class.forName("org.sqlite.JDBC");
             }
 
+            // Create database connection
             final Connection dbConnection = DriverManager.getConnection(dbUrl);
 
+            // Create tables if they don't already exist
             if (dbConnection != null) {
                 final Statement stmt = dbConnection.createStatement();
-                // TODO: remove table deletion
-//                stmt.executeUpdate("DROP TABLE IF EXISTS lines");
-//                stmt.executeUpdate("DROP TABLE IF EXISTS traps");
-//                stmt.executeUpdate("DROP TABLE IF EXISTS captures");
-//                stmt.executeUpdate("DROP TABLE IF EXISTS animals");
                 stmt.executeUpdate("CREATE TABLE IF NOT EXISTS lines (" +
                                    "id INTEGER PRIMARY KEY NOT NULL, " +
                                    "name TEXT NOT NULL, " +

@@ -58,6 +58,10 @@ public class EnterDataView extends View {
         animalList = fetchedAnimalList;
     }
 
+    public static List<Animal> getAnimalList() {
+        return animalList;
+    }
+
     /**
      * Sets up the buttons for selecting an animal (popular or other), entering maintenance, and saving the capture
      */
