@@ -12,7 +12,6 @@
     <orderEntry type="module" module-name="CapstoneApp_main" />
     <orderEntry type="library" name="Gradle: org.javafxports:jfxdvk:8.60.7" level="project" />
     <orderEntry type="library" name="Gradle: com.gluonhq:charm:3.0.0" level="project" />
-    <orderEntry type="library" name="Gradle: org.json:json:20160810" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.gluonhq:charm-android:3.0.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.sqldroid:sqldroid:1.0.3" level="project" />
   </component>

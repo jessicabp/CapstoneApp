@@ -11,6 +11,5 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="CapstoneApp_main" />
     <orderEntry type="library" name="Gradle: com.gluonhq:charm:3.0.0" level="project" />
-    <orderEntry type="library" name="Gradle: org.json:json:20160810" level="project" />
   </component>
 </module>

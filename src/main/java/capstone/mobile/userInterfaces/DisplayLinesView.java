@@ -41,12 +41,11 @@ public class DisplayLinesView extends View {
     private int            NO_PERMISSIONS = 0;
 
     /**
-     * Listener for the side menu bar selections
+     * Listener to detect when a new line has been selected
      */
     private final ChangeListener listener = (obs, oldItem, newLine) -> {
         if (newLine != null) {
             Line line = (Line) newLine;
-            System.out.println(line.getName());
             selectLine(line, controls);
         }
     };
@@ -69,9 +68,9 @@ public class DisplayLinesView extends View {
         // Create filter so users can search lines
         filter.setPromptText("Search");
         filter.textProperty().addListener((observable, oldValue, newValue) -> {
-            linesListView.getSelectionModel().selectedItemProperty().removeListener(listener);
+            // When editing search text clear selection to prevent issue where password entry appears repeatedly
             linesListView.getSelectionModel().clearSelection();
-            linesListView.getSelectionModel().selectedItemProperty().addListener(listener);
+            // Filter results by search term
             String             search = filter.getText().toLowerCase();
             FilteredList<Line> f      = new FilteredList<>(observableLinesList);
             f.setPredicate(s -> s.getName().toLowerCase().contains(search));
@@ -93,7 +92,7 @@ public class DisplayLinesView extends View {
             }
         });
 
-        // Addd listener to detect when a line has been selected
+        // Add listener to detect when a line has been selected
         linesListView.getSelectionModel().selectedItemProperty().addListener(listener);
 
         // Add items to VBox
