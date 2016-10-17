@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Used to store what has been found in a trap along with the time.
  */
-public class Capture {
+public class Catch {
 
     private int  trapId;
     private long time;
@@ -17,7 +17,7 @@ public class Capture {
      * @param trapId   The ID number of the trap
      * @param animalId The ID number of the animal
      */
-    public Capture(int trapId, int animalId) {
+    public Catch(int trapId, int animalId) {
         this.trapId = trapId;
         this.animalId = animalId;
         time = new Date().getTime();
@@ -28,9 +28,9 @@ public class Capture {
      *
      * @param trapId   The ID number of the trap
      * @param animalId The ID of the animal
-     * @param time     Timestamp containing the capture time
+     * @param time     Timestamp containing the catch time
      */
-    public Capture(int trapId, int animalId, long time) {
+    public Catch(int trapId, int animalId, long time) {
         this.trapId = trapId;
         this.animalId = animalId;
         this.time = time;

@@ -15,7 +15,7 @@ import org.evosuite.runtime.sandbox.Sandbox;
 import org.evosuite.runtime.sandbox.Sandbox.SandboxMode;
 
 @EvoSuiteClassExclude
-public class Capture_ESTest_scaffolding {
+public class Catch_ESTest_scaffolding {
 
   private static final java.util.Properties defaultProperties = (java.util.Properties) java.lang.System.getProperties().clone(); 
 
@@ -23,7 +23,7 @@ public class Capture_ESTest_scaffolding {
 
   @BeforeClass 
   public static void initEvoSuiteFramework() { 
-    org.evosuite.runtime.RuntimeSettings.className = "capstone.mobile.models.Capture"; 
+    org.evosuite.runtime.RuntimeSettings.className = "capstone.mobile.models.Catch";
     org.evosuite.runtime.GuiSupport.initialize(); 
     org.evosuite.runtime.RuntimeSettings.maxNumberOfThreads = 100; 
     org.evosuite.runtime.RuntimeSettings.maxNumberOfIterationsPerLoop = 10000; 
@@ -78,8 +78,8 @@ public class Capture_ESTest_scaffolding {
   }
 
   private static void initializeClasses() {
-    org.evosuite.runtime.classhandling.ClassStateSupport.initializeClasses(Capture_ESTest_scaffolding.class.getClassLoader() ,
-      "capstone.mobile.models.Capture"
+    org.evosuite.runtime.classhandling.ClassStateSupport.initializeClasses(Catch_ESTest_scaffolding.class.getClassLoader() ,
+      "capstone.mobile.models.Catch"
     );
   } 
 

@@ -83,7 +83,13 @@ public class SetUpWalkView extends View {
         appBar.setTitleText("Set Up Walk");
         appBar.getActionItems().add(MaterialDesignIcon.UNDO.button(e -> App.getInstance().switchToPreviousView()));
 
-        renderTraps();
+        if (walk.getLine().getTraps().size() > 0) {
+            renderTraps();
+        } else {
+            // TODO:ask if walking in direction of increasing or decreasing numbers
+            walk.startWalkWithoutTraps();
+            App.getInstance().switchScreen(App.CREATE_TRAP_VIEW);
+        }
     }
 
 

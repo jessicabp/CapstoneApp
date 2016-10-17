@@ -47,7 +47,7 @@ public class LocalDatabaseTest {
 
     @Test
     public void setUpLocalDatabaseTest() {
-        List<String> tables = asList("lines", "traps", "captures", "animals");
+        List<String> tables = asList("lines", "traps", "catches", "animals");
 
         // Delete the existing database file, then create the database
         db.delete();

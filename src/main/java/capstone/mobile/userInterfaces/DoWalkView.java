@@ -27,7 +27,7 @@ import java.util.List;
 
 
 /**
- * Displays where the next trap is and the users position. Once found, capture and maintenance data may be created for
+ * Displays where the next trap is and the users position. Once found, catch and maintenance data may be created for
  * the trap, or the trap may be skipped.
  */
 public class DoWalkView extends View {

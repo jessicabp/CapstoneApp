@@ -2,7 +2,7 @@ package capstone.mobile.userInterfaces;
 
 import capstone.mobile.App;
 import capstone.mobile.models.Animal;
-import capstone.mobile.models.Capture;
+import capstone.mobile.models.Catch;
 import capstone.mobile.models.Walk;
 import capstone.mobile.other.CustomGridPane;
 import capstone.mobile.other.CustomPopupView;
@@ -23,7 +23,7 @@ import java.util.List;
 
 
 /**
- * View for users to enter data about a capture (e.g. animal/maintenance)
+ * View for users to enter data about a catch (e.g. animal/maintenance)
  */
 public class EnterDataView extends View {
 
@@ -63,7 +63,7 @@ public class EnterDataView extends View {
     }
 
     /**
-     * Sets up the buttons for selecting an animal (popular or other), entering maintenance, and saving the capture
+     * Sets up the buttons for selecting an animal (popular or other), entering maintenance, and saving the catch
      */
     private void showButtons() {
         // Create VBox for all items
@@ -158,9 +158,9 @@ public class EnterDataView extends View {
         Button done = new Button("DONE");
         done.setMaxWidth(Double.MAX_VALUE);
         done.setOnAction(e -> {
-            // Check an animal is selected, then create capture and finish trap
+            // Check an animal is selected, then create catch and finish trap
             if ((group.getSelectedToggle() != null) && (!group.getSelectedToggle().getUserData().equals("Other") || (otherGroup.getSelectedToggle() != null))) {
-                walk.addCapture(new Capture(walk.getCurrentTrap().getId(), animal));
+                walk.addCatch(new Catch(walk.getCurrentTrap().getId(), animal));
                 selectedMain = null;
                 selectedOther = null;
                 if (walk.getCurrentTrap().equals(walk.getEndTrap())) {

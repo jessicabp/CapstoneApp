@@ -9,7 +9,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.evosuite.runtime.EvoAssertions.*;
 import capstone.mobile.dataHandlers.LocalDatabase;
-import capstone.mobile.models.Capture;
+import capstone.mobile.models.Catch;
 import capstone.mobile.models.Line;
 import capstone.mobile.models.Trap;
 import capstone.mobile.models.Walk;
@@ -110,17 +110,17 @@ public class LocalDatabase_ESTest extends LocalDatabase_ESTest_scaffolding {
   //Test case number: 5
   /*
    * 6 covered goals:
-   * Goal 1. capstone.mobile.dataHandlers.LocalDatabase.addCapture(Lcapstone/mobile/models/Capture;)V: Line 143
-   * Goal 2. capstone.mobile.dataHandlers.LocalDatabase.addCapture(Lcapstone/mobile/models/Capture;)V: Line 147
-   * Goal 3. capstone.mobile.dataHandlers.LocalDatabase.addCapture(Lcapstone/mobile/models/Capture;)V: Line 148
-   * Goal 4. capstone.mobile.dataHandlers.LocalDatabase.addCapture(Lcapstone/mobile/models/Capture;)V: Line 150
-   * Goal 5. [METHOD] capstone.mobile.dataHandlers.LocalDatabase.addCapture(Lcapstone/mobile/models/Capture;)V
-   * Goal 6. [METHODNOEX] capstone.mobile.dataHandlers.LocalDatabase.addCapture(Lcapstone/mobile/models/Capture;)V
+   * Goal 1. capstone.mobile.dataHandlers.LocalDatabase.addCatch(Lcapstone/mobile/models/Catch;)V: Line 143
+   * Goal 2. capstone.mobile.dataHandlers.LocalDatabase.addCatch(Lcapstone/mobile/models/Catch;)V: Line 147
+   * Goal 3. capstone.mobile.dataHandlers.LocalDatabase.addCatch(Lcapstone/mobile/models/Catch;)V: Line 148
+   * Goal 4. capstone.mobile.dataHandlers.LocalDatabase.addCatch(Lcapstone/mobile/models/Catch;)V: Line 150
+   * Goal 5. [METHOD] capstone.mobile.dataHandlers.LocalDatabase.addCatch(Lcapstone/mobile/models/Catch;)V
+   * Goal 6. [METHODNOEX] capstone.mobile.dataHandlers.LocalDatabase.addCatch(Lcapstone/mobile/models/Catch;)V
    */
 
   @Test(timeout = 4000)
   public void test05()  throws Throwable  {
-      LocalDatabase.addCapture((Capture) null);
+      LocalDatabase.addCatch((Catch) null);
   }
 
   //Test case number: 6

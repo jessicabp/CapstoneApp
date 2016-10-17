@@ -29,13 +29,14 @@ public class Trap {
      * @param side      The side of the path the trap is on, true indicates on left in ascending order
      */
     public Trap(int lineId, int number, double latitude, double longitude, boolean side) {
+        this.id = 0;
         this.lineId = lineId;
         this.number = number;
         this.latitude = latitude;
         this.longitude = longitude;
         this.side = side;
-        this.moved = false;
         this.broken = false;
+        this.moved = false;
     }
 
     /**

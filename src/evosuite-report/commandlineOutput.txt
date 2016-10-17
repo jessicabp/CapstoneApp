@@ -1212,14 +1212,14 @@ java.lang.RuntimeException: Failed to load capstone.mobile.userInterfaces.SetUpW
 * Computation finished
 [MASTER] 03:47:49.149 [main] ERROR SearchStatistics - No statistics has been saved because EvoSuite failed to generate any test case
 [MASTER] 03:47:49.250 [main] ERROR TestGeneration - failed to write statistics data
-* Current class: capstone.mobile.models.Capture
-* Going to generate test cases for class: capstone.mobile.models.Capture
+* Current class: capstone.mobile.models.Catch
+* Going to generate test cases for class: capstone.mobile.models.Catch
 * Starting client
 * Connecting to master process on port 16580
 * Analyzing classpath: 
 * Inheritance tree loaded from /var/folders/rv/4n5tsxl154g7_r09hc8xy6nw0000gn/T/ES_inheritancetree5203731066044580492.xml.gz
 * Finished analyzing classpath
-* Generating tests for class capstone.mobile.models.Capture
+* Generating tests for class capstone.mobile.models.Catch
 * Test criteria:
   - Line Coverage
   - Branch Coverage
@@ -1280,7 +1280,7 @@ java.lang.RuntimeException: Failed to load capstone.mobile.userInterfaces.SetUpW
 * Generating assertions
 * Resulting test suite's mutation score: 97%
 * Compiling and checking tests
-* Writing JUnit test case 'Capture_ESTest' to evosuite-tests
+* Writing JUnit test case 'Catch_ESTest' to evosuite-tests
 * Done!
 
 * Computation finished

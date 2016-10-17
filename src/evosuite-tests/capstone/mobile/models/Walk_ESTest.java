@@ -8,7 +8,7 @@ package capstone.mobile.models;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.evosuite.runtime.EvoAssertions.*;
-import capstone.mobile.models.Capture;
+import capstone.mobile.models.Catch;
 import capstone.mobile.models.Line;
 import capstone.mobile.models.Trap;
 import capstone.mobile.models.Walk;
@@ -228,33 +228,33 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
   /*
    * 20 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
-   * Goal 2. capstone.mobile.models.Walk.addCapture(Lcapstone/mobile/models/Capture;)V: root-Branch
-   * Goal 3. capstone.mobile.models.Walk.getCaptures()Ljava/util/List;: root-Branch
-   * Goal 4. Branch capstone.mobile.models.Walk.getCaptures()Ljava/util/List;: root-Branch in context: capstone.mobile.models.Walk:getCaptures()Ljava/util/List;
-   * Goal 5. Branch capstone.mobile.models.Walk.addCapture(Lcapstone/mobile/models/Capture;)V: root-Branch in context: capstone.mobile.models.Walk:addCapture(Lcapstone/mobile/models/Capture;)V
+   * Goal 2. capstone.mobile.models.Walk.addCatch(Lcapstone/mobile/models/Catch;)V: root-Branch
+   * Goal 3. capstone.mobile.models.Walk.getCatches()Ljava/util/List;: root-Branch
+   * Goal 4. Branch capstone.mobile.models.Walk.getCatches()Ljava/util/List;: root-Branch in context: capstone.mobile.models.Walk:getCatches()Ljava/util/List;
+   * Goal 5. Branch capstone.mobile.models.Walk.addCatch(Lcapstone/mobile/models/Catch;)V: root-Branch in context: capstone.mobile.models.Walk:addCatch(Lcapstone/mobile/models/Catch;)V
    * Goal 6. Branch capstone.mobile.models.Walk.<init>()V: root-Branch in context: capstone.mobile.models.Walk:<init>()V
-   * Goal 7. [Output]: capstone.mobile.models.Walk.getCaptures()Ljava/util/List;:NonNull:java.util.List:isEmpty()Z:False
-   * Goal 8. [Output]: capstone.mobile.models.Walk.getCaptures()Ljava/util/List;:NonNull:java.util.List:size()I:Positive
+   * Goal 7. [Output]: capstone.mobile.models.Walk.getCatches()Ljava/util/List;:NonNull:java.util.List:isEmpty()Z:False
+   * Goal 8. [Output]: capstone.mobile.models.Walk.getCatches()Ljava/util/List;:NonNull:java.util.List:size()I:Positive
    * Goal 9. capstone.mobile.models.Walk.<init>()V: Line 33
    * Goal 10. capstone.mobile.models.Walk.<init>()V: Line 34
-   * Goal 11. capstone.mobile.models.Walk.addCapture(Lcapstone/mobile/models/Capture;)V: Line 177
-   * Goal 12. capstone.mobile.models.Walk.addCapture(Lcapstone/mobile/models/Capture;)V: Line 178
-   * Goal 13. capstone.mobile.models.Walk.addCapture(Lcapstone/mobile/models/Capture;)V: Line 179
-   * Goal 14. capstone.mobile.models.Walk.getCaptures()Ljava/util/List;: Line 168
+   * Goal 11. capstone.mobile.models.Walk.addCatch(Lcapstone/mobile/models/Catch;)V: Line 177
+   * Goal 12. capstone.mobile.models.Walk.addCatch(Lcapstone/mobile/models/Catch;)V: Line 178
+   * Goal 13. capstone.mobile.models.Walk.addCatch(Lcapstone/mobile/models/Catch;)V: Line 179
+   * Goal 14. capstone.mobile.models.Walk.getCatches()Ljava/util/List;: Line 168
    * Goal 15. [METHOD] capstone.mobile.models.Walk.<init>()V
-   * Goal 16. [METHOD] capstone.mobile.models.Walk.addCapture(Lcapstone/mobile/models/Capture;)V
-   * Goal 17. [METHOD] capstone.mobile.models.Walk.getCaptures()Ljava/util/List;
+   * Goal 16. [METHOD] capstone.mobile.models.Walk.addCatch(Lcapstone/mobile/models/Catch;)V
+   * Goal 17. [METHOD] capstone.mobile.models.Walk.getCatches()Ljava/util/List;
    * Goal 18. [METHODNOEX] capstone.mobile.models.Walk.<init>()V
-   * Goal 19. [METHODNOEX] capstone.mobile.models.Walk.addCapture(Lcapstone/mobile/models/Capture;)V
-   * Goal 20. [METHODNOEX] capstone.mobile.models.Walk.getCaptures()Ljava/util/List;
+   * Goal 19. [METHODNOEX] capstone.mobile.models.Walk.addCatch(Lcapstone/mobile/models/Catch;)V
+   * Goal 20. [METHODNOEX] capstone.mobile.models.Walk.getCatches()Ljava/util/List;
    */
 
   @Test(timeout = 4000)
   public void test05()  throws Throwable  {
       Walk walk0 = new Walk();
-      Capture capture0 = new Capture(0, 0, 0);
-      walk0.addCapture(capture0);
-      List<Capture> list0 = walk0.getCaptures();
+      Catch catch0 = new Catch(0, 0, 0);
+      walk0.addCatch(catch0);
+      List<Catch> list0 = walk0.getCatches();
       assertFalse(list0.isEmpty());
   }
 
@@ -655,25 +655,25 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
   /*
    * 12 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
-   * Goal 2. capstone.mobile.models.Walk.addCaptureFromDB(Lcapstone/mobile/models/Capture;)V: root-Branch
-   * Goal 3. Branch capstone.mobile.models.Walk.addCaptureFromDB(Lcapstone/mobile/models/Capture;)V: root-Branch in context: capstone.mobile.models.Walk:addCaptureFromDB(Lcapstone/mobile/models/Capture;)V
+   * Goal 2. capstone.mobile.models.Walk.addCatchFromDB(Lcapstone/mobile/models/Catch;)V: root-Branch
+   * Goal 3. Branch capstone.mobile.models.Walk.addCatchFromDB(Lcapstone/mobile/models/Catch;)V: root-Branch in context: capstone.mobile.models.Walk:addCatchFromDB(Lcapstone/mobile/models/Catch;)V
    * Goal 4. Branch capstone.mobile.models.Walk.<init>()V: root-Branch in context: capstone.mobile.models.Walk:<init>()V
    * Goal 5. capstone.mobile.models.Walk.<init>()V: Line 33
    * Goal 6. capstone.mobile.models.Walk.<init>()V: Line 34
-   * Goal 7. capstone.mobile.models.Walk.addCaptureFromDB(Lcapstone/mobile/models/Capture;)V: Line 187
-   * Goal 8. capstone.mobile.models.Walk.addCaptureFromDB(Lcapstone/mobile/models/Capture;)V: Line 188
+   * Goal 7. capstone.mobile.models.Walk.addCatchFromDB(Lcapstone/mobile/models/Catch;)V: Line 187
+   * Goal 8. capstone.mobile.models.Walk.addCatchFromDB(Lcapstone/mobile/models/Catch;)V: Line 188
    * Goal 9. [METHOD] capstone.mobile.models.Walk.<init>()V
-   * Goal 10. [METHOD] capstone.mobile.models.Walk.addCaptureFromDB(Lcapstone/mobile/models/Capture;)V
+   * Goal 10. [METHOD] capstone.mobile.models.Walk.addCatchFromDB(Lcapstone/mobile/models/Catch;)V
    * Goal 11. [METHODNOEX] capstone.mobile.models.Walk.<init>()V
-   * Goal 12. [METHODNOEX] capstone.mobile.models.Walk.addCaptureFromDB(Lcapstone/mobile/models/Capture;)V
+   * Goal 12. [METHODNOEX] capstone.mobile.models.Walk.addCatchFromDB(Lcapstone/mobile/models/Catch;)V
    */
 
   @Test(timeout = 4000)
   public void test19()  throws Throwable  {
       Walk walk0 = new Walk();
-      Capture capture0 = new Capture(2, 2);
-      walk0.addCaptureFromDB(capture0);
-      assertEquals(2, capture0.getAnimalId());
+      Catch catch0 = new Catch(2, 2);
+      walk0.addCatchFromDB(catch0);
+      assertEquals(2, catch0.getAnimalId());
   }
 
   //Test case number: 20
@@ -715,24 +715,24 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
   /*
    * 13 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
-   * Goal 2. capstone.mobile.models.Walk.getCaptures()Ljava/util/List;: root-Branch
-   * Goal 3. Branch capstone.mobile.models.Walk.getCaptures()Ljava/util/List;: root-Branch in context: capstone.mobile.models.Walk:getCaptures()Ljava/util/List;
+   * Goal 2. capstone.mobile.models.Walk.getCatches()Ljava/util/List;: root-Branch
+   * Goal 3. Branch capstone.mobile.models.Walk.getCatches()Ljava/util/List;: root-Branch in context: capstone.mobile.models.Walk:getCatches()Ljava/util/List;
    * Goal 4. Branch capstone.mobile.models.Walk.<init>()V: root-Branch in context: capstone.mobile.models.Walk:<init>()V
-   * Goal 5. [Output]: capstone.mobile.models.Walk.getCaptures()Ljava/util/List;:NonNull:java.util.List:isEmpty()Z:True
-   * Goal 6. [Output]: capstone.mobile.models.Walk.getCaptures()Ljava/util/List;:NonNull:java.util.List:size()I:Zero
+   * Goal 5. [Output]: capstone.mobile.models.Walk.getCatches()Ljava/util/List;:NonNull:java.util.List:isEmpty()Z:True
+   * Goal 6. [Output]: capstone.mobile.models.Walk.getCatches()Ljava/util/List;:NonNull:java.util.List:size()I:Zero
    * Goal 7. capstone.mobile.models.Walk.<init>()V: Line 33
    * Goal 8. capstone.mobile.models.Walk.<init>()V: Line 34
-   * Goal 9. capstone.mobile.models.Walk.getCaptures()Ljava/util/List;: Line 168
+   * Goal 9. capstone.mobile.models.Walk.getCatches()Ljava/util/List;: Line 168
    * Goal 10. [METHOD] capstone.mobile.models.Walk.<init>()V
-   * Goal 11. [METHOD] capstone.mobile.models.Walk.getCaptures()Ljava/util/List;
+   * Goal 11. [METHOD] capstone.mobile.models.Walk.getCatches()Ljava/util/List;
    * Goal 12. [METHODNOEX] capstone.mobile.models.Walk.<init>()V
-   * Goal 13. [METHODNOEX] capstone.mobile.models.Walk.getCaptures()Ljava/util/List;
+   * Goal 13. [METHODNOEX] capstone.mobile.models.Walk.getCatches()Ljava/util/List;
    */
 
   @Test(timeout = 4000)
   public void test21()  throws Throwable  {
       Walk walk0 = new Walk();
-      List<Capture> list0 = walk0.getCaptures();
+      List<Catch> list0 = walk0.getCatches();
       assertTrue(list0.isEmpty());
   }
 

@@ -63,7 +63,7 @@ public class LocalDatabase {
                                    "moved INTEGER NOT NULL, " +
                                    "broken INTEGER NOT NULL, " +
                                    "changed TEXT)");
-                stmt.executeUpdate("CREATE TABLE IF NOT EXISTS captures (" +
+                stmt.executeUpdate("CREATE TABLE IF NOT EXISTS catches (" +
                                    "trapId INTEGER NOT NULL, " +
                                    "time REAL NOT NULL, " +
                                    "animalId INTEGER NOT NULL)");
@@ -113,12 +113,12 @@ public class LocalDatabase {
                 DisplayLinesView.addToObservableLinesList(line);
             }
             linesRS.close();
-            // load captures
-            final ResultSet captureRS = stmt.executeQuery("SELECT * FROM captures;");
-            while (captureRS.next()) {
-                walk.addCaptureFromDB(new Capture(captureRS.getInt("trapID"), captureRS.getInt("animalID"), captureRS.getLong("time")));
+            // load catches
+            final ResultSet catchRS = stmt.executeQuery("SELECT * FROM catches;");
+            while (catchRS.next()) {
+                walk.addCatchFromDB(new Catch(catchRS.getInt("trapID"), catchRS.getInt("animalID"), catchRS.getLong("time")));
             }
-            captureRS.close();
+            catchRS.close();
             // load animal
             final ResultSet animalRS = stmt.executeQuery("SELECT * FROM animals;");
             while (animalRS.next()) {
@@ -134,14 +134,14 @@ public class LocalDatabase {
     }
 
     /**
-     * Creates a new capture entry in the database
+     * Creates a new catch entry in the database
      *
-     * @param capture
+     * @param newCatch
      */
-    public static void addCapture(Capture capture) {
+    public static void addCatch(Catch newCatch) {
         try (Connection dbConnection = DriverManager.getConnection(dbUrl)) {
             final Statement stmt = dbConnection.createStatement();
-            stmt.executeUpdate("insert into captures values(" + capture.getTrapId() + ", " + capture.getTime() + ", " + capture.getAnimalId() + ")");
+            stmt.executeUpdate("insert into catches values(" + newCatch.getTrapId() + ", " + newCatch.getTime() + ", " + newCatch.getAnimalId() + ")");
             stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -173,7 +173,7 @@ public class LocalDatabase {
     public static void addNewTrap(Trap trap) {
         try (Connection dbConnection = DriverManager.getConnection(dbUrl)) {
             final Statement stmt = dbConnection.createStatement();
-            stmt.executeUpdate("insert into traps(id, lineId, number, latitude, longitude, side, moved, broken) values(NULL, " + trap.getLineId() + ", " + trap.getNumber() + ", " + trap.getLatitude() + ", " + trap.getLongitude() + ", " + (trap.getSide() ? 1 : 0) + ", 0, 0)");
+            stmt.executeUpdate("insert into traps(id, lineId, number, latitude, longitude, side, moved, broken) values(0, " + trap.getLineId() + ", " + trap.getNumber() + ", " + trap.getLatitude() + ", " + trap.getLongitude() + ", " + (trap.getSide() ? 1 : 0) + ", 0, 0)");
             stmt.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -217,15 +217,29 @@ public class LocalDatabase {
     }
 
     /**
-     * Remove all captures, mark all traps as not changed, delete traps without ids (newly created traps)
+     * Remove all catches
      */
-    public static void endWalk() {
+    public static void removeCatches() {
         try (Connection dbConnection = DriverManager.getConnection(dbUrl)) {
             if (dbConnection != null) {
                 final Statement stmt = dbConnection.createStatement();
-                stmt.executeUpdate("DELETE FROM captures");
+                stmt.executeUpdate("DELETE FROM catches");
+                stmt.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Mark all traps as not changed, delete traps without ids (newly created traps)
+     */
+    public static void removeNewTraps() {
+        try (Connection dbConnection = DriverManager.getConnection(dbUrl)) {
+            if (dbConnection != null) {
+                final Statement stmt = dbConnection.createStatement();
                 stmt.executeUpdate("update traps set changed = NULL;");
-                stmt.executeUpdate("DELETE FROM traps WHERE id = NULL");
+                stmt.executeUpdate("DELETE FROM traps WHERE id = 0");
                 stmt.close();
             }
         } catch (SQLException e) {

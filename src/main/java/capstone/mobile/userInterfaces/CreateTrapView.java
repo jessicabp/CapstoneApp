@@ -5,6 +5,7 @@ import capstone.mobile.models.Trap;
 import capstone.mobile.models.Walk;
 import capstone.mobile.other.CustomGridPane;
 import capstone.mobile.other.CustomMapView;
+import capstone.mobile.other.CustomPopupView;
 import capstone.mobile.other.Validator;
 import com.gluonhq.charm.down.common.PlatformFactory;
 import com.gluonhq.charm.down.common.Position;
@@ -24,6 +25,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 
 import java.util.List;
 
@@ -166,7 +168,7 @@ public class CreateTrapView extends View {
         // Save Button.
         saveButton = new Button("Save");
         saveButton.setMaxWidth(Double.MAX_VALUE);
-        saveButton.setOnAction(e -> saveNewTrap());
+        saveButton.setOnAction(e -> saveNewTrap(controls));
 
         // Cancel Button.
         Button cancelButton = new Button("Cancel");
@@ -277,8 +279,10 @@ public class CreateTrapView extends View {
 
     /**
      * TODO: Comment
+     *
+     * @param popUpOwner
      */
-    private void saveNewTrap() {
+    private void saveNewTrap(VBox popUpOwner) {
         boolean validInputs = true;
 
         // Validate trap number.
@@ -332,10 +336,44 @@ public class CreateTrapView extends View {
             Trap newTrap = new Trap(lineId, trapNumber, latitude, longitude, side);
 
             walk.addNewTrap(newTrap);
-            App.getInstance().switchScreen(App.DO_WALK_VIEW);
+
+            if (walk.getCurrentTrap() != null) {
+                App.getInstance().switchScreen(App.DO_WALK_VIEW);
+            } else {
+                askIfDoneAddingTraps(popUpOwner);
+            }
         } else {
             saveButton.setText("Please complete all details"); // TODO: better way?
             saveButton.setWrapText(true);
         }
+    }
+
+    /**
+     * Create popup to ask if the user wants to add another trap or finish the walk
+     * Only call if all traps on the line are new
+     *
+     * @param ownerNode
+     */
+    private void askIfDoneAddingTraps(VBox ownerNode) {
+        CustomPopupView popup        = new CustomPopupView(ownerNode);
+        Text            errorMessage = new Text("Do you want to create a new trap or finish the walk?");
+        errorMessage.wrappingWidthProperty().bind(ownerNode.widthProperty().subtract(100));
+        // Button to create trap
+        Button newTrap = new Button("Create Trap");
+        newTrap.setOnAction(ev -> {
+            popup.hide();
+            resetControls();
+        });
+        // Button to finish walk
+        Button finish = new Button("Finish Walk");
+        finish.setOnAction(ev -> {
+            popup.hide();
+            App.getInstance().switchScreen(App.END_WALK_VIEW);
+        });
+        VBox popupVB = new VBox(20, errorMessage, newTrap, finish);
+        popupVB.setPadding(new Insets(40, 40, 40, 40));
+        popupVB.setAlignment(Pos.TOP_CENTER);
+        popup.setContent(popupVB);
+        popup.show();
     }
 }

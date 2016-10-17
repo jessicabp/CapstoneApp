@@ -119,7 +119,7 @@ public class LocalDatabase_ESTest_scaffolding {
       "capstone.mobile.dataHandlers.LocalDatabase$$Lambda$1",
       "capstone.mobile.models.Trap",
       "capstone.mobile.models.Line",
-      "capstone.mobile.models.Capture",
+      "capstone.mobile.models.Catch",
       "capstone.mobile.models.Animal"
     );
   } 

@@ -3,16 +3,10 @@ package capstone.mobile.models;
 import capstone.mobile.App;
 import capstone.mobile.dataHandlers.DataUnavailableException;
 import capstone.mobile.dataHandlers.LocalDatabase;
-import capstone.mobile.other.CustomMapView;
-import capstone.mobile.userInterfaces.DoWalkView;
 import com.gluonhq.charm.down.common.PlatformFactory;
 import com.gluonhq.charm.down.common.SettingService;
-import gluonhq.maps.MapPoint;
-import gluonhq.maps.PoiLayer;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +24,7 @@ public class Walk {
     private int  index;
     private Trap endTrap;
     private Trap currentTrap;
-    private List<Capture> captures     = new ArrayList<>();
+    private List<Catch> catches     = new ArrayList<>();
     private List<Trap>    changedTraps = new ArrayList<>();
 
     /**
@@ -120,11 +114,6 @@ public class Walk {
         changedTraps.add(trap);
         line.addTrap(trap);
         LocalDatabase.addNewTrap(trap);
-        final Circle        marker   = new Circle(5, Color.YELLOW);
-        final MapPoint      mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
-        final CustomMapView mapview  = DoWalkView.getMapView();
-        final PoiLayer      layer    = DoWalkView.getMarkersLayer();
-        mapview.addMarker(layer, mapPoint, marker);
     }
 
     public boolean isDirection() {
@@ -148,6 +137,19 @@ public class Walk {
     }
 
     /**
+     * Start the walk in an instance where there are no existing traps
+     */
+    public void startWalkWithoutTraps() {
+        walking.setValue(true);
+        currentTrap = null;
+        endTrap = null;
+        direction = true;
+        index = 0;
+        PlatformFactory.getPlatform().getSettingService().remove(App.currentTrapID);
+        PlatformFactory.getPlatform().getSettingService().remove(App.endTrapID);
+    }
+
+    /**
      * Finish the walk, erasing data about the current walk and changing to the home view.
      * Do NOT use unless server has successfully received data.
      */
@@ -156,35 +158,50 @@ public class Walk {
         line = null;
         endTrap = null;
         currentTrap = null;
-        captures = new ArrayList<>();
-        changedTraps = new ArrayList<>();
         final SettingService settingService = PlatformFactory.getPlatform().getSettingService();
         settingService.remove(App.currentLineID);
         settingService.remove(App.currentTrapID);
         settingService.remove(App.endTrapID);
-        LocalDatabase.endWalk();
     }
 
-    public List<Capture> getCaptures() {
-        return captures;
-    }
-
-    /**
-     * Add a capture to the walk and the local database
-     *
-     * @param capture
-     */
-    public void addCapture(Capture capture) {
-        this.captures.add(capture);
-        LocalDatabase.addCapture(capture);
+    public List<Catch> getCatches() {
+        return catches;
     }
 
     /**
-     * Add a capture from the local database to the walk
+     * Add a catch to the walk and the local database
      *
-     * @param capture
+     * @param newCatch
      */
-    public void addCaptureFromDB(Capture capture) {
-        this.captures.add(capture);
+    public void addCatch(Catch newCatch) {
+        this.catches.add(newCatch);
+        LocalDatabase.addCatch(newCatch);
+    }
+
+    /**
+     * Add a catch from the local database to the walk
+     *
+     * @param newCatch
+     */
+    public void addCatchFromDB(Catch newCatch) {
+        this.catches.add(newCatch);
+    }
+
+    /**
+     * Delete changed trap data so it won't be sent more than once.
+     * Do NOT use unless server has successfully received trap data.
+     */
+    public void trapsSent() {
+        changedTraps = new ArrayList<>();
+        LocalDatabase.removeNewTraps();
+    }
+
+    /**
+     * Delete catch data so it won't be sent more than once.
+     * Do NOT use unless server has successfully received catch data.
+     */
+    public void catchesSent() {
+        catches = new ArrayList<>();
+        LocalDatabase.removeCatches();
     }
 }
