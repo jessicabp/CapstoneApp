@@ -170,7 +170,6 @@ public class DoWalkView extends View {
             App.getInstance().switchScreen(App.END_WALK_VIEW);
         } else {
             walk.endCurrentTrap();
-            // TODO: fix refreshing
             // Switch to another view and back to refresh data on screen
             App.getInstance().switchScreen(App.ENTER_DATA_VIEW);
             App.getInstance().switchScreen(App.DO_WALK_VIEW);

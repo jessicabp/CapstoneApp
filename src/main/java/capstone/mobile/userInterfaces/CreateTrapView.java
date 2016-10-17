@@ -29,10 +29,6 @@ import javafx.scene.text.Text;
 
 import java.util.List;
 
-/*
-    TODO: Consider GPS is null and the user wants to use this to create the new trap.
- */
-
 /**
  * Provides ability to create new trap objects while in a walk. The new trap objects coordinates may be obtained from
  * the current GPS position or entered manually. Trap number and side are also required.
@@ -313,6 +309,8 @@ public class CreateTrapView extends View {
         if (mapCoordinatesToggle.isSelected()) {
             if (currentPosition == null) {
                 validInputs = false;
+                mapCoordinatesToggle.setDisable(true);
+                mapCoordinatesToggle.setSelected(false);
             }
         }
 
@@ -348,7 +346,7 @@ public class CreateTrapView extends View {
                 askIfDoneAddingTraps(popUpOwner);
             }
         } else {
-            saveButton.setText("Please complete all details"); // TODO: better way?
+            saveButton.setText("Please complete all details");
             saveButton.setWrapText(true);
         }
     }
