@@ -1,3 +1,5 @@
+package other;
+
 import capstone.mobile.other.Validator;
 import org.junit.Test;
 import org.junit.runner.RunWith;

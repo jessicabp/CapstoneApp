@@ -1,3 +1,5 @@
+package dataHandlers;
+
 import capstone.mobile.dataHandlers.LocalDatabase;
 import capstone.mobile.models.Animal;
 import capstone.mobile.models.Walk;

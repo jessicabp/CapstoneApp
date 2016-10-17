@@ -15,7 +15,7 @@ import java.net.URL;
  */
 public class SendData {
 
-    private static final String HOST             = "traptracker.pythonanywhere.com";
+    private static final String HOST             = "https://traptracker.pythonanywhere.com";
     private static       int    FULFILLED        = 201;
     private static       int    INVALID_PASSWORD = 403;
 
@@ -49,7 +49,7 @@ public class SendData {
      * @return int Response code from put request if successful, else returns 500
      */
     private static int sendCatchesData(Walk walk) {
-        final String location = "https://" + HOST + "/api/catch";
+        final String location = HOST + "/api/catch";
         try {
             final URL                url        = new URL(location);
             final HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
@@ -98,7 +98,7 @@ public class SendData {
      * @return int Response code from put request if successful, else returns 500
      */
     private static int sendTrapsData(Walk walk) {
-        final String location = "https://" + HOST + "/api/trap";
+        final String location = HOST + "/api/trap";
         try {
             final URL                url        = new URL(location);
             final HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
