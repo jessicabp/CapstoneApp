@@ -4,12 +4,14 @@ import capstone.mobile.App;
 import capstone.mobile.models.Trap;
 import capstone.mobile.models.Walk;
 import capstone.mobile.other.CustomMapView;
+import capstone.mobile.other.CustomPopupView;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import gluonhq.maps.MapPoint;
 import gluonhq.maps.PoiLayer;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -86,7 +88,6 @@ public class SetUpWalkView extends View {
         if (walk.getLine().getTraps().size() > 0) {
             renderTraps();
         } else {
-            // TODO:ask if walking in direction of increasing or decreasing numbers
             walk.startWalkWithoutTraps();
             App.getInstance().switchScreen(App.CREATE_TRAP_VIEW);
         }
@@ -97,6 +98,13 @@ public class SetUpWalkView extends View {
      * TODO: Comment
      */
     private void renderTraps() {
+        // Remove all odl traps
+        startMarkersLayer = startMapView.clearMarkers(startMarkersLayer);
+        startNumbersLayer = startMapView.clearMarkers(startNumbersLayer);
+        endMarkersLayer = endMapView.clearMarkers(endMarkersLayer);
+        endNumbersLayer = endMapView.clearMarkers(endNumbersLayer);
+
+        // Add all traps for current line
         List<Trap> traps = walk.getLine().getTraps();
         for (Trap trap : traps) {
             MapPoint mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
@@ -117,9 +125,11 @@ public class SetUpWalkView extends View {
             endMapView.addMarker(endNumbersLayer, mapPoint, numberEnd);
         }
 
+        // Center start trap map on first trap
         Trap s = traps.get(0);
         startMapView.setCenter(s.getLatitude(), s.getLongitude());
 
+        // Center end trap map on last trap
         Trap e = traps.get(traps.size() - 1);
         endMapView.setCenter(e.getLatitude(), e.getLongitude());
     }

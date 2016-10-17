@@ -21,10 +21,11 @@ import javafx.scene.text.TextAlignment;
 
 public class EndWalkView extends View {
 
-    private final int[] count            = {0}; // stored as an array so it is effectively final for use in lambda expression
     private Walk walk;
+    private Button send;
     private       int   OKAY             = 0;
     private       int   INVALID_PASSWORD = 1;
+    private final int[] count            = {0}; // stored as an array so it is effectively final for use in lambda expression
 
     public EndWalkView(String name, Walk walk) {
         super(name);
@@ -37,7 +38,7 @@ public class EndWalkView extends View {
         setCenter(controls);
 
         // Add button to manually send data to server and finish walk
-        Button send = new Button("Click to send to server once internet is connected");
+        send = new Button("Click to send to server once internet is connected");
         send.setWrapText(true);
         send.setTextAlignment(TextAlignment.CENTER);
         send.setOnAction(e -> sendData(send, controls));
@@ -55,6 +56,7 @@ public class EndWalkView extends View {
         appBar.setTitleText("Finished: " + walk.getLine().getName());
 
         count[0] = 0;
+        send.setText("Click to send to server once internet is connected");
     }
 
     /**

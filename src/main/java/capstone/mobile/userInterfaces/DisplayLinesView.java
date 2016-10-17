@@ -81,7 +81,6 @@ public class DisplayLinesView extends View {
         // Add listener to cells
         linesListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newLine) -> {
             if (newLine != null) {
-                LocalDatabase.setCurrentLine(newLine);
                 selectLine(newLine, controls);
             }
         });
@@ -113,6 +112,7 @@ public class DisplayLinesView extends View {
         if (password != null) {
             try {
                 if (RetrieveData.checkAuthorisation(line.getId(), password) > NO_PERMISSIONS) {
+                    LocalDatabase.setCurrentLine(line);
                     PlatformFactory.getPlatform().getSettingService().store("password" + line.getId(), password);
                     walk.setLine(line);
                     App.getInstance().switchScreen(App.SET_UP_WALK_VIEW);
@@ -160,6 +160,7 @@ public class DisplayLinesView extends View {
             try {
                 String enteredPassword = passwordField.getText();
                 if (RetrieveData.checkAuthorisation(line.getId(), enteredPassword) > NO_PERMISSIONS) {
+                    LocalDatabase.setCurrentLine(line);
                     PlatformFactory.getPlatform().getSettingService().store("password" + line.getId(), enteredPassword);
                     walk.setLine(line);
                     passwordPopup.hide();

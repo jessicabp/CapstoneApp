@@ -30,7 +30,15 @@ public class Walk {
     /**
      * direction == Trap.side when the user will find the trap on the left. Direction will be true when trap number increases (e.g. start at trap 1, end at trap 5)
      */
-    private boolean direction;
+    private Boolean direction;
+
+    public Boolean isDirection() {
+        return direction;
+    }
+
+    public void setDirection(Boolean direction) {
+        this.direction = direction;
+    }
 
     public static BooleanProperty isWalking() {
         return walking;
@@ -116,10 +124,6 @@ public class Walk {
         LocalDatabase.addNewTrap(trap);
     }
 
-    public boolean isDirection() {
-        return direction;
-    }
-
     /**
      * Start the walk, setting the first and last traps in the walk to be current and end, and setting the direction & index
      *
@@ -143,7 +147,7 @@ public class Walk {
         walking.setValue(true);
         currentTrap = null;
         endTrap = null;
-        direction = true;
+        direction = null;
         index = 0;
         PlatformFactory.getPlatform().getSettingService().remove(App.currentTrapID);
         PlatformFactory.getPlatform().getSettingService().remove(App.endTrapID);
@@ -158,6 +162,7 @@ public class Walk {
         line = null;
         endTrap = null;
         currentTrap = null;
+        direction = null;
         final SettingService settingService = PlatformFactory.getPlatform().getSettingService();
         settingService.remove(App.currentLineID);
         settingService.remove(App.currentTrapID);

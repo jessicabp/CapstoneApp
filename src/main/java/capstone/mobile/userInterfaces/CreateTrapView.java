@@ -40,6 +40,7 @@ import java.util.List;
 public class CreateTrapView extends View {
 
     private Walk          walk;
+    private VBox          controls;
     private CustomMapView mapView;
     private PoiLayer      currentLayer;
     private PoiLayer      markersLayer;
@@ -70,7 +71,7 @@ public class CreateTrapView extends View {
         getStylesheets().add(CreateTrapView.class.getResource("secondary.css").toExternalForm());
 
         // Create layout for buttons with correct spacing
-        VBox controls = new VBox();
+        controls = new VBox();
         controls.setAlignment(Pos.TOP_CENTER);
         setCenter(controls);
 
@@ -204,6 +205,10 @@ public class CreateTrapView extends View {
         appBar.getActionItems().add(MaterialDesignIcon.UNDO.button(e -> App.getInstance().switchToPreviousView()));
 
         resetControls();
+
+        if (walk.isDirection() == null) {
+            askWalkingDirection();
+        }
     }
 
     /**
@@ -320,7 +325,7 @@ public class CreateTrapView extends View {
         if (validInputs) {
             double  latitude;
             double  longitude;
-            boolean side = leftToggleButton.isSelected();
+            boolean side = leftToggleButton.isSelected() == walk.isDirection();
 
             if (mapCoordinatesToggle.isSelected()) {
                 latitude = currentPosition.getLatitude();
@@ -355,9 +360,9 @@ public class CreateTrapView extends View {
      * @param ownerNode
      */
     private void askIfDoneAddingTraps(VBox ownerNode) {
-        CustomPopupView popup        = new CustomPopupView(ownerNode);
-        Text            errorMessage = new Text("Do you want to create a new trap or finish the walk?");
-        errorMessage.wrappingWidthProperty().bind(ownerNode.widthProperty().subtract(100));
+        CustomPopupView popup   = new CustomPopupView(ownerNode);
+        Text            message = new Text("Do you want to create a new trap or finish the walk?");
+        message.wrappingWidthProperty().bind(ownerNode.widthProperty().subtract(100));
         // Button to create trap
         Button newTrap = new Button("Create Trap");
         newTrap.setOnAction(ev -> {
@@ -370,7 +375,34 @@ public class CreateTrapView extends View {
             popup.hide();
             App.getInstance().switchScreen(App.END_WALK_VIEW);
         });
-        VBox popupVB = new VBox(20, errorMessage, newTrap, finish);
+        VBox popupVB = new VBox(20, message, newTrap, finish);
+        popupVB.setPadding(new Insets(40, 40, 40, 40));
+        popupVB.setAlignment(Pos.TOP_CENTER);
+        popup.setContent(popupVB);
+        popup.show();
+    }
+
+    /**
+     * Create popup to ask which direction the user is walking
+     * Only call if all traps on the line are new
+     */
+    private void askWalkingDirection() {
+        CustomPopupView popup   = new CustomPopupView(controls);
+        Text            message = new Text("As you walk the track, will the trap numbers increase (eg. start at 1 and go up) or decrease (eg. start at 100 and go down)?");
+        message.wrappingWidthProperty().bind(controls.widthProperty().subtract(100));
+        // Button to create trap
+        Button increase = new Button("Increase (1 -> 100)");
+        increase.setOnAction(ev -> {
+            walk.setDirection(true);
+            popup.hide();
+        });
+        // Button to finish walk
+        Button decrease = new Button("Decrease (100 -> 1)");
+        decrease.setOnAction(ev -> {
+            walk.setDirection(false);
+            popup.hide();
+        });
+        VBox popupVB = new VBox(20, message, increase, decrease);
         popupVB.setPadding(new Insets(40, 40, 40, 40));
         popupVB.setAlignment(Pos.TOP_CENTER);
         popup.setContent(popupVB);
