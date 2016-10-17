@@ -14,6 +14,7 @@ import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.gluonhq.connect.GluonObservableList;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -39,6 +40,17 @@ public class DisplayLinesView extends View {
     private ListView<Line> linesListView  = new ListView<>();
     private int            NO_PERMISSIONS = 0;
 
+    /**
+     * Listener for the side menu bar selections
+     */
+    private final ChangeListener listener = (obs, oldItem, newLine) -> {
+        if (newLine != null) {
+            Line line = (Line) newLine;
+            System.out.println(line.getName());
+            selectLine(line, controls);
+        }
+    };
+
     public DisplayLinesView(String name, Walk walk) {
         super(name);
         this.walk = walk;
@@ -57,6 +69,9 @@ public class DisplayLinesView extends View {
         // Create filter so users can search lines
         filter.setPromptText("Search");
         filter.textProperty().addListener((observable, oldValue, newValue) -> {
+            linesListView.getSelectionModel().selectedItemProperty().removeListener(listener);
+            linesListView.getSelectionModel().clearSelection();
+            linesListView.getSelectionModel().selectedItemProperty().addListener(listener);
             String             search = filter.getText().toLowerCase();
             FilteredList<Line> f      = new FilteredList<>(observableLinesList);
             f.setPredicate(s -> s.getName().toLowerCase().contains(search));
@@ -78,12 +93,8 @@ public class DisplayLinesView extends View {
             }
         });
 
-        // Add listener to cells
-        linesListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newLine) -> {
-            if (newLine != null) {
-                selectLine(newLine, controls);
-            }
-        });
+        // Addd listener to detect when a line has been selected
+        linesListView.getSelectionModel().selectedItemProperty().addListener(listener);
 
         // Add items to VBox
         controls.getChildren().addAll(filter, linesListView);
@@ -154,7 +165,9 @@ public class DisplayLinesView extends View {
         controls.getChildren().add(passwordField);
 
         Button popupCancel = new Button("Cancel");
-        popupCancel.setOnAction(ev -> passwordPopup.hide());
+        popupCancel.setOnAction(ev -> {
+            passwordPopup.hide();
+        });
         Button popupDone = new Button("Save");
         popupDone.setOnAction(ev -> {
             try {

@@ -38,17 +38,13 @@ public class CreateTrapView extends View {
     private Walk          walk;
     private VBox          controls;
     private CustomMapView mapView;
-    private PoiLayer      currentLayer;
     private PoiLayer      markersLayer;
-    private PoiLayer      numbersLayer;
     private PoiLayer      positionLayer;
     private ToggleGroup   sideGroup;
     private ToggleGroup   locationGroup;
     private Position      currentPosition;
     private Label         waitingMessage;
     private VBox          coordinatesVBox;
-    private Label         latitudeLabel;
-    private Label         longitudeLabel;
     private ToggleButton  mapCoordinatesToggle;
     private ToggleButton  manualCoordinatesToggle;
     private TextField     latitudeTextField;
@@ -74,8 +70,8 @@ public class CreateTrapView extends View {
         // Creating map with position and trap marker layers
         mapView = new CustomMapView();
         markersLayer = mapView.createLayer();
-        currentLayer = mapView.createLayer();
-        numbersLayer = mapView.createLayer();
+        PoiLayer currentLayer = mapView.createLayer();
+        PoiLayer numbersLayer = mapView.createLayer();
         positionLayer = mapView.createLayer();
         VBox mapVB = new VBox(mapView);
         mapVB.setPadding(new Insets(15, 0, 15, 0));
@@ -106,14 +102,14 @@ public class CreateTrapView extends View {
         manualCoordinatesToggle.selectedProperty().addListener((observableValue, oldValue, newValue) -> toggleCoordinatesToggle(newValue));
 
         // Latitude Label and TextField.
-        latitudeLabel = new Label();
+        Label latitudeLabel = new Label();
         latitudeLabel.setText("Enter Latitude: (at least 4 decimal places)");
         latitudeTextField = new TextField();
         latitudeTextField.setStyle("-fx-border-width: 2; -fx-border-color: white");
         latitudeTextField.textProperty().addListener((observableValue, oldValue, newValue) -> validateCoordinateInput(newValue, latitudeTextField));
 
         // Longitude Label and TextField.
-        longitudeLabel = new Label();
+        Label longitudeLabel = new Label();
         longitudeLabel.setText("Enter Longitude: (at least 4 decimal places)");
         longitudeTextField = new TextField();
         longitudeTextField.setStyle("-fx-border-width: 2; -fx-border-color: white");
@@ -125,9 +121,9 @@ public class CreateTrapView extends View {
         coordinatesVBox = new VBox();
         coordinatesVBox.setVisible(false);
         coordinatesVBox.setManaged(false);
-        coordinatesVBox.getChildren().addAll(
+        boolean b = coordinatesVBox.getChildren().addAll(
                 latitudeLabel, latitudeTextField, longitudeLabel, longitudeTextField
-                                            );
+                                                        );
 
         VBox locationVB = new VBox(10, mapCoordinatesToggle, manualCoordinatesToggle, coordinatesVBox);
         locationVB.setPadding(new Insets(0, 0, 15, 0));
