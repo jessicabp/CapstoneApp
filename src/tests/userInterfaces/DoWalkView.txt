@@ -1,0 +1,6 @@
+DoWalkView
+1) A map shows a small green marker with the device"s current position
+2) Trap locations are shown by larger blue markers
+3) The current trap is shown by a larger yellow marker
+4) Pressing "Found" opens the EnterDataView
+5) Pressing "Skip" changes the current trap (changing the trap number in the top menu and changing which trap is shown by a yellow marker)

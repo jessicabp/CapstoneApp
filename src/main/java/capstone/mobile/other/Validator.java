@@ -13,7 +13,7 @@ public class Validator {
      * @return boolean true if coordinate in correct format
      */
     public static boolean isCoordinate(final String coordinate) {
-        final String pattern = "^(\\-)?\\d{2,3}\\.\\d{4,7}$";
+        final String pattern = "^(\\-)?\\d{1,3}\\.\\d{4,7}$";
         return coordinate.matches(pattern);
     }
 

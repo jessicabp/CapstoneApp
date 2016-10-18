@@ -1,0 +1,6 @@
+EnterDataView
+1) The four animals shown immediately are "Empty" and the three selected as most popular by the line administrator
+2) Pressing "Other" brings up a popup with more animal options
+3) Whichever animal option is selected is orange, while all others are green. If an "Other" animal is selected, the "Other" popup closes and the "Other" button is highlighted orange. If the popup is opened again, the selected animal should already be orange.
+4) Pressing "Trap Maintenance" opens "EnterMaintenanceView"
+5) Pressing "Done" without selecting an animal causes the "Done" text to be changed to "Please select an animal"

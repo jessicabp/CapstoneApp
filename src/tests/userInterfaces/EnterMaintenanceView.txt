@@ -1,0 +1,4 @@
+EnterMaintenanceView
+1) The selection state of "Broken" and "Moved" initially correspond to the data for the trap on the server
+2) Pressing "Broken" or "Moved" changes the selection state of that item, as indicated by a tick in the box next to the text
+3) Pressing "Done" opens the EnterDataView

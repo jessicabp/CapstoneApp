@@ -1,0 +1,4 @@
+EndWalkView
+1) Text appears explaining the user"s options
+2) Pressing the "Set up walk" button takes the user to SetUpWalkView, which will show the current line and include a button at the bottom to cancel which will return the user to EndWalkView if pressed
+3) Pressing "Send to server" will attempt to send the data to the server. If successful, HomeView will be shown. Otherwise the "Send to server" text will be edited to include a retry count which increases with each unsuccessful attempt to send the data. If the password for the line is incorrect, a popup will appear prompting the user to enter the correct password. Once this popup is closed by selecting either "Cancel" or "Save", the user will then need to select to send the data to the server or set up another walk.

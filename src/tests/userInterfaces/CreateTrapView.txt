@@ -1,0 +1,8 @@
+CreateTrapView
+1) A map shows a small green marker with the device's current position
+2) Pre-existing trap locations are shown by larger yellow markers
+3) Selecting a location entry method and side of path turns the selected option orange
+4) When "Manually enter longitude and latitude values" is selected, entry boxes appear for longitude and latitude values, and when deflected, they disappear
+5) When manually entering latitude and longitude values, once any text has been entered into the text field it will be surrounded by a red box unless the text is a gps coordinate (a number with or without a "-" at the start, then 1 to 3 digits, then a ".", and finally 4 to 7 digits)
+6) When entering a trap number, once any text has been entered into the text field it will be surrounded by a red box unless the text is a positive number with 4 digits or less
+7) Pressing "Save" without correctly completing all fields causes the text on the "Save" button change to read "Please complete all details"

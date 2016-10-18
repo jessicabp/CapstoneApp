@@ -120,7 +120,7 @@ public class CreateTrapView extends View {
         coordinatesVBox = new VBox();
         coordinatesVBox.setVisible(false);
         coordinatesVBox.setManaged(false);
-//        boolean b = coordinatesVBox.getChildren().addAll(latitudeLabel, latitudeTextField, longitudeLabel, longitudeTextField);
+        coordinatesVBox.getChildren().addAll(latitudeLabel, latitudeTextField, longitudeLabel, longitudeTextField);
 
         VBox locationVB = new VBox(10, mapCoordinatesToggle, manualCoordinatesToggle, coordinatesVBox);
         locationVB.setPadding(new Insets(0, 0, 15, 0));

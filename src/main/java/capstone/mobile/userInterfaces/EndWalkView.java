@@ -22,12 +22,13 @@ import javafx.scene.text.TextAlignment;
 
 public class EndWalkView extends View {
 
-    private Walk walk;
+    private Walk   walk;
     private Button send;
     private Button cont;
-    private       int   OKAY             = 0;
-    private       int   INVALID_PASSWORD = 1;
-    private final int[] count            = {0}; // stored as an array so it is effectively final for use in lambda expression
+    private       String SENDTEXT         = "Send to server";
+    private       int    OKAY             = 0;
+    private       int    INVALID_PASSWORD = 1;
+    private final int[]  count            = {0}; // stored as an array so it is effectively final for use in lambda expression
 
     public EndWalkView(String name, Walk walk) {
         super(name);
@@ -42,7 +43,7 @@ public class EndWalkView extends View {
         // Add button to manually send data to server and finish walk
         Label sendDescription = new Label("Once there is an internet connection, click the below to send the data to the server and return to the home page. If you want to complete more traps on this line before you send data to the server, click the button to set up the next part of your walk.");
         sendDescription.setWrapText(true);
-        send = new Button("Send to server");
+        send = new Button(SENDTEXT);
         send.setWrapText(true);
         send.setTextAlignment(TextAlignment.CENTER);
         send.setOnAction(e -> sendData(send, controls));
@@ -67,7 +68,7 @@ public class EndWalkView extends View {
         appBar.setTitleText("Finished: " + walk.getLine().getName());
 
         count[0] = 0;
-        send.setText("Send to server");
+        send.setText(SENDTEXT);
     }
 
     /**
@@ -86,7 +87,7 @@ public class EndWalkView extends View {
         } else {
             count[0]++;
             // Update button text to propt user to retry, and count retries
-            send.setText("Click to retry sending to server once internet is connected. (Retry #" + count[0] + ")");
+            send.setText(SENDTEXT + " (Retry #" + count[0] + ")");
 
             if (response == INVALID_PASSWORD) {
                 // Create popup to request password
