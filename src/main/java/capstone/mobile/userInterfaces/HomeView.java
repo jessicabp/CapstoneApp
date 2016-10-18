@@ -21,7 +21,7 @@ public class HomeView extends View {
     public HomeView(String name, Walk walk) {
         super(name);
 
-        getStylesheets().add(DisplayLinesView.class.getResource("primary.css").toExternalForm());
+        getStylesheets().add(HomeView.class.getResource("primary.css").toExternalForm());
 
         // Create VBox to hold items
         VBox controls = new VBox();
@@ -32,12 +32,14 @@ public class HomeView extends View {
 
         // Button to view favourite lines
         Button favLines = new Button("Select a line you've used before");
+        favLines.getStyleClass().add("tall");
         favLines.setMaxWidth(Double.MAX_VALUE);
         favLines.setOnAction(e -> App.getInstance().switchScreen(App.FAVOURITE_LINES_VIEW));
         controls.getChildren().add(favLines);
 
         // Button to view all lines
         Button allLines = new Button("Select a new line");
+        allLines.getStyleClass().add("tall");
         allLines.setMaxWidth(Double.MAX_VALUE);
         allLines.setOnAction(e -> App.getInstance().switchScreen(App.DISPLAY_LINES_VIEW));
         controls.getChildren().add(allLines);

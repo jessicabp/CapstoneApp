@@ -21,13 +21,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
-
-import java.util.List;
 
 /**
  * Provides ability to create new trap objects while in a walk. The new trap objects coordinates may be obtained from
@@ -39,6 +38,7 @@ public class CreateTrapView extends View {
     private VBox          controls;
     private CustomMapView mapView;
     private PoiLayer      markersLayer;
+    private PoiLayer      numbersLayer;
     private PoiLayer      positionLayer;
     private ToggleGroup   sideGroup;
     private ToggleGroup   locationGroup;
@@ -70,8 +70,7 @@ public class CreateTrapView extends View {
         // Creating map with position and trap marker layers
         mapView = new CustomMapView();
         markersLayer = mapView.createLayer();
-        PoiLayer currentLayer = mapView.createLayer();
-        PoiLayer numbersLayer = mapView.createLayer();
+        numbersLayer = mapView.createLayer();
         positionLayer = mapView.createLayer();
         VBox mapVB = new VBox(mapView);
         mapVB.setPadding(new Insets(15, 0, 15, 0));
@@ -121,9 +120,7 @@ public class CreateTrapView extends View {
         coordinatesVBox = new VBox();
         coordinatesVBox.setVisible(false);
         coordinatesVBox.setManaged(false);
-        boolean b = coordinatesVBox.getChildren().addAll(
-                latitudeLabel, latitudeTextField, longitudeLabel, longitudeTextField
-                                                        );
+//        boolean b = coordinatesVBox.getChildren().addAll(latitudeLabel, latitudeTextField, longitudeLabel, longitudeTextField);
 
         VBox locationVB = new VBox(10, mapCoordinatesToggle, manualCoordinatesToggle, coordinatesVBox);
         locationVB.setPadding(new Insets(0, 0, 15, 0));
@@ -177,14 +174,6 @@ public class CreateTrapView extends View {
         actionVB.setPadding(new Insets(15, 0, 15, 0));
         items.add(actionVB);
 
-        markersLayer = mapView.clearMarkers(markersLayer);
-        List<Trap> traps = walk.getLine().getTraps();
-        for (Trap trap : traps) {
-            Circle   marker   = new Circle(5, Color.ORANGE);
-            MapPoint mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
-            mapView.addMarker(markersLayer, mapPoint, marker);
-        }
-
         // Adding listener for obtaining current GPS location.
         PositionService positionService = PlatformFactory.getPlatform().getPositionService();
         positionService.positionProperty().addListener((observableValue, oldValue, newValue) -> updateCurrentPosition(newValue));
@@ -216,8 +205,10 @@ public class CreateTrapView extends View {
         markersLayer = mapView.clearMarkers(markersLayer);
         for (Trap trap : walk.getLine().getTraps()) {
             Circle   marker   = new Circle(5, Color.ORANGE);
+            Node     number   = new Text("   " + trap.getNumber());
             MapPoint mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
             mapView.addMarker(markersLayer, mapPoint, marker);
+            mapView.addMarker(numbersLayer, mapPoint, number);
         }
     }
 
@@ -234,7 +225,7 @@ public class CreateTrapView extends View {
         }
         positionLayer = mapView.clearMarkers(positionLayer);
         MapPoint mapPoint = new MapPoint(position.getLatitude(), position.getLongitude());
-        mapView.addMarker(positionLayer, mapPoint, new Circle(5, Color.GREEN));
+        mapView.addMarker(positionLayer, mapPoint, new Circle(4, Color.GREEN));
         mapView.setCenter(position.getLatitude(), position.getLongitude());
         currentPosition = position;
     }

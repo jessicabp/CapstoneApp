@@ -6,7 +6,6 @@ import capstone.mobile.models.Walk;
 import capstone.mobile.userInterfaces.EnterDataView;
 import com.gluonhq.charm.down.common.JavaFXPlatform;
 import com.gluonhq.charm.down.common.PlatformFactory;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,9 +19,8 @@ import static java.util.Arrays.asList;
 
 public class LocalDatabaseTest {
 
-    File       db;
-    String     dbUrl;
-    Connection dbConnection;
+    File   db;
+    String dbUrl;
 
     @Before
     public void establishDatabaseConnection() {
@@ -39,10 +37,7 @@ public class LocalDatabaseTest {
             } else { // desktop and embedded
                 Class.forName("org.sqlite.JDBC");
             }
-
-            // Get connection to database
-            dbConnection = DriverManager.getConnection(dbUrl);
-        } catch (ClassNotFoundException | SQLException | IOException e) {
+        } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -55,7 +50,7 @@ public class LocalDatabaseTest {
         db.delete();
         LocalDatabase.setUpLocalDatabase();
 
-        try {
+        try (Connection dbConnection = DriverManager.getConnection(dbUrl)) {
             DatabaseMetaData dbm = DriverManager.getConnection(dbUrl).getMetaData();
             // For each table
             for (String table : tables) {
@@ -77,7 +72,7 @@ public class LocalDatabaseTest {
         Statement stmt           = null;
 
         // Insert test animal into the database
-        try {
+        try (Connection dbConnection = DriverManager.getConnection(dbUrl)) {
             stmt = dbConnection.createStatement();
             stmt.executeUpdate("insert or ignore into animals(id, name) values(NULL, '" + testAnimalName + "')");
         } catch (SQLException e) {
@@ -102,15 +97,6 @@ public class LocalDatabaseTest {
         try {
             stmt.executeUpdate("delete from animals where name like '%" + testAnimalName + "%')");
             stmt.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @After
-    public void closeDatabaseConnection() {
-        try {
-            dbConnection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

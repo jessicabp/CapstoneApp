@@ -158,7 +158,7 @@ public class DoWalkView extends View {
         }
         positionLayer = mapView.clearMarkers(positionLayer);
         MapPoint mapPoint = new MapPoint(position.getLatitude(), position.getLongitude());
-        mapView.addMarker(positionLayer, mapPoint, new Circle(5, Color.GREEN));
+        mapView.addMarker(positionLayer, mapPoint, new Circle(4, Color.GREEN));
         mapView.setCenter(position.getLatitude(), position.getLongitude());
     }
 

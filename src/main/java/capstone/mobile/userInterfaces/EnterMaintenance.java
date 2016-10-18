@@ -40,12 +40,10 @@ public class EnterMaintenance extends View {
         // buttons for damage
         CheckBox broken = new CheckBox("Broken");
         broken.setSelected(walk.getCurrentTrap().isBroken());
-        broken.setOnAction(e -> walk.getCurrentTrap().setBroken(broken.isSelected()));
 
         // button for moved trap
         CheckBox moved = new CheckBox("Moved");
         moved.setSelected(walk.getCurrentTrap().isMoved());
-        moved.setOnAction(e -> walk.getCurrentTrap().setMoved(moved.isSelected()));
 
         // button to save
         Button save = new Button("Done");
@@ -68,6 +66,8 @@ public class EnterMaintenance extends View {
      */
     private void saveMaintenance(CheckBox broken, CheckBox moved) {
         if (broken.isSelected() != walk.getCurrentTrap().isBroken() || moved.isSelected() != walk.getCurrentTrap().isMoved()) {
+            walk.getCurrentTrap().setMoved(moved.isSelected());
+            walk.getCurrentTrap().setBroken(broken.isSelected());
             walk.addChangedTrap(walk.getCurrentTrap());
         }
         App.getInstance().switchScreen(App.ENTER_DATA_VIEW);

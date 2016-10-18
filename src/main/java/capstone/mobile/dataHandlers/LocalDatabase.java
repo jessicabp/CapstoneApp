@@ -30,6 +30,7 @@ public class LocalDatabase {
             System.out.println("Error " + ex);
         }
 
+        Connection dbConnection = null;
         try {
             // Get sql access for platform
             if (JavaFXPlatform.isAndroid()) {
@@ -41,7 +42,7 @@ public class LocalDatabase {
             }
 
             // Create database connection
-            final Connection dbConnection = DriverManager.getConnection(dbUrl);
+            dbConnection = DriverManager.getConnection(dbUrl);
 
             // Create tables if they don't already exist
             if (dbConnection != null) {
@@ -77,6 +78,12 @@ public class LocalDatabase {
             System.out.println("Error class not found " + e);
         } catch (SQLException ex) {
             System.out.println("SQL Exception " + ex);
+        } finally {
+            try {
+                dbConnection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
