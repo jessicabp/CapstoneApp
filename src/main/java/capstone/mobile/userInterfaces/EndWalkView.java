@@ -40,7 +40,7 @@ public class EndWalkView extends View {
         setCenter(controls);
 
         // Add button to manually send data to server and finish walk
-        Label sendDescription = new Label("Once there is an internet connection, click the below to send the data to the server. If you want to complete more traps on this line before you send data to the server, click the button to set up the next part of your walk.");
+        Label sendDescription = new Label("Once there is an internet connection, click the below to send the data to the server and return to the home page. If you want to complete more traps on this line before you send data to the server, click the button to set up the next part of your walk.");
         sendDescription.setWrapText(true);
         send = new Button("Send to server");
         send.setWrapText(true);

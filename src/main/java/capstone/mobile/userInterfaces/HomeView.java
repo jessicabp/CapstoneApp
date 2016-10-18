@@ -25,6 +25,7 @@ public class HomeView extends View {
 
         // Create VBox to hold items
         VBox controls = new VBox();
+        controls.getStylesheets().add(HomeView.class.getResource("primary.css").toExternalForm());
         controls.setPadding(new Insets(40));
         controls.setSpacing(40);
         controls.setAlignment(Pos.CENTER);
@@ -32,16 +33,16 @@ public class HomeView extends View {
 
         // Button to view favourite lines
         Button favLines = new Button("Select a line you've used before");
-        favLines.getStyleClass().add("tall");
         favLines.setMaxWidth(Double.MAX_VALUE);
         favLines.setOnAction(e -> App.getInstance().switchScreen(App.FAVOURITE_LINES_VIEW));
+        favLines.getStyleClass().add("tall");
         controls.getChildren().add(favLines);
 
         // Button to view all lines
         Button allLines = new Button("Select a new line");
-        allLines.getStyleClass().add("tall");
         allLines.setMaxWidth(Double.MAX_VALUE);
         allLines.setOnAction(e -> App.getInstance().switchScreen(App.DISPLAY_LINES_VIEW));
+        allLines.getStyleClass().add("tall");
         controls.getChildren().add(allLines);
 
         // If storage lists another page as the current page, restore information from local storage
