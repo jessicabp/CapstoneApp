@@ -13,6 +13,7 @@ import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -23,6 +24,7 @@ public class EndWalkView extends View {
 
     private Walk walk;
     private Button send;
+    private Button cont;
     private       int   OKAY             = 0;
     private       int   INVALID_PASSWORD = 1;
     private final int[] count            = {0}; // stored as an array so it is effectively final for use in lambda expression
@@ -38,11 +40,20 @@ public class EndWalkView extends View {
         setCenter(controls);
 
         // Add button to manually send data to server and finish walk
-        send = new Button("Click to send to server once internet is connected");
+        Label sendDescription = new Label("Once there is an internet connection, click the below to send the data to the server. If you want to complete more traps on this line before you send data to the server, click the button to set up the next part of your walk.");
+        sendDescription.setWrapText(true);
+        send = new Button("Send to server");
         send.setWrapText(true);
         send.setTextAlignment(TextAlignment.CENTER);
         send.setOnAction(e -> sendData(send, controls));
-        controls.getChildren().add(send);
+        controls.getChildren().addAll(sendDescription, send);
+
+        // Add button to continue walk
+        cont = new Button("Set up walk");
+        cont.setWrapText(true);
+        cont.setTextAlignment(TextAlignment.CENTER);
+        cont.setOnAction(e -> App.getInstance().switchScreen(App.SET_UP_WALK_VIEW));
+        controls.getChildren().addAll(cont);
     }
 
     /**
@@ -56,7 +67,7 @@ public class EndWalkView extends View {
         appBar.setTitleText("Finished: " + walk.getLine().getName());
 
         count[0] = 0;
-        send.setText("Click to send to server once internet is connected");
+        send.setText("Send to server");
     }
 
     /**

@@ -4,18 +4,19 @@ import capstone.mobile.App;
 import capstone.mobile.models.Trap;
 import capstone.mobile.models.Walk;
 import capstone.mobile.other.CustomMapView;
-import capstone.mobile.other.CustomPopupView;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import gluonhq.maps.MapPoint;
 import gluonhq.maps.PoiLayer;
+import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -62,21 +63,42 @@ public class SetUpWalkView extends View {
         endNumbersLayer = endMapView.createLayer();
         startMarkersLayer = startMapView.createLayer();
         endMarkersLayer = endMapView.createLayer();
+    }
+
+    /**
+     * Add page content and place on screen
+     */
+    private void showContent() {// Create VBox and add all items
+        VBox controls = new VBox();
+        controls.setPadding(new Insets(10));
+        controls.setAlignment(Pos.TOP_CENTER);
+        setCenter(controls);
 
         // Creating the labels and button
         Label startLabel = new Label();
         startLabel.setText("Select starting trap:");
         Label endLabel = new Label();
         endLabel.setText("Select ending trap:");
+        controls.setMargin(endLabel, new Insets(10, 0, 2, 0));
 
+        // Start walk button
+        HBox action = new HBox(10);
+        action.setAlignment(Pos.CENTER);
         Button startButton = new Button();
         startButton.setText("Start Walk");
         startButton.setOnMouseClicked(e -> startWalk());
-        // Create VBox and add all items
-        VBox controls = new VBox(startLabel, startMapView, endLabel, endMapView, startButton);
-        // controls.setPadding(new Insets(0, 40, 40, 40));
-        controls.setAlignment(Pos.TOP_CENTER);
-        setCenter(controls);
+        action.getChildren().add(startButton);
+        controls.setMargin(action, new Insets(10, 0, 0, 0));
+
+        controls.getChildren().addAll(startLabel, startMapView, endLabel, endMapView, action);
+
+        // If walk is already started, add the option to cancel and go straight back to the end walk view
+        if (Walk.isWalking().get()) {
+            Button cancel = new Button();
+            cancel.setText("Cancel - return to end of walk");
+            cancel.setOnAction(e -> App.getInstance().switchScreen(App.END_WALK_VIEW));
+            action.getChildren().add(cancel);
+        }
     }
 
     @Override
@@ -84,6 +106,8 @@ public class SetUpWalkView extends View {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
         appBar.setTitleText("Set Up Walk");
         appBar.getActionItems().add(MaterialDesignIcon.UNDO.button(e -> App.getInstance().switchToPreviousView()));
+
+        showContent();
 
         if (walk.getLine().getTraps().size() > 0) {
             renderTraps();
