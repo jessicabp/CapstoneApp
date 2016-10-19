@@ -1,4 +1,4 @@
-package dataHandlers;
+package manual.dataHandlers;
 
 import capstone.mobile.dataHandlers.DataUnavailableException;
 import capstone.mobile.dataHandlers.RetrieveData;

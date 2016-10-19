@@ -1,4 +1,4 @@
-package other;
+package manual.other;
 
 import capstone.mobile.other.CustomGridPane;
 import org.junit.Assert;

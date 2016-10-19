@@ -16,6 +16,9 @@ repositories {
     maven {
         url 'http://nexus.gluonhq.com/nexus/content/repositories/releases'
     }
+    maven {
+        url "http://www.evosuite.org/m2"
+    }
 }
 
 mainClassName = 'capstone.mobile.App'
@@ -30,6 +33,7 @@ dependencies {
     desktopRuntime 'org.xerial:sqlite-jdbc:3.8.11.2'
 
     testCompile 'junit:junit:4.12'
+    testCompile 'org.evosuite:evosuite-standalone-runtime:1.0.3'
     testCompile group: 'com.github.seratch', name: 'java-time-backport', version: '1.0.0'
     testCompile group: 'net.java.openjfx.backport', name: 'openjfx-78-backport', version: '1.8.0-ea-b96.1'
 

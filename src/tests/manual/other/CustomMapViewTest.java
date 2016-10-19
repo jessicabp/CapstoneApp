@@ -1,4 +1,4 @@
-package other;
+package manual.other;
 
 import capstone.mobile.other.CustomMapView;
 import org.junit.Assert;

@@ -1,4 +1,4 @@
-package other;
+package manual.other;
 
 import capstone.mobile.App;
 import capstone.mobile.other.CustomPopupView;
