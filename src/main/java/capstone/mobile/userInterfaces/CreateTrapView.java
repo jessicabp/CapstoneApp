@@ -328,7 +328,7 @@ public class CreateTrapView extends View {
             walk.addNewTrap(newTrap);
 
             if (walk.getCurrentTrap() != null) {
-                App.getInstance().switchScreen(App.DO_WALK_VIEW);
+                App.getInstance().switchToPreviousView();
             } else {
                 askIfDoneAddingTraps(popUpOwner);
             }
