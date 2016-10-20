@@ -25,12 +25,14 @@ mainClassName = 'capstone.mobile.App'
 
 dependencies {
     compile 'com.gluonhq:charm:3.0.0'
+    compile group: 'com.gluonhq', name: 'charm-down-desktop', version: '2.0.1'
+    compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.8.1.1'
 
     androidRuntime 'com.gluonhq:charm-android:3.0.0'
     androidRuntime 'org.sqldroid:sqldroid:1.0.3'
     iosRuntime 'com.gluonhq:charm-ios:3.0.0'
     desktopRuntime 'com.gluonhq:charm-desktop:3.0.0'
-    desktopRuntime 'org.xerial:sqlite-jdbc:3.8.11.2'
+    // desktopRuntime 'org.xerial:sqlite-jdbc:3.8.11.2'
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.evosuite:evosuite-standalone-runtime:1.0.3'
@@ -94,6 +96,18 @@ jacocoTestReport {
         csv.enabled false
         html.destination "${buildDir}/jacocoHtml"
     }
+//    doFirst {
+//        new File("$buildDir/classes/main/capstone/mobile").eachFileRecurse { file ->
+//            if (file.name.contains('$$')) {
+//                file.renameTo(file.path.replace('$$', '$'))
+//            }
+//        }
+//    }
+//    afterEvaluate {
+//        classDirectories = files(classDirectories.files.collect {
+//            fileTree(dir: it, exclude: 'gluonhq/**')
+//        })
+//    }
 }
 
 sourceSets {
@@ -102,6 +116,7 @@ sourceSets {
             srcDirs = ["src/tests"]
         }
     }
+    //runtimeClasspath "C:\\Users\\w7p\\.gradle\\caches\\modules-2\\files-2.1\\com.gluonhq\\charm\\3.0.0\\7a9f3485292b2a0086145063d393ed55b42a8a2b\\charm-3.0.0.jar"
 }
 
 retrolambda {

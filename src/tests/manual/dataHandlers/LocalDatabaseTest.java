@@ -1,6 +1,7 @@
 package manual.dataHandlers;
 
 import capstone.mobile.dataHandlers.LocalDatabase;
+
 import capstone.mobile.models.Animal;
 import capstone.mobile.models.Walk;
 import capstone.mobile.userInterfaces.EnterDataView;
@@ -19,13 +20,15 @@ import static java.util.Arrays.asList;
 
 public class LocalDatabaseTest {
 
-    File   db;
-    String dbUrl;
+
+    private File db;
+    private String dbUrl;
 
     @Before
     public void establishDatabaseConnection() {
         try {
             // Get database file
+
             db = new File(PlatformFactory.getPlatform().getPrivateStorage(), "TrapTrackerDatabase");
             dbUrl = "jdbc:sqlite:" + db.getAbsolutePath();
 
@@ -66,37 +69,36 @@ public class LocalDatabaseTest {
 
     @Test
     public void loadDatafromLocalDatabaseTest() {
-        boolean   success        = false;
-        String    testAnimalName = "testAnimal";
-        Walk      walk           = new Walk();
-        Statement stmt           = null;
+        boolean success = false;
+        String testAnimalName = "testAnimal";
+        Walk walk = new Walk();
+        Statement stmt = null;
 
         // Insert test animal into the database
         try (Connection dbConnection = DriverManager.getConnection(dbUrl)) {
             stmt = dbConnection.createStatement();
             stmt.executeUpdate("insert or ignore into animals(id, name) values(NULL, '" + testAnimalName + "')");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
-        // Restore data from database
-        LocalDatabase.loadDatafromLocalDatabase(walk);
 
-        // If the test animal is in the app, set success to true
-        List<Animal> animalList = EnterDataView.getAnimalList();
-        for (Animal animal : animalList) {
-            if (animal.getName().equals(testAnimalName)) {
-                success = true;
+            // Restore data from database
+            LocalDatabase.setUpLocalDatabase(); // TODO: Get clarification on this.
+            LocalDatabase.loadDatafromLocalDatabase(walk);
+
+            // If the test animal is in the app, set success to true
+            List<Animal> animalList = EnterDataView.getAnimalList();
+            for (Animal animal : animalList) {
+                if (animal.getName().equals(testAnimalName)) {
+                    success = true;
+                }
             }
-        }
 
-        // Assert animal was found
-        Assert.assertTrue(success);
+            // Assert animal was found
+            Assert.assertTrue(success);
 
-        // Clean up added animal
-        try {
-            stmt.executeUpdate("delete from animals where name like '%" + testAnimalName + "%')");
+            // Clean up added animal
+            stmt.executeUpdate("delete from animals where name like '%" + testAnimalName + "%'");
             stmt.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
