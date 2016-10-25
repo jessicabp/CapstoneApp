@@ -13,3 +13,11 @@
 .toggle-button:hover {
     -fx-background-color: darkgreen;
 }
+
+.button {
+    -fx-padding: 20 0 20 0;
+}
+
+.label, .button {
+    -fx-font-size: 1.3em;
+}
