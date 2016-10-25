@@ -10,7 +10,6 @@ import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import gluonhq.maps.MapPoint;
 import gluonhq.maps.PoiLayer;
-import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -25,7 +24,8 @@ import javafx.scene.text.Text;
 import java.util.List;
 
 /**
- * TODO: Comment
+ * Displays two maps to the user with the traps marked and numbered. The start trap and end trap are selected, and then
+ * the walk is started.
  */
 public class SetUpWalkView extends View {
 
@@ -109,6 +109,12 @@ public class SetUpWalkView extends View {
 
         showContent();
 
+        // Reset properties related to trap selection when returning to view
+        selectedStartCircle = null;
+        selectedEndCircle = null;
+        selectedStartTrap = null;
+        selectedEndTrap = null;
+
         if (walk.getLine().getTraps().size() > 0) {
             renderTraps();
         } else {
@@ -119,10 +125,10 @@ public class SetUpWalkView extends View {
 
 
     /**
-     * TODO: Comment
+     * Renders all of the trap markers and numbers on the maps.
      */
     private void renderTraps() {
-        // Remove all odl traps
+        // Remove all old traps
         startMarkersLayer = startMapView.clearMarkers(startMarkersLayer);
         startNumbersLayer = startMapView.clearMarkers(startNumbersLayer);
         endMarkersLayer = endMapView.clearMarkers(endMarkersLayer);
@@ -150,17 +156,17 @@ public class SetUpWalkView extends View {
         }
 
         // Center start trap map on first trap
-        Trap s = traps.get(0);
-        startMapView.setCenter(s.getLatitude(), s.getLongitude());
+        Trap firstTrap = traps.get(0);
+        startMapView.setCenter(firstTrap.getLatitude(), firstTrap.getLongitude());
 
         // Center end trap map on last trap
-        Trap e = traps.get(traps.size() - 1);
-        endMapView.setCenter(e.getLatitude(), e.getLongitude());
+        Trap lastTrap = traps.get(traps.size() - 1);
+        endMapView.setCenter(lastTrap.getLatitude(), lastTrap.getLongitude());
     }
 
 
     /**
-     * TODO: Comment
+     * Toggles the users selection for the starting trap selection.
      */
     private void toggleStartCircle(Circle startCircle, Trap startTrap) {
         if (selectedStartCircle == null) {
@@ -176,7 +182,7 @@ public class SetUpWalkView extends View {
 
 
     /**
-     * TODO: Comment
+     * Toggles the users selection for the ending trap selection.
      */
     private void toggleEndCircle(Circle endCircle, Trap endTrap) {
         if (selectedEndCircle == null) {
@@ -192,7 +198,7 @@ public class SetUpWalkView extends View {
 
 
     /**
-     * TODO: Comment
+     * Allows the user to begin the walk after selecting the start and end traps.
      */
     private void startWalk() {
         if (selectedStartTrap != null && selectedEndTrap != null) {
