@@ -4,4 +4,9 @@
 
 .tall {
     -fx-padding: 40 0 40 0;
+    -fx-font-size: 1.3em;
+}
+
+.label, .button {
+    -fx-font-size: 2em;
 }

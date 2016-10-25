@@ -64,12 +64,6 @@ public class DoWalkView extends View {
         currentLayer = mapView.createLayer();
         positionLayer = mapView.createLayer();
 
-        // Create VBox for messages
-        messages = new VBox(15.0, side);
-        messages.setAlignment(Pos.CENTER);
-        messages.setPadding(new Insets(40, 40, 40, 40));
-        setTop(messages);
-
         // Show buttons to enter data or skip trap
         Button found = new Button("Found");
         found.setMaxWidth(Double.MAX_VALUE);
@@ -91,7 +85,7 @@ public class DoWalkView extends View {
         waitingMessage.setText("Waiting on GPS for position..");
 
         // Create VBox for map & buttons
-        VBox controls = new VBox(mapView, waitingMessage, messages, grid);
+        VBox controls = new VBox(15, mapView, waitingMessage, moved, broken, grid);
         controls.setAlignment(Pos.TOP_CENTER);
         // controls.setPadding(new Insets(0, 40, 40, 40));
         setCenter(controls);
@@ -124,12 +118,8 @@ public class DoWalkView extends View {
         // Update message about side of path for trap
         side.setText("Trap indicator on " + (walk.isDirection() == walk.getCurrentTrap().getSide() ? "left" : "right") + " side");
 
-        if (walk.getCurrentTrap().isMoved()) {
-            messages.getChildren().add(moved);
-        }
-        if (walk.getCurrentTrap().isBroken()) {
-            messages.getChildren().add(broken);
-        }
+        moved.setVisible(walk.getCurrentTrap().isMoved());
+        broken.setVisible(walk.getCurrentTrap().isBroken());
 
         markersLayer = mapView.clearMarkers(markersLayer);
         for (Trap trap : walk.getLine().getTraps()) {
@@ -158,7 +148,7 @@ public class DoWalkView extends View {
         }
         positionLayer = mapView.clearMarkers(positionLayer);
         MapPoint mapPoint = new MapPoint(position.getLatitude(), position.getLongitude());
-        mapView.addMarker(positionLayer, mapPoint, new Circle(4, Color.GREEN));
+        mapView.addMarker(positionLayer, mapPoint, new Circle(4, Color.RED));
         mapView.setCenter(position.getLatitude(), position.getLongitude());
     }
 

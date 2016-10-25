@@ -225,7 +225,7 @@ public class CreateTrapView extends View {
         }
         positionLayer = mapView.clearMarkers(positionLayer);
         MapPoint mapPoint = new MapPoint(position.getLatitude(), position.getLongitude());
-        mapView.addMarker(positionLayer, mapPoint, new Circle(4, Color.GREEN));
+        mapView.addMarker(positionLayer, mapPoint, new Circle(4, Color.RED));
         mapView.setCenter(position.getLatitude(), position.getLongitude());
         currentPosition = position;
     }
