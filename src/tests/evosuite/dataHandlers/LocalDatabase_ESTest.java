@@ -18,10 +18,10 @@ along with Trap Tracker.  If not, see <http://www.gnu.org/licenses/>.
 package evosuite.dataHandlers;
 
 import capstone.mobile.dataHandlers.LocalDatabase;
-import capstone.mobile.models.Catch;
 import capstone.mobile.models.Line;
 import capstone.mobile.models.Trap;
 import capstone.mobile.models.Walk;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -127,69 +127,6 @@ public class LocalDatabase_ESTest {
     @Test(timeout = 4000)
     public void test05() throws Throwable {
         LocalDatabase.addNewTrap((Trap) null);
-    }
-
-    //Test case number: 6
-  /*
-   * 6 covered goals:
-   * Goal 1. capstone.mobile.dataHandlers.LocalDatabase.addCatch(Lcapstone/mobile/models/Catch;)V: Line 149
-   * Goal 2. capstone.mobile.dataHandlers.LocalDatabase.addCatch(Lcapstone/mobile/models/Catch;)V: Line 153
-   * Goal 3. capstone.mobile.dataHandlers.LocalDatabase.addCatch(Lcapstone/mobile/models/Catch;)V: Line 154
-   * Goal 4. capstone.mobile.dataHandlers.LocalDatabase.addCatch(Lcapstone/mobile/models/Catch;)V: Line 156
-   * Goal 5. [METHOD] capstone.mobile.dataHandlers.LocalDatabase.addCatch(Lcapstone/mobile/models/Catch;)V
-   * Goal 6. [METHODNOEX] capstone.mobile.dataHandlers.LocalDatabase.addCatch(Lcapstone/mobile/models/Catch;)V
-   */
-
-    @Test(timeout = 4000)
-    public void test06() throws Throwable {
-        Catch catch0 = new Catch((-2), (-2));
-        LocalDatabase.addCatch(catch0);
-        assertEquals(1392409281320L, catch0.getTime());
-    }
-
-    //Test case number: 7
-  /*
-   * 6 covered goals:
-   * Goal 1. updateTraps(I)Ljava/util/List;_java.lang.ClassCastException_IMPLICIT
-   * Goal 2. capstone.mobile.dataHandlers.LocalDatabase.updateTraps(I)Ljava/util/List;: Line 198
-   * Goal 3. [METHOD] capstone.mobile.dataHandlers.LocalDatabase.updateTraps(I)Ljava/util/List;
-   * Goal 4. Weak Mutation 84: capstone.mobile.dataHandlers.LocalDatabase.updateTraps(I)Ljava/util/List;:198 - InsertUnaryOp Negation of lineId
-   * Goal 5. Weak Mutation 85: capstone.mobile.dataHandlers.LocalDatabase.updateTraps(I)Ljava/util/List;:198 - InsertUnaryOp IINC 1 lineId
-   * Goal 6. Weak Mutation 86: capstone.mobile.dataHandlers.LocalDatabase.updateTraps(I)Ljava/util/List;:198 - InsertUnaryOp IINC -1 lineId
-   */
-
-    @Test(timeout = 4000, expected = ClassCastException.class)
-    public void test07() throws Throwable {
-        LocalDatabase.updateTraps((-4445));
-        fail("Expecting exception: ClassCastException");
-    }
-
-    //Test case number: 8
-  /*
-   * 3 covered goals:
-   * Goal 1. updateLines()Ljava/util/List;_java.lang.ClassCastException_IMPLICIT
-   * Goal 2. capstone.mobile.dataHandlers.LocalDatabase.updateLines()Ljava/util/List;: Line 279
-   * Goal 3. [METHOD] capstone.mobile.dataHandlers.LocalDatabase.updateLines()Ljava/util/List;
-   */
-
-    @Test(timeout = 4000, expected = ClassCastException.class)
-    public void test08() throws Throwable {
-        LocalDatabase.updateLines();
-        fail("Expecting exception: ClassCastException");
-    }
-
-    //Test case number: 9
-  /*
-   * 3 covered goals:
-   * Goal 1. updateAnimals()Ljava/util/List;_java.lang.ClassCastException_IMPLICIT
-   * Goal 2. capstone.mobile.dataHandlers.LocalDatabase.updateAnimals()Ljava/util/List;: Line 309
-   * Goal 3. [METHOD] capstone.mobile.dataHandlers.LocalDatabase.updateAnimals()Ljava/util/List;
-   */
-
-    @Test(timeout = 4000, expected = ClassCastException.class)
-    public void test09() throws Throwable {
-        LocalDatabase.updateAnimals();
-        fail("Expecting exception: ClassCastException");
     }
 
     //Test case number: 10

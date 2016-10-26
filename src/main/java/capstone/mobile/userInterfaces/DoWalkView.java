@@ -18,10 +18,15 @@ along with Trap Tracker.  If not, see <http://www.gnu.org/licenses/>.
 package capstone.mobile.userInterfaces;
 
 import capstone.mobile.App;
+import capstone.mobile.dataHandlers.DataUnavailableException;
+import capstone.mobile.dataHandlers.LocalDatabase;
+import capstone.mobile.dataHandlers.RetrieveData;
+import capstone.mobile.models.Line;
 import capstone.mobile.models.Trap;
 import capstone.mobile.models.Walk;
 import capstone.mobile.other.CustomGridPane;
 import capstone.mobile.other.CustomMapView;
+import capstone.mobile.other.CustomPopupView;
 import com.gluonhq.charm.down.common.PlatformFactory;
 import com.gluonhq.charm.down.common.Position;
 import com.gluonhq.charm.down.common.PositionService;
@@ -34,13 +39,14 @@ import gluonhq.maps.PoiLayer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-
-import java.util.List;
 
 
 /**
@@ -60,6 +66,7 @@ public class DoWalkView extends View {
     private        PoiLayer      positionLayer;
     private        Label         waitingMessage;
     private boolean waitingMessageVisible = true;
+    private         VBox         controls;
 
     public DoWalkView(String name, Walk walk) {
         super(name);
@@ -126,6 +133,7 @@ public class DoWalkView extends View {
     protected void updateAppBar(AppBar appBar) {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
         appBar.setTitleText("Trap " + walk.getCurrentTrap().getNumber() + " - " + walk.getLine().getName());
+        appBar.getActionItems().add(MaterialDesignIcon.HELP.button(e -> displayLegend()));
 
         displayTraps();
     }
@@ -183,5 +191,59 @@ public class DoWalkView extends View {
             App.getInstance().switchScreen(App.ENTER_DATA_VIEW);
             App.getInstance().switchScreen(App.DO_WALK_VIEW);
         }
+    }
+
+    /**
+     * Displays a legend pop up.
+     */
+    private void displayLegend() {
+        final double radius = 14.0;
+        final double spacer = 50.0;
+        final double labelsX = 55.0;
+        final double labelsY = 55.0;
+        final double iconsX = 30.0;
+        final double iconsY = 50.0;
+
+        // Creating custom pop up
+        CustomPopupView legendPopup = new CustomPopupView(controls);
+
+        // Overall layout for pop up
+        VBox container = new VBox(20);
+        container.setPadding(new Insets(40, 40, 40, 40));
+        container.setAlignment(Pos.CENTER);
+
+        // Label at the top
+        Label legendLabel = new Label("Legend");
+        HBox labelContainer = new HBox();
+        labelContainer.setAlignment(Pos.CENTER);
+        labelContainer.getChildren().addAll(legendLabel);
+
+        // Canvas for displaying icons and description text
+        Canvas legendCanvas = new Canvas(200, 200);
+        GraphicsContext graphicsContext = legendCanvas.getGraphicsContext2D();
+
+        String[] labels = {"Your Position", "Next Trap Marker", "Other Trap Markers"};
+        Color[] colours = {Color.RED, Color.BLUE, Color.ORANGE};
+
+        for(int i = 0; i < labels.length; i++) {
+            graphicsContext.setFill(Color.BLACK);
+            graphicsContext.fillText(labels[i], labelsX, labelsY + i * spacer);
+            graphicsContext.beginPath();
+            graphicsContext.setFill(colours[i]);
+            graphicsContext.arc(iconsX, iconsY + i * spacer, radius, radius, 0, 360.0);
+            graphicsContext.fill();
+        }
+
+        // Button to close pop up
+        Button closeButton = new Button("Close");
+        closeButton.setOnAction(ev -> {
+            legendPopup.hide();
+        });
+
+        // Adding all controls for pop up
+        container.getChildren().addAll(labelContainer, legendCanvas, closeButton);
+
+        legendPopup.setContent(container);
+        legendPopup.show();
     }
 }

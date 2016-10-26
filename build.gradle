@@ -103,11 +103,16 @@ jacocoTestReport {
 //            }
 //        }
 //    }
-//    afterEvaluate {
-//        classDirectories = files(classDirectories.files.collect {
-//            fileTree(dir: it, exclude: 'gluonhq/**')
-//        })
-//    }
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            // fileTree(dir: it, excludes: ['gluonhq/**'])
+            fileTree(dir: it, includes: [
+                    'capstone/mobile/dataHandlers/**',
+                    'capstone/mobile/models/**',
+                    'capstone/mobile/other/**'
+            ])
+        })
+    }
 }
 
 sourceSets {

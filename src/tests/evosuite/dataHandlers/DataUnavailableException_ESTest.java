@@ -18,6 +18,7 @@ along with Trap Tracker.  If not, see <http://www.gnu.org/licenses/>.
 package evosuite.dataHandlers;
 
 import capstone.mobile.dataHandlers.DataUnavailableException;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class DataUnavailableException_ESTest {
@@ -34,6 +35,8 @@ public class DataUnavailableException_ESTest {
 
     @Test(timeout = 4000)
     public void test0() throws Throwable {
-        DataUnavailableException dataUnavailableException0 = new DataUnavailableException("capstone.mobile.dataHandlers.DataUnavailableException");
+        String message = "capstone.mobile.dataHandlers.DataUnavailableException";
+        DataUnavailableException dataUnavailableException0 = new DataUnavailableException(message);
+        Assert.assertEquals(message, dataUnavailableException0.getMessage());
     }
 }

@@ -41,8 +41,8 @@ public class Walk {
     private int  index;
     private Trap endTrap;
     private Trap currentTrap;
-    private List<Catch> catches     = new ArrayList<>();
-    private List<Trap>    changedTraps = new ArrayList<>();
+    private List<Catch> catches      = new ArrayList<>();
+    private List<Trap>  changedTraps = new ArrayList<>();
 
     /**
      * direction == Trap.side when the user will find the trap on the left. Direction will be true when trap number increases (e.g. start at trap 1, end at trap 5)
@@ -63,6 +63,13 @@ public class Walk {
 
     public Line getLine() {
         return line;
+    }
+
+    /**
+     * Constructor
+     */
+    public Walk() {
+        this.direction = null;
     }
 
     /**
