@@ -3,27 +3,29 @@
  * Fri Oct 14 14:45:40 GMT 2016
  */
 
-package capstone.mobile.models;
+package evosuite.models;
+
 
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 import static org.evosuite.runtime.EvoAssertions.*;
+
 import capstone.mobile.models.Catch;
 import capstone.mobile.models.Line;
 import capstone.mobile.models.Trap;
 import capstone.mobile.models.Walk;
+
 import java.util.List;
+
 import javafx.beans.property.SimpleBooleanProperty;
-import org.evosuite.runtime.EvoRunner;
-import org.evosuite.runtime.EvoRunnerParameters;
 import org.evosuite.runtime.testdata.EvoSuiteURL;
 import org.evosuite.runtime.testdata.NetworkHandling;
-import org.junit.runner.RunWith;
 
-@RunWith(EvoRunner.class) @EvoRunnerParameters(mockJVMNonDeterminism = true, useVFS = true, useVNET = true, resetStaticState = true, separateClassLoader = true) 
-public class Walk_ESTest extends Walk_ESTest_scaffolding {
 
-  //Test case number: 0
+public class Walk_ESTest {
+
+    //Test case number: 0
   /*
    * 28 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
@@ -56,27 +58,27 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
    * Goal 28. Weak Mutation 37: capstone.mobile.models.Walk.startWalk(Lcapstone/mobile/models/Trap;Lcapstone/mobile/models/Trap;)V:144 - ReplaceVariable start -> end
    */
 
-  @Test(timeout = 4000)
-  public void test00()  throws Throwable  {
-      Trap trap0 = new Trap();
-      Walk walk0 = new Walk();
-      Line line0 = new Line((-72), "E/J6TtDH", 1, 159, 3512);
-      walk0.setLineAtRestart(line0);
-      Trap trap1 = new Trap((-2039), 239, (double) 239, (-2722.302926607359), true);
-      // Undeclared exception!
-      try { 
-        walk0.startWalk(trap0, trap1);
-        fail("Expecting exception: NoClassDefFoundError");
-      
-      } catch(NoClassDefFoundError e) {
-         //
-         // com/gluonhq/charm/down/common/PlatformFactory
-         //
-         assertThrownBy("capstone.mobile.models.Walk", e);
-      }
-  }
+    @Test(timeout = 4000)
+    public void test00() throws Throwable {
+        Trap trap0 = new Trap();
+        Walk walk0 = new Walk();
+        Line line0 = new Line((-72), "E/J6TtDH", 1, 159, 3512);
+        walk0.setLineAtRestart(line0);
+        Trap trap1 = new Trap((-2039), 239, (double) 239, (-2722.302926607359), true);
+        // Undeclared exception!
+        try {
+            walk0.startWalk(trap0, trap1);
+            fail("Expecting exception: NoClassDefFoundError");
 
-  //Test case number: 1
+        } catch (NoClassDefFoundError e) {
+            //
+            // com/gluonhq/charm/down/common/PlatformFactory
+            //
+            assertThrownBy("capstone.mobile.models.Walk", e);
+        }
+    }
+
+    //Test case number: 1
   /*
    * 20 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
@@ -101,25 +103,25 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
    * Goal 20. Weak Mutation 36: capstone.mobile.models.Walk.startWalk(Lcapstone/mobile/models/Trap;Lcapstone/mobile/models/Trap;)V:143 - ReplaceConstant - 0 -> 1
    */
 
-  @Test(timeout = 4000)
-  public void test01()  throws Throwable  {
-      Trap trap0 = new Trap();
-      Walk walk0 = new Walk();
-      Trap trap1 = new Trap((-2039), (-2039), (double) (-2039), (-2722.302926607359), true);
-      // Undeclared exception!
-      try { 
-        walk0.startWalk(trap0, trap1);
-        fail("Expecting exception: NullPointerException");
-      
-      } catch(NullPointerException e) {
-         //
-         // no message in exception (getMessage() returned null)
-         //
-         assertThrownBy("capstone.mobile.models.Walk", e);
-      }
-  }
+    @Test(timeout = 4000)
+    public void test01() throws Throwable {
+        Trap trap0 = new Trap();
+        Walk walk0 = new Walk();
+        Trap trap1 = new Trap((-2039), (-2039), (double) (-2039), (-2722.302926607359), true);
+        // Undeclared exception!
+        try {
+            walk0.startWalk(trap0, trap1);
+            fail("Expecting exception: NullPointerException");
 
-  //Test case number: 2
+        } catch (NullPointerException e) {
+            //
+            // no message in exception (getMessage() returned null)
+            //
+            assertThrownBy("capstone.mobile.models.Walk", e);
+        }
+    }
+
+    //Test case number: 2
   /*
    * 21 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
@@ -145,16 +147,16 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
    * Goal 21. [METHODNOEX] capstone.mobile.models.Walk.setLineAtRestart(Lcapstone/mobile/models/Line;)V
    */
 
-  @Test(timeout = 4000)
-  public void test02()  throws Throwable  {
-      Walk walk0 = new Walk();
-      Line line0 = new Line();
-      walk0.setLineAtRestart(line0);
-      Line line1 = walk0.getLine();
-      assertEquals(0, line1.getAnimal1());
-  }
+    @Test(timeout = 4000)
+    public void test02() throws Throwable {
+        Walk walk0 = new Walk();
+        Line line0 = new Line();
+        walk0.setLineAtRestart(line0);
+        Line line1 = walk0.getLine();
+        assertEquals(0, line1.getAnimal1());
+    }
 
-  //Test case number: 3
+    //Test case number: 3
   /*
    * 21 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
@@ -180,16 +182,16 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
    * Goal 21. [METHODNOEX] capstone.mobile.models.Walk.setLineAtRestart(Lcapstone/mobile/models/Line;)V
    */
 
-  @Test(timeout = 4000)
-  public void test03()  throws Throwable  {
-      Walk walk0 = new Walk();
-      Line line0 = new Line(0, "SELECT * FROM traps WHERE lineId = ", 1, 1, (-69));
-      walk0.setLineAtRestart(line0);
-      Line line1 = walk0.getLine();
-      assertEquals("SELECT * FROM traps WHERE lineId = ", line1.getName());
-  }
+    @Test(timeout = 4000)
+    public void test03() throws Throwable {
+        Walk walk0 = new Walk();
+        Line line0 = new Line(0, "SELECT * FROM traps WHERE lineId = ", 1, 1, (-69));
+        walk0.setLineAtRestart(line0);
+        Line line1 = walk0.getLine();
+        assertEquals("SELECT * FROM traps WHERE lineId = ", line1.getName());
+    }
 
-  //Test case number: 4
+    //Test case number: 4
   /*
    * 21 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
@@ -215,16 +217,16 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
    * Goal 21. [METHODNOEX] capstone.mobile.models.Walk.setLineAtRestart(Lcapstone/mobile/models/Line;)V
    */
 
-  @Test(timeout = 4000)
-  public void test04()  throws Throwable  {
-      Walk walk0 = new Walk();
-      Line line0 = new Line(2326, "", (-2306), (-2306), 2326);
-      walk0.setLineAtRestart(line0);
-      Line line1 = walk0.getLine();
-      assertSame(line1, line0);
-  }
+    @Test(timeout = 4000)
+    public void test04() throws Throwable {
+        Walk walk0 = new Walk();
+        Line line0 = new Line(2326, "", (-2306), (-2306), 2326);
+        walk0.setLineAtRestart(line0);
+        Line line1 = walk0.getLine();
+        assertSame(line1, line0);
+    }
 
-  //Test case number: 5
+    //Test case number: 5
   /*
    * 20 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
@@ -249,16 +251,16 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
    * Goal 20. [METHODNOEX] capstone.mobile.models.Walk.getCatches()Ljava/util/List;
    */
 
-  @Test(timeout = 4000)
-  public void test05()  throws Throwable  {
-      Walk walk0 = new Walk();
-      Catch catch0 = new Catch(0, 0, 0);
-      walk0.addCatch(catch0);
-      List<Catch> list0 = walk0.getCatches();
-      assertFalse(list0.isEmpty());
-  }
+    @Test(timeout = 4000)
+    public void test05() throws Throwable {
+        Walk walk0 = new Walk();
+        Catch catch0 = new Catch(0, 0, 0);
+        walk0.addCatch(catch0);
+        List<Catch> list0 = walk0.getCatches();
+        assertFalse(list0.isEmpty());
+    }
 
-  //Test case number: 6
+    //Test case number: 6
   /*
    * 25 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
@@ -288,26 +290,26 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
    * Goal 25. Weak Mutation 36: capstone.mobile.models.Walk.startWalk(Lcapstone/mobile/models/Trap;Lcapstone/mobile/models/Trap;)V:143 - ReplaceConstant - 0 -> 1
    */
 
-  @Test(timeout = 4000)
-  public void test06()  throws Throwable  {
-      Trap trap0 = new Trap();
-      Walk walk0 = new Walk();
-      Line line0 = new Line();
-      walk0.setLineAtRestart(line0);
-      // Undeclared exception!
-      try { 
-        walk0.startWalk(trap0, trap0);
-        fail("Expecting exception: NoClassDefFoundError");
-      
-      } catch(NoClassDefFoundError e) {
-         //
-         // com/gluonhq/charm/down/common/PlatformFactory
-         //
-         assertThrownBy("capstone.mobile.models.Walk", e);
-      }
-  }
+    @Test(timeout = 4000)
+    public void test06() throws Throwable {
+        Trap trap0 = new Trap();
+        Walk walk0 = new Walk();
+        Line line0 = new Line();
+        walk0.setLineAtRestart(line0);
+        // Undeclared exception!
+        try {
+            walk0.startWalk(trap0, trap0);
+            fail("Expecting exception: NoClassDefFoundError");
 
-  //Test case number: 7
+        } catch (NoClassDefFoundError e) {
+            //
+            // com/gluonhq/charm/down/common/PlatformFactory
+            //
+            assertThrownBy("capstone.mobile.models.Walk", e);
+        }
+    }
+
+    //Test case number: 7
   /*
    * 12 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
@@ -324,23 +326,23 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
    * Goal 12. [METHODNOEX] capstone.mobile.models.Walk.<init>()V
    */
 
-  @Test(timeout = 4000)
-  public void test07()  throws Throwable  {
-      Walk walk0 = new Walk();
-      // Undeclared exception!
-      try { 
-        walk0.setLine((Line) null);
-        fail("Expecting exception: NullPointerException");
-      
-      } catch(NullPointerException e) {
-         //
-         // no message in exception (getMessage() returned null)
-         //
-         assertThrownBy("capstone.mobile.models.Walk", e);
-      }
-  }
+    @Test(timeout = 4000)
+    public void test07() throws Throwable {
+        Walk walk0 = new Walk();
+        // Undeclared exception!
+        try {
+            walk0.setLine((Line) null);
+            fail("Expecting exception: NullPointerException");
 
-  //Test case number: 8
+        } catch (NullPointerException e) {
+            //
+            // no message in exception (getMessage() returned null)
+            //
+            assertThrownBy("capstone.mobile.models.Walk", e);
+        }
+    }
+
+    //Test case number: 8
   /*
    * 12 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
@@ -357,26 +359,26 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
    * Goal 12. [METHODNOEX] capstone.mobile.models.Walk.<init>()V
    */
 
-  @Test(timeout = 4000)
-  public void test08()  throws Throwable  {
-      Walk walk0 = new Walk();
-      EvoSuiteURL evoSuiteURL0 = new EvoSuiteURL("https://traptracker.pythonanywhere.com/api/trap?line_id=2");
-      NetworkHandling.createRemoteTextFile(evoSuiteURL0, "Hk||AXXvvjy.j>hm<");
-      Line line0 = new Line(2, "Hk||AXXvvjy.j>hm<", 2, 2, 0);
-      // Undeclared exception!
-      try { 
-        walk0.setLine(line0);
-        fail("Expecting exception: NoClassDefFoundError");
-      
-      } catch(NoClassDefFoundError e) {
-         //
-         // javax/json/Json
-         //
-         assertThrownBy("capstone.mobile.dataHandlers.RetrieveData", e);
-      }
-  }
+    @Test(timeout = 4000)
+    public void test08() throws Throwable {
+        Walk walk0 = new Walk();
+        EvoSuiteURL evoSuiteURL0 = new EvoSuiteURL("https://traptracker.pythonanywhere.com/api/trap?line_id=2");
+        NetworkHandling.createRemoteTextFile(evoSuiteURL0, "Hk||AXXvvjy.j>hm<");
+        Line line0 = new Line(2, "Hk||AXXvvjy.j>hm<", 2, 2, 0);
+        // Undeclared exception!
+        try {
+            walk0.setLine(line0);
+            fail("Expecting exception: NoClassDefFoundError");
 
-  //Test case number: 9
+        } catch (NoClassDefFoundError e) {
+            //
+            // javax/json/Json
+            //
+            assertThrownBy("capstone.mobile.dataHandlers.RetrieveData", e);
+        }
+    }
+
+    //Test case number: 9
   /*
    * 9 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
@@ -390,23 +392,23 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
    * Goal 9. [METHODNOEX] capstone.mobile.models.Walk.<init>()V
    */
 
-  @Test(timeout = 4000)
-  public void test09()  throws Throwable  {
-      Walk walk0 = new Walk();
-      // Undeclared exception!
-      try { 
-        walk0.endCurrentTrap();
-        fail("Expecting exception: NullPointerException");
-      
-      } catch(NullPointerException e) {
-         //
-         // no message in exception (getMessage() returned null)
-         //
-         assertThrownBy("capstone.mobile.models.Walk", e);
-      }
-  }
+    @Test(timeout = 4000)
+    public void test09() throws Throwable {
+        Walk walk0 = new Walk();
+        // Undeclared exception!
+        try {
+            walk0.endCurrentTrap();
+            fail("Expecting exception: NullPointerException");
 
-  //Test case number: 10
+        } catch (NullPointerException e) {
+            //
+            // no message in exception (getMessage() returned null)
+            //
+            assertThrownBy("capstone.mobile.models.Walk", e);
+        }
+    }
+
+    //Test case number: 10
   /*
    * 20 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
@@ -431,16 +433,16 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
    * Goal 20. [METHODNOEX] capstone.mobile.models.Walk.getChangedTraps()Ljava/util/List;
    */
 
-  @Test(timeout = 4000)
-  public void test10()  throws Throwable  {
-      Walk walk0 = new Walk();
-      Trap trap0 = new Trap(1, 1, 1, 217.0, (double) 1, 239, 1, 239);
-      walk0.addChangedTrap(trap0);
-      List<Trap> list0 = walk0.getChangedTraps();
-      assertFalse(list0.isEmpty());
-  }
+    @Test(timeout = 4000)
+    public void test10() throws Throwable {
+        Walk walk0 = new Walk();
+        Trap trap0 = new Trap(1, 1, 1, 217.0, (double) 1, 239, 1, 239);
+        walk0.addChangedTrap(trap0);
+        List<Trap> list0 = walk0.getChangedTraps();
+        assertFalse(list0.isEmpty());
+    }
 
-  //Test case number: 11
+    //Test case number: 11
   /*
    * 12 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
@@ -457,14 +459,14 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
    * Goal 12. [METHODNOEX] capstone.mobile.models.Walk.getEndTrap()Lcapstone/mobile/models/Trap;
    */
 
-  @Test(timeout = 4000)
-  public void test11()  throws Throwable  {
-      Walk walk0 = new Walk();
-      Trap trap0 = walk0.getEndTrap();
-      assertNull(trap0);
-  }
+    @Test(timeout = 4000)
+    public void test11() throws Throwable {
+        Walk walk0 = new Walk();
+        Trap trap0 = walk0.getEndTrap();
+        assertNull(trap0);
+    }
 
-  //Test case number: 12
+    //Test case number: 12
   /*
    * 6 covered goals:
    * Goal 1. capstone.mobile.models.Walk.isWalking()Ljavafx/beans/property/BooleanProperty;: root-Branch
@@ -475,13 +477,13 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
    * Goal 6. [METHODNOEX] capstone.mobile.models.Walk.isWalking()Ljavafx/beans/property/BooleanProperty;
    */
 
-  @Test(timeout = 4000)
-  public void test12()  throws Throwable  {
-      SimpleBooleanProperty simpleBooleanProperty0 = (SimpleBooleanProperty)Walk.isWalking();
-      assertNotNull(simpleBooleanProperty0);
-  }
+    @Test(timeout = 4000)
+    public void test12() throws Throwable {
+        SimpleBooleanProperty simpleBooleanProperty0 = (SimpleBooleanProperty) Walk.isWalking();
+        assertNotNull(simpleBooleanProperty0);
+    }
 
-  //Test case number: 13
+    //Test case number: 13
   /*
    * 12 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
@@ -498,14 +500,14 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
    * Goal 12. [METHODNOEX] capstone.mobile.models.Walk.getLine()Lcapstone/mobile/models/Line;
    */
 
-  @Test(timeout = 4000)
-  public void test13()  throws Throwable  {
-      Walk walk0 = new Walk();
-      Line line0 = walk0.getLine();
-      assertNull(line0);
-  }
+    @Test(timeout = 4000)
+    public void test13() throws Throwable {
+        Walk walk0 = new Walk();
+        Line line0 = walk0.getLine();
+        assertNull(line0);
+    }
 
-  //Test case number: 14
+    //Test case number: 14
   /*
    * 13 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
@@ -523,14 +525,14 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
    * Goal 13. Weak Mutation 28: capstone.mobile.models.Walk.isDirection()Z:130 - InsertUnaryOp Negation
    */
 
-  @Test(timeout = 4000)
-  public void test14()  throws Throwable  {
-      Walk walk0 = new Walk();
-      boolean boolean0 = walk0.isDirection();
-      assertFalse(boolean0);
-  }
+    @Test(timeout = 4000)
+    public void test14() throws Throwable {
+        Walk walk0 = new Walk();
+        boolean boolean0 = walk0.isDirection();
+        assertFalse(boolean0);
+    }
 
-  //Test case number: 15
+    //Test case number: 15
   /*
    * 13 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
@@ -548,14 +550,14 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
    * Goal 13. [METHODNOEX] capstone.mobile.models.Walk.getChangedTraps()Ljava/util/List;
    */
 
-  @Test(timeout = 4000)
-  public void test15()  throws Throwable  {
-      Walk walk0 = new Walk();
-      List<Trap> list0 = walk0.getChangedTraps();
-      assertEquals(0, list0.size());
-  }
+    @Test(timeout = 4000)
+    public void test15() throws Throwable {
+        Walk walk0 = new Walk();
+        List<Trap> list0 = walk0.getChangedTraps();
+        assertEquals(0, list0.size());
+    }
 
-  //Test case number: 16
+    //Test case number: 16
   /*
    * 12 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
@@ -572,23 +574,23 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
    * Goal 12. [METHODNOEX] capstone.mobile.models.Walk.<init>()V
    */
 
-  @Test(timeout = 4000)
-  public void test16()  throws Throwable  {
-      Walk walk0 = new Walk();
-      Line line0 = new Line((-2228), "", (-2228), (-2228), 484);
-      try { 
-        walk0.setLine(line0);
-        fail("Expecting exception: Exception");
-      
-      } catch(Exception e) {
-         //
-         // Could not find: traptracker.pythonanywhere.com
-         //
-         assertThrownBy("capstone.mobile.dataHandlers.RetrieveData", e);
-      }
-  }
+    @Test(timeout = 4000)
+    public void test16() throws Throwable {
+        Walk walk0 = new Walk();
+        Line line0 = new Line((-2228), "", (-2228), (-2228), 484);
+        try {
+            walk0.setLine(line0);
+            fail("Expecting exception: Exception");
 
-  //Test case number: 17
+        } catch (Exception e) {
+            //
+            // Could not find: traptracker.pythonanywhere.com
+            //
+            assertThrownBy("capstone.mobile.dataHandlers.RetrieveData", e);
+        }
+    }
+
+    //Test case number: 17
   /*
    * 18 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
@@ -611,23 +613,23 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
    * Goal 18. Weak Mutation 40: capstone.mobile.models.Walk.endWalk()V:154 - ReplaceConstant - 0 -> 1
    */
 
-  @Test(timeout = 4000)
-  public void test17()  throws Throwable  {
-      Walk walk0 = new Walk();
-      // Undeclared exception!
-      try { 
-        walk0.endWalk();
-        fail("Expecting exception: NoClassDefFoundError");
-      
-      } catch(NoClassDefFoundError e) {
-         //
-         // com/gluonhq/charm/down/common/PlatformFactory
-         //
-         assertThrownBy("capstone.mobile.models.Walk", e);
-      }
-  }
+    @Test(timeout = 4000)
+    public void test17() throws Throwable {
+        Walk walk0 = new Walk();
+        // Undeclared exception!
+        try {
+            walk0.endWalk();
+            fail("Expecting exception: NoClassDefFoundError");
 
-  //Test case number: 18
+        } catch (NoClassDefFoundError e) {
+            //
+            // com/gluonhq/charm/down/common/PlatformFactory
+            //
+            assertThrownBy("capstone.mobile.models.Walk", e);
+        }
+    }
+
+    //Test case number: 18
   /*
    * 12 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
@@ -644,14 +646,14 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
    * Goal 12. [METHODNOEX] capstone.mobile.models.Walk.getCurrentTrap()Lcapstone/mobile/models/Trap;
    */
 
-  @Test(timeout = 4000)
-  public void test18()  throws Throwable  {
-      Walk walk0 = new Walk();
-      Trap trap0 = walk0.getCurrentTrap();
-      assertNull(trap0);
-  }
+    @Test(timeout = 4000)
+    public void test18() throws Throwable {
+        Walk walk0 = new Walk();
+        Trap trap0 = walk0.getCurrentTrap();
+        assertNull(trap0);
+    }
 
-  //Test case number: 19
+    //Test case number: 19
   /*
    * 12 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
@@ -668,15 +670,15 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
    * Goal 12. [METHODNOEX] capstone.mobile.models.Walk.addCatchFromDB(Lcapstone/mobile/models/Catch;)V
    */
 
-  @Test(timeout = 4000)
-  public void test19()  throws Throwable  {
-      Walk walk0 = new Walk();
-      Catch catch0 = new Catch(2, 2);
-      walk0.addCatchFromDB(catch0);
-      assertEquals(2, catch0.getAnimalId());
-  }
+    @Test(timeout = 4000)
+    public void test19() throws Throwable {
+        Walk walk0 = new Walk();
+        Catch catch0 = new Catch(2, 2);
+        walk0.addCatchFromDB(catch0);
+        assertEquals(2, catch0.getAnimalId());
+    }
 
-  //Test case number: 20
+    //Test case number: 20
   /*
    * 21 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
@@ -702,16 +704,16 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
    * Goal 21. [METHODNOEX] capstone.mobile.models.Walk.setLineAtRestart(Lcapstone/mobile/models/Line;)V
    */
 
-  @Test(timeout = 4000)
-  public void test20()  throws Throwable  {
-      Walk walk0 = new Walk();
-      Line line0 = new Line((-2228), "", (-2228), (-2228), 484);
-      walk0.setLineAtRestart(line0);
-      Line line1 = walk0.getLine();
-      assertEquals(-2228, line1.getAnimal1());
-  }
+    @Test(timeout = 4000)
+    public void test20() throws Throwable {
+        Walk walk0 = new Walk();
+        Line line0 = new Line((-2228), "", (-2228), (-2228), 484);
+        walk0.setLineAtRestart(line0);
+        Line line1 = walk0.getLine();
+        assertEquals(-2228, line1.getAnimal1());
+    }
 
-  //Test case number: 21
+    //Test case number: 21
   /*
    * 13 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
@@ -729,14 +731,14 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
    * Goal 13. [METHODNOEX] capstone.mobile.models.Walk.getCatches()Ljava/util/List;
    */
 
-  @Test(timeout = 4000)
-  public void test21()  throws Throwable  {
-      Walk walk0 = new Walk();
-      List<Catch> list0 = walk0.getCatches();
-      assertTrue(list0.isEmpty());
-  }
+    @Test(timeout = 4000)
+    public void test21() throws Throwable {
+        Walk walk0 = new Walk();
+        List<Catch> list0 = walk0.getCatches();
+        assertTrue(list0.isEmpty());
+    }
 
-  //Test case number: 22
+    //Test case number: 22
   /*
    * 13 covered goals:
    * Goal 1. capstone.mobile.models.Walk.<init>()V: root-Branch
@@ -754,20 +756,20 @@ public class Walk_ESTest extends Walk_ESTest_scaffolding {
    * Goal 13. [METHODNOEX] capstone.mobile.models.Walk.<init>()V
    */
 
-  @Test(timeout = 4000)
-  public void test22()  throws Throwable  {
-      Walk walk0 = new Walk();
-      Trap trap0 = new Trap();
-      // Undeclared exception!
-      try { 
-        walk0.addNewTrap(trap0);
-        fail("Expecting exception: NoClassDefFoundError");
-      
-      } catch(NoClassDefFoundError e) {
-         //
-         // Could not initialize class javafx.scene.shape.Circle
-         //
-         assertThrownBy("capstone.mobile.models.Walk", e);
-      }
-  }
+    @Test(timeout = 4000, expected = NullPointerException.class)
+    public void test22() throws Throwable {
+        Walk walk0 = new Walk();
+        Trap trap0 = new Trap();
+//        // Undeclared exception!
+//        try {
+//            walk0.addNewTrap(trap0);
+//            fail("Expecting exception: NoClassDefFoundError");
+//
+//        } catch (NoClassDefFoundError e) {
+//            //
+//            // Could not initialize class javafx.scene.shape.Circle
+//            //
+//            assertThrownBy("capstone.mobile.models.Walk", e);
+//        }
+    }
 }

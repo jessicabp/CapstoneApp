@@ -49,6 +49,13 @@ public class Walk {
     }
 
     /**
+     * Constructor
+     */
+    public Walk() {
+        this.direction = false;
+    }
+
+    /**
      * Set line in walk, fetch traps from server, save traps in database, set currentLine on device
      *
      * @param line

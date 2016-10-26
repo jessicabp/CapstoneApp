@@ -3,19 +3,17 @@
  * Fri Oct 14 14:48:09 GMT 2016
  */
 
-package capstone.mobile.models;
+package evosuite.models;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
 import capstone.mobile.models.Catch;
-import org.evosuite.runtime.EvoRunner;
-import org.evosuite.runtime.EvoRunnerParameters;
-import org.junit.runner.RunWith;
+import org.junit.Test;
 
-@RunWith(EvoRunner.class) @EvoRunnerParameters(mockJVMNonDeterminism = true, useVFS = true, useVNET = true, resetStaticState = true, separateClassLoader = true) 
-public class Catch_ESTest extends Catch_ESTest_scaffolding {
+import static org.junit.Assert.*;
 
-  //Test case number: 0
+
+public class Catch_ESTest {
+
+    //Test case number: 0
   /*
    * 33 covered goals:
    * Goal 1. capstone.mobile.models.Catch.setTrapId(I)V: root-Branch
@@ -53,15 +51,15 @@ public class Catch_ESTest extends Catch_ESTest_scaffolding {
    * Goal 33. Weak Mutation 23: capstone.mobile.models.Catch.setTrapId(I)V:44 - InsertUnaryOp IINC -1 trapId
    */
 
-  @Test(timeout = 4000)
-  public void test0()  throws Throwable  {
-      Catch catch0 = new Catch(0, 0);
-      catch0.setTrapId(1588);
-      int int0 = catch0.getTrapId();
-      assertEquals(1588, int0);
-  }
+    @Test(timeout = 4000)
+    public void test0() throws Throwable {
+        Catch catch0 = new Catch(0, 0);
+        catch0.setTrapId(1588);
+        int int0 = catch0.getTrapId();
+        assertEquals(1588, int0);
+    }
 
-  //Test case number: 1
+    //Test case number: 1
   /*
    * 33 covered goals:
    * Goal 1. capstone.mobile.models.Catch.setTrapId(I)V: root-Branch
@@ -99,17 +97,17 @@ public class Catch_ESTest extends Catch_ESTest_scaffolding {
    * Goal 33. Weak Mutation 23: capstone.mobile.models.Catch.setTrapId(I)V:44 - InsertUnaryOp IINC -1 trapId
    */
 
-  @Test(timeout = 4000)
-  public void test1()  throws Throwable  {
-      Catch catch0 = new Catch(0, 0);
-      assertEquals(0, catch0.getTrapId());
-      
-      catch0.setTrapId((-1));
-      int int0 = catch0.getTrapId();
-      assertEquals((-1), int0);
-  }
+    @Test(timeout = 4000)
+    public void test1() throws Throwable {
+        Catch catch0 = new Catch(0, 0);
+        assertEquals(0, catch0.getTrapId());
 
-  //Test case number: 2
+        catch0.setTrapId((-1));
+        int int0 = catch0.getTrapId();
+        assertEquals((-1), int0);
+    }
+
+    //Test case number: 2
   /*
    * 29 covered goals:
    * Goal 1. capstone.mobile.models.Catch.getTime()J: root-Branch
@@ -143,17 +141,17 @@ public class Catch_ESTest extends Catch_ESTest_scaffolding {
    * Goal 29. Weak Mutation 31: capstone.mobile.models.Catch.setTime(J)V:60 - InsertUnaryOp Negation of time
    */
 
-  @Test(timeout = 4000)
-  public void test2()  throws Throwable  {
-      Catch catch0 = new Catch(0, 0);
-      assertEquals(1392409281320L, catch0.getTime());
-      
-      catch0.setTime(0);
-      catch0.getTime();
-      assertEquals(0, catch0.getTrapId());
-  }
+    @Test(timeout = 4000)
+    public void test2() throws Throwable {
+        Catch catch0 = new Catch(0, 0);
+        assertEquals(1392409281320L, catch0.getTime());
 
-  //Test case number: 3
+        catch0.setTime(0);
+        catch0.getTime();
+        assertEquals(0, catch0.getTrapId());
+    }
+
+    //Test case number: 3
   /*
    * 29 covered goals:
    * Goal 1. capstone.mobile.models.Catch.<init>(IIJ)V: root-Branch
@@ -187,15 +185,15 @@ public class Catch_ESTest extends Catch_ESTest_scaffolding {
    * Goal 29. Weak Mutation 31: capstone.mobile.models.Catch.setTime(J)V:60 - InsertUnaryOp Negation of time
    */
 
-  @Test(timeout = 4000)
-  public void test3()  throws Throwable  {
-      Catch catch0 = new Catch(0, 0, 0);
-      catch0.setTime((-1269L));
-      long long0 = catch0.getTime();
-      assertEquals((-1269L), long0);
-  }
+    @Test(timeout = 4000)
+    public void test3() throws Throwable {
+        Catch catch0 = new Catch(0, 0, 0);
+        catch0.setTime((-1269L));
+        long long0 = catch0.getTime();
+        assertEquals((-1269L), long0);
+    }
 
-  //Test case number: 4
+    //Test case number: 4
   /*
    * 26 covered goals:
    * Goal 1. capstone.mobile.models.Catch.<init>(II)V: root-Branch
@@ -226,16 +224,16 @@ public class Catch_ESTest extends Catch_ESTest_scaffolding {
    * Goal 26. Weak Mutation 26: capstone.mobile.models.Catch.getAnimalId()I:48 - InsertUnaryOp -1
    */
 
-  @Test(timeout = 4000)
-  public void test4()  throws Throwable  {
-      Catch catch0 = new Catch(0, 1);
-      int int0 = catch0.getAnimalId();
-      assertEquals(0, catch0.getTrapId());
-      assertEquals(1392409281320L, catch0.getTime());
-      assertEquals(1, int0);
-  }
+    @Test(timeout = 4000)
+    public void test4() throws Throwable {
+        Catch catch0 = new Catch(0, 1);
+        int int0 = catch0.getAnimalId();
+        assertEquals(0, catch0.getTrapId());
+        assertEquals(1392409281320L, catch0.getTime());
+        assertEquals(1, int0);
+    }
 
-  //Test case number: 5
+    //Test case number: 5
   /*
    * 26 covered goals:
    * Goal 1. capstone.mobile.models.Catch.<init>(IIJ)V: root-Branch
@@ -266,16 +264,16 @@ public class Catch_ESTest extends Catch_ESTest_scaffolding {
    * Goal 26. Weak Mutation 26: capstone.mobile.models.Catch.getAnimalId()I:48 - InsertUnaryOp -1
    */
 
-  @Test(timeout = 4000)
-  public void test5()  throws Throwable  {
-      Catch catch0 = new Catch(1588, (-1), 1L);
-      int int0 = catch0.getAnimalId();
-      assertEquals(1L, catch0.getTime());
-      assertEquals(1588, catch0.getTrapId());
-      assertEquals((-1), int0);
-  }
+    @Test(timeout = 4000)
+    public void test5() throws Throwable {
+        Catch catch0 = new Catch(1588, (-1), 1L);
+        int int0 = catch0.getAnimalId();
+        assertEquals(1L, catch0.getTime());
+        assertEquals(1588, catch0.getTrapId());
+        assertEquals((-1), int0);
+    }
 
-  //Test case number: 6
+    //Test case number: 6
   /*
    * 24 covered goals:
    * Goal 1. capstone.mobile.models.Catch.<init>(II)V: root-Branch
@@ -304,16 +302,16 @@ public class Catch_ESTest extends Catch_ESTest_scaffolding {
    * Goal 24. Weak Mutation 20: capstone.mobile.models.Catch.getTrapId()I:40 - InsertUnaryOp -1
    */
 
-  @Test(timeout = 4000)
-  public void test6()  throws Throwable  {
-      Catch catch0 = new Catch(0, 0);
-      int int0 = catch0.getTrapId();
-      assertEquals(1392409281320L, catch0.getTime());
-      assertEquals(0, catch0.getAnimalId());
-      assertEquals(0, int0);
-  }
+    @Test(timeout = 4000)
+    public void test6() throws Throwable {
+        Catch catch0 = new Catch(0, 0);
+        int int0 = catch0.getTrapId();
+        assertEquals(1392409281320L, catch0.getTime());
+        assertEquals(0, catch0.getAnimalId());
+        assertEquals(0, int0);
+    }
 
-  //Test case number: 7
+    //Test case number: 7
   /*
    * 24 covered goals:
    * Goal 1. capstone.mobile.models.Catch.<init>(II)V: root-Branch
@@ -342,16 +340,16 @@ public class Catch_ESTest extends Catch_ESTest_scaffolding {
    * Goal 24. Weak Mutation 26: capstone.mobile.models.Catch.getAnimalId()I:48 - InsertUnaryOp -1
    */
 
-  @Test(timeout = 4000)
-  public void test7()  throws Throwable  {
-      Catch catch0 = new Catch(0, 0);
-      int int0 = catch0.getAnimalId();
-      assertEquals(0, catch0.getTrapId());
-      assertEquals(1392409281320L, catch0.getTime());
-      assertEquals(0, int0);
-  }
+    @Test(timeout = 4000)
+    public void test7() throws Throwable {
+        Catch catch0 = new Catch(0, 0);
+        int int0 = catch0.getAnimalId();
+        assertEquals(0, catch0.getTrapId());
+        assertEquals(1392409281320L, catch0.getTime());
+        assertEquals(0, int0);
+    }
 
-  //Test case number: 8
+    //Test case number: 8
   /*
    * 24 covered goals:
    * Goal 1. capstone.mobile.models.Catch.setAnimalId(I)V: root-Branch
@@ -380,14 +378,14 @@ public class Catch_ESTest extends Catch_ESTest_scaffolding {
    * Goal 24. Weak Mutation 29: capstone.mobile.models.Catch.setAnimalId(I)V:52 - InsertUnaryOp IINC -1 animalId
    */
 
-  @Test(timeout = 4000)
-  public void test8()  throws Throwable  {
-      Catch catch0 = new Catch(0, 0);
-      catch0.setAnimalId(1588);
-      assertEquals(1588, catch0.getAnimalId());
-  }
+    @Test(timeout = 4000)
+    public void test8() throws Throwable {
+        Catch catch0 = new Catch(0, 0);
+        catch0.setAnimalId(1588);
+        assertEquals(1588, catch0.getAnimalId());
+    }
 
-  //Test case number: 9
+    //Test case number: 9
   /*
    * 22 covered goals:
    * Goal 1. capstone.mobile.models.Catch.getTime()J: root-Branch
@@ -414,12 +412,12 @@ public class Catch_ESTest extends Catch_ESTest_scaffolding {
    * Goal 22. Weak Mutation 30: capstone.mobile.models.Catch.getTime()J:56 - InsertUnaryOp Negation
    */
 
-  @Test(timeout = 4000)
-  public void test9()  throws Throwable  {
-      Catch catch0 = new Catch(0, 0);
-      long long0 = catch0.getTime();
-      assertEquals(1392409281320L, long0);
-      assertEquals(0, catch0.getAnimalId());
-      assertEquals(0, catch0.getTrapId());
-  }
+    @Test(timeout = 4000)
+    public void test9() throws Throwable {
+        Catch catch0 = new Catch(0, 0);
+        long long0 = catch0.getTime();
+        assertEquals(1392409281320L, long0);
+        assertEquals(0, catch0.getAnimalId());
+        assertEquals(0, catch0.getTrapId());
+    }
 }

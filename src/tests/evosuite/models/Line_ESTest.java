@@ -3,22 +3,23 @@
  * Fri Oct 14 14:40:36 GMT 2016
  */
 
-package capstone.mobile.models;
+package evosuite.models;
+
 
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 import static org.evosuite.runtime.EvoAssertions.*;
+
 import capstone.mobile.models.Line;
 import capstone.mobile.models.Trap;
+
 import java.util.List;
-import org.evosuite.runtime.EvoRunner;
-import org.evosuite.runtime.EvoRunnerParameters;
-import org.junit.runner.RunWith;
 
-@RunWith(EvoRunner.class) @EvoRunnerParameters(mockJVMNonDeterminism = true, useVFS = true, useVNET = true, resetStaticState = true, separateClassLoader = true) 
-public class Line_ESTest extends Line_ESTest_scaffolding {
 
-  //Test case number: 0
+public class Line_ESTest {
+
+    //Test case number: 0
   /*
    * 34 covered goals:
    * Goal 1. capstone.mobile.models.Line.<init>(ILjava/lang/String;III)V: root-Branch
@@ -57,16 +58,16 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 34. Weak Mutation 23: capstone.mobile.models.Line.<init>(ILjava/lang/String;III)V:37 - InsertUnaryOp IINC -1 animal3
    */
 
-  @Test(timeout = 4000)
-  public void test00()  throws Throwable  {
-      Line line0 = new Line((-2404), "f;", (-2304), 0, 0);
-      assertEquals(-2404, line0.getId());
-      assertEquals(0, line0.getAnimal2());
-      assertEquals(-2304, line0.getAnimal1());
-      assertEquals(0, line0.getAnimal3());
-  }
+    @Test(timeout = 4000)
+    public void test00() throws Throwable {
+        Line line0 = new Line((-2404), "f;", (-2304), 0, 0);
+        assertEquals(-2404, line0.getId());
+        assertEquals(0, line0.getAnimal2());
+        assertEquals(-2304, line0.getAnimal1());
+        assertEquals(0, line0.getAnimal3());
+    }
 
-  //Test case number: 1
+    //Test case number: 1
   /*
    * 19 covered goals:
    * Goal 1. capstone.mobile.models.Line.getTraps()Ljava/util/List;: root-Branch
@@ -90,15 +91,15 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 19. [METHODNOEX] capstone.mobile.models.Line.setTraps(Ljava/util/List;)V
    */
 
-  @Test(timeout = 4000)
-  public void test01()  throws Throwable  {
-      Line line0 = new Line();
-      line0.setTraps((List<Trap>) null);
-      List<Trap> list0 = line0.getTraps();
-      assertNull(list0);
-  }
+    @Test(timeout = 4000)
+    public void test01() throws Throwable {
+        Line line0 = new Line();
+        line0.setTraps((List<Trap>) null);
+        List<Trap> list0 = line0.getTraps();
+        assertNull(list0);
+    }
 
-  //Test case number: 2
+    //Test case number: 2
   /*
    * 22 covered goals:
    * Goal 1. capstone.mobile.models.Line.getTrapByIndex(I)Lcapstone/mobile/models/Trap;: root-Branch
@@ -125,15 +126,15 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 22. Weak Mutation 26: capstone.mobile.models.Line.getTrapByIndex(I)Lcapstone/mobile/models/Trap;:56 - InsertUnaryOp IINC -1 index
    */
 
-  @Test(timeout = 4000)
-  public void test02()  throws Throwable  {
-      Line line0 = new Line();
-      line0.addTrap((Trap) null);
-      Trap trap0 = line0.getTrapByIndex(0);
-      assertNull(trap0);
-  }
+    @Test(timeout = 4000)
+    public void test02() throws Throwable {
+        Line line0 = new Line();
+        line0.addTrap((Trap) null);
+        Trap trap0 = line0.getTrapByIndex(0);
+        assertNull(trap0);
+    }
 
-  //Test case number: 3
+    //Test case number: 3
   /*
    * 29 covered goals:
    * Goal 1. capstone.mobile.models.Line.getTrapByIndex(I)Lcapstone/mobile/models/Trap;: root-Branch
@@ -167,17 +168,17 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 29. Weak Mutation 26: capstone.mobile.models.Line.getTrapByIndex(I)Lcapstone/mobile/models/Trap;:56 - InsertUnaryOp IINC -1 index
    */
 
-  @Test(timeout = 4000)
-  public void test03()  throws Throwable  {
-      Line line0 = new Line();
-      Trap trap0 = new Trap();
-      trap0.setMoved(true);
-      line0.addTrap(trap0);
-      Trap trap1 = line0.getTrapByIndex(0);
-      assertEquals(0, trap1.getId());
-  }
+    @Test(timeout = 4000)
+    public void test03() throws Throwable {
+        Line line0 = new Line();
+        Trap trap0 = new Trap();
+        trap0.setMoved(true);
+        line0.addTrap(trap0);
+        Trap trap1 = line0.getTrapByIndex(0);
+        assertEquals(0, trap1.getId());
+    }
 
-  //Test case number: 4
+    //Test case number: 4
   /*
    * 46 covered goals:
    * Goal 1. capstone.mobile.models.Line.<init>(ILjava/lang/String;III)V: root-Branch
@@ -228,20 +229,20 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 46. Weak Mutation 26: capstone.mobile.models.Line.getTrapByIndex(I)Lcapstone/mobile/models/Trap;:56 - InsertUnaryOp IINC -1 index
    */
 
-  @Test(timeout = 4000)
-  public void test04()  throws Throwable  {
-      Line line0 = new Line(464, "", 464, 464, 464);
-      Trap trap0 = new Trap(0, (-4042), (double) (-4042), 0.0, false);
-      trap0.setBroken(true);
-      line0.addTrap(trap0);
-      line0.getTrapByIndex(0);
-      assertEquals(464, line0.getId());
-      assertEquals(464, line0.getAnimal3());
-      assertEquals(464, line0.getAnimal1());
-      assertEquals(464, line0.getAnimal2());
-  }
+    @Test(timeout = 4000)
+    public void test04() throws Throwable {
+        Line line0 = new Line(464, "", 464, 464, 464);
+        Trap trap0 = new Trap(0, (-4042), (double) (-4042), 0.0, false);
+        trap0.setBroken(true);
+        line0.addTrap(trap0);
+        line0.getTrapByIndex(0);
+        assertEquals(464, line0.getId());
+        assertEquals(464, line0.getAnimal3());
+        assertEquals(464, line0.getAnimal1());
+        assertEquals(464, line0.getAnimal2());
+    }
 
-  //Test case number: 5
+    //Test case number: 5
   /*
    * 54 covered goals:
    * Goal 1. capstone.mobile.models.Line.<init>(ILjava/lang/String;III)V: root-Branch
@@ -300,20 +301,20 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 54. Weak Mutation 26: capstone.mobile.models.Line.getTrapByIndex(I)Lcapstone/mobile/models/Trap;:56 - InsertUnaryOp IINC -1 index
    */
 
-  @Test(timeout = 4000)
-  public void test05()  throws Throwable  {
-      Line line0 = new Line(4625, "KF&<+E|6b", 0, 4625, 0);
-      Trap trap0 = new Trap((-1), 460, (-894.9), 0.0, true);
-      trap0.setLongitude((-1.0));
-      line0.addTrap(trap0);
-      line0.getTrapByIndex(0);
-      assertEquals(4625, line0.getId());
-      assertEquals(0, line0.getAnimal3());
-      assertEquals(4625, line0.getAnimal2());
-      assertEquals(0, line0.getAnimal1());
-  }
+    @Test(timeout = 4000)
+    public void test05() throws Throwable {
+        Line line0 = new Line(4625, "KF&<+E|6b", 0, 4625, 0);
+        Trap trap0 = new Trap((-1), 460, (-894.9), 0.0, true);
+        trap0.setLongitude((-1.0));
+        line0.addTrap(trap0);
+        line0.getTrapByIndex(0);
+        assertEquals(4625, line0.getId());
+        assertEquals(0, line0.getAnimal3());
+        assertEquals(4625, line0.getAnimal2());
+        assertEquals(0, line0.getAnimal1());
+    }
 
-  //Test case number: 6
+    //Test case number: 6
   /*
    * 46 covered goals:
    * Goal 1. capstone.mobile.models.Line.<init>(ILjava/lang/String;III)V: root-Branch
@@ -364,19 +365,19 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 46. Weak Mutation 26: capstone.mobile.models.Line.getTrapByIndex(I)Lcapstone/mobile/models/Trap;:56 - InsertUnaryOp IINC -1 index
    */
 
-  @Test(timeout = 4000)
-  public void test06()  throws Throwable  {
-      Line line0 = new Line(1340, "", 1340, 1340, 1340);
-      Trap trap0 = new Trap(1340, 1866, (double) 1340, (double) 1340, false);
-      line0.addTrap(trap0);
-      line0.getTrapByIndex(0);
-      assertEquals(1340, line0.getId());
-      assertEquals(1340, line0.getAnimal2());
-      assertEquals(1340, line0.getAnimal1());
-      assertEquals(1340, line0.getAnimal3());
-  }
+    @Test(timeout = 4000)
+    public void test06() throws Throwable {
+        Line line0 = new Line(1340, "", 1340, 1340, 1340);
+        Trap trap0 = new Trap(1340, 1866, (double) 1340, (double) 1340, false);
+        line0.addTrap(trap0);
+        line0.getTrapByIndex(0);
+        assertEquals(1340, line0.getId());
+        assertEquals(1340, line0.getAnimal2());
+        assertEquals(1340, line0.getAnimal1());
+        assertEquals(1340, line0.getAnimal3());
+    }
 
-  //Test case number: 7
+    //Test case number: 7
   /*
    * 46 covered goals:
    * Goal 1. capstone.mobile.models.Line.<init>(ILjava/lang/String;III)V: root-Branch
@@ -427,19 +428,19 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 46. Weak Mutation 26: capstone.mobile.models.Line.getTrapByIndex(I)Lcapstone/mobile/models/Trap;:56 - InsertUnaryOp IINC -1 index
    */
 
-  @Test(timeout = 4000)
-  public void test07()  throws Throwable  {
-      Line line0 = new Line(464, "", 464, 464, 464);
-      Trap trap0 = new Trap(2836, (-2994), 464, 2484.2034, (double) 2836, (-4042), 0, 464);
-      line0.addTrap(trap0);
-      line0.getTrapByIndex(0);
-      assertEquals(464, line0.getId());
-      assertEquals(464, line0.getAnimal2());
-      assertEquals(464, line0.getAnimal3());
-      assertEquals(464, line0.getAnimal1());
-  }
+    @Test(timeout = 4000)
+    public void test07() throws Throwable {
+        Line line0 = new Line(464, "", 464, 464, 464);
+        Trap trap0 = new Trap(2836, (-2994), 464, 2484.2034, (double) 2836, (-4042), 0, 464);
+        line0.addTrap(trap0);
+        line0.getTrapByIndex(0);
+        assertEquals(464, line0.getId());
+        assertEquals(464, line0.getAnimal2());
+        assertEquals(464, line0.getAnimal3());
+        assertEquals(464, line0.getAnimal1());
+    }
 
-  //Test case number: 8
+    //Test case number: 8
   /*
    * 46 covered goals:
    * Goal 1. capstone.mobile.models.Line.<init>(ILjava/lang/String;III)V: root-Branch
@@ -490,20 +491,20 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 46. Weak Mutation 26: capstone.mobile.models.Line.getTrapByIndex(I)Lcapstone/mobile/models/Trap;:56 - InsertUnaryOp IINC -1 index
    */
 
-  @Test(timeout = 4000)
-  public void test08()  throws Throwable  {
-      Line line0 = new Line(0, "f;", 0, 0, 0);
-      Trap trap0 = new Trap(0, (-2304), 0.0, 0.0, true);
-      trap0.setId((-2304));
-      line0.addTrap(trap0);
-      line0.getTrapByIndex(0);
-      assertEquals(0, line0.getAnimal2());
-      assertEquals(0, line0.getAnimal3());
-      assertEquals(0, line0.getId());
-      assertEquals(0, line0.getAnimal1());
-  }
+    @Test(timeout = 4000)
+    public void test08() throws Throwable {
+        Line line0 = new Line(0, "f;", 0, 0, 0);
+        Trap trap0 = new Trap(0, (-2304), 0.0, 0.0, true);
+        trap0.setId((-2304));
+        line0.addTrap(trap0);
+        line0.getTrapByIndex(0);
+        assertEquals(0, line0.getAnimal2());
+        assertEquals(0, line0.getAnimal3());
+        assertEquals(0, line0.getId());
+        assertEquals(0, line0.getAnimal1());
+    }
 
-  //Test case number: 9
+    //Test case number: 9
   /*
    * 36 covered goals:
    * Goal 1. capstone.mobile.models.Line.<init>(ILjava/lang/String;III)V: root-Branch
@@ -544,17 +545,17 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 36. Weak Mutation 23: capstone.mobile.models.Line.<init>(ILjava/lang/String;III)V:37 - InsertUnaryOp IINC -1 animal3
    */
 
-  @Test(timeout = 4000)
-  public void test09()  throws Throwable  {
-      Line line0 = new Line((-2115), "(T}ZO", (-2115), (-2115), 0);
-      line0.getName();
-      assertEquals(0, line0.getAnimal3());
-      assertEquals(-2115, line0.getAnimal2());
-      assertEquals(-2115, line0.getId());
-      assertEquals(-2115, line0.getAnimal1());
-  }
+    @Test(timeout = 4000)
+    public void test09() throws Throwable {
+        Line line0 = new Line((-2115), "(T}ZO", (-2115), (-2115), 0);
+        line0.getName();
+        assertEquals(0, line0.getAnimal3());
+        assertEquals(-2115, line0.getAnimal2());
+        assertEquals(-2115, line0.getId());
+        assertEquals(-2115, line0.getAnimal1());
+    }
 
-  //Test case number: 10
+    //Test case number: 10
   /*
    * 19 covered goals:
    * Goal 1. capstone.mobile.models.Line.setName(Ljava/lang/String;)V: root-Branch
@@ -578,15 +579,15 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 19. [METHODNOEX] capstone.mobile.models.Line.setName(Ljava/lang/String;)V
    */
 
-  @Test(timeout = 4000)
-  public void test10()  throws Throwable  {
-      Line line0 = new Line();
-      line0.setName("");
-      String string0 = line0.getName();
-      assertEquals("", string0);
-  }
+    @Test(timeout = 4000)
+    public void test10() throws Throwable {
+        Line line0 = new Line();
+        line0.setName("");
+        String string0 = line0.getName();
+        assertEquals("", string0);
+    }
 
-  //Test case number: 11
+    //Test case number: 11
   /*
    * 33 covered goals:
    * Goal 1. capstone.mobile.models.Line.getId()I: root-Branch
@@ -624,17 +625,17 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 33. Weak Mutation 29: capstone.mobile.models.Line.getId()I:60 - InsertUnaryOp -1
    */
 
-  @Test(timeout = 4000)
-  public void test11()  throws Throwable  {
-      Line line0 = new Line(0, "OZ", 0, 0, 0);
-      int int0 = line0.getId();
-      assertEquals(0, line0.getAnimal1());
-      assertEquals(0, line0.getAnimal2());
-      assertEquals(0, line0.getAnimal3());
-      assertEquals(0, int0);
-  }
+    @Test(timeout = 4000)
+    public void test11() throws Throwable {
+        Line line0 = new Line(0, "OZ", 0, 0, 0);
+        int int0 = line0.getId();
+        assertEquals(0, line0.getAnimal1());
+        assertEquals(0, line0.getAnimal2());
+        assertEquals(0, line0.getAnimal3());
+        assertEquals(0, int0);
+    }
 
-  //Test case number: 12
+    //Test case number: 12
   /*
    * 33 covered goals:
    * Goal 1. capstone.mobile.models.Line.getId()I: root-Branch
@@ -672,17 +673,17 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 33. Weak Mutation 29: capstone.mobile.models.Line.getId()I:60 - InsertUnaryOp -1
    */
 
-  @Test(timeout = 4000)
-  public void test12()  throws Throwable  {
-      Line line0 = new Line((-1547), "-O>", (-1547), (-1547), (-1547));
-      int int0 = line0.getId();
-      assertEquals((-1547), int0);
-      assertEquals(-1547, line0.getAnimal3());
-      assertEquals(-1547, line0.getAnimal1());
-      assertEquals(-1547, line0.getAnimal2());
-  }
+    @Test(timeout = 4000)
+    public void test12() throws Throwable {
+        Line line0 = new Line((-1547), "-O>", (-1547), (-1547), (-1547));
+        int int0 = line0.getId();
+        assertEquals((-1547), int0);
+        assertEquals(-1547, line0.getAnimal3());
+        assertEquals(-1547, line0.getAnimal1());
+        assertEquals(-1547, line0.getAnimal2());
+    }
 
-  //Test case number: 13
+    //Test case number: 13
   /*
    * 42 covered goals:
    * Goal 1. capstone.mobile.models.Line.getAnimal3()I: root-Branch
@@ -729,15 +730,15 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 42. Weak Mutation 50: capstone.mobile.models.Line.setAnimal3(I)V:96 - InsertUnaryOp IINC -1 animal3
    */
 
-  @Test(timeout = 4000)
-  public void test13()  throws Throwable  {
-      Line line0 = new Line(0, "f;", 0, 0, 0);
-      line0.setAnimal3((-2304));
-      int int0 = line0.getAnimal3();
-      assertEquals((-2304), int0);
-  }
+    @Test(timeout = 4000)
+    public void test13() throws Throwable {
+        Line line0 = new Line(0, "f;", 0, 0, 0);
+        line0.setAnimal3((-2304));
+        int int0 = line0.getAnimal3();
+        assertEquals((-2304), int0);
+    }
 
-  //Test case number: 14
+    //Test case number: 14
   /*
    * 16 covered goals:
    * Goal 1. capstone.mobile.models.Line.<init>()V: root-Branch
@@ -758,14 +759,14 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 16. Weak Mutation 41: capstone.mobile.models.Line.getAnimal2()I:84 - InsertUnaryOp -1
    */
 
-  @Test(timeout = 4000)
-  public void test14()  throws Throwable  {
-      Line line0 = new Line();
-      int int0 = line0.getAnimal2();
-      assertEquals(0, int0);
-  }
+    @Test(timeout = 4000)
+    public void test14() throws Throwable {
+        Line line0 = new Line();
+        int int0 = line0.getAnimal2();
+        assertEquals(0, int0);
+    }
 
-  //Test case number: 15
+    //Test case number: 15
   /*
    * 33 covered goals:
    * Goal 1. capstone.mobile.models.Line.<init>(ILjava/lang/String;III)V: root-Branch
@@ -803,17 +804,17 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 33. Weak Mutation 41: capstone.mobile.models.Line.getAnimal2()I:84 - InsertUnaryOp -1
    */
 
-  @Test(timeout = 4000)
-  public void test15()  throws Throwable  {
-      Line line0 = new Line((-691), "Ir4N?{F>", (-691), (-691), (-691));
-      int int0 = line0.getAnimal2();
-      assertEquals(-691, line0.getAnimal1());
-      assertEquals(-691, line0.getId());
-      assertEquals((-691), int0);
-      assertEquals(-691, line0.getAnimal3());
-  }
+    @Test(timeout = 4000)
+    public void test15() throws Throwable {
+        Line line0 = new Line((-691), "Ir4N?{F>", (-691), (-691), (-691));
+        int int0 = line0.getAnimal2();
+        assertEquals(-691, line0.getAnimal1());
+        assertEquals(-691, line0.getId());
+        assertEquals((-691), int0);
+        assertEquals(-691, line0.getAnimal3());
+    }
 
-  //Test case number: 16
+    //Test case number: 16
   /*
    * 33 covered goals:
    * Goal 1. capstone.mobile.models.Line.<init>(ILjava/lang/String;III)V: root-Branch
@@ -851,17 +852,17 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 33. Weak Mutation 35: capstone.mobile.models.Line.getAnimal1()I:76 - InsertUnaryOp -1
    */
 
-  @Test(timeout = 4000)
-  public void test16()  throws Throwable  {
-      Line line0 = new Line(1340, "", 1340, 1340, 1340);
-      int int0 = line0.getAnimal1();
-      assertEquals(1340, line0.getId());
-      assertEquals(1340, line0.getAnimal2());
-      assertEquals(1340, line0.getAnimal3());
-      assertEquals(1340, int0);
-  }
+    @Test(timeout = 4000)
+    public void test16() throws Throwable {
+        Line line0 = new Line(1340, "", 1340, 1340, 1340);
+        int int0 = line0.getAnimal1();
+        assertEquals(1340, line0.getId());
+        assertEquals(1340, line0.getAnimal2());
+        assertEquals(1340, line0.getAnimal3());
+        assertEquals(1340, int0);
+    }
 
-  //Test case number: 17
+    //Test case number: 17
   /*
    * 42 covered goals:
    * Goal 1. capstone.mobile.models.Line.<init>(ILjava/lang/String;III)V: root-Branch
@@ -908,15 +909,15 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 42. Weak Mutation 38: capstone.mobile.models.Line.setAnimal1(I)V:80 - InsertUnaryOp IINC -1 animal1
    */
 
-  @Test(timeout = 4000)
-  public void test17()  throws Throwable  {
-      Line line0 = new Line(0, "f;", 0, 0, 0);
-      line0.setAnimal1((-2304));
-      int int0 = line0.getAnimal1();
-      assertEquals((-2304), int0);
-  }
+    @Test(timeout = 4000)
+    public void test17() throws Throwable {
+        Line line0 = new Line(0, "f;", 0, 0, 0);
+        line0.setAnimal1((-2304));
+        int int0 = line0.getAnimal1();
+        assertEquals((-2304), int0);
+    }
 
-  //Test case number: 18
+    //Test case number: 18
   /*
    * 21 covered goals:
    * Goal 1. capstone.mobile.models.Line.getTrapByIndex(I)Lcapstone/mobile/models/Trap;: root-Branch
@@ -942,24 +943,24 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 21. Weak Mutation 26: capstone.mobile.models.Line.getTrapByIndex(I)Lcapstone/mobile/models/Trap;:56 - InsertUnaryOp IINC -1 index
    */
 
-  @Test(timeout = 4000)
-  public void test18()  throws Throwable  {
-      Line line0 = new Line();
-      line0.setTraps((List<Trap>) null);
-      // Undeclared exception!
-      try { 
-        line0.getTrapByIndex(0);
-        fail("Expecting exception: NullPointerException");
-      
-      } catch(NullPointerException e) {
-         //
-         // no message in exception (getMessage() returned null)
-         //
-         assertThrownBy("capstone.mobile.models.Line", e);
-      }
-  }
+    @Test(timeout = 4000)
+    public void test18() throws Throwable {
+        Line line0 = new Line();
+        line0.setTraps((List<Trap>) null);
+        // Undeclared exception!
+        try {
+            line0.getTrapByIndex(0);
+            fail("Expecting exception: NullPointerException");
 
-  //Test case number: 19
+        } catch (NullPointerException e) {
+            //
+            // no message in exception (getMessage() returned null)
+            //
+            assertThrownBy("capstone.mobile.models.Line", e);
+        }
+    }
+
+    //Test case number: 19
   /*
    * 15 covered goals:
    * Goal 1. capstone.mobile.models.Line.getTrapByIndex(I)Lcapstone/mobile/models/Trap;: root-Branch
@@ -979,22 +980,22 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 15. Weak Mutation 26: capstone.mobile.models.Line.getTrapByIndex(I)Lcapstone/mobile/models/Trap;:56 - InsertUnaryOp IINC -1 index
    */
 
-  @Test(timeout = 4000)
-  public void test19()  throws Throwable  {
-      Line line0 = new Line();
-      // Undeclared exception!
-      try { 
-        line0.getTrapByIndex((-279));
-        fail("Expecting exception: ArrayIndexOutOfBoundsException");
-      
-      } catch(ArrayIndexOutOfBoundsException e) {
-         //
-         // no message in exception (getMessage() returned null)
-         //
-      }
-  }
+    @Test(timeout = 4000)
+    public void test19() throws Throwable {
+        Line line0 = new Line();
+        // Undeclared exception!
+        try {
+            line0.getTrapByIndex((-279));
+            fail("Expecting exception: ArrayIndexOutOfBoundsException");
 
-  //Test case number: 20
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //
+            // no message in exception (getMessage() returned null)
+            //
+        }
+    }
+
+    //Test case number: 20
   /*
    * 18 covered goals:
    * Goal 1. capstone.mobile.models.Line.setTraps(Ljava/util/List;)V: root-Branch
@@ -1017,25 +1018,25 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 18. [METHODNOEX] capstone.mobile.models.Line.setTraps(Ljava/util/List;)V
    */
 
-  @Test(timeout = 4000)
-  public void test20()  throws Throwable  {
-      Line line0 = new Line();
-      line0.setTraps((List<Trap>) null);
-      Trap trap0 = new Trap(4743, (-422), (-1.0), (-1.0), false);
-      // Undeclared exception!
-      try { 
-        line0.addTrap(trap0);
-        fail("Expecting exception: NullPointerException");
-      
-      } catch(NullPointerException e) {
-         //
-         // no message in exception (getMessage() returned null)
-         //
-         assertThrownBy("capstone.mobile.models.Line", e);
-      }
-  }
+    @Test(timeout = 4000)
+    public void test20() throws Throwable {
+        Line line0 = new Line();
+        line0.setTraps((List<Trap>) null);
+        Trap trap0 = new Trap(4743, (-422), (-1.0), (-1.0), false);
+        // Undeclared exception!
+        try {
+            line0.addTrap(trap0);
+            fail("Expecting exception: NullPointerException");
 
-  //Test case number: 21
+        } catch (NullPointerException e) {
+            //
+            // no message in exception (getMessage() returned null)
+            //
+            assertThrownBy("capstone.mobile.models.Line", e);
+        }
+    }
+
+    //Test case number: 21
   /*
    * 41 covered goals:
    * Goal 1. capstone.mobile.models.Line.<init>(ILjava/lang/String;III)V: root-Branch
@@ -1081,17 +1082,17 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 41. Weak Mutation 41: capstone.mobile.models.Line.getAnimal2()I:84 - InsertUnaryOp -1
    */
 
-  @Test(timeout = 4000)
-  public void test21()  throws Throwable  {
-      Line line0 = new Line(4625, "KF&<+E|6b", 0, 4625, 0);
-      int int0 = line0.getAnimal2();
-      assertEquals(0, line0.getAnimal3());
-      assertEquals(4625, int0);
-      assertEquals(4625, line0.getId());
-      assertEquals(0, line0.getAnimal1());
-  }
+    @Test(timeout = 4000)
+    public void test21() throws Throwable {
+        Line line0 = new Line(4625, "KF&<+E|6b", 0, 4625, 0);
+        int int0 = line0.getAnimal2();
+        assertEquals(0, line0.getAnimal3());
+        assertEquals(4625, int0);
+        assertEquals(4625, line0.getId());
+        assertEquals(0, line0.getAnimal1());
+    }
 
-  //Test case number: 22
+    //Test case number: 22
   /*
    * 33 covered goals:
    * Goal 1. capstone.mobile.models.Line.<init>(ILjava/lang/String;III)V: root-Branch
@@ -1129,17 +1130,17 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 33. Weak Mutation 35: capstone.mobile.models.Line.getAnimal1()I:76 - InsertUnaryOp -1
    */
 
-  @Test(timeout = 4000)
-  public void test22()  throws Throwable  {
-      Line line0 = new Line(0, "f;", 0, 0, 0);
-      int int0 = line0.getAnimal1();
-      assertEquals(0, int0);
-      assertEquals(0, line0.getId());
-      assertEquals(0, line0.getAnimal3());
-      assertEquals(0, line0.getAnimal2());
-  }
+    @Test(timeout = 4000)
+    public void test22() throws Throwable {
+        Line line0 = new Line(0, "f;", 0, 0, 0);
+        int int0 = line0.getAnimal1();
+        assertEquals(0, int0);
+        assertEquals(0, line0.getId());
+        assertEquals(0, line0.getAnimal3());
+        assertEquals(0, line0.getAnimal2());
+    }
 
-  //Test case number: 23
+    //Test case number: 23
   /*
    * 37 covered goals:
    * Goal 1. capstone.mobile.models.Line.<init>(ILjava/lang/String;III)V: root-Branch
@@ -1181,19 +1182,19 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 37. Weak Mutation 23: capstone.mobile.models.Line.<init>(ILjava/lang/String;III)V:37 - InsertUnaryOp IINC -1 animal3
    */
 
-  @Test(timeout = 4000)
-  public void test23()  throws Throwable  {
-      Line line0 = new Line(0, "f;", 0, 0, 0);
-      Trap trap0 = new Trap(0, (-2304), 0.0, 0.0, true);
-      line0.addTrap(trap0);
-      line0.getTraps();
-      assertEquals(0, line0.getAnimal1());
-      assertEquals(0, line0.getAnimal2());
-      assertEquals(0, line0.getAnimal3());
-      assertEquals(0, line0.getId());
-  }
+    @Test(timeout = 4000)
+    public void test23() throws Throwable {
+        Line line0 = new Line(0, "f;", 0, 0, 0);
+        Trap trap0 = new Trap(0, (-2304), 0.0, 0.0, true);
+        line0.addTrap(trap0);
+        line0.getTraps();
+        assertEquals(0, line0.getAnimal1());
+        assertEquals(0, line0.getAnimal2());
+        assertEquals(0, line0.getAnimal3());
+        assertEquals(0, line0.getId());
+    }
 
-  //Test case number: 24
+    //Test case number: 24
   /*
    * 13 covered goals:
    * Goal 1. capstone.mobile.models.Line.<init>()V: root-Branch
@@ -1211,14 +1212,14 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 13. [METHODNOEX] capstone.mobile.models.Line.getName()Ljava/lang/String;
    */
 
-  @Test(timeout = 4000)
-  public void test24()  throws Throwable  {
-      Line line0 = new Line();
-      String string0 = line0.getName();
-      assertNull(string0);
-  }
+    @Test(timeout = 4000)
+    public void test24() throws Throwable {
+        Line line0 = new Line();
+        String string0 = line0.getName();
+        assertNull(string0);
+    }
 
-  //Test case number: 25
+    //Test case number: 25
   /*
    * 42 covered goals:
    * Goal 1. capstone.mobile.models.Line.getAnimal3()I: root-Branch
@@ -1265,15 +1266,15 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 42. Weak Mutation 50: capstone.mobile.models.Line.setAnimal3(I)V:96 - InsertUnaryOp IINC -1 animal3
    */
 
-  @Test(timeout = 4000)
-  public void test25()  throws Throwable  {
-      Line line0 = new Line(0, "f;", 0, 0, 0);
-      line0.setAnimal3(1239);
-      int int0 = line0.getAnimal3();
-      assertEquals(1239, int0);
-  }
+    @Test(timeout = 4000)
+    public void test25() throws Throwable {
+        Line line0 = new Line(0, "f;", 0, 0, 0);
+        line0.setAnimal3(1239);
+        int int0 = line0.getAnimal3();
+        assertEquals(1239, int0);
+    }
 
-  //Test case number: 26
+    //Test case number: 26
   /*
    * 33 covered goals:
    * Goal 1. capstone.mobile.models.Line.<init>(ILjava/lang/String;III)V: root-Branch
@@ -1311,14 +1312,14 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 33. Weak Mutation 32: capstone.mobile.models.Line.setId(I)V:64 - InsertUnaryOp IINC -1 id
    */
 
-  @Test(timeout = 4000)
-  public void test26()  throws Throwable  {
-      Line line0 = new Line(0, "f;", 0, 0, 0);
-      line0.setId(2603);
-      assertEquals(2603, line0.getId());
-  }
+    @Test(timeout = 4000)
+    public void test26() throws Throwable {
+        Line line0 = new Line(0, "f;", 0, 0, 0);
+        line0.setId(2603);
+        assertEquals(2603, line0.getId());
+    }
 
-  //Test case number: 27
+    //Test case number: 27
   /*
    * 37 covered goals:
    * Goal 1. capstone.mobile.models.Line.<init>(ILjava/lang/String;III)V: root-Branch
@@ -1360,18 +1361,18 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 37. Weak Mutation 23: capstone.mobile.models.Line.<init>(ILjava/lang/String;III)V:37 - InsertUnaryOp IINC -1 animal3
    */
 
-  @Test(timeout = 4000)
-  public void test27()  throws Throwable  {
-      Line line0 = new Line(0, "f;", 0, 0, 0);
-      List<Trap> list0 = line0.getTraps();
-      line0.setTraps(list0);
-      assertEquals(0, line0.getAnimal1());
-      assertEquals(0, line0.getAnimal2());
-      assertEquals(0, line0.getId());
-      assertEquals(0, line0.getAnimal3());
-  }
+    @Test(timeout = 4000)
+    public void test27() throws Throwable {
+        Line line0 = new Line(0, "f;", 0, 0, 0);
+        List<Trap> list0 = line0.getTraps();
+        line0.setTraps(list0);
+        assertEquals(0, line0.getAnimal1());
+        assertEquals(0, line0.getAnimal2());
+        assertEquals(0, line0.getId());
+        assertEquals(0, line0.getAnimal3());
+    }
 
-  //Test case number: 28
+    //Test case number: 28
   /*
    * 41 covered goals:
    * Goal 1. capstone.mobile.models.Line.<init>(ILjava/lang/String;III)V: root-Branch
@@ -1417,16 +1418,16 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 41. Weak Mutation 44: capstone.mobile.models.Line.setAnimal2(I)V:88 - InsertUnaryOp IINC -1 animal2
    */
 
-  @Test(timeout = 4000)
-  public void test28()  throws Throwable  {
-      Line line0 = new Line(4625, "KF&<+E|6b", 0, 4625, 0);
-      assertEquals(4625, line0.getAnimal2());
-      
-      line0.setAnimal2(0);
-      assertEquals(0, line0.getAnimal2());
-  }
+    @Test(timeout = 4000)
+    public void test28() throws Throwable {
+        Line line0 = new Line(4625, "KF&<+E|6b", 0, 4625, 0);
+        assertEquals(4625, line0.getAnimal2());
 
-  //Test case number: 29
+        line0.setAnimal2(0);
+        assertEquals(0, line0.getAnimal2());
+    }
+
+    //Test case number: 29
   /*
    * 32 covered goals:
    * Goal 1. capstone.mobile.models.Line.<init>(ILjava/lang/String;III)V: root-Branch
@@ -1463,23 +1464,23 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 32. Weak Mutation 26: capstone.mobile.models.Line.getTrapByIndex(I)Lcapstone/mobile/models/Trap;:56 - InsertUnaryOp IINC -1 index
    */
 
-  @Test(timeout = 4000)
-  public void test29()  throws Throwable  {
-      Line line0 = new Line(0, "f;", 0, 0, 0);
-      // Undeclared exception!
-      try { 
-        line0.getTrapByIndex(0);
-        fail("Expecting exception: IndexOutOfBoundsException");
-      
-      } catch(IndexOutOfBoundsException e) {
-         //
-         // Index: 0, Size: 0
-         //
-         assertThrownBy("java.util.ArrayList", e);
-      }
-  }
+    @Test(timeout = 4000)
+    public void test29() throws Throwable {
+        Line line0 = new Line(0, "f;", 0, 0, 0);
+        // Undeclared exception!
+        try {
+            line0.getTrapByIndex(0);
+            fail("Expecting exception: IndexOutOfBoundsException");
 
-  //Test case number: 30
+        } catch (IndexOutOfBoundsException e) {
+            //
+            // Index: 0, Size: 0
+            //
+            assertThrownBy("java.util.ArrayList", e);
+        }
+    }
+
+    //Test case number: 30
   /*
    * 33 covered goals:
    * Goal 1. capstone.mobile.models.Line.getAnimal3()I: root-Branch
@@ -1517,17 +1518,17 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 33. Weak Mutation 47: capstone.mobile.models.Line.getAnimal3()I:92 - InsertUnaryOp -1
    */
 
-  @Test(timeout = 4000)
-  public void test30()  throws Throwable  {
-      Line line0 = new Line(0, "f;", 0, 0, 0);
-      int int0 = line0.getAnimal3();
-      assertEquals(0, int0);
-      assertEquals(0, line0.getAnimal2());
-      assertEquals(0, line0.getAnimal1());
-      assertEquals(0, line0.getId());
-  }
+    @Test(timeout = 4000)
+    public void test30() throws Throwable {
+        Line line0 = new Line(0, "f;", 0, 0, 0);
+        int int0 = line0.getAnimal3();
+        assertEquals(0, int0);
+        assertEquals(0, line0.getAnimal2());
+        assertEquals(0, line0.getAnimal1());
+        assertEquals(0, line0.getId());
+    }
 
-  //Test case number: 31
+    //Test case number: 31
   /*
    * 33 covered goals:
    * Goal 1. capstone.mobile.models.Line.getId()I: root-Branch
@@ -1565,13 +1566,13 @@ public class Line_ESTest extends Line_ESTest_scaffolding {
    * Goal 33. Weak Mutation 29: capstone.mobile.models.Line.getId()I:60 - InsertUnaryOp -1
    */
 
-  @Test(timeout = 4000)
-  public void test31()  throws Throwable  {
-      Line line0 = new Line(1340, "", 1340, 1340, 1340);
-      int int0 = line0.getId();
-      assertEquals(1340, int0);
-      assertEquals(1340, line0.getAnimal3());
-      assertEquals(1340, line0.getAnimal2());
-      assertEquals(1340, line0.getAnimal1());
-  }
+    @Test(timeout = 4000)
+    public void test31() throws Throwable {
+        Line line0 = new Line(1340, "", 1340, 1340, 1340);
+        int int0 = line0.getId();
+        assertEquals(1340, int0);
+        assertEquals(1340, line0.getAnimal3());
+        assertEquals(1340, line0.getAnimal2());
+        assertEquals(1340, line0.getAnimal1());
+    }
 }

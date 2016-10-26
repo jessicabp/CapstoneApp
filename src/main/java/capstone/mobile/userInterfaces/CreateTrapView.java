@@ -22,7 +22,10 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -183,7 +186,7 @@ public class CreateTrapView extends View {
     protected void updateAppBar(AppBar appBar) {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
         appBar.setTitleText("Create New Trap");
-        appBar.getActionItems().add(MaterialDesignIcon.UNDO.button(e -> App.getInstance().switchToPreviousView()));
+        appBar.getActionItems().add(MaterialDesignIcon.HELP.button(e -> displayLegend()));
 
         resetControls();
 
@@ -392,5 +395,59 @@ public class CreateTrapView extends View {
         popupVB.setAlignment(Pos.TOP_CENTER);
         popup.setContent(popupVB);
         popup.show();
+    }
+
+    /**
+     * Displays a legend pop up.
+     */
+    private void displayLegend() {
+        final double radius = 14.0;
+        final double spacer = 50.0;
+        final double labelsX = 55.0;
+        final double labelsY = 55.0;
+        final double iconsX = 30.0;
+        final double iconsY = 50.0;
+
+        // Creating custom pop up
+        CustomPopupView legendPopup = new CustomPopupView(controls);
+
+        // Overall layout for pop up
+        VBox container = new VBox(20);
+        container.setPadding(new Insets(40, 40, 40, 40));
+        container.setAlignment(Pos.CENTER);
+
+        // Label at the top
+        Label legendLabel = new Label("Legend");
+        HBox labelContainer = new HBox();
+        labelContainer.setAlignment(Pos.CENTER);
+        labelContainer.getChildren().addAll(legendLabel);
+
+        // Canvas for displaying icons and description text
+        Canvas legendCanvas = new Canvas(200, 200);
+        GraphicsContext graphicsContext = legendCanvas.getGraphicsContext2D();
+
+        String[] labels = {"Your Position", "Next Trap Marker", "Other Trap Markers"};
+        Color[] colours = {Color.RED, Color.BLUE, Color.ORANGE};
+
+        for(int i = 0; i < labels.length; i++) {
+            graphicsContext.setFill(Color.BLACK);
+            graphicsContext.fillText(labels[i], labelsX, labelsY + i * spacer);
+            graphicsContext.beginPath();
+            graphicsContext.setFill(colours[i]);
+            graphicsContext.arc(iconsX, iconsY + i * spacer, radius, radius, 0, 360.0);
+            graphicsContext.fill();
+        }
+
+        // Button to close pop up
+        Button closeButton = new Button("Close");
+        closeButton.setOnAction(ev -> {
+            legendPopup.hide();
+        });
+
+        // Adding all controls for pop up
+        container.getChildren().addAll(labelContainer, legendCanvas, closeButton);
+
+        legendPopup.setContent(container);
+        legendPopup.show();
     }
 }

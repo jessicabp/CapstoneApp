@@ -3,19 +3,18 @@
  * Fri Oct 14 14:41:51 GMT 2016
  */
 
-package capstone.mobile.models;
+package evosuite.models;
 
 import org.junit.Test;
+
 import static org.junit.Assert.*;
+
 import capstone.mobile.models.Animal;
-import org.evosuite.runtime.EvoRunner;
-import org.evosuite.runtime.EvoRunnerParameters;
-import org.junit.runner.RunWith;
 
-@RunWith(EvoRunner.class) @EvoRunnerParameters(mockJVMNonDeterminism = true, useVFS = true, useVNET = true, resetStaticState = true, separateClassLoader = true) 
-public class Animal_ESTest extends Animal_ESTest_scaffolding {
 
-  //Test case number: 0
+public class Animal_ESTest {
+
+    //Test case number: 0
   /*
    * 16 covered goals:
    * Goal 1. capstone.mobile.models.Animal.<init>(ILjava/lang/String;)V: root-Branch
@@ -36,14 +35,14 @@ public class Animal_ESTest extends Animal_ESTest_scaffolding {
    * Goal 16. Weak Mutation 2: capstone.mobile.models.Animal.<init>(ILjava/lang/String;)V:16 - InsertUnaryOp IINC -1 id
    */
 
-  @Test(timeout = 4000)
-  public void test0()  throws Throwable  {
-      Animal animal0 = new Animal(2205, "");
-      animal0.getName();
-      assertEquals(2205, animal0.getId());
-  }
+    @Test(timeout = 4000)
+    public void test0() throws Throwable {
+        Animal animal0 = new Animal(2205, "");
+        animal0.getName();
+        assertEquals(2205, animal0.getId());
+    }
 
-  //Test case number: 1
+    //Test case number: 1
   /*
    * 23 covered goals:
    * Goal 1. capstone.mobile.models.Animal.<init>()V: root-Branch
@@ -71,15 +70,15 @@ public class Animal_ESTest extends Animal_ESTest_scaffolding {
    * Goal 23. Weak Mutation 8: capstone.mobile.models.Animal.setId(I)V:25 - InsertUnaryOp IINC -1 id
    */
 
-  @Test(timeout = 4000)
-  public void test1()  throws Throwable  {
-      Animal animal0 = new Animal();
-      animal0.setId((-1215));
-      int int0 = animal0.getId();
-      assertEquals((-1215), int0);
-  }
+    @Test(timeout = 4000)
+    public void test1() throws Throwable {
+        Animal animal0 = new Animal();
+        animal0.setId((-1215));
+        int int0 = animal0.getId();
+        assertEquals((-1215), int0);
+    }
 
-  //Test case number: 2
+    //Test case number: 2
   /*
    * 23 covered goals:
    * Goal 1. capstone.mobile.models.Animal.<init>()V: root-Branch
@@ -107,15 +106,15 @@ public class Animal_ESTest extends Animal_ESTest_scaffolding {
    * Goal 23. Weak Mutation 8: capstone.mobile.models.Animal.setId(I)V:25 - InsertUnaryOp IINC -1 id
    */
 
-  @Test(timeout = 4000)
-  public void test2()  throws Throwable  {
-      Animal animal0 = new Animal();
-      animal0.setId(1404);
-      int int0 = animal0.getId();
-      assertEquals(1404, int0);
-  }
+    @Test(timeout = 4000)
+    public void test2() throws Throwable {
+        Animal animal0 = new Animal();
+        animal0.setId(1404);
+        int int0 = animal0.getId();
+        assertEquals(1404, int0);
+    }
 
-  //Test case number: 3
+    //Test case number: 3
   /*
    * 11 covered goals:
    * Goal 1. capstone.mobile.models.Animal.<init>()V: root-Branch
@@ -131,14 +130,14 @@ public class Animal_ESTest extends Animal_ESTest_scaffolding {
    * Goal 11. [METHODNOEX] capstone.mobile.models.Animal.getName()Ljava/lang/String;
    */
 
-  @Test(timeout = 4000)
-  public void test3()  throws Throwable  {
-      Animal animal0 = new Animal();
-      String string0 = animal0.getName();
-      assertNull(string0);
-  }
+    @Test(timeout = 4000)
+    public void test3() throws Throwable {
+        Animal animal0 = new Animal();
+        String string0 = animal0.getName();
+        assertNull(string0);
+    }
 
-  //Test case number: 4
+    //Test case number: 4
   /*
    * 14 covered goals:
    * Goal 1. capstone.mobile.models.Animal.<init>()V: root-Branch
@@ -157,14 +156,14 @@ public class Animal_ESTest extends Animal_ESTest_scaffolding {
    * Goal 14. Weak Mutation 5: capstone.mobile.models.Animal.getId()I:21 - InsertUnaryOp -1
    */
 
-  @Test(timeout = 4000)
-  public void test4()  throws Throwable  {
-      Animal animal0 = new Animal();
-      int int0 = animal0.getId();
-      assertEquals(0, int0);
-  }
+    @Test(timeout = 4000)
+    public void test4() throws Throwable {
+        Animal animal0 = new Animal();
+        int int0 = animal0.getId();
+        assertEquals(0, int0);
+    }
 
-  //Test case number: 5
+    //Test case number: 5
   /*
    * 16 covered goals:
    * Goal 1. capstone.mobile.models.Animal.<init>(ILjava/lang/String;)V: root-Branch
@@ -185,14 +184,14 @@ public class Animal_ESTest extends Animal_ESTest_scaffolding {
    * Goal 16. Weak Mutation 2: capstone.mobile.models.Animal.<init>(ILjava/lang/String;)V:16 - InsertUnaryOp IINC -1 id
    */
 
-  @Test(timeout = 4000)
-  public void test5()  throws Throwable  {
-      Animal animal0 = new Animal(0, "e'5?:K:n*b5");
-      animal0.getName();
-      assertEquals(0, animal0.getId());
-  }
+    @Test(timeout = 4000)
+    public void test5() throws Throwable {
+        Animal animal0 = new Animal(0, "e'5?:K:n*b5");
+        animal0.getName();
+        assertEquals(0, animal0.getId());
+    }
 
-  //Test case number: 6
+    //Test case number: 6
   /*
    * 11 covered goals:
    * Goal 1. capstone.mobile.models.Animal.setName(Ljava/lang/String;)V: root-Branch
@@ -208,10 +207,10 @@ public class Animal_ESTest extends Animal_ESTest_scaffolding {
    * Goal 11. [METHODNOEX] capstone.mobile.models.Animal.setName(Ljava/lang/String;)V
    */
 
-  @Test(timeout = 4000)
-  public void test6()  throws Throwable  {
-      Animal animal0 = new Animal();
-      animal0.setName("");
-      assertEquals("", animal0.getName());
-  }
+    @Test(timeout = 4000)
+    public void test6() throws Throwable {
+        Animal animal0 = new Animal();
+        animal0.setName("");
+        assertEquals("", animal0.getName());
+    }
 }

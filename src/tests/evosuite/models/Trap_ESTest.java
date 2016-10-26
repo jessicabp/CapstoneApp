@@ -3,17 +3,14 @@
  * Fri Oct 14 14:41:13 GMT 2016
  */
 
-package capstone.mobile.models;
+package evosuite.models;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
 import capstone.mobile.models.Trap;
-import org.evosuite.runtime.EvoRunner;
-import org.evosuite.runtime.EvoRunnerParameters;
-import org.junit.runner.RunWith;
 
-@RunWith(EvoRunner.class) @EvoRunnerParameters(mockJVMNonDeterminism = true, useVFS = true, useVNET = true, resetStaticState = true, separateClassLoader = true) 
-public class Trap_ESTest extends Trap_ESTest_scaffolding {
+
+public class Trap_ESTest {
 
   //Test case number: 0
   /*
