@@ -1,3 +1,20 @@
+/*
+This file is part of Trap Tracker.
+
+Trap Tracker is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Trap Tracker is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Trap Tracker.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package capstone.mobile.userInterfaces;
 
 import capstone.mobile.App;
@@ -10,9 +27,12 @@ import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
@@ -27,20 +47,20 @@ import java.util.List;
  */
 public class EnterDataView extends View {
 
-    private static List<Animal> animalList     = new ArrayList<>();
-    private static ToggleButton selectedMain   = null;
-    private static ToggleButton selectedOther  = null;
+    private        Button       done          = null;
+    private static List<Animal> animalList    = new ArrayList<>();
+    private static ToggleButton selectedMain  = null;
+    private static ToggleButton selectedOther = null;
     private Walk walk;
     private int  animal;
-    private        List<Animal> tempAnimalList = new ArrayList<>();
+    private List<Animal> tempAnimalList = new ArrayList<>();
 
     public EnterDataView(String name, Walk walk) {
         super(name);
 
         this.walk = walk;
 
-        getStylesheets().add(EnterDataView.class.getResource("DataEntry.css").toExternalForm());
-        getStylesheets().add(EnterDataView.class.getResource("secondary.css").toExternalForm());
+        getStylesheets().add(EnterDataView.class.getResource("userinterface.css").toExternalForm());
 
         showButtons();
     }
@@ -68,6 +88,7 @@ public class EnterDataView extends View {
     private void showButtons() {
         // Create VBox for all items
         VBox controls = new VBox(20.0);
+        controls.getStylesheets().add(EnterDataView.class.getResource("userinterface.css").toExternalForm());
         controls.setPadding(new Insets(40, 40, 40, 40));
         controls.setAlignment(Pos.CENTER);
         setCenter(controls);
@@ -100,6 +121,7 @@ public class EnterDataView extends View {
                     animal = nextAnimal.getId();
                     selectedMain = button;
                     selectedOther = null;
+                    done.setText("Done");
                 });
                 button.setMaxWidth(Double.MAX_VALUE);
                 grid.add(button, c, r);
@@ -119,12 +141,17 @@ public class EnterDataView extends View {
 
         // Popup for selecting other animal
         CustomPopupView animalPopup = new CustomPopupView(grid);
-        animalPopup.getStylesheets().add(EnterDataView.class.getResource("OtherAnimals.css").toExternalForm());
-        animalPopup.getStylesheets().add(EnterDataView.class.getResource("secondary.css").toExternalForm());
+        animalPopup.getStylesheets().add(EnterDataView.class.getResource("userinterface.css").toExternalForm());
         animalPopup.setMinWidth(other.getWidth());
         ToggleGroup otherGroup = new ToggleGroup();
         VBox        animalVB   = new VBox(10);
+        animalVB.getStylesheets().add(EnterDataView.class.getResource("userinterface.css").toExternalForm());
         animalVB.setPadding(new Insets(20, 20, 20, 20));
+        // Create list view so user can scroll through items if there are too many
+        ListView<ToggleButton>       content = new ListView<>();
+        ObservableList<ToggleButton> items   = FXCollections.observableArrayList();
+        content.setItems(items);
+        animalVB.getChildren().add(content);
         // Add all non-popular animals to vbox and toggle group
         for (int i = 0; i < tempAnimalList.size(); i++) {
             Animal       nextAnimal = tempAnimalList.get(i);
@@ -144,7 +171,7 @@ public class EnterDataView extends View {
             });
             button.maxWidthProperty().bind(controls.widthProperty().subtract(120));
             button.minWidthProperty().bind(controls.widthProperty().subtract(120));
-            animalVB.getChildren().add(button);
+            items.add(button);
         }
         animalPopup.setContent(animalVB);
 
@@ -152,10 +179,11 @@ public class EnterDataView extends View {
         other.setOnAction(e -> {
             other.setSelected(true);
             animalPopup.show();
+            done.setText("Done");
         });
 
         // Add button to mark trap as done
-        Button done = new Button("DONE");
+        done = new Button("DONE");
         done.setMaxWidth(Double.MAX_VALUE);
         done.setOnAction(e -> {
             // Check an animal is selected, then create catch and finish trap

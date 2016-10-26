@@ -1,3 +1,20 @@
+/*
+This file is part of Trap Tracker.
+
+Trap Tracker is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Trap Tracker is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Trap Tracker.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package capstone.mobile.userInterfaces;
 
 
@@ -34,8 +51,11 @@ public class EndWalkView extends View {
         super(name);
         this.walk = walk;
 
+        getStylesheets().add(DisplayLinesView.class.getResource("userinterface.css").toExternalForm());
+
         // VBox to display elements
         VBox controls = new VBox(15.0);
+        controls.getStylesheets().add(DisplayLinesView.class.getResource("userinterface.css").toExternalForm());
         controls.setPadding(new Insets(40));
         controls.setAlignment(Pos.CENTER);
         setCenter(controls);
@@ -88,11 +108,14 @@ public class EndWalkView extends View {
 
             // Create layout for buttons with correct spacing
             VBox successControls = new VBox(20);
+            successControls.getStylesheets().add(DisplayLinesView.class.getResource("userinterface.css").toExternalForm());
             successControls.setPadding(new Insets(40, 40, 40, 40));
             successControls.setAlignment(Pos.CENTER);
 
             // Add text
-            Text titleText = new Text("Collected data has been sent successfully");
+            Label titleText = new Label("Collected data has been sent successfully");
+            titleText.getStyleClass().add("text");
+            titleText.setWrapText(true);
             titleText.setTextAlignment(TextAlignment.CENTER);
             successControls.getChildren().add(titleText);
 
@@ -117,6 +140,7 @@ public class EndWalkView extends View {
 
                 // Create layout for buttons with correct spacing
                 VBox passControls = new VBox(20);
+                passControls.getStylesheets().add(DisplayLinesView.class.getResource("userinterface.css").toExternalForm());
                 passControls.setPadding(new Insets(40, 40, 40, 40));
                 passControls.setAlignment(Pos.CENTER);
 

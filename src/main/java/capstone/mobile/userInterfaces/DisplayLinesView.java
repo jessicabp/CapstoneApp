@@ -1,3 +1,20 @@
+/*
+This file is part of Trap Tracker.
+
+Trap Tracker is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Trap Tracker is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Trap Tracker.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package capstone.mobile.userInterfaces;
 
 import capstone.mobile.App;
@@ -54,13 +71,13 @@ public class DisplayLinesView extends View {
         super(name);
         this.walk = walk;
 
-        getStylesheets().add(DisplayLinesView.class.getResource("LineList.css").toExternalForm());
-        getStylesheets().add(DisplayLinesView.class.getResource("secondary.css").toExternalForm());
+        getStylesheets().add(DisplayLinesView.class.getResource("linelist.css").toExternalForm());
+        getStylesheets().add(DisplayLinesView.class.getResource("userinterface.css").toExternalForm());
 
         // Create VBox to hold items
         controls = new VBox();
-        controls.getStylesheets().add(DisplayLinesView.class.getResource("LineList.css").toExternalForm());
-        controls.getStylesheets().add(DisplayLinesView.class.getResource("secondary.css").toExternalForm());
+        controls.getStylesheets().add(DisplayLinesView.class.getResource("linelist.css").toExternalForm());
+        controls.getStylesheets().add(DisplayLinesView.class.getResource("userinterface.css").toExternalForm());
         controls.setAlignment(Pos.CENTER);
         setTop(controls);
 
@@ -153,6 +170,8 @@ public class DisplayLinesView extends View {
 
         // Create layout for buttons with correct spacing
         VBox controls = new VBox(20);
+        controls.getStylesheets().add(DisplayLinesView.class.getResource("linelist.css").toExternalForm());
+        controls.getStylesheets().add(DisplayLinesView.class.getResource("userinterface.css").toExternalForm());
         controls.setPadding(new Insets(40, 40, 40, 40));
         controls.setAlignment(Pos.CENTER);
 
@@ -205,11 +224,14 @@ public class DisplayLinesView extends View {
     protected void showServerError(VBox ownerNode) {
         CustomPopupView serverError  = new CustomPopupView(ownerNode);
         Text            errorMessage = new Text("There has been an error connecting to the server. Information will not been updated from server.");
+        errorMessage.getStyleClass().add("text");
         errorMessage.wrappingWidthProperty().bind(ownerNode.widthProperty().subtract(100));
         // Button to hide popup and reload lines from server
         Button retry = new Button("Okay");
         retry.setOnAction(ev -> serverError.hide());
         VBox popupVB = new VBox(20, errorMessage, retry);
+        popupVB.getStylesheets().add(DisplayLinesView.class.getResource("linelist.css").toExternalForm());
+        popupVB.getStylesheets().add(DisplayLinesView.class.getResource("userinterface.css").toExternalForm());
         popupVB.setPadding(new Insets(40, 40, 40, 40));
         popupVB.setAlignment(Pos.TOP_CENTER);
         serverError.setContent(popupVB);
@@ -252,6 +274,7 @@ public class DisplayLinesView extends View {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
         appBar.setTitleText("Select a line");
         appBar.getActionItems().add(MaterialDesignIcon.UNDO.button(e -> App.getInstance().switchScreen(App.HOME_VIEW)));
+
         updateLinesList();
     }
 }

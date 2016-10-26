@@ -1,3 +1,20 @@
+/*
+This file is part of Trap Tracker.
+
+Trap Tracker is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Trap Tracker is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Trap Tracker.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package capstone.mobile.userInterfaces;
 
 
@@ -18,14 +35,17 @@ import javafx.scene.layout.VBox;
 
 public class HomeView extends View {
 
+    private Walk walk;
+
     public HomeView(String name, Walk walk) {
         super(name);
+        this.walk = walk;
 
-        getStylesheets().add(HomeView.class.getResource("primary.css").toExternalForm());
+        getStylesheets().add(HomeView.class.getResource("userinterface.css").toExternalForm());
 
         // Create VBox to hold items
         VBox controls = new VBox();
-        controls.getStylesheets().add(HomeView.class.getResource("primary.css").toExternalForm());
+        controls.getStylesheets().add(HomeView.class.getResource("userinterface.css").toExternalForm());
         controls.setPadding(new Insets(40));
         controls.setSpacing(40);
         controls.setAlignment(Pos.CENTER);
@@ -85,7 +105,9 @@ public class HomeView extends View {
 
         String currentPage = PlatformFactory.getPlatform().getSettingService().retrieve(App.currentPage) != null ? PlatformFactory.getPlatform().getSettingService().retrieve(App.currentPage) : App.HOME_VIEW;
         if (currentPage != App.HOME_VIEW) {
-            App.getInstance().switchScreen(currentPage);
+            if (!currentPage.equals(App.END_WALK_VIEW) || !(walk.getLine() == null)) { // if data has not already been sent while still on EndWalkView
+                App.getInstance().switchScreen(currentPage);
+            }
         }
     }
 }

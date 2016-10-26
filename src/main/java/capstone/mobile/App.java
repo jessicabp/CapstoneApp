@@ -1,3 +1,20 @@
+/*
+This file is part of Trap Tracker.
+
+Trap Tracker is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Trap Tracker is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Trap Tracker.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package capstone.mobile;
 
 import capstone.mobile.dataHandlers.LocalDatabase;
@@ -40,6 +57,7 @@ public class App extends MobileApplication {
     public static       String currentLineID        = "CURRENTLINE";
     public static       String currentTrapID        = "CURRENTTRAP";
     public static       String endTrapID            = "ENDTRAP";
+    // Reference to this class
     private static App a;
     // Items to appear in the side menu bar
     private Item homeItem;
@@ -85,7 +103,7 @@ public class App extends MobileApplication {
 
         // Create side menu bar
         final NavigationDrawer drawer = new NavigationDrawer();
-        final Header           header = new NavigationDrawer.Header("Trap Tracker", "Pest Trap Line Tool", new Avatar(21, new Image(App.class.getResourceAsStream("/icon.png"))));
+        final Header           header = new NavigationDrawer.Header("Trap Tracker", "Pest Trap Line Tool");
         drawer.setHeader(header);
         drawer.getItems().addAll(homeItem, createTrapItem, endWalkItem);
         drawer.selectedItemProperty().addListener(listener);
@@ -120,9 +138,8 @@ public class App extends MobileApplication {
      */
     @Override
     public void postInit(Scene scene) {
-        Swatch.TEAL.assignTo(scene);
+        Swatch.LIGHT_GREEN.assignTo(scene);
         scene.getStylesheets().add(App.class.getResource("style.css").toExternalForm());
-        ((Stage) scene.getWindow()).getIcons().add(new Image(App.class.getResourceAsStream("/icon.png")));
 
         // Disable adding a trap or ending a walk if the user is not currently doing a walk
         homeItem.disableProperty().bind(Walk.isWalking());

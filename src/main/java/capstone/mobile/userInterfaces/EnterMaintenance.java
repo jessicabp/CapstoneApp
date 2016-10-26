@@ -1,3 +1,20 @@
+/*
+This file is part of Trap Tracker.
+
+Trap Tracker is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Trap Tracker is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Trap Tracker.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package capstone.mobile.userInterfaces;
 
 import capstone.mobile.App;
@@ -23,7 +40,7 @@ public class EnterMaintenance extends View {
     public EnterMaintenance(String name, Walk walk) {
         super(name);
         this.walk = walk;
-        getStylesheets().add(EnterMaintenance.class.getResource("secondary.css").toExternalForm());
+        getStylesheets().add(EnterMaintenance.class.getResource("userinterface.css").toExternalForm());
     }
 
     /**
@@ -53,6 +70,7 @@ public class EnterMaintenance extends View {
 
         // VBox to display all elements
         VBox controls = new VBox(20, broken, moved, save);
+        controls.getStylesheets().add(EnterMaintenance.class.getResource("userinterface.css").toExternalForm());
         controls.setPadding(new Insets(40, 40, 40, 40));
         controls.setAlignment(Pos.CENTER);
         setCenter(controls);

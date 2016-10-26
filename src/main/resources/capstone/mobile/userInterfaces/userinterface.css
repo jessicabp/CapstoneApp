@@ -15,12 +15,35 @@ You should have received a copy of the GNU General Public License
 along with Trap Tracker.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package capstone.mobile.dataHandlers;
+.view {
 
-public class DataUnavailableException extends Exception {
+}
 
-    public DataUnavailableException(String message) {
-        super(message);
-    }
+.toggle-button:selected {
+    -fx-background-color: orange;
+}
 
+.toggle-button:selected:hover {
+    -fx-background-color: orangered;
+}
+
+.toggle-button:hover {
+    -fx-background-color: darkgreen;
+}
+
+.button {
+    -fx-padding: 20 10 20 10;
+}
+
+.button:hover {
+    -fx-background-color: darkgreen;
+}
+
+.label, .button, .text {
+    -fx-font-size: 1.3em;
+}
+
+.tall {
+    -fx-padding: 20 0 20 0;
+    -fx-font-size: 1.3em;
 }

@@ -1,3 +1,20 @@
+/*
+This file is part of Trap Tracker.
+
+Trap Tracker is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Trap Tracker is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Trap Tracker.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package capstone.mobile.userInterfaces;
 
 import capstone.mobile.App;
@@ -37,11 +54,13 @@ public class FavouriteLinesView extends DisplayLinesView {
         super(name, walk);
         this.walk = walk;
 
-        getStylesheets().add(DisplayLinesView.class.getResource("LineList.css").toExternalForm());
-        getStylesheets().add(FavouriteLinesView.class.getResource("secondary.css").toExternalForm());
+        getStylesheets().add(DisplayLinesView.class.getResource("linelist.css").toExternalForm());
+        getStylesheets().add(FavouriteLinesView.class.getResource("userinterface.css").toExternalForm());
 
         // Create VBox to hold items
         controls = new VBox();
+        controls.getStylesheets().add(DisplayLinesView.class.getResource("linelist.css").toExternalForm());
+        controls.getStylesheets().add(FavouriteLinesView.class.getResource("userinterface.css").toExternalForm());
         controls.setAlignment(Pos.CENTER);
         setTop(controls);
 
@@ -118,8 +137,9 @@ public class FavouriteLinesView extends DisplayLinesView {
     @Override
     protected void updateAppBar(AppBar appBar) {
         appBar.setNavIcon(MaterialDesignIcon.MENU.button(e -> MobileApplication.getInstance().showLayer(App.MENU_LAYER)));
-        appBar.setTitleText("Select a line");
+        appBar.setTitleText("Pre-visited lines");
         appBar.getActionItems().add(MaterialDesignIcon.UNDO.button(e -> App.getInstance().switchScreen(App.HOME_VIEW)));
+
         updateLinesList();
     }
 }

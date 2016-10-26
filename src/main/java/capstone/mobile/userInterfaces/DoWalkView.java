@@ -1,3 +1,20 @@
+/*
+This file is part of Trap Tracker.
+
+Trap Tracker is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Trap Tracker is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Trap Tracker.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package capstone.mobile.userInterfaces;
 
 import capstone.mobile.App;
@@ -48,7 +65,7 @@ public class DoWalkView extends View {
         super(name);
         this.walk = walk;
 
-        getStylesheets().add(DoWalkView.class.getResource("secondary.css").toExternalForm());
+        getStylesheets().add(DoWalkView.class.getResource("userinterface.css").toExternalForm());
 
         // Create labels with side of path and maintenance info
         side = new Label("text updated when user changes to this view");
@@ -86,6 +103,8 @@ public class DoWalkView extends View {
 
         // Create VBox for map & buttons
         VBox controls = new VBox(15, mapView, waitingMessage, moved, broken, grid);
+        controls.getStylesheets().add(DisplayLinesView.class.getResource("linelist.css").toExternalForm());
+        controls.getStylesheets().add(DisplayLinesView.class.getResource("userinterface.css").toExternalForm());
         controls.setAlignment(Pos.TOP_CENTER);
         // controls.setPadding(new Insets(0, 40, 40, 40));
         setCenter(controls);
@@ -123,12 +142,12 @@ public class DoWalkView extends View {
 
         markersLayer = mapView.clearMarkers(markersLayer);
         for (Trap trap : walk.getLine().getTraps()) {
-            Circle   marker   = new Circle(5, Color.ORANGE);
+            Circle   marker   = new Circle(10, Color.ORANGE);
             MapPoint mapPoint = new MapPoint(trap.getLatitude(), trap.getLongitude());
             mapView.addMarker(markersLayer, mapPoint, marker);
         }
 
-        Node     icon        = new Circle(7, Color.BLUE);
+        Node     icon        = new Circle(10, Color.BLUE);
         Trap     currentTrap = walk.getCurrentTrap();
         MapPoint mapPoint    = new MapPoint(currentTrap.getLatitude(), currentTrap.getLongitude());
         currentLayer = mapView.clearMarkers(currentLayer);
@@ -148,7 +167,7 @@ public class DoWalkView extends View {
         }
         positionLayer = mapView.clearMarkers(positionLayer);
         MapPoint mapPoint = new MapPoint(position.getLatitude(), position.getLongitude());
-        mapView.addMarker(positionLayer, mapPoint, new Circle(4, Color.RED));
+        mapView.addMarker(positionLayer, mapPoint, new Circle(7, Color.RED));
         mapView.setCenter(position.getLatitude(), position.getLongitude());
     }
 

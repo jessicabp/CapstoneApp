@@ -15,12 +15,7 @@ You should have received a copy of the GNU General Public License
 along with Trap Tracker.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package capstone.mobile.dataHandlers;
-
-public class DataUnavailableException extends Exception {
-
-    public DataUnavailableException(String message) {
-        super(message);
-    }
-
+.list-view .list-cell {
+    -fx-cell-size: 50;
+    -fx-font-size: 1.3em;
 }
