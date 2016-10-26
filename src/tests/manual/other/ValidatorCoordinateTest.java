@@ -32,7 +32,10 @@ public class ValidatorCoordinateTest {
                 {"175.6117444", true},
                 {"175.61174444", false},
                 {"175.611", false},
-                {"--40.3550", false}
+                {"--40.3550", false},
+                {"1.23", false},
+                {"1.2345", true},
+                {"1.23456789", false}
         });
     }
 
