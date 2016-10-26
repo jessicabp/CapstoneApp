@@ -59,6 +59,8 @@ public class DisplayLinesView extends View {
 
         // Create VBox to hold items
         controls = new VBox();
+        controls.getStylesheets().add(DisplayLinesView.class.getResource("LineList.css").toExternalForm());
+        controls.getStylesheets().add(DisplayLinesView.class.getResource("secondary.css").toExternalForm());
         controls.setAlignment(Pos.CENTER);
         setTop(controls);
 

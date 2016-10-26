@@ -33,6 +33,7 @@ public class HomeView extends View {
 
         // Button to view favourite lines
         Button favLines = new Button("Select a line you've used before");
+        favLines.setWrapText(true);
         favLines.setMaxWidth(Double.MAX_VALUE);
         favLines.setOnAction(e -> App.getInstance().switchScreen(App.FAVOURITE_LINES_VIEW));
         favLines.getStyleClass().add("tall");
@@ -40,6 +41,7 @@ public class HomeView extends View {
 
         // Button to view all lines
         Button allLines = new Button("Select a new line");
+        allLines.setWrapText(true);
         allLines.setMaxWidth(Double.MAX_VALUE);
         allLines.setOnAction(e -> App.getInstance().switchScreen(App.DISPLAY_LINES_VIEW));
         allLines.getStyleClass().add("tall");

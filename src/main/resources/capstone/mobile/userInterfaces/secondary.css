@@ -15,7 +15,7 @@
 }
 
 .button {
-    -fx-padding: 20 0 20 0;
+    -fx-padding: 20 5 20 5;
 }
 
 .label, .button {
