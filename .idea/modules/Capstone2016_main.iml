@@ -11,6 +11,5 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Gradle: com.gluonhq:charm:3.0.0" level="project" />
     <orderEntry type="library" name="Gradle: org.json:json:20160810" level="project" />
-    <orderEntry type="library" name="Gradle: org.robovm:robovm-rt:1.8.0" level="project" />
   </component>
 </module>

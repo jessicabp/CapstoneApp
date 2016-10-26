@@ -57,7 +57,6 @@ public class DoWalkView extends View {
     private        Label         side;
     private        Label         moved;
     private        Label         broken;
-    private        VBox          messages;
     private        PoiLayer      currentLayer;
     private        PoiLayer      positionLayer;
     private        Label         waitingMessage;
@@ -105,7 +104,7 @@ public class DoWalkView extends View {
         waitingMessage.setText("Waiting on GPS for position..");
 
         // Create VBox for map & buttons
-        VBox controls = new VBox(15, mapView, waitingMessage, moved, broken, grid);
+        controls = new VBox(15, mapView, waitingMessage, moved, broken, grid);
         controls.getStylesheets().add(DisplayLinesView.class.getResource("linelist.css").toExternalForm());
         controls.getStylesheets().add(DisplayLinesView.class.getResource("userinterface.css").toExternalForm());
         controls.setAlignment(Pos.TOP_CENTER);
