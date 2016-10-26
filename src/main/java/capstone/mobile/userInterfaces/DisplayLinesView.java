@@ -79,7 +79,7 @@ public class DisplayLinesView extends View {
         controls.getStylesheets().add(DisplayLinesView.class.getResource("linelist.css").toExternalForm());
         controls.getStylesheets().add(DisplayLinesView.class.getResource("userinterface.css").toExternalForm());
         controls.setAlignment(Pos.CENTER);
-        setTop(controls);
+        setCenter(controls);
 
         // Create ListView to hold lines
         linesListView = new ListView<>(observableLinesList);
