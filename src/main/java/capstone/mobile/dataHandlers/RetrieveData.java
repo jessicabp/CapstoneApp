@@ -47,9 +47,9 @@ public class RetrieveData {
      */
     public static List<Line> fetchLinesList() throws DataUnavailableException {
         try {
-            final URL               url             = new URL(HOST + "/line");
+            final URL                url             = new URL(HOST + "/line");
             final HttpsURLConnection connection      = (HttpsURLConnection) url.openConnection();
-            final InputStream       jsonInputStream = connection.getInputStream();
+            final InputStream        jsonInputStream = connection.getInputStream();
 
             final JsonReader jsonReader = Json.createReader(jsonInputStream);
             final JsonObject jsonObject = jsonReader.readObject();
@@ -88,9 +88,9 @@ public class RetrieveData {
      */
     public static List<Trap> fetchTrapsList(int lineId) throws DataUnavailableException {
         try {
-            final URL               url             = new URL(HOST + "/trap?line_id=" + lineId);
+            final URL                url             = new URL(HOST + "/trap?line_id=" + lineId);
             final HttpsURLConnection connection      = (HttpsURLConnection) url.openConnection();
-            final InputStream       jsonInputStream = connection.getInputStream();
+            final InputStream        jsonInputStream = connection.getInputStream();
 
             final JsonReader jsonReader = Json.createReader(jsonInputStream);
             final JsonObject jsonObject = jsonReader.readObject();
@@ -163,9 +163,9 @@ public class RetrieveData {
      */
     public static int checkAuthorisation(int lineId, String password) throws DataUnavailableException {
         try {
-            final URL               url             = new URL(HOST + "/checkauth?line_id=" + lineId + "&password=" + password);
+            final URL                url             = new URL(HOST + "/checkauth?line_id=" + lineId + "&password=" + password);
             final HttpsURLConnection connection      = (HttpsURLConnection) url.openConnection();
-            final InputStream       jsonInputStream = connection.getInputStream();
+            final InputStream        jsonInputStream = connection.getInputStream();
 
             final JsonReader jsonReader = Json.createReader(jsonInputStream);
             final JsonObject jsonObject = jsonReader.readObject();

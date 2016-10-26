@@ -427,12 +427,12 @@ public class CreateTrapView extends View {
      * Displays a legend pop up.
      */
     private void displayLegend() {
-        final double radius = 14.0;
-        final double spacer = 50.0;
+        final double radius  = 14.0;
+        final double spacer  = 50.0;
         final double labelsX = 55.0;
         final double labelsY = 55.0;
-        final double iconsX = 30.0;
-        final double iconsY = 50.0;
+        final double iconsX  = 30.0;
+        final double iconsY  = 50.0;
 
         // Creating custom pop up
         CustomPopupView legendPopup = new CustomPopupView(controls);
@@ -443,19 +443,19 @@ public class CreateTrapView extends View {
         container.setAlignment(Pos.CENTER);
 
         // Label at the top
-        Label legendLabel = new Label("Legend");
-        HBox labelContainer = new HBox();
+        Label legendLabel    = new Label("Legend");
+        HBox  labelContainer = new HBox();
         labelContainer.setAlignment(Pos.CENTER);
         labelContainer.getChildren().addAll(legendLabel);
 
         // Canvas for displaying icons and description text
-        Canvas legendCanvas = new Canvas(200, 200);
+        Canvas          legendCanvas    = new Canvas(200, 200);
         GraphicsContext graphicsContext = legendCanvas.getGraphicsContext2D();
 
-        String[] labels = {"Your Position", "Other Trap Markers"};
-        Color[] colours = {Color.RED, Color.ORANGE};
+        String[] labels  = {"Your Position", "Other Trap Markers"};
+        Color[]  colours = {Color.RED, Color.ORANGE};
 
-        for(int i = 0; i < labels.length; i++) {
+        for (int i = 0; i < labels.length; i++) {
             graphicsContext.setFill(Color.BLACK);
             graphicsContext.fillText(labels[i], labelsX, labelsY + i * spacer);
             graphicsContext.beginPath();

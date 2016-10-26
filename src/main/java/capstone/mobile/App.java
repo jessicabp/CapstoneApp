@@ -22,7 +22,6 @@ import capstone.mobile.models.Walk;
 import capstone.mobile.userInterfaces.*;
 import com.gluonhq.charm.down.common.PlatformFactory;
 import com.gluonhq.charm.glisten.application.MobileApplication;
-import com.gluonhq.charm.glisten.control.Avatar;
 import com.gluonhq.charm.glisten.control.NavigationDrawer;
 import com.gluonhq.charm.glisten.control.NavigationDrawer.Header;
 import com.gluonhq.charm.glisten.control.NavigationDrawer.Item;
@@ -32,8 +31,6 @@ import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.gluonhq.charm.glisten.visual.Swatch;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
 
 @License(key = "60820384-1db6-43c0-a456-1ed0ede425b4")
 
@@ -58,11 +55,11 @@ public class App extends MobileApplication {
     public static       String currentTrapID        = "CURRENTTRAP";
     public static       String endTrapID            = "ENDTRAP";
     // Reference to this class
-    private static App a;
+    private static App  a;
     // Items to appear in the side menu bar
-    private Item homeItem;
-    private Item createTrapItem;
-    private Item endWalkItem;
+    private        Item homeItem;
+    private        Item createTrapItem;
+    private        Item endWalkItem;
 
     /**
      * Listener for the side menu bar selections

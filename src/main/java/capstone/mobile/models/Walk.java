@@ -49,6 +49,17 @@ public class Walk {
      */
     private Boolean direction;
 
+    /**
+     * Constructor
+     */
+    public Walk() {
+        this.direction = null;
+    }
+
+    public static BooleanProperty isWalking() {
+        return walking;
+    }
+
     public Boolean isDirection() {
         return direction;
     }
@@ -57,19 +68,8 @@ public class Walk {
         this.direction = direction;
     }
 
-    public static BooleanProperty isWalking() {
-        return walking;
-    }
-
     public Line getLine() {
         return line;
-    }
-
-    /**
-     * Constructor
-     */
-    public Walk() {
-        this.direction = null;
     }
 
     /**

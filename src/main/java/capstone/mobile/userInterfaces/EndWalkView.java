@@ -39,13 +39,13 @@ import javafx.scene.text.TextAlignment;
 
 public class EndWalkView extends View {
 
+    private final int[]  count            = {0}; // stored as an array so it is effectively final for use in lambda expression
     private Walk   walk;
     private Button send;
     private Button cont;
     private       String SENDTEXT         = "Send to server";
     private       int    OKAY             = 0;
     private       int    INVALID_PASSWORD = 1;
-    private final int[]  count            = {0}; // stored as an array so it is effectively final for use in lambda expression
 
     public EndWalkView(String name, Walk walk) {
         super(name);

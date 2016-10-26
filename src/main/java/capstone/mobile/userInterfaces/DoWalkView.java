@@ -18,10 +18,6 @@ along with Trap Tracker.  If not, see <http://www.gnu.org/licenses/>.
 package capstone.mobile.userInterfaces;
 
 import capstone.mobile.App;
-import capstone.mobile.dataHandlers.DataUnavailableException;
-import capstone.mobile.dataHandlers.LocalDatabase;
-import capstone.mobile.dataHandlers.RetrieveData;
-import capstone.mobile.models.Line;
 import capstone.mobile.models.Trap;
 import capstone.mobile.models.Walk;
 import capstone.mobile.other.CustomGridPane;
@@ -66,7 +62,7 @@ public class DoWalkView extends View {
     private        PoiLayer      positionLayer;
     private        Label         waitingMessage;
     private boolean waitingMessageVisible = true;
-    private         VBox         controls;
+    private VBox controls;
 
     public DoWalkView(String name, Walk walk) {
         super(name);
@@ -197,12 +193,12 @@ public class DoWalkView extends View {
      * Displays a legend pop up.
      */
     private void displayLegend() {
-        final double radius = 14.0;
-        final double spacer = 50.0;
+        final double radius  = 14.0;
+        final double spacer  = 50.0;
         final double labelsX = 55.0;
         final double labelsY = 55.0;
-        final double iconsX = 30.0;
-        final double iconsY = 50.0;
+        final double iconsX  = 30.0;
+        final double iconsY  = 50.0;
 
         // Creating custom pop up
         CustomPopupView legendPopup = new CustomPopupView(controls);
@@ -213,19 +209,19 @@ public class DoWalkView extends View {
         container.setAlignment(Pos.CENTER);
 
         // Label at the top
-        Label legendLabel = new Label("Legend");
-        HBox labelContainer = new HBox();
+        Label legendLabel    = new Label("Legend");
+        HBox  labelContainer = new HBox();
         labelContainer.setAlignment(Pos.CENTER);
         labelContainer.getChildren().addAll(legendLabel);
 
         // Canvas for displaying icons and description text
-        Canvas legendCanvas = new Canvas(200, 200);
+        Canvas          legendCanvas    = new Canvas(200, 200);
         GraphicsContext graphicsContext = legendCanvas.getGraphicsContext2D();
 
-        String[] labels = {"Your Position", "Next Trap Marker", "Other Trap Markers"};
-        Color[] colours = {Color.RED, Color.BLUE, Color.ORANGE};
+        String[] labels  = {"Your Position", "Next Trap Marker", "Other Trap Markers"};
+        Color[]  colours = {Color.RED, Color.BLUE, Color.ORANGE};
 
-        for(int i = 0; i < labels.length; i++) {
+        for (int i = 0; i < labels.length; i++) {
             graphicsContext.setFill(Color.BLACK);
             graphicsContext.fillText(labels[i], labelsX, labelsY + i * spacer);
             graphicsContext.beginPath();

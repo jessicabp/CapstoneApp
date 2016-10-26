@@ -47,10 +47,10 @@ import java.util.List;
  */
 public class EnterDataView extends View {
 
-    private        Button       done          = null;
     private static List<Animal> animalList    = new ArrayList<>();
     private static ToggleButton selectedMain  = null;
     private static ToggleButton selectedOther = null;
+    private        Button       done          = null;
     private Walk walk;
     private int  animal;
     private List<Animal> tempAnimalList = new ArrayList<>();
@@ -74,12 +74,12 @@ public class EnterDataView extends View {
         animalList.add(animal);
     }
 
-    public static void setAnimalList(List<Animal> fetchedAnimalList) {
-        animalList = fetchedAnimalList;
-    }
-
     public static List<Animal> getAnimalList() {
         return animalList;
+    }
+
+    public static void setAnimalList(List<Animal> fetchedAnimalList) {
+        animalList = fetchedAnimalList;
     }
 
     /**
