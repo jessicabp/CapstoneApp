@@ -67,6 +67,7 @@ public class CreateTrapView extends View {
 
         // Create layout for buttons with correct spacing
         controls = new VBox();
+        controls.getStylesheets().add(CreateTrapView.class.getResource("secondary.css").toExternalForm());
         controls.setAlignment(Pos.TOP_CENTER);
         setCenter(controls);
 
@@ -76,6 +77,7 @@ public class CreateTrapView extends View {
         numbersLayer = mapView.createLayer();
         positionLayer = mapView.createLayer();
         VBox mapVB = new VBox(mapView);
+        mapVB.getStylesheets().add(CreateTrapView.class.getResource("secondary.css").toExternalForm());
         mapVB.setPadding(new Insets(15, 0, 15, 0));
         controls.getChildren().add(mapVB);
 
@@ -121,11 +123,13 @@ public class CreateTrapView extends View {
         // and Managed properties are set to false to initially hide the controls, which can be
         // toggled via the Button to manually enter the coordinates.
         coordinatesVBox = new VBox();
+        coordinatesVBox.getStylesheets().add(CreateTrapView.class.getResource("secondary.css").toExternalForm());
         coordinatesVBox.setVisible(false);
         coordinatesVBox.setManaged(false);
         coordinatesVBox.getChildren().addAll(latitudeLabel, latitudeTextField, longitudeLabel, longitudeTextField);
 
         VBox locationVB = new VBox(10, mapCoordinatesToggle, manualCoordinatesToggle, coordinatesVBox);
+        locationVB.getStylesheets().add(CreateTrapView.class.getResource("secondary.css").toExternalForm());
         locationVB.setPadding(new Insets(0, 0, 15, 0));
         items.add(locationVB);
 
@@ -136,6 +140,7 @@ public class CreateTrapView extends View {
         numberTextField.textProperty().addListener((observableValue, oldValue, newValue) -> validateNumberInput(newValue, numberTextField));
 
         VBox numberVB = new VBox(5, numberLabel, numberTextField);
+        numberVB.getStylesheets().add(CreateTrapView.class.getResource("secondary.css").toExternalForm());
         numberVB.setPadding(new Insets(15, 0, 15, 0));
         items.add(numberVB);
 
@@ -155,6 +160,7 @@ public class CreateTrapView extends View {
         sideGrid.add(leftToggleButton, 0, 1);
         sideGrid.add(rightToggleButton, 1, 1);
         VBox sideVB = new VBox(5, side, sideGrid);
+        sideVB.getStylesheets().add(CreateTrapView.class.getResource("secondary.css").toExternalForm());
         sideVB.setPadding(new Insets(15, 0, 15, 0));
         items.add(sideVB);
 
@@ -174,6 +180,7 @@ public class CreateTrapView extends View {
         actionGrid.add(cancelButton, 1, 0);
 
         VBox actionVB = new VBox(actionGrid);
+        actionVB.getStylesheets().add(CreateTrapView.class.getResource("secondary.css").toExternalForm());
         actionVB.setPadding(new Insets(15, 0, 15, 0));
         items.add(actionVB);
 
@@ -364,6 +371,7 @@ public class CreateTrapView extends View {
             App.getInstance().switchScreen(App.END_WALK_VIEW);
         });
         VBox popupVB = new VBox(20, message, newTrap, finish);
+        popupVB.getStylesheets().add(CreateTrapView.class.getResource("secondary.css").toExternalForm());
         popupVB.setPadding(new Insets(40, 40, 40, 40));
         popupVB.setAlignment(Pos.TOP_CENTER);
         popup.setContent(popupVB);
@@ -391,6 +399,7 @@ public class CreateTrapView extends View {
             popup.hide();
         });
         VBox popupVB = new VBox(20, message, increase, decrease);
+        popupVB.getStylesheets().add(CreateTrapView.class.getResource("secondary.css").toExternalForm());
         popupVB.setPadding(new Insets(40, 40, 40, 40));
         popupVB.setAlignment(Pos.TOP_CENTER);
         popup.setContent(popupVB);

@@ -83,7 +83,29 @@ public class EndWalkView extends View {
         int response = SendData.sendWalkData(walk);
         if (response == OKAY) {
             walk.endWalk();
-            App.getInstance().switchScreen(App.HOME_VIEW);
+            // Create popup to inform user send was successful
+            CustomPopupView successPopup = new CustomPopupView(controls);
+
+            // Create layout for buttons with correct spacing
+            VBox successControls = new VBox(20);
+            successControls.setPadding(new Insets(40, 40, 40, 40));
+            successControls.setAlignment(Pos.CENTER);
+
+            // Add text
+            Text titleText = new Text("Collected data has been sent successfully");
+            titleText.setTextAlignment(TextAlignment.CENTER);
+            successControls.getChildren().add(titleText);
+
+            // Add okay button
+            Button okayButton = new Button("Okay");
+            okayButton.setOnAction(ev -> {
+                successPopup.hide();
+                App.getInstance().switchScreen(App.HOME_VIEW);
+            });
+            successControls.getChildren().add(okayButton);
+
+            successPopup.setContent(successControls);
+            successPopup.show();
         } else {
             count[0]++;
             // Update button text to propt user to retry, and count retries
