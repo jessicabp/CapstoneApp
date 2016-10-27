@@ -92,13 +92,11 @@ public class SendData {
             catchJson += "]";
 
             String catchesJsonObject = "{" + lineIdJson + "," + passwordJson + "," + catchJson + "}";
-            System.out.println(catchesJsonObject);
 
             connection.setRequestProperty("Content-Length", Integer.toString(catchesJsonObject.length()));
             connection.getOutputStream().write(catchesJsonObject.getBytes("UTF-8"));
 
             final int responseCode = connection.getResponseCode();
-            System.out.println(responseCode);
 
             return responseCode;
         } catch (Exception ex) {
@@ -145,13 +143,11 @@ public class SendData {
             trapJson += "]";
 
             String trapsJsonObject = "{" + lineIdJson + "," + passwordJson + "," + trapJson + "}";
-            System.out.println(trapsJsonObject);
 
             connection.setRequestProperty("Content-Length", Integer.toString(trapsJsonObject.length()));
             connection.getOutputStream().write(trapsJsonObject.getBytes("UTF-8"));
 
             final int responseCode = connection.getResponseCode();
-            System.out.println(responseCode);
 
             return responseCode;
         } catch (Exception ex) {
