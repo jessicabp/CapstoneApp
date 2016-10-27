@@ -113,7 +113,7 @@ public class SetUpWalkView extends View {
         // If walk is already started, add the option to cancel and go straight back to the end walk view
         if (Walk.isWalking().get()) {
             Button cancel = new Button();
-            cancel.setText("Cancel - return to end of walk");
+            cancel.setText("Cancel");
             cancel.setOnAction(e -> App.getInstance().switchScreen(App.END_WALK_VIEW));
             action.getChildren().add(cancel);
         }
