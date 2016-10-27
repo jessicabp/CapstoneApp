@@ -61,8 +61,6 @@ public class EnterDataView extends View {
         this.walk = walk;
 
         getStylesheets().add(EnterDataView.class.getResource("userinterface.css").toExternalForm());
-
-        showButtons();
     }
 
     /**
@@ -105,10 +103,11 @@ public class EnterDataView extends View {
         controls.getChildren().add(grid);
         // Add first 4 animals (empty + 3 x line preferences) to grid and toggle group
         int[] animalNo    = {0, walk.getLine().getAnimal1(), walk.getLine().getAnimal2(), walk.getLine().getAnimal3()};
-        int   animalIndex = 0;
+        int   animalIndex = 3;
         for (int r = 0; r < 2; r++) {
             for (int c = 0; c < 2; c++) {
                 Animal       nextAnimal = tempAnimalList.remove(animalNo[animalIndex]);
+                animalIndex--;
                 ToggleButton button     = new ToggleButton(nextAnimal.getName());
                 button.getStyleClass().add("tall");
                 button.setUserData(nextAnimal.getId());
@@ -121,7 +120,7 @@ public class EnterDataView extends View {
                     animal = nextAnimal.getId();
                     selectedMain = button;
                     selectedOther = null;
-                    done.setText("Done");
+                    done.setText("DONE");
                 });
                 button.setMaxWidth(Double.MAX_VALUE);
                 grid.add(button, c, r);
