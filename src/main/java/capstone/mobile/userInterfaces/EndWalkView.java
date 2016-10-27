@@ -97,14 +97,14 @@ public class EndWalkView extends View {
      * If line password is incorrect when sending, create popup and request password
      *
      * @param send
-     * @param controls
+     * @param ownerNode
      */
-    private void sendData(Button send, VBox controls) {
+    private void sendData(Button send, VBox ownerNode) {
         int response = SendData.sendWalkData(walk);
         if (response == OKAY) {
             walk.endWalk();
             // Create popup to inform user send was successful
-            CustomPopupView successPopup = new CustomPopupView(controls);
+            CustomPopupView successPopup = new CustomPopupView(ownerNode);
 
             // Create layout for buttons with correct spacing
             VBox successControls = new VBox(20);
@@ -113,9 +113,9 @@ public class EndWalkView extends View {
             successControls.setAlignment(Pos.CENTER);
 
             // Add text
-            Label titleText = new Label("Collected data has been sent successfully");
+            Text titleText = new Text("Collected data has been sent successfully");
             titleText.getStyleClass().add("text");
-            titleText.setWrapText(true);
+            titleText.wrappingWidthProperty().bind(ownerNode.widthProperty().subtract(100));
             titleText.setTextAlignment(TextAlignment.CENTER);
             successControls.getChildren().add(titleText);
 
@@ -136,7 +136,7 @@ public class EndWalkView extends View {
 
             if (response == INVALID_PASSWORD) {
                 // Create popup to request password
-                CustomPopupView passwordPopup = new CustomPopupView(controls);
+                CustomPopupView passwordPopup = new CustomPopupView(ownerNode);
 
                 // Create layout for buttons with correct spacing
                 VBox passControls = new VBox(20);
@@ -154,7 +154,7 @@ public class EndWalkView extends View {
 
                 // Add password entry field
                 PasswordField passwordField = new PasswordField();
-                passwordField.maxWidthProperty().bind(controls.widthProperty().subtract(25));
+                passwordField.maxWidthProperty().bind(ownerNode.widthProperty().subtract(25));
                 passControls.getChildren().add(passwordField);
 
                 // Add cancel/save buttons

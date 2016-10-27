@@ -62,7 +62,7 @@ public class FavouriteLinesView extends DisplayLinesView {
         controls.getStylesheets().add(DisplayLinesView.class.getResource("linelist.css").toExternalForm());
         controls.getStylesheets().add(FavouriteLinesView.class.getResource("userinterface.css").toExternalForm());
         controls.setAlignment(Pos.CENTER);
-        setCenter(controls);
+        setTop(controls);
 
         // Create ListView to hold lines
         linesListView = new ListView<>(observableLinesList);
