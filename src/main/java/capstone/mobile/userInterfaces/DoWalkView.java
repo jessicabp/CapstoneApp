@@ -23,9 +23,11 @@ import capstone.mobile.models.Walk;
 import capstone.mobile.other.CustomGridPane;
 import capstone.mobile.other.CustomMapView;
 import capstone.mobile.other.CustomPopupView;
+import com.gluonhq.charm.down.Services;
 import com.gluonhq.charm.down.common.PlatformFactory;
 import com.gluonhq.charm.down.common.Position;
 import com.gluonhq.charm.down.common.PositionService;
+import com.gluonhq.charm.down.plugins.VibrationService;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
@@ -172,6 +174,37 @@ public class DoWalkView extends View {
         MapPoint mapPoint = new MapPoint(position.getLatitude(), position.getLongitude());
         mapView.addMarker(positionLayer, mapPoint, new Circle(7, Color.RED));
         mapView.setCenter(position.getLatitude(), position.getLongitude());
+
+        // Check to see proximity to trap
+        Trap currenTrap = walk.getCurrentTrap();
+        Position trapPosition = new Position(currenTrap.getLatitude(), currenTrap.getLongitude());
+
+        if(isWithinProximity(trapPosition, position)) {
+            Services.get(VibrationService.class).ifPresent(service -> {
+                service.vibrate();
+            });
+        }
+    }
+
+    private boolean isWithinProximity(Position a, Position b) {
+//        a = new Position(50.845619, 4.723552);
+//        b = new Position(50.845429, 4.723514);
+//        System.out.println(b.getLongitude());
+//        System.out.println(b.getLatitude());
+
+
+        double sx = Math.pow(Math.abs(a.getLongitude() - b.getLongitude()), 2.0);
+        double sy = Math.pow(Math.abs(a.getLatitude() - b.getLatitude()), 2.0);
+        double total = sx + sy;
+        double distance = Math.sqrt(total);
+
+        return true;
+
+//        if(distance < 1.9376274151295284E-4) {
+//            return true;
+//        }
+
+        //return false;
     }
 
     /**

@@ -24,7 +24,11 @@ repositories {
 mainClassName = 'capstone.mobile.App'
 
 dependencies {
-    compile 'com.gluonhq:charm:3.0.0'
+    compile 'com.gluonhq:charm:4.0.1'
+    compile group: 'com.gluonhq', name: 'charm-down-plugin-vibration', version: '3.0.0'
+    compile group: 'com.gluonhq', name: 'charm-down-plugin-vibration-android', version: '3.0.0'
+
+
     testCompile group: 'com.gluonhq', name: 'charm-down-desktop', version: '2.0.1'
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.8.11.2'
 
