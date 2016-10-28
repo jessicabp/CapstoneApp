@@ -26,13 +26,10 @@ import com.gluonhq.charm.glisten.control.NavigationDrawer;
 import com.gluonhq.charm.glisten.control.NavigationDrawer.Header;
 import com.gluonhq.charm.glisten.control.NavigationDrawer.Item;
 import com.gluonhq.charm.glisten.layout.layer.SidePopupView;
-import com.gluonhq.charm.glisten.license.License;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.gluonhq.charm.glisten.visual.Swatch;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.Scene;
-
-@License(key = "60820384-1db6-43c0-a456-1ed0ede425b4")
 
 /**
  * Creates views and side menu bar, and holds reference to the walk.
