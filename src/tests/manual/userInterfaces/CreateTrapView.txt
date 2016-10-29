@@ -1,5 +1,5 @@
 CreateTrapView
-1) A map shows a small green marker with the device's current position
+1) A map shows a small red marker with the device's current position
 2) Pre-existing trap locations are shown by larger yellow markers
 3) Selecting a location entry method and side of path turns the selected option orange
 4) When "Manually enter longitude and latitude values" is selected, entry boxes appear for longitude and latitude values, and when deflected, they disappear

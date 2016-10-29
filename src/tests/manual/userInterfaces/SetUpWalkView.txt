@@ -1,4 +1,11 @@
-EndWalkView
-1) Text appears explaining the user"s options
-2) Pressing the "Set up walk" button takes the user to SetUpWalkView, which will show the current line and include a button at the bottom to cancel which will return the user to EndWalkView if pressed
-3) Pressing "Send to server" will attempt to send the data to the server. If successful, HomeView will be shown. Otherwise the "Send to server" text will be edited to include a retry count which increases with each unsuccessful attempt to send the data. If the password for the line is incorrect, a popup will appear prompting the user to enter the correct password. Once this popup is closed by selecting either "Cancel" or "Save", the user will then need to select to send the data to the server or set up another walk.
+SetUpWalkView
+1) Pressing a trap marker under "Select starting trap" turns the trap marker red.
+2) Pressing a different trap marker under "Select starting trap" turns the trap marker red and restores the previously changed trap marker to blue.
+3) Pressing a trap marker under "Select ending trap" turns the trap marker red.
+4) Pressing a different trap marker under "Select ending trap" turns the trap marker red and restores the previously changed trap marker to blue.
+5) Pressing "Start Walk" button without selecting a start and end location does nothing.
+6) Pressing "Start Walk" button without selecting an end location does nothing.
+7) Pressing "Start Walk" button without selecting a start location does nothing.
+8) Pressing "Start Walk" button after selecting a start and end location switches to DoWalkView.
+9) Pressing "Previous" button returning to DisplayLinesView after selecting a start and end trap, then returning to SetUpWalkView for the same line clears trap selections, then pressing "Start Walk" button without selecting a start and end location does nothing.
+10) Pressing "Previous" button returning to FavouritesLinesView after selecting a start and end trap, then returning to SetUpWalkView for the same line clears trap selections, then pressing "Start Walk" button without selecting a start and end location does nothing.

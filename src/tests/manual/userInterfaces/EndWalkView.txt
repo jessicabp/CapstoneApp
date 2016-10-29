@@ -1,0 +1,4 @@
+EndWalkView
+1) An explanation of the possible actions should appear, with a button to send data and a button to set up a walk.
+2) Selecting the send data button with an internet connection and correct password will send the data to the server and show a confirmation of success popup. If the send fails for any reason the button will change to include a retry count. If the password is incorrect, it will also show a popup asking for the password.
+3) Selecting the set up walk button will take the user to the set up walk view, with the added option of cancelling (which takes the user back to the end walk view).

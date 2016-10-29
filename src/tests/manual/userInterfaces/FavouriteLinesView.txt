@@ -1,0 +1,5 @@
+FavouriteLinesView
+1) List of lines to select from is empty before any lines have been selected via DisplayLinesView.
+2) List of lines displays all lines that have been selected via DisplayLinesView.
+3) List of lines are displayed sorted by alphabetical order.
+4) Filter successfully filters list of avaiable lines to select from.

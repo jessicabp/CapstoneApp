@@ -1,0 +1,9 @@
+DisplayLinesView
+1) List of lines displays all lines from website.
+2) List of lines are displayed sorted by alphabetical order.
+3) Filter successfully filters list of avaiable lines to select from.
+4) Selecting a line darkens the background and a popup prompts the user for the line password.
+5) Pressing "Cancel" on the prompt relightens the background and deselects the selected line.
+6) Pressing "Save" with an incorrect password changes prompt text to try again.
+7) Pressing "Save" with a correct password changes view to SetUpWalkView (traps > 0)
+8) Pressing "Save" with a correct password changes view to CreateTrapView (traps == 0), darkens background and displays prompt for the user to select ascending or descending trap number order.

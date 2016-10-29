@@ -1,0 +1,3 @@
+HomeView
+1) Pressing the "Select a line you've used before" button switches the view displaying FavouritesLineView.
+2) Pressing the "Select a new line" button switches the view displaying DisplayLinesView.
